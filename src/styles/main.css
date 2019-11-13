@@ -1,0 +1,18 @@
+.text-area-container{
+    width: 100%;
+    position: relative;
+}
+.post-text-area{
+    padding-left: 70px;
+    width: 100%;
+    min-height: 80px;
+}
+.person-image{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    
+}
+.person-image div{
+    border-radius: 15px/7px !important;
+}
