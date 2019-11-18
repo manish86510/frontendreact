@@ -2,8 +2,12 @@ import React from 'react';
 import './App.css';
 import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
+import './Routes';
+
 
 import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
+import Login from './containers/login';
+import Register from './containers/register';
 
 const theme = createMuiTheme({
   palette: {
