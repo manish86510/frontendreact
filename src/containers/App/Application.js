@@ -10,8 +10,6 @@ import {
   } from '../components';
 import Login from './components/forms/Login';
 
-  
-
 
 class Application extends React.Component {
   render() {
@@ -21,7 +19,6 @@ class Application extends React.Component {
           { /* Layout */ }
           <Route exact path="/app" component={DashboardV2} />
           <Route exact path="/app/dashboard-v2" component={DashboardV2} />
-
           <Route exact path="/login" component={Login} />
 
 

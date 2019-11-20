@@ -8,7 +8,7 @@ function MainContainer() {
   return (
     <div>
         <SideNav>
-            <Home/>
+          <Home />
         </SideNav>
     </div>
   );

@@ -35,7 +35,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
 // import { borderRadius } from '@material-ui/system';
-import Login from './forms/Login';
 
 
 const drawerWidth = 240;
@@ -126,9 +125,7 @@ class SideNav extends React.Component {
     userMenuRef = null;
 
     menuList = [
-        // <Route exact path="/login" component={Login} />
-
-        <HomeOutlinedIcon path="/login" component={Login} />,
+        <HomeOutlinedIcon />,
         <ExploreOutlinedIcon />,
         <NotificationsNoneOutlinedIcon />,
         <WbIncandescentOutlinedIcon />,
