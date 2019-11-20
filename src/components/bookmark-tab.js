@@ -55,8 +55,8 @@ class BookmarkTabs extends React.Component {
           <Tab label="Events" />
         </Tabs>
         {value == 0 && <TabContainer><Posts /></TabContainer>}
-        {value == 1 && <TabContainer>hello1</TabContainer>}
-        {value == 2 && <TabContainer>hello2</TabContainer>}
+        {value == 1 && <TabContainer><Posts /></TabContainer>}
+        {value == 2 && <TabContainer><Posts /></TabContainer>}
       </div>
     );
   }
