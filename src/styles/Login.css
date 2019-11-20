@@ -26,6 +26,11 @@
       }
       
       #title{
-        color: darkgreen;
+        color:#33a24d;
+      }
+
+      .btn-primary {
+          background: #33a24d;
+          border: 0px;
       }
   }

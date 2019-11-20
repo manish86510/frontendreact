@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
@@ -24,6 +24,14 @@ const theme = createMuiTheme({
 console.log(theme);
 
 function App() {
+
+  const [authTokens, setAuthTokens] = useState();
+  
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  }
+
   return (
     <div>
         <MuiThemeProvider theme={theme}>

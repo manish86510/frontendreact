@@ -11,7 +11,7 @@ export default function Login(props) {
   const [isError, setIsError] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //const { setAuthTokens } = useAuth();
+  const { setAuthTokens } = useAuth;
 
   function postLogin() {
     axios.post("https://energeapi.do.viewyoursite.net/api/token/", {
@@ -19,7 +19,7 @@ export default function Login(props) {
       password
     }).then(result => {
       if (result.status === 200) {
-        //setAuthTokens(result.data);
+        setAuthTokens(result.data);
         setLoggedIn(true);
       } else {                
         setIsError(true);
@@ -44,7 +44,7 @@ export default function Login(props) {
   return (
     <div className="Login">
         <h4 align="center">Login in to</h4>
-        <h4 align="center">Energe</h4>
+        <h4 align="center" id="title">Energe</h4>
         <center>
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="username" bsSize="large" className="padb10">
@@ -64,12 +64,12 @@ export default function Login(props) {
             type="password"
           />
         </FormGroup>
-        <p>Forgot your password? Reset!</p>
-        <Button block bsSize="large" type="submit">
+        <p className="padb10"><a href="/forgetpass">Forgot your password? Reset!</a></p>
+        <Button onClick={postLogin} block bsSize="large" type="submit" className="padb10">
           Log in
         </Button>
       </form>
-      <p>Don't have an account? Sign up!</p>
+      <p><a href="/register">Don't have an account? Sign up!</a></p>
       </center>
     </div>
   );

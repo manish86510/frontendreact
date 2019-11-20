@@ -57,11 +57,11 @@ export default function Register(props) {
             type="password"
           />
         </FormGroup>
-        <Button block bsSize="large" type="submit">
+        <Button block bsSize="large" type="submit" className="padb10">
           Sign up
         </Button>
       </form>
-      <p>Already have an account? Log in!</p>
+      <p><a href="/login">Already have an account? Log in!</a></p>
       </center>
     </div>
   );
