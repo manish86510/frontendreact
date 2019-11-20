@@ -32,8 +32,8 @@ import '../styles/side-nav.css'
 import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 // import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
 // import { borderRadius } from '@material-ui/system';
 
 
