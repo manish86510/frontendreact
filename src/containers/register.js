@@ -6,6 +6,7 @@ export default function Register(props) {
     const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm_password, setcPassword] = useState("");
 
   function validateForm() {
     return username.length > 0 && password.length > 0;
@@ -17,9 +18,11 @@ export default function Register(props) {
 
   return (
     <div className="Register">
-        <p align="center">Register</p>
+        <h4 align="center">Sign Up for</h4>
+        <h4 align="center" id="title">Energe</h4>
+        <center>
       <form onSubmit={handleSubmit}>
-        <FormGroup controlId="username" bsSize="large">
+        <FormGroup controlId="username" bsSize="large" className="padb10">
           <FormControl
             autoFocus
             type="text"
@@ -29,7 +32,7 @@ export default function Register(props) {
             onChange={e => setUsername(e.target.value)}
           />
         </FormGroup>
-        <FormGroup controlId="email" bsSize="large">
+        <FormGroup controlId="email" bsSize="large" className="padb10">
           <FormControl
             autoFocus
             type="email"
@@ -38,19 +41,28 @@ export default function Register(props) {
             onChange={e => setEmail(e.target.value)}
           />
         </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
+        <FormGroup controlId="password" bsSize="large" className="padb10">
           <FormControl
-            hint="Password"
             placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
           />
         </FormGroup>
+        <FormGroup controlId="cpassword" bsSize="large" className="padb10">
+          <FormControl
+            placeholder="Confirm Password"
+            value={confirm_password}
+            onChange={e => setcPassword(e.target.value)}
+            type="password"
+          />
+        </FormGroup>
         <Button block bsSize="large" type="submit">
-          Register
+          Sign up
         </Button>
       </form>
+      <p>Already have an account? Log in!</p>
+      </center>
     </div>
   );
 }
