@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import '../styles/Login.css'
 
-export default function Login(props) {
+export default function ForgotPassword(props) {
+    const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm_password, setcPassword] = useState("");
 
   function validateForm() {
     return username.length > 0 && password.length > 0;
@@ -15,34 +17,44 @@ export default function Login(props) {
   }
 
   return (
-    <div className="Login">
-        <h4 align="center">Login in to</h4>
-        <h4 align="center">Energe</h4>
+    <div className="Register">
+        <h4 align="center">Reset Your Password</h4>
         <center>
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="username" bsSize="large" className="padb10">
           <FormControl
             autoFocus
             type="text"
-            placeholder="username"
+            placeholder="username/email"
             value={username}
             onChange={e => setUsername(e.target.value)}
           />
         </FormGroup>
+        <Button block bsSize="large" type="submit" className="padb10">
+          Reset Password
+        </Button>
+      </form>
+      <form onSubmit={handleSubmit}>
         <FormGroup controlId="password" bsSize="large" className="padb10">
           <FormControl
+            placeholder="New Password"
             value={password}
-            placeholder="password"
             onChange={e => setPassword(e.target.value)}
             type="password"
           />
         </FormGroup>
-        <p>Forgot your password? Reset!</p>
+        <FormGroup controlId="cpassword" bsSize="large" className="padb10">
+          <FormControl
+            placeholder="Confirm PasswoSet New Password"
+            value={confirm_password}
+            onChange={e => setcPassword(e.target.value)}
+            type="password"
+          />
+        </FormGroup>
         <Button block bsSize="large" type="submit">
-          Log in
+          Set Password
         </Button>
       </form>
-      <p>Don't have an account? Sign up!</p>
       </center>
     </div>
   );
