@@ -29,7 +29,14 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PropTypes } from 'prop-types';
 import '../styles/side-nav.css'
-import { Button, Avatar, Grow } from '@material-ui/core';
+import { Button, Avatar, Grow, Divider } from '@material-ui/core';
+// import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
+// import { borderRadius } from '@material-ui/system';
+import Login from './forms/Login';
+
 
 const drawerWidth = 240;
 
@@ -38,11 +45,11 @@ const styles = theme => ({
     root: {
         display: 'flex',
     },
-    title:{
+    title: {
         flexGrow: 1,
     },
-    pageTitle:{
-        borderBottom: '2px solid '+theme.palette.primary.main,
+    pageTitle: {
+        borderBottom: '2px solid ' + theme.palette.primary.main,
         padding: '2px 10px',
         display: 'inline-block',
         marginRight: 20
@@ -105,23 +112,29 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+
 });
+
+
 
 class SideNav extends React.Component {
     state = {
         open: false,
-        userMenuOpen: false
+        userMenuOpen: false,
+        rightSidebarOpen: false
     };
     userMenuRef = null;
 
-    menuList=[
-        <HomeOutlinedIcon/>,
-        <ExploreOutlinedIcon/>,
-        <NotificationsNoneOutlinedIcon/>,
-        <WbIncandescentOutlinedIcon/>,
-        <DateRangeOutlinedIcon/>,
-        <LocalOfferOutlinedIcon/>,
-        <SettingsOutlinedIcon/>
+    menuList = [
+        // <Route exact path="/login" component={Login} />
+
+        <HomeOutlinedIcon path="/login" component={Login} />,
+        <ExploreOutlinedIcon />,
+        <NotificationsNoneOutlinedIcon />,
+        <WbIncandescentOutlinedIcon />,
+        <DateRangeOutlinedIcon />,
+        <LocalOfferOutlinedIcon />,
+        <SettingsOutlinedIcon />
     ];
 
     constructor(props) {
@@ -129,18 +142,27 @@ class SideNav extends React.Component {
     }
 
     handleDrawerOpen = () => {
-        this.setState({open: true});
+        this.setState({ open: true });
     };
 
     handleDrawerClose = () => {
-        this.setState({open: false});
+        this.setState({ open: false });
     };
-    handleUserMenuClose = ()=>{
-        this.setState({userMenuOpen: false});
+    handleUserMenuClose = () => {
+        this.setState({
+            userMenuOpen: false,
+            rightSidebarOpen: true
+        });
     };
-    handleUserMenuToggle = ()=>{
-        this.setState({userMenuOpen: !this.state.userMenuOpen});
+    handleUserMenuToggle = () => {
+        this.setState({ userMenuOpen: !this.state.userMenuOpen });
     };
+
+    handleMenuItems = () => {
+        this.setState({
+            rightSidebarOpen: false
+        });
+    }
 
     render() {
         const { classes, children } = this.props;
@@ -165,49 +187,49 @@ class SideNav extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap className={classes.title}>
-                            <div  className={classes.pageTitle}>
-                                <HomeOutlinedIcon style={{display: 'inline-block', marginBottom: '-5px'}} /> Home
+                            <div className={classes.pageTitle}>
+                                <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> Home
                             </div>
-                            <div style={{display: 'inline-block'}}>
+                            <div style={{ display: 'inline-block' }}>
                                 <IconButton aria-label="search" size="medium">
-                                    <SearchOutlinedIcon/>
-                                </IconButton>   
+                                    <SearchOutlinedIcon />
+                                </IconButton>
                             </div>
                         </Typography>
                         <div>
                             <IconButton aria-label="search" size="medium">
-                                <MailOutlineOutlinedIcon/>
+                                <MailOutlineOutlinedIcon />
                             </IconButton>
                             <IconButton aria-label="search" size="medium">
-                                <MonetizationOnOutlinedIcon/>
+                                <MonetizationOnOutlinedIcon />
                             </IconButton>
-                            <div style={{display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px'}}>
-                                <div style={{fontWeight: 'bold'}}>Suman Kumar</div>
+                            <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
+                                <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
                                 <div>@suman</div>
                             </div>
-                            
+
                             <Button onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
-                                src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                                    src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
                                 </Avatar>
                             </Button>
 
                             <Popper open={this.state.userMenuOpen} role={undefined} transition disablePortal anchorEl={this.refs.userMenuRef}>
-                            {({ TransitionProps, placement }) => (
-                                <Grow
-                                {...TransitionProps}
-                                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
-                                    <Paper>
-                                        <ClickAwayListener onClickAway={this.handleUserMenuClose}>
-                                            <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
-                                                <MenuItem onClick={this.handleUserMenuClose}>Profile</MenuItem>
-                                                <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
-                                                <MenuItem onClick={this.handleUserMenuClose}>Logout</MenuItem>
-                                            </MenuList>
-                                        </ClickAwayListener>
-                                    </Paper>
-                                </Grow>
-                            )}
+                                {({ TransitionProps, placement }) => (
+                                    <Grow
+                                        {...TransitionProps}
+                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
+                                        <Paper>
+                                            <ClickAwayListener onClickAway={this.handleUserMenuClose}>
+                                                <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
+                                                    <MenuItem onClick={this.handleUserMenuClose}>Profile</MenuItem>
+                                                    <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
+                                                    <MenuItem onClick={this.handleUserMenuClose}>Logout</MenuItem>
+                                                </MenuList>
+                                            </ClickAwayListener>
+                                        </Paper>
+                                    </Grow>
+                                )}
                             </Popper>
 
                         </div>
@@ -231,13 +253,13 @@ class SideNav extends React.Component {
                 >
                     <div className={classes.toolbar}>
                         <IconButton onClick={this.handleDrawerClose}>
-                        <ChevronLeftIcon />
+                            <ChevronLeftIcon />
                         </IconButton>
                     </div>
                     <List>
                         {
-                            this.menuList.map((item, index)=>(
-                                <ListItem button key={"menu_item_"+index} className={"menu-item"}>
+                            this.menuList.map((item, index) => (
+                                <ListItem button key={"menu_item_" + index} className={"menu-item"}>
                                     <ListItemIcon>
                                         {item}
                                     </ListItemIcon>
@@ -253,6 +275,67 @@ class SideNav extends React.Component {
                         } */}
                     </List>
                 </Drawer>
+                <Drawer
+                    anchor="right"
+                    open={this.state.rightSidebarOpen}
+                >
+                    {/* <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
+                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                            <MenuItem onClick={this.handleMenuItems} key={text}>{text}</MenuItem>
+                        ))}
+                    </MenuList> */}
+
+                    <List style={{ width: 350 }}>
+                        <ListItem>
+                            <Avatar
+                                src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                            </Avatar>
+
+                            <div style={{ padding: 20 }}>
+                                <div><b>Awosome Project</b></div>
+                                <div>Suman Kumar@suman</div>
+                            </div>
+                            <IconButton color="inherit" aria-label="Close" style={{ float: 'right' }}>
+                                <CloseIcon onClick={this.handleMenuItems} />
+                            </IconButton><br />
+
+                        </ListItem>
+                        <div style={{ paddingLeft: 20 }}>
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                                <FontAwesomeIcon icon={faComment} />
+                            </IconButton>
+                            <span style={{ paddingLeft: 10, fontSize: 12 }}>51</span>
+                            <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
+                                <FontAwesomeIcon icon={faShareAlt} />
+                            </IconButton>
+                            <span style={{ paddingLeft: 10, fontSize: 12 }}>51</span>
+                            <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
+                                <FontAwesomeIcon icon={faTag} />
+                            </IconButton>
+                        </div>
+                        <Divider />
+                    </List>
+                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
+                    </div><br />
+                    <div style={{ textAlign: 'justify', width: 350, padding: [5, 20, 5, 20] }}>
+                        <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faCoins} />
+                        </IconButton>
+                        <span style={{ paddingLeft: 10, fontSize: 12 }}>$250</span>
+                        <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faUsers} />
+                        </IconButton>
+                        <span style={{ paddingLeft: 10, fontSize: 12 }}>10</span>
+                        <br />
+                    </div>
+                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
+                    </div><br />
+                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
+                    </div><br />
+                </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     {children}
@@ -265,6 +348,6 @@ class SideNav extends React.Component {
 
 SideNav.propTypes = {
     children: PropTypes.node.isRequired,
-  };
+};
 
 export default withStyles(styles)(SideNav);
