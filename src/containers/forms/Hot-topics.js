@@ -118,8 +118,8 @@ class PostHotTopics extends React.Component {
                           </Avatar>
 
                           <span style={{ padding: 20 }}>
-                            <div><b>Awosome Project</b></div>
-                            <div style={{ fontSize: 12 }}>@user . 300 followers</div>
+                            <div><b>Interesting facts</b></div>
+                            <div style={{ fontSize: 12 }}>@billy . 5000 followers</div>
                           </span>
 
                         </ListItem>
@@ -179,7 +179,7 @@ class PostHotTopics extends React.Component {
 
                           <span style={{ padding: 20 }}>
                             <div style={{ fontSize: 12 }} >
-                              @user . 300 followers
+                              @billy . 5000 followers
                               {/* <span > */}
 
                               {/* </span> */}
@@ -205,7 +205,7 @@ class PostHotTopics extends React.Component {
 
                           <span style={{ padding: 20 }}>
                             <div style={{ fontSize: 12 }} >
-                              @user . 300 followers
+                              @billy . 5000 followers
                               {/* <span > */}
 
                               {/* </span> */}
@@ -231,7 +231,7 @@ class PostHotTopics extends React.Component {
 
                           <span style={{ padding: 20 }}>
                             <div style={{ fontSize: 12 }} >
-                              @user . 300 followers
+                              @billy . 5000 followers
                               {/* <span > */}
 
                               {/* </span> */}

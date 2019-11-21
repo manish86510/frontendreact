@@ -1,26 +1,73 @@
 import React from 'react';
-import SideNav from '../nav'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { PropTypes } from 'prop-types';
-import { withStyles } from '@material-ui/styles';
+import { withStyles} from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
+import { Button} from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
 import Typography from '@material-ui/core/Typography'
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
+import Switch from '@material-ui/core/Switch';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import TextField from '@material-ui/core/TextField';
+import { green } from '@material-ui/core/colors';
+import {
+  ThemeProvider,
+  createMuiTheme,
+} from '@material-ui/core/styles';
 
 
+
+const AntSwitch = withStyles(theme => ({
+  root: {
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: 'flex',
+  },
+  switchBase: {
+    padding: 2,
+    color: theme.palette.grey[500],
+    '&$checked': {
+      transform: 'translateX(12px)',
+      color: theme.palette.common.white,
+      '& + $track': {
+        opacity: 1,
+        backgroundColor: theme.palette.primary.main,
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  },
+  thumb: {
+    width: 12,
+    height: 12,
+    boxShadow: 'none',
+  },
+  track: {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: theme.palette.common.white,
+  },
+  checked: {},
+}))(Switch);
+
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+  },
+});
 
 
 class EditProfile extends React.Component{
-
     
 
     render() {
+    
+
         const handleDelete = () => {
             console.info('You clicked the delete icon.');
           };
@@ -35,54 +82,78 @@ class EditProfile extends React.Component{
         Done
       </Button>
             <Paper > 
-               <p></p>
-                    {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
-                    <div class="row">
+            <br></br>
+                                                {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
+                                                <div class='row' style={{  padding: 5,  height:95}} >
                     <div class="col-md-6">
                         
-<p>
-
-
-                            
+    
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
-                            src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
                             </img>
-                            Name<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            
-                            <p>Jackie Chan</p>
-                            Username<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            
-                            <p>Jackie Chan</p>
-                            </p>
+
+                            <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
+                            Name
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                            </span>
+                            <p><span style={{ padding: 10, fontSize: 12}}>Jackie Chan</span></p>
+                            <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
+                            Username
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                            </span>
+                            <p><span style={{ padding: 10, fontSize: 12}}>@Jackie Chan</span></p>
                             </div>
                             <div class="col-md-6">
-                            <Typography>
-                            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
+                           <Typography component="div" style={{position: 'absolute', right: 15}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>Private Profile</Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
                                 />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                Private Profile
-                                </label>
-                                </div>
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                            </div>
+                            </div>
 
-                            </Typography>    
+                            <div class='row' style={{ height: 35, padding: 20, fontSize: 12 }} >
+                            Change Profile Photo
+                            <IconButton size='small' color="inherit" aria-label="Close" style={{ color: 'grey' }}>
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
                             </div>
+
+                            <div class='row' style={{ height: 45 }} >
+                            <span style={{ padding: 20, fontSize: 12, color: 'grey' }}>
+                            Bio
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                            </span>
                             </div>
-                            Change Profile Photo<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            <p></p>
-                            Bio<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                             
-                            <p>Programmer,designer,father,husband
-                            </p>
+                            <div class='row' style={{ position: 'absolute', left: 100 }}>
+                            <span style={{ fontSize: 10 }}>Programmer, Designer, Father, Husband</span>
+                            </div>
+                            <br></br>
+                            <br></br>
                             <hr></hr>
-                            <p>
+
+                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            <span style={{ padding: 10, fontSize: 12}}>
                             Interests
-                            </p>
-                            <p>
+                            </span>
+                            </div>
+                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
         label="Interests"
@@ -104,11 +175,19 @@ class EditProfile extends React.Component{
         label="Interests"
         onDelete={handleDelete}
       />
-                            </p>
-                            <p>
+      
+      <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}}/>
+      </Fab>
+                            </div>
+
+                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            <span style={{ padding: 10, fontSize: 12}}>
                             Skills
-                            </p>
-                            <p>
+                            </span>
+                            </div>
+                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
         label="Skills"
@@ -131,12 +210,17 @@ class EditProfile extends React.Component{
   label="Skills"
   onDelete={handleDelete}
 />
-
-                            </p>
-  <p>
-      Languages
-  </p>
-  <p>
+<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}}/>
+      </Fab>
+</div>
+<div class='row' style={{ position: 'relative', left: 30 }}>
+<span style={{ padding: 10, fontSize: 12}}>
+  Languages
+</span>
+</div>
+ 
+<div class='row' style={{ position: 'relative', left: 30 }}>
   <Chip
   // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
   label="Languages"
@@ -151,116 +235,244 @@ class EditProfile extends React.Component{
   label="Languages"
   onDelete={handleDelete}
 />
-
-  </p>
-  <p>
-            Level
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                Professional
-                                </label>
-                                </div>
-            <p></p>
-            Degree
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                Bachelour of communications
-                                </label>
-                                </div>
-            <p></p>
-            url
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                www.jackiechan.com
-                                </label>
-                                </div>
-                                <p></p>
-            Linkedin
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                www.linkedin.com
-                                </label>
-                                </div>
-            <p></p>
-            Expertise level
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                Advanced
-                                </label>
-                                </div>
-            <p></p>
-            Expertise level<p></p>
-            Phone Number
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                9876541230
-                                </label>
-                                </div>
-            <p></p>
-            E-mail
-            <div className='custom-control custom-switch' style={{float : 'right'}}>
-                                <input
-                                type='checkbox'
-                                className='custom-control-input'
-                                id='customSwitchesChecked'
-                                defaultChecked
-                                />
-                                <label  className='custom-control-label' htmlFor='customSwitchesChecked'>
-                                aascc@123.com
-                                </label>
-                                </div>
-
-                                {/* <TextField
-    id="filled-secondary"
-    label="Filled secondary"
-    variant="filled"
-    color="secondary"
-  /> */}
-            
-            <p></p>
-            Badge Level <i class="fas fa-medal"></i>
+<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}}/>
+      </Fab>
+</div>
 
 <p></p>
-            Coins Level<p></p>
+<div class='row' style={{ position: 'relative', left: 30 }}>
+{/* <Grid container spacing={3}> */}
+          <Grid item xs={6}>
+          
+        <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                                 Level
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                            <br></br>
+                            </span>
+                            <Typography component="div" style={{ padding: 10}}>
+    <Grid component="label" container alignItems="center" spacing={1}>
+    <Grid item>Professional</Grid>
+    <Grid item>
+    <AntSwitch
+    // checked={state.checkedC}
+    // onChange={handleChange('checkedC')}
+    value="checkedC"
+    />
+    </Grid>
+<Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                            </Grid>
+                            <Grid item xs={6}>
 
-  </p>
+                            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+                            
+                            Linkedin
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                                            <FontAwesomeIcon icon={faEdit} />
+                                            </IconButton>
+                            </span>
 
+                            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>www.linkedin.com</Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+
+                            
+                            </Grid>
+
+          </div>
+           <div class='row' style={{ position: 'relative', left: 30 }}>
+           <Grid item xs={6}>
+
+           <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+                            
+            Degree
+            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+            </span>
+            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>Bachelour of communications</Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+</Grid>
+                            <Grid item xs={6}>
+                            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+                            Url
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                          <FontAwesomeIcon icon={faEdit} />
+                          </IconButton>
+                            </span>
+                            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>www.jackiechan.com</Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                              </Grid>
+
+            </div>
+            
+         <div class='row' style={{ position: 'relative', left: 30 }}>
+         <Grid item xs={12}>
+
+         <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+            Expertise level
+            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+            </span>
+
+<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}}/>
+      </Fab>
+            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>Advanced <CheckCircleOutlineIcon style={{color: 'green'}} /> </Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                            
+                            </Grid>
+            </div>
+                                <div class='row' style={{ position: 'relative', left: 30 }}>
+                                <Grid item xs={12}>
+                                  
+
+
+                                <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                                     Expertise level
+                              <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                            
+                            </span>
+
+<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}} />
+      </Fab>
+                            <Typography component="div" style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+
+                            Upload Qualifications
+                            
+                            </Typography>
+
+      </Grid>
+                            </div>
+            <div class='row' style={{ position: 'relative', left: 30 }}> 
+            <Grid item xs={12}>
+
+            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+            Phone Number
+            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+            </span>
+            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>9876543210</Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                            </Grid>
+            </div>
+            <div class='row' style={{ position: 'relative', left: 30 }}>
+            <Grid item xs={12}>
+
+            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+            E-mail
+            </span>
+            <Typography component="div" style={{ padding: 10}}>
+                            <Grid component="label" container alignItems="center" spacing={1}>
+                              <Grid item>
+                                <ThemeProvider theme={theme}>
+                            <TextField
+                              height='24px'
+                              // className={classes.margin}
+                              label="abc@123.com"
+                              variant="outlined"
+                              id="mui-theme-provider-outlined-input"
+                            />
+                          </ThemeProvider>
+                                
+                                </Grid>
+                              <Grid item>
+                                <AntSwitch
+                                  // checked={state.checkedC}
+                                  // onChange={handleChange('checkedC')}
+                                  value="checkedC"
+                                />
+                              </Grid>
+                              <Grid item></Grid>
+                            </Grid>
+                            </Typography> 
+                            </Grid>
+            </div>
+                  
+            <div class='row' style={{ position: 'relative', left: 30 }}>
+            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+                              Badge Level <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faMedal} />
+                            </IconButton>
+                            </span>
+
+</div>
+                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
+                            
+                                        Coins Level
+                            </span>
+                                        </div>
+                                        
 
                 </Paper>   
             </Grid>
