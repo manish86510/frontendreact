@@ -11,6 +11,8 @@ import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
 import postsTab from './components/posts-tab';
 import Home from './containers/home';
+import SideNav from './containers/nav';
+import PostTab from './components/posts-tab'
 
 const theme = createMuiTheme({
   palette: {
@@ -37,11 +39,14 @@ function App() {
         <MuiThemeProvider theme={theme}>
         <Router>
           <div>
-            <Route path="/login" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/forgetpass" component={ForgotPassword} />
+
+         <SideNav>
             <Route path="/home" component={Home} />
             <Route path="/bookmark" component={postsTab}/>
-            <Route path="/register" component={Register} />
-            <Route path="/forgetpass" component={ForgotPassword} />
+          </SideNav>
           </div>
         </Router>
         </MuiThemeProvider>
