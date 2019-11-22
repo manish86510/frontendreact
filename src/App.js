@@ -11,7 +11,8 @@ import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
 import Profile from './containers/forms/Profile'
 import Wallet from './containers/wallet/wallet'
-
+import WalletCoins from './containers/wallet/coins/WalletCoins'
+import MoreCoins from './containers/wallet/coins/MoreCoins'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -37,8 +38,11 @@ function App() {
             <Route path="/home" component={MainContainer} />
             <Route path="/register" component={Register} />
             <Route path="/forgetpass" component={ForgotPassword} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/wallet" component={Wallet} />
+            <Route path="/profile" component={Profile} /> #abhishek
+            <Route path="/wallet" component={Wallet} /> #abhishek
+            <Route path="/walletcoins" component={WalletCoins} /> #abhishek
+            <Route path="/morecoins" component={MoreCoins} /> #abhishek
+
             
           </div>
 

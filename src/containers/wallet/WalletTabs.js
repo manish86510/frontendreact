@@ -32,7 +32,7 @@ const StyledTabs = withStyles({
   const StyledTab = withStyles(theme => ({
     root: {
       textTransform: 'none',
-      color: 'green',
+      color: '#6fc1a5',
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: theme.typography.pxToRem(15),
       marginRight: theme.spacing(1),
@@ -42,21 +42,6 @@ const StyledTabs = withStyles({
     },
   }))(props => <Tab disableRipple {...props} />);
   
-
-//   const useStyles = makeStyles(theme => ({
-//     root: {
-//       flexGrow: 1,
-//       overflow: 'hidden',
-//       padding: theme.spacing(0, 3),
-//     },
-//     paper: {
-//       maxWidth: 400,
-//       margin: `${theme.spacing(1)}px auto`,
-//       padding: theme.spacing(2),
-//     },
-//   }));
-//   const classes = useStyles();
-
 
 
 class WalletInfo extends React.Component{
@@ -84,7 +69,7 @@ class WalletInfo extends React.Component{
 
       
       <svg height="180" width="180">
-      <circle cx="80" cy="80" r="60" stroke="green" stroke-width="1" fill="white" />
+      <circle cx="80" cy="80" r="60" stroke="#6fc1a5" stroke-width="1" fill="white" />
       <text x="45%" y="45%" text-anchor="middle" stroke="grey"  dy=".3em">100</text>
       </svg> 
       </Grid>
@@ -104,7 +89,7 @@ class WalletInfo extends React.Component{
                 </ListItem>
                 <ListItem>
 
-                <Button style={{borderRadius: '25px', width:'160px'}} variant="contained" color="primary" >
+                <Button style={{borderRadius: '25px', width:'160px', backgroundColor:'#6fc1a5'}} variant="contained" color="primary" >
                     Buy More
                 </Button>
                 </ListItem>
