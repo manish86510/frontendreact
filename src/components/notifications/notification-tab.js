@@ -5,8 +5,8 @@ import Tab from '@material-ui/core/Tab';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import Notifications from './../../containers/Notifications';
-import Feed from '../feed/feed';
+import Circle from './circle';
+import You from './you'
 
 function TabContainer(props) {
   return (
@@ -54,8 +54,8 @@ class NotificationTab extends React.Component {
           <Tab label="Your Circle" />
           <Tab label="You" />
         </Tabs>
-        {value == 0 && <TabContainer><Feed/></TabContainer>}
-        {value == 1 && <TabContainer></TabContainer>}
+        {value == 0 && <TabContainer><Circle /></TabContainer>}
+        {value == 1 && <TabContainer><You /></TabContainer>}
       </div>
     );
   }

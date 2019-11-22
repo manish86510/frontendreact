@@ -34,8 +34,9 @@ import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
-// import { borderRadius } from '@material-ui/system';
 import { withRouter } from 'react-router-dom';
+// import { borderRadius } from '@material-ui/system';
+// import { withRouter } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -140,6 +141,11 @@ class SideNav extends React.Component {
         super(props);
     }
 
+    nav = () => {
+        this.props.history.push({
+            pathname: '/home',
+        });
+    }
     handleDrawerOpen = () => {
         this.setState({ open: true });
     };
@@ -171,6 +177,9 @@ class SideNav extends React.Component {
     }
     nav_notification = () => {
         this.props.history.push({ pathname: "/notifications" })
+    }
+    nav_collaborate = () => {
+        this.props.history.push({ pathname: "/collaborate" })
     }
     handlelistSelected=()=>{
 
@@ -315,7 +324,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.nav_collaborate}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <WbIncandescentOutlinedIcon />

@@ -9,13 +9,13 @@ import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
-import postsTab from './components/posts-tab';
 import Home from './containers/home';
 import SideNav from './containers/nav';
-import PostTab from './components/posts-tab';
 import Profile from './containers/forms/Profile';
 import EditProfile from './containers/forms/EditProfile';
 import Notifications from './containers/Notifications';
+import Bookmark from './components/bookmark';
+import CollaboarateMain from './containers/collaborate_main';
 
 const theme = createMuiTheme({
   palette: {
@@ -49,11 +49,12 @@ function App() {
 
          <SideNav>
             <Route path="/home" component={Home} />
-            <Route path="/bookmark" component={postsTab}/>
+            <Route path="/bookmark" component={Bookmark}/>
             <Route path="/notifications" component={Notifications}/>
             <Route path="/profile" component={Profile}/>
             <Route path="/edit-profile" component={EditProfile}/>
-          </SideNav>
+            <Route path="/collaborate" component={CollaboarateMain}/>
+         </SideNav>
 
           </div>
 
