@@ -37,6 +37,7 @@ import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/fre
 // import { borderRadius } from '@material-ui/system';
 import { withRouter } from 'react-router-dom';
 
+
 const drawerWidth = 240;
 
 
@@ -114,6 +115,8 @@ const styles = theme => ({
 
 });
 
+
+
 class SideNav extends React.Component {
     state = {
         open: false,
@@ -165,6 +168,9 @@ class SideNav extends React.Component {
     }
     nav_bookmark = () => {
         this.props.history.push({ pathname: "/bookmark" })
+    }
+    nav_notification = () => {
+        this.props.history.push({ pathname: "/notifications" })
     }
     handlelistSelected=()=>{
 
@@ -302,7 +308,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.nav_notification}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <NotificationsNoneOutlinedIcon />
