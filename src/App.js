@@ -10,6 +10,8 @@ import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
 import Profile from './containers/forms/Profile'
+import Wallet from './containers/wallet/wallet'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -36,6 +38,7 @@ function App() {
             <Route path="/register" component={Register} />
             <Route path="/forgetpass" component={ForgotPassword} />
             <Route path="/profile" component={Profile} />
+            <Route path="/wallet" component={Wallet} />
             
           </div>
 
