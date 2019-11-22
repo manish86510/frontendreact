@@ -34,6 +34,7 @@ import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { withRouter } from 'react-router-dom';
 // import { borderRadius } from '@material-ui/system';
 
 const drawerWidth = 240;
@@ -121,6 +122,7 @@ class SideNav extends React.Component {
     };
     userMenuRef = null;
 
+
     menuList = [
         <HomeOutlinedIcon />,
         <ExploreOutlinedIcon />,
@@ -135,6 +137,11 @@ class SideNav extends React.Component {
         super(props);
     }
 
+    nav = () => {
+        this.props.history.push({
+            pathname: '/home',
+        });
+    }
     handleDrawerOpen = () => {
         this.setState({ open: true });
     };
@@ -253,7 +260,7 @@ class SideNav extends React.Component {
                     <List>
                         {
                             this.menuList.map((item, index) => (
-                                <ListItem button key={"menu_item_" + index} className={"menu-item"}>
+                                <ListItem button key={"menu_item_" + index} onClick={this.nav} className={"menu-item"}>
                                     <ListItemIcon>
                                         {item}
                                     </ListItemIcon>
@@ -344,4 +351,4 @@ SideNav.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(SideNav);
+export default withRouter(withStyles(styles)(SideNav));

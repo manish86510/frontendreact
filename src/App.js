@@ -9,7 +9,7 @@ import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
-import postsTab from './components/posts-tab';
+import bookmark from './components/bookmark';
 import Home from './containers/home';
 
 const theme = createMuiTheme({
@@ -29,9 +29,10 @@ function App() {
         <MuiThemeProvider theme={theme}>
         <Router>
           <div>
+            <Route path="" component={MainContainer}/>
             <Route path="/login" component={Login} />
             <Route path="/home" component={Home} />
-            <Route path="/bookmark" component={postsTab}/>
+            <Route path="/bookmark" component={bookmark}/>
             <Route path="/register" component={Register} />
             <Route path="/forgetpass" component={ForgotPassword} />
           </div>

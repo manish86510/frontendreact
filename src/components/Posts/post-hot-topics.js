@@ -24,7 +24,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = theme => ({
   autoplay: {
-    maxWidth: "100%",
+    maxWidth: "99%",
     flexGrow: 1,
   },
   header: {
@@ -35,9 +35,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    height: 255,
+    height: 250,
     display: 'block',
-    maxWidth: "100%",
+    maxWidth: "99%",
     overflow: 'hidden',
     width: '100%',
   },
@@ -93,7 +93,7 @@ class PostHotTopics extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            {/* <Paper className={classes.paper}> */}
               <Accordion defaultActiveKey="0">
                 <Card>
                   <Card.Header>
@@ -246,43 +246,13 @@ class PostHotTopics extends React.Component {
                             onClick={this.handleClick}
                             onDelete={this.handleDelete}
                           />
-
                         </ListItem>
                       </Paper>
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
               </Accordion>
-              {/* <Accordion defaultActiveKey="0">
-                <Card>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    
-                    <div style={{ float:"right" }}>
-                      <IconButton>
-                        <FontAwesomeIcon size="1x" icon={faRedoAlt}/>
-                      </IconButton>
-                      <IconButton>
-                        <FontAwesomeIcon size="1x" icon={faAngleDown}/>
-                      </IconButton>
-                    </div>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>Hello! I'm the body</Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-
-              <Accordion defaultActiveKey="0">
-                <Card>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    Click me!
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>Hello! I'm the body</Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion> */}
-            </Paper>
+            {/* </Paper> */}
           </Grid>
         </Grid>
       </div>

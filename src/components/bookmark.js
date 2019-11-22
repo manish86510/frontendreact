@@ -15,7 +15,7 @@ const styles = theme => ({
     },
 });
 
-class PostTab extends React.Component {
+class Bookmark extends React.Component {
     constructor(props) {
         super(props);
     };
@@ -36,8 +36,8 @@ class PostTab extends React.Component {
         );
     }
 }
-PostTab.propTypes = {
+Bookmark.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(PostTab);
+export default withStyles(styles)(Bookmark);

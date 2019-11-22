@@ -5,18 +5,17 @@ import Feed from '../components/feed/feed';
 import HotTopic from '../components/hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 
-class Home extends React.Component{
-
+class Home extends React.Component {
+    
     render() {
         return (
             <div>
-                <TextArea/>
-                <Grid container direction="row" justify="space-between" alignItems="center" spacing={16}>
-                    <Grid item>
-                        <Feed/>
+                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
+                    <Grid item xs={8}>
+                        <Feed />
                     </Grid>
-                    <Grid item>
-                        <HotTopic/> 
+                    <Grid item xs={4}>
+                        <HotTopic />
                     </Grid>
                 </Grid>
             </div>
