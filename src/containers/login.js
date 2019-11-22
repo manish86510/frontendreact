@@ -4,7 +4,7 @@ import '../styles/Login.css'
 import axios from 'axios';
 import { useAuth } from "../context/auth";
 import { Link, Redirect } from "react-router-dom";
-import '../../node_modules/font-awesome/css/font-awesome.min.css'; 
+import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 
 
@@ -34,7 +34,7 @@ export default function Login(props) {
   }
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to="/home" />;
   }
 
   function validateForm() {
@@ -50,6 +50,7 @@ export default function Login(props) {
     <div className="Login">
         <h4 align="center">Login in to</h4>
         <h4 align="center" id="title">Energe</h4>
+        <p><span className="fas fa-search"></span></p>
         <center>
       <form onSubmit={handleSubmit} method="post">
         <FormGroup controlId="username" bsSize="large" className="padb10">
@@ -60,9 +61,6 @@ export default function Login(props) {
             value={username}
             onChange={e => setUsername(e.target.value)}
           />
-          <div className="search-icon">
-            <i className="fas fa-search" />
-          </div>
         </FormGroup>
         <FormGroup controlId="password" bsSize="large" className="padb10">
           <FormControl
@@ -72,7 +70,9 @@ export default function Login(props) {
             type="password"
           />
         </FormGroup>
+
         <p className="padb10"><a href="/forgetpass">Forgot your password? Reset!</a></p>
+
         <Button block bsSize="large" type="submit" className="padb10">
           Log in
         </Button>
