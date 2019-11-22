@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
@@ -11,6 +11,8 @@ import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
 import bookmark from './components/bookmark';
 import Home from './containers/home';
+import SideNav from './containers/nav';
+// import bookmark from './components/bookmark'
 
 const theme = createMuiTheme({
   palette: {
@@ -24,17 +26,27 @@ const theme = createMuiTheme({
 console.log(theme);
 
 function App() {
+
+  const [authTokens, setAuthTokens] = useState();
+  
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  }
+
   return (
     <div>
         <MuiThemeProvider theme={theme}>
         <Router>
           <div>
-            <Route path="" component={MainContainer}/>
-            <Route path="/login" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/forgetpass" component={ForgotPassword} />
+
+         <SideNav>
             <Route path="/home" component={Home} />
             <Route path="/bookmark" component={bookmark}/>
-            <Route path="/register" component={Register} />
-            <Route path="/forgetpass" component={ForgotPassword} />
+          </SideNav>
           </div>
         </Router>
         </MuiThemeProvider>
