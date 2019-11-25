@@ -3,8 +3,8 @@ import './App.css';
 import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
 //import './Routes';
-import ReactDOM from 'react-dom'
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
@@ -17,6 +17,10 @@ import Notifications from './containers/Notifications';
 import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
+import Wallet from './containers/wallet/wallet';
+import WalletCoins from './containers/wallet/coins/WalletCoins';
+import MoreCoins from './containers/wallet/coins/MoreCoins';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const theme = createMuiTheme({
   palette: {
@@ -57,12 +61,11 @@ function App() {
             <Route path="/edit-profile" component={EditProfile}/>
             <Route path="/collaborate" component={CollaboarateMain}/>
             <Route path="/events" component={Events}/>
-         </SideNav>
-
+            <Route path="/wallet" component={Wallet} />
+            <Route path="/walletcoins" component={WalletCoins} />
+            <Route path="/morecoins" component={MoreCoins} />
+            </SideNav>
           </div>
-
-
-          
         </Router>
         </MuiThemeProvider>
     </div>

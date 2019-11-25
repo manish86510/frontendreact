@@ -1,18 +1,18 @@
 import React from 'react';
-import SideNav from '../nav'
-import ProfileTabs from './EditProfile'
+import SideNav from '../../nav'
+import SrCoins from '../coins/srcoins'
 import Grid from '@material-ui/core/Grid';
-import HotTopics from './Hot-topics';
+import HotTopics from '../../forms/Hot-topics';
 
 
-class Profile extends React.Component{
+class Wallet extends React.Component{
 
     render() {
         return (
             <SideNav>
                 <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
                     <Grid item xs={8}>
-                        <ProfileTabs />
+                        <SrCoins />
                     </Grid>
                     <Grid item xs={4}>
                     <HotTopics />
@@ -23,4 +23,4 @@ class Profile extends React.Component{
     }
 }
 
-export default Profile;
+export default Wallet;

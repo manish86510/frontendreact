@@ -187,6 +187,9 @@ class SideNav extends React.Component {
     nav_events = () => {
         this.props.history.push({ pathname: "/events" })
     }
+    nav_wallet = () => {
+        this.props.history.push({ pathname: "/wallet" })
+    }
     handlelistSelected=()=>{
 
     }
@@ -228,7 +231,7 @@ class SideNav extends React.Component {
                                 <MailOutlineOutlinedIcon />
                             </IconButton>
                             <IconButton aria-label="search" size="medium">
-                                <MonetizationOnOutlinedIcon />
+                                <MonetizationOnOutlinedIcon onClick={this.nav_wallet}/>
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
