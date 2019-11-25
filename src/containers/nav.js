@@ -181,6 +181,12 @@ class SideNav extends React.Component {
     nav_collaborate = () => {
         this.props.history.push({ pathname: "/collaborate" })
     }
+    nav_profile = () => {
+        this.props.history.push({ pathname: "/profile" })
+    }
+    nav_events = () => {
+        this.props.history.push({ pathname: "/events" })
+    }
     handlelistSelected=()=>{
 
     }
@@ -243,7 +249,7 @@ class SideNav extends React.Component {
                                         <Paper>
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
-                                                    <MenuItem onClick={this.handleUserMenuClose}>Profile</MenuItem>
+                                                    <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
                                                     <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
                                                     <MenuItem onClick={this.handleUserMenuClose}>Logout</MenuItem>
                                                 </MenuList>
@@ -331,7 +337,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.nav_events}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <DateRangeOutlinedIcon />

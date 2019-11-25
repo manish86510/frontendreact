@@ -16,6 +16,7 @@ import EditProfile from './containers/forms/EditProfile';
 import Notifications from './containers/Notifications';
 import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
+import Events from './containers/Events';
 
 const theme = createMuiTheme({
   palette: {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/profile" component={Profile}/>
             <Route path="/edit-profile" component={EditProfile}/>
             <Route path="/collaborate" component={CollaboarateMain}/>
+            <Route path="/events" component={Events}/>
          </SideNav>
 
           </div>
