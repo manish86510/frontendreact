@@ -172,8 +172,8 @@ class SideNav extends React.Component {
     nav_bookmark = () => {
         this.props.history.push({ pathname: "/bookmark" })
     }
-    handlelistSelected=()=>{
-
+    handleMessageNav=()=>{
+        this.props.history.push({ pathname: "/message" })
     }
 
     render() {
@@ -291,7 +291,7 @@ class SideNav extends React.Component {
                     <List>
                         <ListItem
                             button
-                            selected
+                            selected={true}
                             onClick={this.mynav}
                             className={"menu-item"}
                         >
@@ -308,7 +308,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.handleMessageNav}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <NotificationsNoneOutlinedIcon />

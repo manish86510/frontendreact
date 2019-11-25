@@ -12,7 +12,7 @@ import ForgotPassword from './containers/forgot_password'
 import bookmark from './components/bookmark';
 import Home from './containers/home';
 import SideNav from './containers/nav';
-// import bookmark from './components/bookmark'
+import Message from './components/message';
 
 const theme = createMuiTheme({
   palette: {
@@ -46,6 +46,7 @@ function App() {
          <SideNav>
             <Route path="/home" component={Home} />
             <Route path="/bookmark" component={bookmark}/>
+            <Route path="/message" component={Message}/>
           </SideNav>
           </div>
         </Router>
