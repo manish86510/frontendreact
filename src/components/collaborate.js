@@ -16,7 +16,7 @@ const styles = theme => ({
   },
 });
 
-class Posts extends React.Component {
+class Collaborate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,8 +142,8 @@ class Posts extends React.Component {
   }
 }
 
-Posts.propTypes = {
+Collaborate.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(Posts);
+export default withStyles(styles)(Collaborate);

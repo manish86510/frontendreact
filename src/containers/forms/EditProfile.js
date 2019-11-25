@@ -89,7 +89,7 @@ class EditProfile extends React.Component{
                         
     
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
-                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt="alt">
                             </img>
 
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>

@@ -34,7 +34,9 @@ import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { withRouter } from 'react-router-dom';
 // import { borderRadius } from '@material-ui/system';
+// import { withRouter } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -120,24 +122,30 @@ class SideNav extends React.Component {
     state = {
         open: false,
         userMenuOpen: false,
-        rightSidebarOpen: false
+        rightSidebarOpen: false,
+        sideList:''
     };
     userMenuRef = null;
 
-    menuList = [
-        <HomeOutlinedIcon />,
-        <ExploreOutlinedIcon />,
-        <NotificationsNoneOutlinedIcon />,
-        <WbIncandescentOutlinedIcon />,
-        <DateRangeOutlinedIcon />,
-        <LocalOfferOutlinedIcon />,
-        <SettingsOutlinedIcon />
-    ];
+    // menuList = [
+    //     <HomeOutlinedIcon />,
+    //     <ExploreOutlinedIcon />,
+    //     <NotificationsNoneOutlinedIcon />,
+    //     <WbIncandescentOutlinedIcon />,
+    //     <DateRangeOutlinedIcon />,
+    //     <LocalOfferOutlinedIcon />,
+    //     <SettingsOutlinedIcon />
+    // ];
 
     constructor(props) {
         super(props);
     }
 
+    nav = () => {
+        this.props.history.push({
+            pathname: '/home',
+        });
+    }
     handleDrawerOpen = () => {
         this.setState({ open: true });
     };
@@ -159,6 +167,22 @@ class SideNav extends React.Component {
         this.setState({
             rightSidebarOpen: false
         });
+    }
+
+    mynav = () => {
+        this.props.history.push({ pathname: "/home" })
+    }
+    nav_bookmark = () => {
+        this.props.history.push({ pathname: "/bookmark" })
+    }
+    nav_notification = () => {
+        this.props.history.push({ pathname: "/notifications" })
+    }
+    nav_collaborate = () => {
+        this.props.history.push({ pathname: "/collaborate" })
+    }
+    handlelistSelected=()=>{
+
     }
 
     render() {
@@ -253,23 +277,80 @@ class SideNav extends React.Component {
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
-                    <List>
+                    {/* <List>
                         {
                             this.menuList.map((item, index) => (
-                                <ListItem button key={"menu_item_" + index} className={"menu-item"}>
+                                <ListItem button key={"menu_item_" + index}
+                                onClick={this.mynav}
+                                className={"menu-item"}>
                                     <ListItemIcon>
                                         {item}
                                     </ListItemIcon>
                                 </ListItem>
                             ))
                         }
-                        {/* {
+                        {
                             ['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                             <ListItem button key={text} className={"menu-item"}>
                                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                             </ListItem>
                         ))
-                        } */}
+                        }
+                    </List> */}
+                    <List>
+                        <ListItem
+                            button
+                            selected
+                            onClick={this.mynav}
+                            className={"menu-item"}
+                        >
+                            <ListItemIcon>
+                                <HomeOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+
+                        <ListItem button
+                            onClick={this.nav_bookmark}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <ExploreOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+                        <ListItem button
+                            onClick={this.nav_notification}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <NotificationsNoneOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+                        <ListItem button
+                            onClick={this.nav_collaborate}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <WbIncandescentOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+                        <ListItem button
+                            onClick={this.nav_bookmark}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <DateRangeOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+                        <ListItem button
+                            onClick={this.nav_bookmark}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <LocalOfferOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
+                        <ListItem button
+                            onClick={this.nav_bookmark}
+                            className={"menu-item"}>
+                            <ListItemIcon>
+                                <SettingsOutlinedIcon />
+                            </ListItemIcon>
+                        </ListItem>
                     </List>
                 </Drawer>
                 <Drawer
@@ -347,4 +428,4 @@ SideNav.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(SideNav);
+export default withRouter(withStyles(styles)(SideNav));
