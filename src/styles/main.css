@@ -24,3 +24,25 @@ textarea.post-text-area {
     resize: none;
     padding: 15px 10px 10px 75px;
 }
+.mybtn {
+    border-radius: 10px;
+    border: 0px;
+    padding: 0px 15px;
+    margin: 0px 4px;
+    background: #e0e0e0;
+}
+.eventBtn {
+    border-radius: 15px;
+    border: 0px;
+    padding: 4px 15px;
+    margin: 0px 50px;
+    background: #43a048;
+}
+.eventBtnl {
+    width: 100%;
+    border-radius: 15px;
+    border: 0px;
+    padding: 4px 15px;
+    margin: 0px 50px;
+    background: #43a048;
+}
