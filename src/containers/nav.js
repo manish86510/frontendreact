@@ -231,7 +231,7 @@ class SideNav extends React.Component {
                         </Typography>
                         <div>
                             <IconButton aria-label="search" size="medium">
-                                <MailOutlineOutlinedIcon />
+                                <MailOutlineOutlinedIcon onClick={this.handleMessageNav}/>
                             </IconButton>
                             <IconButton aria-label="search" size="medium">
                                 <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
