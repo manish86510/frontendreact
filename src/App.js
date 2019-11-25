@@ -2,17 +2,16 @@ import React from 'react';
 import './App.css';
 import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
-//import './Routes';
 import ReactDOM from 'react-dom'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password'
-import Profile from './containers/forms/Profile'
-import Wallet from './containers/wallet/wallet'
-import WalletCoins from './containers/wallet/coins/WalletCoins'
-import MoreCoins from './containers/wallet/coins/MoreCoins'
+import Profile from './components/profile/profile'
+import Wallet from './components/wallet/wallet'
+import WalletCoins from './components/wallet/coins/WalletCoins'
+import MoreCoins from './components/wallet/coins/MoreCoins'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

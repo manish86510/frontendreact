@@ -16,8 +16,8 @@ import {
 import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
-import HotTopics from '../../forms/Hot-topics';
-import SideNav from '../../nav'
+import HotTopics from '../../../components/profile/Hot-topics';
+import SideNav from '../../../containers/nav'
 
 
 

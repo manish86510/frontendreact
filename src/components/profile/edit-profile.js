@@ -18,6 +18,8 @@ import {
   ThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles';
+import axios from 'axios';
+
 
 
 
@@ -63,11 +65,45 @@ const theme = createMuiTheme({
 
 
 class EditProfile extends React.Component{
-    
 
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        name: '',
+        username: '',
+        bio:'',
+        email:'',
+        skills:'',
+        image:'',  
+      }
+      }
+    }
+
+componentDidMount = () => {
+  this.getUserData();
+}
+getUserData = () => {
+
+  axios.get('https://energeapi.do.viewyoursite.net/', {
+    // headers: {
+    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+    // }
+  }).then(res => {
+    debugger;
+    const user = this.state.user
+    user.name = res.data[5].first_name+' '+res.data[5].last_name 
+    user.username = res.data[5].username
+    user.bio = res.data[5].about
+    user.email = res.data[5].email
+    user.skills = res.data[5].skills
+    user.image = res.data[5].avatar
+    
+    this.setState({ user });
+  });
+}
     render() {
-    
-
         const handleDelete = () => {
             console.info('You clicked the delete icon.');
           };
@@ -75,10 +111,10 @@ class EditProfile extends React.Component{
          <div>
         <Grid container spacing={3}>
           <Grid item xs={11}>
-          <Button  style={{borderRadius: '25px', width:'130px'}} variant="outlined" >
+          <Button variant="outlined" >
             Cancel
             </Button>
-            <Button style={{borderRadius: '25px', float:'right', width:'130px'}} variant="contained" color="primary" >
+            <Button  variant="contained" color="primary" >
         Done
       </Button>
             <Paper > 
@@ -89,7 +125,7 @@ class EditProfile extends React.Component{
                         
     
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
-                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                            src={this.state.user.image}>
                             </img>
 
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
@@ -98,14 +134,14 @@ class EditProfile extends React.Component{
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
-                            <p><span style={{ padding: 10, fontSize: 12}}>Jackie Chan</span></p>
+                            <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span></p>
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Username
                             <IconButton size='small' color="inherit" aria-label="Close">
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
-                            <p><span style={{ padding: 10, fontSize: 12}}>@Jackie Chan</span></p>
+        <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.username}</span></p>
                             </div>
                             <div class="col-md-6">
                            <Typography component="div" style={{position: 'absolute', right: 15}}>
@@ -141,7 +177,7 @@ class EditProfile extends React.Component{
                             </div>
                             
                             <div class='row' style={{ position: 'absolute', left: 100 }}>
-                            <span style={{ fontSize: 10 }}>Programmer, Designer, Father, Husband</span>
+                            <span style={{ fontSize: 10 }}>{this.state.user.bio}</span>
                             </div>
                             <br></br>
                             <br></br>
@@ -190,7 +226,7 @@ class EditProfile extends React.Component{
                             
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Skills"
+        label={this.state.user.skills}
         onDelete={handleDelete}
       />
        <Chip
@@ -437,7 +473,7 @@ class EditProfile extends React.Component{
                             <TextField
                               height='24px'
                               // className={classes.margin}
-                              label="abc@123.com"
+                              label={this.state.user.email}
                               variant="outlined"
                               id="mui-theme-provider-outlined-input"
                             />

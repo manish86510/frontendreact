@@ -47,8 +47,6 @@ const StyledTabs = withStyles({
 class WalletInfo extends React.Component{
 
     render() {
-
-
         return (
             <Grid container spacing={3}>
               <Grid item xs={11}>
