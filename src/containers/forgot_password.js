@@ -45,11 +45,12 @@ export default function ForgotPassword(props) {
         </FormGroup>
         <FormGroup controlId="cpassword" bsSize="large" className="padb10">
           <FormControl
-            placeholder="Confirm PasswoSet New Password"
+            placeholder="Set New Password"
             value={confirm_password}
             onChange={e => setcPassword(e.target.value)}
             type="password"
           />
+          
         </FormGroup>
         <Button block bsSize="large" type="submit">
           Set Password

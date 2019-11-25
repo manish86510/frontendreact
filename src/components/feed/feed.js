@@ -39,7 +39,7 @@ const styles = theme => ({
         position: "relative",
         width: "100%",
         top: -50,
-        borderRadius: 35,
+        borderRadius: 15,
         paddingBottom: 24
     }
     // imgStyle:{

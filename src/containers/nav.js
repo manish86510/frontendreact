@@ -38,6 +38,7 @@ import { withRouter } from 'react-router-dom';
 // import { borderRadius } from '@material-ui/system';
 // import { withRouter } from 'react-router-dom';
 
+
 const drawerWidth = 240;
 
 
@@ -115,12 +116,14 @@ const styles = theme => ({
 
 });
 
+
+
 class SideNav extends React.Component {
     state = {
         open: false,
         userMenuOpen: false,
         rightSidebarOpen: false,
-        sideList:''
+        sideList: ''
     };
     userMenuRef = null;
 
@@ -172,8 +175,26 @@ class SideNav extends React.Component {
     nav_bookmark = () => {
         this.props.history.push({ pathname: "/bookmark" })
     }
-    handleMessageNav=()=>{
+    handleMessageNav = () => {
         this.props.history.push({ pathname: "/message" })
+    }
+    nav_notification = () => {
+        this.props.history.push({ pathname: "/notifications" })
+    }
+    nav_collaborate = () => {
+        this.props.history.push({ pathname: "/collaborate" })
+    }
+    nav_profile = () => {
+        this.props.history.push({ pathname: "/profile" })
+    }
+    nav_events = () => {
+        this.props.history.push({ pathname: "/events" })
+    }
+    nav_wallet = () => {
+        this.props.history.push({ pathname: "/wallet" })
+    }
+    handlelistSelected = () => {
+
     }
 
     render() {
@@ -213,7 +234,7 @@ class SideNav extends React.Component {
                                 <MailOutlineOutlinedIcon />
                             </IconButton>
                             <IconButton aria-label="search" size="medium">
-                                <MonetizationOnOutlinedIcon />
+                                <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
@@ -234,7 +255,7 @@ class SideNav extends React.Component {
                                         <Paper>
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
-                                                    <MenuItem onClick={this.handleUserMenuClose}>Profile</MenuItem>
+                                                    <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
                                                     <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
                                                     <MenuItem onClick={this.handleUserMenuClose}>Logout</MenuItem>
                                                 </MenuList>
@@ -309,20 +330,21 @@ class SideNav extends React.Component {
                         </ListItem>
                         <ListItem button
                             onClick={this.handleMessageNav}
+                            onClick={this.nav_notification}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <NotificationsNoneOutlinedIcon />
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.nav_collaborate}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <WbIncandescentOutlinedIcon />
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.nav_bookmark}
+                            onClick={this.nav_events}
                             className={"menu-item"}>
                             <ListItemIcon>
                                 <DateRangeOutlinedIcon />

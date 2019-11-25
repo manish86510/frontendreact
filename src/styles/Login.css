@@ -1,6 +1,6 @@
 @media all and (min-width: 480px) {
     .Login {
-      padding: 10px 0;
+      padding: 100px 100px;
     }
   
     .Login form {
@@ -9,7 +9,7 @@
     }
 
     .Register {
-        padding: 10px 0;
+        padding: 100px 100px;
       }
     
       .Register form {
@@ -84,8 +84,8 @@
     border: 0px;
   }
 
-  a:link {
-    color: #aabbcc;
+  a:link{
+    color: #43474a;
     text-decoration: none;
   }
 }
