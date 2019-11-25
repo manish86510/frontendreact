@@ -123,7 +123,7 @@ class SideNav extends React.Component {
         open: false,
         userMenuOpen: false,
         rightSidebarOpen: false,
-        sideList:''
+        sideList: ''
     };
     userMenuRef = null;
 
@@ -175,6 +175,9 @@ class SideNav extends React.Component {
     nav_bookmark = () => {
         this.props.history.push({ pathname: "/bookmark" })
     }
+    handleMessageNav = () => {
+        this.props.history.push({ pathname: "/message" })
+    }
     nav_notification = () => {
         this.props.history.push({ pathname: "/notifications" })
     }
@@ -190,7 +193,7 @@ class SideNav extends React.Component {
     nav_wallet = () => {
         this.props.history.push({ pathname: "/wallet" })
     }
-    handlelistSelected=()=>{
+    handlelistSelected = () => {
 
     }
 
@@ -231,7 +234,7 @@ class SideNav extends React.Component {
                                 <MailOutlineOutlinedIcon />
                             </IconButton>
                             <IconButton aria-label="search" size="medium">
-                                <MonetizationOnOutlinedIcon onClick={this.nav_wallet}/>
+                                <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
@@ -309,7 +312,7 @@ class SideNav extends React.Component {
                     <List>
                         <ListItem
                             button
-                            selected
+                            selected={true}
                             onClick={this.mynav}
                             className={"menu-item"}
                         >
@@ -326,6 +329,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
+                            onClick={this.handleMessageNav}
                             onClick={this.nav_notification}
                             className={"menu-item"}>
                             <ListItemIcon>
