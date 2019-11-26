@@ -133,7 +133,6 @@ class WalletInfo extends React.Component{
 
 
         return (
-            <SideNav>
             <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
                 <Grid item xs={8}>
             <Grid container spacing={2}>
@@ -238,8 +237,7 @@ class WalletInfo extends React.Component{
                 <HotTopics />
                 </Grid>
             </Grid>
-        </SideNav>
-
+   
 
 
           

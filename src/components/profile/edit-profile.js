@@ -90,10 +90,10 @@ componentDidMount = () => {
 getUserData = () => {
 
   axios.get('https://energeapi.do.viewyoursite.net/2/', {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
-    }
+    // headers: {
+    //   'Content-Type': 'application/json',
+    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+    // }
   }).then(res => {
     const user = this.state.user
     user.name = res.data.first_name+' '+res.data.last_name 
@@ -108,15 +108,13 @@ getUserData = () => {
   });
 }
 
-
-
 getInterestData = () => {
   debugger;
 
   axios.get('https://energeapi.do.viewyoursite.net/user/interest/', {
-    headers: {
-      Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
-    }
+    // headers: {
+    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+    // }
   }).then(res => {
     const interest = this.state.interest
     interest.skills = res.data.first_name+' '+res.data.last_name 

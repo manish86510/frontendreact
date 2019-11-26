@@ -1,6 +1,6 @@
 @media all and (min-width: 480px) {
     .Login {
-      padding: 10px 0;
+      padding: 100px 100px;
     }
   
     .Login form {
@@ -9,7 +9,7 @@
     }
 
     .Register {
-        padding: 10px 0;
+        padding: 100px 100px;
       }
     
       .Register form {
@@ -26,6 +26,66 @@
       }
       
       #title{
-        color: darkgreen;
+        color:#00b894;
       }
+
+      .btn-primary {
+          background: #00b894;
+          border: 0px;
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 9999;
+      }
+
+      .form-control {
+        display: block;
+        width: 100%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #000;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #00b894;
+        border-radius: 2.25rem
+    }
+
+    .form-control:focus {
+      color: #495057;
+      background-color: #aabbcc;
+      border-color: #00b894;
+      outline: 0;
+      box-shadow: 0 0 0 0rem;
   }
+
+  .btn-primary {
+    width: auto;
+    padding: 6px 50px;
+    background: #00b894;
+    border: 0px;
+    border-radius: 2.25rem
+  }
+
+  .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #00b894;
+    border: 0px;
+  }
+
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #00b894;
+    border: 0px;
+  }
+
+  a:link{
+    color: #43474a;
+    text-decoration: none;
+  }
+}

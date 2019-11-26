@@ -16,7 +16,7 @@ const styles = theme => ({
   },
 });
 
-class PostTab extends React.Component {
+class Posts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,8 +142,8 @@ class PostTab extends React.Component {
   }
 }
 
-PostTab.propTypes = {
+Posts.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(PostTab);
+export default withStyles(styles)(Posts);

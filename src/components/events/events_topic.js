@@ -45,7 +45,7 @@ const styles = theme => ({
 
 
 
-class PostHotTopics extends React.Component {
+class EventTopics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -260,9 +260,9 @@ class PostHotTopics extends React.Component {
   }
 }
 
-PostHotTopics.propTypes = {
+EventTopics.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(PostHotTopics);
+export default withStyles(styles)(EventTopics);
 

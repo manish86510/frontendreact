@@ -1,10 +1,9 @@
 import React from 'react';
-import PostHotTopics from './Posts/post-hot-topics';
+import NotificationTopics from './../components/notifications/notification-topics';
 import Grid from '@material-ui/core/Grid';
-import BookmarkTabs from './bookmark-tab'
+import NotificationTabs from './../components/notifications/notification-tab'
 import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
-
 
 
 const styles = theme => ({
@@ -15,7 +14,7 @@ const styles = theme => ({
     },
 });
 
-class PostTab extends React.Component {
+class Notifications extends React.Component {
     constructor(props) {
         super(props);
     };
@@ -26,18 +25,19 @@ class PostTab extends React.Component {
             <div>
                 <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
                     <Grid item xs={8}>
-                        <BookmarkTabs />
+                        <NotificationTabs />
+                        {/* hello */}
                     </Grid>
                     <Grid item xs={4}>
-                        <PostHotTopics />
+                        { <NotificationTopics /> }
                     </Grid>
                 </Grid>
             </div>
         );
     }
 }
-PostTab.propTypes = {
+Notifications.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(PostTab);
+export default withStyles(styles)(Notifications);
