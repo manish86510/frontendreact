@@ -6,23 +6,18 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Switch from '@material-ui/core/Switch';
 import { Button} from '@material-ui/core';
 import {
     ThemeProvider,
     createMuiTheme,
     fade
   } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
 import HotTopics from '../../../components/profile/Hot-topics';
 import SideNav from '../../../containers/nav'
 
 
-
-
-  
 const BootstrapInput = withStyles(theme => ({
     root: {
       'label + &': {

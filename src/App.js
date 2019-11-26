@@ -37,10 +37,10 @@ function App() {
             <Route path="/home" component={MainContainer} />
             <Route path="/register" component={Register} />
             <Route path="/forgetpass" component={ForgotPassword} />
-            <Route path="/profile" component={Profile} /> #abhishek
-            <Route path="/wallet" component={Wallet} /> #abhishek
-            <Route path="/walletcoins" component={WalletCoins} /> #abhishek
-            <Route path="/morecoins" component={MoreCoins} /> #abhishek
+            <Route path="/profile" component={Profile} /> 
+            <Route path="/wallet" component={Wallet} /> 
+            <Route path="/walletcoins" component={WalletCoins} />
+            <Route path="/morecoins" component={MoreCoins} />
 
             
           </div>

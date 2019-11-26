@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import HotTopics from '../../../components/profile/Hot-topics';
 
 
-
 class Wallet extends React.Component{
 
     render() {
