@@ -98,14 +98,14 @@ class Register extends React.Component {
                             <FormControl 
                                 autoFocus 
                                 type="text"
-                                placeholder="username"
+                                placholder="username"
                                 onChange={this.handleUserName}
                                 value={this.state.username} />
                         </FormGroup >
                         <FormGroup controlId="email"
                             bsSize="large"
                             className="padb10" >
-                            <FormControl autoFocus type="email"
+                            <FormControl  type="email"
                                 placeholder="email"
                                 onChange={this.handleEmail}
                                 value={this.state.email} />

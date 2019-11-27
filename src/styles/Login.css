@@ -1,6 +1,7 @@
 @media all and (min-width: 480px) {
     .Login {
-      padding: 100px 100px;
+      padding: 0px 0px;
+      margin-top: 5%;
     }
   
     .Login form {
@@ -9,7 +10,8 @@
     }
 
     .Register {
-        padding: 100px 100px;
+        padding: 0px 0px;
+        margin-top: 5%;
       }
     
       .Register form {

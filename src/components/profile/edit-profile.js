@@ -18,7 +18,7 @@ import {
   ThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles';
-
+import axios from 'axios';
 
 
 const AntSwitch = withStyles(theme => ({
@@ -63,11 +63,63 @@ const theme = createMuiTheme({
 
 
 class EditProfile extends React.Component{
-    
 
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        name: '',
+        username: '',
+        bio:'',
+        email:'',
+        image:'',  
+      },
+      interest: {
+        skills:'',
+        
+      }
+      }
+    }
+
+componentDidMount = () => {
+  this.getUserData();
+  this.getInterestData(); 
+
+}
+getUserData = () => {
+  axios.get('https://energeapi.do.viewyoursite.net/', {
+     headers: {
+       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('access'))
+     }
+  }).then(res => {
+    const user = this.state.user
+    user.name = res.data.first_name+' '+res.data.last_name 
+    user.username = res.data.username
+    user.bio = res.data.about
+    user.email = res.data.email
+    user.skills = 'skill set' 
+    // res.data.skills
+    user.image = res.data.avatar
+    this.setState({ user });
+  });
+}
+
+getInterestData = () => {
+  debugger;
+
+  axios.get('https://energeapi.do.viewyoursite.net/user/interest/2/', {
+     //headers: {
+     //  Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('access')).access,
+     //}
+  }).then(res => {
+    const interest = this.state.interest
+    interest.skills = res.data.first_name+' '+res.data.last_name 
+    
+    this.setState({ interest });
+  });
+}
     render() {
-    
-
         const handleDelete = () => {
             console.info('You clicked the delete icon.');
           };
@@ -75,21 +127,22 @@ class EditProfile extends React.Component{
          <div>
         <Grid container spacing={3}>
           <Grid item xs={11}>
-          <Button  style={{borderRadius: '25px', width:'130px'}} variant="outlined" >
+          <Grid container spacing={7}>
+          <Grid item xs={10}><Button variant="outlined" >
             Cancel
-            </Button>
-            <Button style={{borderRadius: '25px', float:'right', width:'130px'}} variant="contained" color="primary" >
-        Done
-      </Button>
-            <Paper > 
+          </Button>
+          </Grid><Grid item xs={2}>
+          <Button  variant="contained" color="primary" >
+          Done
+          </Button></Grid>
+          </Grid>
+          <Paper> 
             <br></br>
-                                                {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
-                                                <div class='row' style={{  padding: 5,  height:95}} >
+                {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
+                <div class='row' style={{  padding: 5,  height:95}} >
                     <div class="col-md-6">
-                        
-    
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
-                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt="alt">
+                            src={this.state.user.image}>
                             </img>
 
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
@@ -98,14 +151,14 @@ class EditProfile extends React.Component{
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
-                            <p><span style={{ padding: 10, fontSize: 12}}>Jackie Chan</span></p>
+                            <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span></p>
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Username
                             <IconButton size='small' color="inherit" aria-label="Close">
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
-                            <p><span style={{ padding: 10, fontSize: 12}}>@Jackie Chan</span></p>
+        <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.username}</span></p>
                             </div>
                             <div class="col-md-6">
                            <Typography component="div" style={{position: 'absolute', right: 15}}>
@@ -141,12 +194,11 @@ class EditProfile extends React.Component{
                             </div>
                             
                             <div class='row' style={{ position: 'absolute', left: 100 }}>
-                            <span style={{ fontSize: 10 }}>Programmer, Designer, Father, Husband</span>
+                            <span style={{ fontSize: 10 }}>{this.state.user.bio}</span>
                             </div>
                             <br></br>
                             <br></br>
                             <hr></hr>
-
                             <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Interests
@@ -190,7 +242,7 @@ class EditProfile extends React.Component{
                             
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Skills"
+        label={this.state.user.skills}
         onDelete={handleDelete}
       />
        <Chip
@@ -437,7 +489,7 @@ class EditProfile extends React.Component{
                             <TextField
                               height='24px'
                               // className={classes.margin}
-                              label="abc@123.com"
+                              label={this.state.user.email}
                               variant="outlined"
                               id="mui-theme-provider-outlined-input"
                             />
