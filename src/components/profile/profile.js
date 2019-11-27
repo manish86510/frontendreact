@@ -1,6 +1,6 @@
 import React from 'react';
-import SideNav from '../nav'
-import ProfileTabs from './EditProfile'
+import SideNav from '../../containers/nav'
+import ProfileTabs from './edit-profile'
 import Grid from '@material-ui/core/Grid';
 import HotTopics from './Hot-topics';
 
@@ -9,7 +9,6 @@ class Profile extends React.Component{
 
     render() {
         return (
-            <SideNav>
                 <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
                     <Grid item xs={8}>
                         <ProfileTabs />
@@ -18,7 +17,6 @@ class Profile extends React.Component{
                     <HotTopics />
                     </Grid>
                 </Grid>
-            </SideNav>
         );
     }
 }

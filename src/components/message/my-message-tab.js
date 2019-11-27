@@ -117,10 +117,10 @@ class MyMessages extends React.Component {
                                             </Grid>
                                             <Grid item xs={1}>
                                                 {
-                                                    data.seen_status==false?
-                                                    <Fab color="primary" size="small" aria-label="add">1</Fab>:""
+                                                    data.seen_status == false ?
+                                                        <Fab color="primary" size="small" aria-label="add">1</Fab> : ""
                                                 }
-                                                
+
                                             </Grid>
                                         </Grid>
                                     </Paper>

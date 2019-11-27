@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -23,6 +24,7 @@ class Posts extends React.Component {
       value: 0
     }
   }
+  
   handleChange = (event, newValue) => {
     // console.log(newValue);
     this.setState({ value: newValue });
@@ -34,6 +36,7 @@ class Posts extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
+
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ListItem>

@@ -1,0 +1,1 @@
+// Details of Post  Use Card Component of material
