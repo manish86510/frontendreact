@@ -3,11 +3,12 @@ import PostHotTopics from './Posts/post-hot-topics';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
-import MessageTabs from './message/message-tabs';
+import MessageTabs from './message/message-box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import MyMessages from './message/my-message-tab';
+import MessageBox from './message/message-box'
 
 function TabContainer(props) {
     return (
@@ -19,7 +20,7 @@ function TabContainer(props) {
 
 const styles = theme => ({
     paper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing * 2,
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -35,14 +36,14 @@ class Message extends React.Component {
     handleChange = (event, newValue) => {
         // console.log(newValue);
         this.setState({ value: newValue });
-      };
+    };
 
     render() {
         const { classes } = this.props;
         var value = this.state.value;
         return (
             <div>
-                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
+                <Grid container direction="row" spacing={2}>
                     <Grid item xs={7}>
                         <div className={classes.root}>
                             <Tabs
@@ -60,7 +61,7 @@ class Message extends React.Component {
                         </div>
                     </Grid>
                     <Grid item xs={5}>
-                        <PostHotTopics />
+                        <MessageBox />
                     </Grid>
                 </Grid>
             </div>

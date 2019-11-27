@@ -24,6 +24,7 @@ class Register extends React.Component {
             password: ''
         }
     }
+
     postRegister = (e) => {
         e.preventDefault();
         let self = this;
@@ -52,20 +53,18 @@ class Register extends React.Component {
         });
     }
 
-
-
-    handleUserName = e => {
-        console.log(e.target.value);
-        this.setState({
-            username: e.target.value,
-        });
-    }
-    handlePassword = e => {
-        console.log(e.target.value);
-        this.setState({
-            password: e.target.value,
-        });
-    }
+  handleUserName = e => {
+    console.log(e.target.value);
+    this.setState({
+      username: e.target.value,
+    });
+  }
+  handlePassword = e => {
+    console.log(e.target.value);
+    this.setState({
+      password: e.target.value,
+    });
+  }
 
     handleEmail = e => {
         console.log(e.target.value);
@@ -137,10 +136,9 @@ class Register extends React.Component {
             </div >
         );
     }
-
 }
 Register.propTypes = {
-    children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default withRouter(withStyles(styles)(Register));

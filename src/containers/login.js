@@ -51,23 +51,20 @@ class Login extends React.Component {
             });
         });
     }
-
-
-
+    
     handleUserName = e => {
         console.log(e.target.value);
         this.setState({
-            username: e.target.value,
+          username: e.target.value,
         });
-    }
-    handlePassword = e => {
+      }
+      handlePassword = e => {
         console.log(e.target.value);
         this.setState({
-            password: e.target.value,
+          password: e.target.value,
         });
-    }
-
-
+      }
+  
     render() {
         return ( <div className = "Login" >
             <h4 align = "center" > Login in to </h4>
@@ -113,10 +110,9 @@ class Login extends React.Component {
             </div>
         );
     }
-
 }
 Login.propTypes = {
-    children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default withRouter(withStyles(styles)(Login));

@@ -89,9 +89,9 @@ componentDidMount = () => {
 }
 getUserData = () => {
   axios.get('https://energeapi.do.viewyoursite.net/', {
-     headers: {
-       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('access'))
-     }
+     //headers: {
+     //  Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('access'))
+     //}
   }).then(res => {
     const user = this.state.user
     user.name = res.data.first_name+' '+res.data.last_name 
