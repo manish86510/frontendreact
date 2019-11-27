@@ -16,10 +16,16 @@ export default function Login(props) {
   const { setAuthTokens } = useAuth;
 
   function postLogin() {
+    console.log("user Name :" ,username, "Password : ",password);
     axios.post("https://energeapi.do.viewyoursite.net/api/token/", {
       username,
-      password
-    }).then(result => {
+      password,
+      headers: {
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+      }
+    }
+   
+    ).then(result => {
       if (result.status === 200) {
         console.log(username);
         console.log(result.data);
@@ -45,8 +51,9 @@ export default function Login(props) {
     event.preventDefault();
     postLogin();
   }
-
+  
   return (
+    
     <div className="Login">
         <h4 align="center">Login in to</h4>
         <h4 align="center" id="title">Energe</h4>
