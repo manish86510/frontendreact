@@ -7,7 +7,7 @@ import TextArea from '../textarea'
 import IconButton from '@material-ui/core/IconButton';
 import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faShareAlt, faTag, faCoins, faUsers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Box } from '@material-ui/core';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -18,7 +18,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { height } from 'dom-helpers';
 import { maxHeight, borderRadius } from '@material-ui/system';
 import { white } from 'ansi-colors';
-
+import axios from 'axios';
 
 const styles = theme => ({
     root: {
@@ -28,7 +28,7 @@ const styles = theme => ({
         float: "right",
     },
     gridList: {
-        listStyleType:"none",
+        listStyleType: "none",
         width: '100%',
         borderRadius: 30
     },
@@ -53,30 +53,56 @@ class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            postList: [],
             value: 0,
-            tileData: [
-                {
-                    img: "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                    title: 'test',
-                    author: 'author',
-                },
-                {
-                    img: "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-                    title: 'test',
-                    author: 'author',
-                },
-            ]
+            like_status: false
         }
     }
+    componentDidMount() {
+        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+        var getToken = localStorage.getItem('access');
+        axios.get(
+            url,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken,
+                }
+            }
+        ).then(res => {
+            if (res.status == 200) {
+                console.log(res.data)
+                this.setState({
+                    postList: res.data,
+                });
+            }
+        })
+        // this.getPostList();
+
+    }
+
+    handleLike = () => {
+        var like = 0
+        if(this.state.postList.like_count==0){
+            like+=1
+        }else{
+            like=-+1
+        }
+        return like;
+    }
+
+    // updatePostLikes = () => {
+    //     console.log("status :", this.state.like_status);
+    // }
     render() {
         const { classes } = this.props;
+        console.log(this.state.like_status);
         return (
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         {/* <Paper> */}
-                            <TextArea />
-                            
+                        <TextArea />
+
                         {/* </Paper> */}
                     </Grid>
                 </Grid>
@@ -88,11 +114,12 @@ class Feed extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <div>
-                            <Grid className={classes.gridList} style={{ borderRadius:30 }}>
-                                {this.state.tileData.map(tile => (
+                            <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
+                                {this.state.postList.map(tile => (
                                     <div>
-                                        <GridListTile key={tile.img} style={{ width: "100%", height: 300, borderRadius:30}}>
-                                            <img src={tile.img} alt={tile.title} style={{ borderRadius:30 }}/>
+
+                                        <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>
@@ -108,22 +135,22 @@ class Feed extends React.Component {
                                             </ListItem>
 
                                             <div style={{ paddingLeft: '2%' }}>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                {tile.about_post}
                                             </div>
 
                                             <div style={{ paddingLeft: '2%' }}>
                                                 <IconButton size='small' color="inherit" uaria-label="Close">
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
-                                                <span style={{ fontSize: 12 }}>51</span>
+                                                <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
-                                                <span style={{ fontSize: 12 }}>51</span>
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
-                                                    <FontAwesomeIcon icon={faTag} />
+                                                <span style={{ fontSize: 12 }}>{tile.share_count}</span>
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" onClick={this.handleLike}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} />
                                                 </IconButton>
-                                                <span style={{ fontSize: 12 }}>251</span>
+                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
                                             </div>
                                         </Paper>
                                     </div>

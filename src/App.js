@@ -25,12 +25,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Bookmark from './components/bookmark'
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#43a047',
+    palette: {
+        primary: {
+            main: '#43a047',
+        },
+        secondary: Colors.pink,
     },
-    secondary: Colors.pink,
-  },
 });
 
 
@@ -38,42 +38,75 @@ console.log(theme);
 
 function App() {
 
-  const [authTokens, setAuthTokens] = useState();
+    const [authTokens, setAuthTokens] = useState();
 
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
-  }
+    const setTokens = (data) => {
+        localStorage.setItem("tokens", JSON.stringify(data));
+        setAuthTokens(data);
+    }
 
-  return (
-    <div>
-      <MuiThemeProvider theme={theme}>
+    return ( <
+        div >
+        <
+        MuiThemeProvider theme = { theme } >
 
-        <Router>
-          <div>
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/forgetpass" component={ForgotPassword} />
+        <
+        Router >
+        <
+        div >
+        <
+        Route path = "/login"
+        component = { Login }
+        /> <
+        Route path = "/register"
+        component = { Register }
+        /> <
+        Route path = "/forgetpass"
+        component = { ForgotPassword }
+        />
 
-            <SideNav>
-              <Route path="/home" component={Home} />
-              {/* <Route path="/bookmark" component={Bookmark} /> */}
-              <Route path="/message" component={Message} />
-              <Route path="/bookmark" component={Bookmark} />
-              <Route path="/notifications" component={Notifications} />
-              <Route path="/profile" component={Profile} />
-              <Route path="/edit-profile" component={EditProfile} />
-              <Route path="/collaborate" component={CollaboarateMain} />
-              <Route path="/events" component={Events} />
-              <Route path="/wallet" component={Wallet} />
-              <Route path="/walletcoins" component={WalletCoins} />
-              <Route path="/morecoins" component={MoreCoins} />
-            </SideNav>
-          </div>
-        </Router>
-      </MuiThemeProvider>
-    </div>
-  );
+        <
+        SideNav >
+        <
+        Route path = "/home"
+        component = { Home }
+        /> <
+        Route path = "/message"
+        component = { Message }
+        /> <
+        Route path = "/bookmark"
+        component = { Bookmark }
+        /> <
+        Route path = "/notifications"
+        component = { Notifications }
+        /> <
+        Route path = "/profile"
+        component = { Profile }
+        /> <
+        Route path = "/edit-profile"
+        component = { EditProfile }
+        /> <
+        Route path = "/collaborate"
+        component = { CollaboarateMain }
+        /> <
+        Route path = "/events"
+        component = { Events }
+        /> <
+        Route path = "/wallet"
+        component = { Wallet }
+        /> <
+        Route path = "/walletcoins"
+        component = { WalletCoins }
+        /> <
+        Route path = "/morecoins"
+        component = { MoreCoins }
+        /> < /
+        SideNav > <
+        /div> < /
+        Router > <
+        /MuiThemeProvider> < /
+        div >
+    );
 }
 
 export default App;
