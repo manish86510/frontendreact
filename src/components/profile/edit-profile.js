@@ -20,6 +20,8 @@ import {
 } from '@material-ui/core/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 
 const AntSwitch = withStyles(theme => ({
@@ -65,7 +67,6 @@ const theme = createMuiTheme({
 
 class EditProfile extends React.Component{
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -76,9 +77,9 @@ class EditProfile extends React.Component{
         email:'',
         image:'',  
       },
-      interest: '',
-      skill: '',
-      language: '',
+      interest: [],
+      skill: [],
+      language: [],
       }
     }
 
@@ -113,10 +114,14 @@ getInterestData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const interest = res.data[0].interest_code;
-    this.setState({
-      interest
-    });
+    const interest = this.state.interest
+      
+      for (let i = 0; i < res.data.length; i++) {
+        interest.push(res.data[i].interest_code)
+        }
+
+      this.setState({ interest: interest }) 
+    
   });
 }
 
@@ -127,10 +132,14 @@ getSkillData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-     const skill = res.data[0].skill;
-     this.setState({
-      skill
-     });
+    const skill = this.state.skill
+      
+    for (let i = 0; i < res.data.length; i++) {
+      skill.push(res.data[i].skill)
+      }
+
+    this.setState({ skill: skill })  
+   
   });
 }
 getLanguageData = () => {
@@ -140,18 +149,84 @@ getLanguageData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const language = res.data[0].name;
-    this.setState({
-      language
-    });
+    
+    const language = this.state.language
+      
+    for (let i = 0; i < res.data.length; i++) {
+      language.push(res.data[i].name)
+      }
+
+    this.setState({ language: language })  
+    
   });
 }
 
 
     render() {
+
+      const top100Films = [
+        { title: 'The Shawshank Redemption', year: 1994 },
+        { title: 'The Godfather', year: 1972 },
+        { title: 'The Godfather: Part II', year: 1974 },
+        { title: 'The Dark Knight', year: 2008 },
+        { title: '12 Angry Men', year: 1957 },
+        { title: "Schindler's List", year: 1993 },
+      ];
+
         const handleDelete = () => {
             console.info('You clicked the delete icon.');
           };
+
+      const elements = this.state.interest
+      const interest_items = []
+      const interest_items_ed = []
+      
+    
+      for (const [index, value] of elements.entries()) {
+        interest_items.push(
+          { title: value, year: {value} },
+           
+        )
+        interest_items_ed.push(
+<Chip
+        //   // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+          label={value}
+          onDelete={handleDelete}
+        />
+
+        )
+      }
+
+
+      const elements_skill = this.state.skill
+      const skill_items = []
+      for (let i = 0; i < elements_skill.length; i++) {
+        skill_items.push(
+          { title: elements_skill[i], year: elements_skill[i] },
+
+          // <Chip
+          // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+        //   label={elements_skill[i]}
+        //   onDelete={handleDelete}
+        // /> 
+        )
+        }
+
+      const elements_language = this.state.language
+      const language_items = []
+      for (let i = 0; i < elements_language.length; i++) {
+        language_items.push(
+          { title: elements_language[i], year: elements_language[i] },
+
+        //   <Chip
+        //   avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+        //   label={elements_language[i]}
+        //   onDelete={handleDelete}
+        // /> 
+        )
+        }  
+
+        
         return (
          <div>
         <Grid container spacing={3}>
@@ -228,97 +303,106 @@ getLanguageData = () => {
                             <br></br>
                             <br></br>
                             <hr></hr>
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Interests
                             </span>
-                            </div>
+                            </div> */}
                             <div class='row' style={{ position: 'relative', left: 30 }}>
-                            
-                            <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={this.state.interest}
-        onDelete={handleDelete}
-      /> <Chip
-      // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-      label="Interests"
-      onDelete={handleDelete}
-    /> <Chip
-    // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-    label="Interests"
-    onDelete={handleDelete}
-  /> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Interests"
-  onDelete={handleDelete}
-/> <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Interests"
-        onDelete={handleDelete}
-      />
+                            {/* {interest_items_ed} */}
+
+                            <div style={{ width: 500 }} >
+                            <Autocomplete
+                            showResults='true'
+                        multiple
+                        id="tags-standard"
+                        options={interest_items}
+                        getOptionLabel={option => option.title}
+                        // defaultValue={[top100Films[13]]}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            variant="standard"
+                            label="Interest"
+                            placeholder="Interest"
+                            margin="normal"
+                            fullWidth
+                            // InputProps={{disableUnderline: true}}
+                          />
+                        )}
+                      />
+                    </div>
+    
+
+     
       
-      <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+      {/* <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
         <AddIcon style={{color: 'white'}}/>
-      </Fab>
+      </Fab> */}
+      
                             </div>
 
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Skills
                             </span>
-                            </div>
+                            </div> */}
                             <div class='row' style={{ position: 'relative', left: 30 }}>
                             
-                            <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={this.state.skill}
-        onDelete={handleDelete}
+                            {/* {skill_items} */}
+                            <div style={{ width: 500 }}>
+                            <Autocomplete
+        multiple
+        id="tags-standard"
+        options={skill_items}
+        getOptionLabel={option => option.title}
+        // defaultValue={[top100Films[13]]}
+        renderInput={params => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Skills"
+            placeholder="Favorites"
+            margin="normal"
+            fullWidth
+          />
+        )}
       />
-       <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Skills"
-        onDelete={handleDelete}
-      /> <Chip
-      // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-      label="Skills"
-      onDelete={handleDelete}
-    /> <Chip
-    // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-    label="Skills"
-    onDelete={handleDelete}
-  /> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Skills"
-  onDelete={handleDelete}
-/>
-<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+      </div>
+     
+{/* <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
         <AddIcon style={{color: 'white'}}/>
-      </Fab>
+      </Fab> */}
 </div>
-<div class='row' style={{ position: 'relative', left: 30 }}>
+{/* <div class='row' style={{ position: 'relative', left: 30 }}>
 <span style={{ padding: 10, fontSize: 12}}>
   Languages
 </span>
-</div>
+</div> */}
  
 <div class='row' style={{ position: 'relative', left: 30 }}>
-  <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label={this.state.language}
-  onDelete={handleDelete}
-/>
-<Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Languages"
-  onDelete={handleDelete}
-/> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Languages"
-  onDelete={handleDelete}
-/>
-<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
-      </Fab>
+{/* {language_items} */}
+
+
+<div style={{ width: 500 }}>
+                            <Autocomplete
+        multiple
+        id="tags-standard"
+        options={language_items}
+        getOptionLabel={option => option.title}
+        // defaultValue={[top100Films[13]]}
+        renderInput={params => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Languages"
+            placeholder="Favorites"
+            margin="normal"
+            fullWidth
+          />
+        )}
+      />
+</div>
 </div>
 
 <p></p>
@@ -562,6 +646,7 @@ getLanguageData = () => {
         
         );
     }
+    
 }
 
 export default EditProfile;
