@@ -19,6 +19,7 @@ import {
   createMuiTheme,
 } from '@material-ui/core/styles';
 import axios from 'axios';
+import endpoints from '../../api/endpoints';
 
 
 const AntSwitch = withStyles(theme => ({
@@ -89,11 +90,11 @@ componentDidMount = () => {
 }
 getUserData = () => {
 
-  axios.get('https://energeapi.do.viewyoursite.net/2/', {
-    // headers: {
-    //   'Content-Type': 'application/json',
-    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
-    // }
+  axios.get(endpoints.profile_user, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+    }
   }).then(res => {
     const user = this.state.user
     user.name = res.data.first_name+' '+res.data.last_name 
@@ -109,9 +110,9 @@ getUserData = () => {
 }
 
 getInterestData = () => {
-  debugger;
+  
 
-  axios.get('https://energeapi.do.viewyoursite.net/user/interest/', {
+  axios.get(endpoints.profile_interest, {
     // headers: {
     //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
     // }
