@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import '../styles/Login.css';
-import Img from "react-image";
+// import Img from "react-image";
 
 export default function ForgotPassword(props) {
     const [email, setEmail] = useState("");
