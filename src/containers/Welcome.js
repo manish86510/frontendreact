@@ -15,10 +15,17 @@ const image = require("../img/login_image.png");
 const styles = theme => ({});
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSuccess: ''
+        }
+    }
     render() {
         return ( <div className = "Login" >
             <h3 align="center" > WELCOME TO ENERGE</h3>
-            <h6 align="center">You have signed up successfully. Please, proceed to login page</h6>
+            {/* <h6 align="center">You have signed up successfully!. Please, proceed to login page</h6> */}
+            <h6 align="center">Mail verified successfully!. Please, proceed to login page</h6>
             <center>
             <p><a href = "/login" >Login Page!</a></p>  
             </center> 

@@ -38,8 +38,13 @@ class Register extends React.Component {
         }).then(result => {
             if (result.status === 200) {
                 console.log(result.data);
+
+                this.setState({
+                    isSuccess:"Email sent successfully, please check your mail to verify"
+                    })
+
                 this.props.history.push({
-                    pathname: "/login"
+                    pathname: "/register"
                 });
             } else {
                 this.setState({
@@ -127,7 +132,7 @@ class Register extends React.Component {
                         </FormGroup>
                         <Button block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
                     </form>
-                    <p> <a href="/welcome" > Already have an account ? Log in ! </a></p>
+                    <p> <a href="/login" > Already have an account ? Log in ! </a></p>
                 </center>
                 <div>
                     <img src={image}
