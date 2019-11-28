@@ -9,6 +9,7 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Icon } from "@material-ui/core";
 
 
 const image = require("../img/login_image.png");
@@ -74,10 +75,17 @@ class Login extends React.Component {
             <p>{ this.state.isError }</p>
             <form onSubmit = { this.handleSubmit }
             method = "post">
+                {/* <i className="fa fa-spinner fa-spin"></i> */}
+                {/* <i className="fa fa-user"></i> */}
+                {/* <Icon className="fa fa-user"/> */}
+
             <FormGroup controlId = "username"
             bsSize = "large"
             className = "padb10" >
-            <FormControl autoFocus type = "text"
+            {/* <FontAwesome name="check" spin key="icon" /> */}
+
+
+            <FormControl IconautoFocus type = "text" 
             placeholder = "username"
             value = { this.state.username }
             onChange = { this.handleUserName }

@@ -38,13 +38,12 @@ class Register extends React.Component {
         }).then(result => {
             if (result.status === 200) {
                 console.log(result.data);
-
-                this.setState({
-                    isSuccess:"Email sent successfully, please check your mail to verify"
-                    })
-
+                // this.setState({
+                //     isSuccess:"Email sent successfully, please check your mail to verify"
+                //     })
                 this.props.history.push({
-                    pathname: "/register"
+                    // pathname: "/register"
+                    pathname: "/verify"
                 });
             } else {
                 this.setState({
