@@ -24,6 +24,7 @@ import Events from './containers/Events';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
+import Welcome from './containers/Welcome';
 
 const theme = createMuiTheme({
     palette: {
@@ -49,6 +50,7 @@ function App() {
         <Route exact path = "/login" component = { Login }/> 
         <Route path = "/register" component = { Register }/> 
         <Route path = "/forgetpass" component = { ForgotPassword }/>
+        <Route path = "/welcome" component = { Welcome }/>
         <SideNav>
         <Route path = "/home" component = { Home }/> 
         <Route path = "/message" component = { Message }/> 

@@ -127,7 +127,7 @@ class Register extends React.Component {
                         </FormGroup>
                         <Button block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
                     </form>
-                    <p> <a href="/login" > Already have an account ? Log in ! </a></p>
+                    <p> <a href="/welcome" > Already have an account ? Log in ! </a></p>
                 </center>
                 <div>
                     <img src={image}
