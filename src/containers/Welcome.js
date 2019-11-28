@@ -6,7 +6,7 @@ import { useAuth } from "../context/auth";
 import { Link, Redirect } from "react-router-dom";
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import Img from "react-image";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'; 
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -15,8 +15,6 @@ const image = require("../img/login_image.png");
 const styles = theme => ({});
 
 class Login extends React.Component {
-
-  
     render() {
         return ( <div className = "Login" >
             <h3 align="center" > WELCOME TO ENERGE</h3>
