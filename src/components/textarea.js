@@ -86,18 +86,17 @@ class TextArea extends React.Component {
                             onChange={this.HandleTextArea}
                         />
                     </div>
-                    <Box component="div" m={1} className={classes.con}>
+                    {/*<Box component="div" m={1} className={classes.con}>
                         <Fab
                             variant="extended"
                             size="medium"
                             color="primary"
                             aria-label="add"
                             className={classes.button}
-                            onClick={this.handlePostCreate}
-                        >
+                            onClick={this.handlePostCreate}>
                             Post
                         </Fab>
-                    </Box>
+                    </Box>*/}
                 </Paper>
             </div>
         )
