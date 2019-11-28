@@ -76,53 +76,77 @@ class EditProfile extends React.Component{
         email:'',
         image:'',  
       },
-      interest: {
-        skills:'',
-        
-      }
+      interest: '',
+      skill: '',
+      language: '',
       }
     }
 
 componentDidMount = () => {
   this.getUserData();
   this.getInterestData(); 
-
+  this.getSkillData();
+  this.getLanguageData();
 }
 getUserData = () => {
-
   axios.get(endpoints.profile_user, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
+      Authorization: 'Bearer ' + localStorage.access,
     }
   }).then(res => {
     const user = this.state.user
-    user.name = res.data.first_name+' '+res.data.last_name 
-    user.username = res.data.username
-    user.bio = res.data.about
-    user.email = res.data.email
-    user.skills = 'skill set' 
+    user.name = res.data[0].first_name+' '+res.data[0].last_name 
+    user.username = res.data[0].username
+    user.bio = res.data[0].about
+    user.email = res.data[0].email
     // res.data.skills
-    user.image = res.data.avatar
-    
+    user.image = res.data[0].avatar
     this.setState({ user });
   });
 }
 
 getInterestData = () => {
-  
-
   axios.get(endpoints.profile_interest, {
-    // headers: {
-    //   Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token_detail')).access,
-    // }
-  }).then(res => {
-    const interest = this.state.interest
-    interest.skills = res.data.first_name+' '+res.data.last_name 
-    
-    this.setState({ interest });
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const interest = res.data[0].interest_code;
+    this.setState({
+      interest
+    });
   });
 }
+
+getSkillData = () => {
+  axios.get(endpoints.profile_skills, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+     const skill = res.data[0].skill;
+     this.setState({
+      skill
+     });
+  });
+}
+getLanguageData = () => {
+  axios.get(endpoints.profile_languages, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const language = res.data[0].name;
+    this.setState({
+      language
+    });
+  });
+}
+
 
     render() {
         const handleDelete = () => {
@@ -204,7 +228,6 @@ getInterestData = () => {
                             <br></br>
                             <br></br>
                             <hr></hr>
-
                             <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Interests
@@ -214,7 +237,7 @@ getInterestData = () => {
                             
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Interests"
+        label={this.state.interest}
         onDelete={handleDelete}
       /> <Chip
       // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
@@ -248,7 +271,7 @@ getInterestData = () => {
                             
                             <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={this.state.user.skills}
+        label={this.state.skill}
         onDelete={handleDelete}
       />
        <Chip
@@ -281,7 +304,7 @@ getInterestData = () => {
 <div class='row' style={{ position: 'relative', left: 30 }}>
   <Chip
   // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Languages"
+  label={this.state.language}
   onDelete={handleDelete}
 />
 <Chip
