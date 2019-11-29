@@ -10,11 +10,13 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import Autosuggest from 'react-autosuggest';
+import MyResult from '../api/utility';
+import endpoints from '../api/endpoints';
+
 
 const styles = theme => ({
     con: {
         width: "100%",
-
     },
     button: {
         marginRight: 8,
@@ -41,7 +43,6 @@ const languages = [
     },
     {
       name: 'sonu_ka',
-      year: 2009
     },
     {
       name: 'renu',
@@ -124,21 +125,6 @@ class PostTextArea extends React.Component {
             this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
         }
         this.setState({ file: this.fileArray })
-
-        {/*this.setState({
-            inputFile: event.target.files[0]
-          })
-       
-          let reader = new FileReader();
-           
-          reader.onloadend = () => {
-            this.setState({
-              imagePreviewUrl: reader.result
-            });
-          }
-       
-          reader.readAsDataURL(event.target.files[0])
-        console.log(this.state.inputFile);*/}
     }
 
     HandleTextArea = (e) => {
@@ -151,57 +137,8 @@ class PostTextArea extends React.Component {
 
     handlePostCreate = () => {
         var postData = this.state.postData;
-        var getToken = localStorage.getItem('access');
-        // console.log("access :",JSON.parse(localStorage.getItem('access')).access);
-        axios.post("https://energeapi.do.viewyoursite.net/api/v1/post/",
-            postData,
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getToken,
-                }
-            }
-        ).then(result => {
-            if (result.status === 200) {
-                {/*this.handleTagCreate()*/}
-            } else {
-                this.setState({
-                    isError: true
-                });
-            }
-        }).catch(e => {
-            this.setState({
-                isError: true
-            });
-        });
+        MyResult(endpoints.create_post, postData);
         window.location.reload();
-    }
-
-    handleTagCreate = () => {
-      var postData = this.state.postData;
-      var getToken = localStorage.getItem('access');
-      // console.log("access :",JSON.parse(localStorage.getItem('access')).access);
-      axios.post("https://energeapi.do.viewyoursite.net/api/v1/post/",
-          postData,
-          {
-              headers: {
-                  Authorization: 'Bearer ' + getToken,
-              }
-          }
-      ).then(result => {
-          if (result.status === 200) {
-            
-              console.log(result);
-          } else {
-              this.setState({
-                  isError: true
-              });
-          }
-      }).catch(e => {
-          this.setState({
-              isError: true
-          });
-      });
-      window.location.reload();
     }
     
     showOpenFileDlg = () => {
@@ -253,7 +190,6 @@ class PostTextArea extends React.Component {
                     {(this.fileArray || []).map(url => (
                         <img src={url} alt="" width="200"/>
                     ))}
-                    {/*<img src={this.state.imagePreviewUrl} alt="icon" width="200" alt="" />*/}
                     </div>
                     <div id="tag">
                         <FormGroup controlId = "password"
