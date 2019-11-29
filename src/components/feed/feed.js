@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
-import TextArea from '../textarea'
 import IconButton from '@material-ui/core/IconButton';
 import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,6 +18,9 @@ import { height } from 'dom-helpers';
 import { maxHeight, borderRadius } from '@material-ui/system';
 import { white } from 'ansi-colors';
 import axios from 'axios';
+import AddPost from '../popup/add_post';
+import '../../styles/main.css';
+
 
 const styles = theme => ({
     root: {
@@ -58,6 +60,7 @@ class Feed extends React.Component {
             like_status: false
         }
     }
+
     componentDidMount() {
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
@@ -89,7 +92,6 @@ class Feed extends React.Component {
         }
         return like;
     }
-
     // updatePostLikes = () => {
     //     console.log("status :", this.state.like_status);
     // }
@@ -100,10 +102,7 @@ class Feed extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        {/* <Paper> */}
-                        <TextArea />
-
-                        {/* </Paper> */}
+                        <AddPost/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>

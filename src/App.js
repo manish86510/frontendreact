@@ -65,9 +65,9 @@ function App() {
         <Route path = "/wallet" component = { Wallet }/> 
         <Route path = "/walletcoins" component = { WalletCoins }/> 
         <Route path = "/morecoins" component = { MoreCoins }/> 
-        </SideNav> 
-        </Switch> 
-        </Router > 
+        </SideNav>
+        </Switch>
+        </Router> 
         </MuiThemeProvider> 
         </div>
     );
