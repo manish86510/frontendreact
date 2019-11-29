@@ -162,7 +162,7 @@ class PostTextArea extends React.Component {
             }
         ).then(result => {
             if (result.status === 200) {
-                {this.handleTagCreate()}
+                {/*this.handleTagCreate()*/}
             } else {
                 this.setState({
                     isError: true
