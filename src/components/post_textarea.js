@@ -108,12 +108,15 @@ class PostTextArea extends React.Component {
                 is_public: true,
                 post_type: "Post",
                 target_audience: "test",
-                inputFile: "",
-                imagePreviewUrl: ""
+                inputFile: ""
+            },
+            mediaData:{
+                post: '',
+                file: [],
+                file_type: "Image"
             },
                 value: '',
-                suggestions: [],
-                file: []
+                suggestions: []
         }
         this.inputOpenFileRef = React.createRef();
         this.handleChange = this.handleChange.bind(this);
@@ -128,7 +131,6 @@ class PostTextArea extends React.Component {
     }
 
     HandleTextArea = (e) => {
-        console.log(e.target.value);
         this.state.postData.about_post = e.target.value;
         this.setState({
             postData: this.state.postData,
@@ -136,8 +138,12 @@ class PostTextArea extends React.Component {
     }
 
     handlePostCreate = () => {
+      debugger;
         var postData = this.state.postData;
-        MyResult(endpoints.create_post, postData);
+        var result = MyResult(endpoints.create_post, postData, "post");
+        // this.state.mediaData.file = this.fileArray;
+        // this.state.mediaData.post = result.data.id;
+        // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
         window.location.reload();
     }
     

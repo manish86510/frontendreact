@@ -20,6 +20,8 @@ import { white } from 'ansi-colors';
 import axios from 'axios';
 import AddPost from '../popup/add_post';
 import '../../styles/main.css';
+import MyResult from '../../api/utility';
+import endpoints from '../../api/endpoints';
 
 
 const styles = theme => ({
@@ -44,11 +46,6 @@ const styles = theme => ({
         borderRadius: 15,
         paddingBottom: 24
     }
-    // imgStyle:{
-    //     width:"100%",
-    //     maxHeight:400,
-    //     borderRadius:10
-    // }
 });
 
 class Feed extends React.Component {
@@ -60,8 +57,15 @@ class Feed extends React.Component {
             like_status: false
         }
     }
-
     componentDidMount() {
+        // var postData = null;
+        // var result = MyResult(endpoints.create_post, postData, "get");
+        // if (result.status == 200) {
+        //     this.setState({
+        //         postList: result.data,
+        //     });
+        // }
+
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -80,7 +84,6 @@ class Feed extends React.Component {
             }
         })
         // this.getPostList();
-
     }
 
     handleLike = () => {
@@ -92,9 +95,6 @@ class Feed extends React.Component {
         }
         return like;
     }
-    // updatePostLikes = () => {
-    //     console.log("status :", this.state.like_status);
-    // }
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -116,7 +116,6 @@ class Feed extends React.Component {
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {this.state.postList.map(tile => (
                                     <div>
-
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
                                         </GridListTile>
@@ -138,7 +137,11 @@ class Feed extends React.Component {
                                             </div>
 
                                             <div style={{ paddingLeft: '2%' }}>
-                                                <IconButton size='small' color="inherit" uaria-label="Close">
+                                                <IconButton size='small' color="inherit" onClick={this.handleLike}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                                </IconButton>
+                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
+                                                <IconButton size='small' style={{ marginLeft: '5%' }} color="inherit" uaria-label="Close">
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
@@ -146,65 +149,13 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" onClick={this.handleLike}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} />
-                                                </IconButton>
-                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
                                             </div>
                                         </Paper>
                                     </div>
-
-
                                 ))}
                             </Grid>
-
                         </div>
                     </Grid>
-                    {/* <Grid item xs={12}>
-                        <div style={{ padding: "0px 50px 0px 50px", borderRadius: "10px" }}>
-                            <GridList cellHeight={180} className={classes.gridList}>
-                                {this.state.tileData.map(tile => (
-                                    <GridListTile key={tile.img} style={{ width: "100%", height: 300, borderRadius: 50 }}>
-                                        <img src={tile.img} alt={tile.title} />
-                                    </GridListTile>
-                                ))}
-                            </GridList>
-                            <div className={classes.conContent}>
-                                <Paper className={classes.content}>
-                                    <ListItem>
-                                        <Avatar
-                                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
-                                        </Avatar>
-
-                                        <span style={{ padding: 20 }}>
-                                            <div><b>Awosome Project</b></div>
-                                            <div style={{ fontSize: 12 }}>@user . 300 followers</div>
-                                        </span>
-
-                                    </ListItem>
-
-                                    <div style={{ paddingLeft: '2%' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    </div>
-
-                                    <div style={{ paddingLeft: '2%' }}>
-                                        <IconButton size='small' color="inherit" uaria-label="Close">
-                                            <FontAwesomeIcon icon={faComment} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>51</span>
-                                        <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
-                                            <FontAwesomeIcon icon={faShareAlt} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>51</span>
-                                        <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
-                                            <FontAwesomeIcon icon={faTag} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>251</span>
-                                    </div>
-                                </Paper>
-                            </div>
-                        </div>
-                    </Grid> */}
                 </Grid>
             </div>
         );
