@@ -60,7 +60,6 @@ class Feed extends React.Component {
             like_status: false
         }
     }
-
     componentDidMount() {
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
@@ -138,18 +137,22 @@ class Feed extends React.Component {
                                             </div>
 
                                             <div style={{ paddingLeft: '2%' }}>
-                                                <IconButton size='small' color="inherit" uaria-label="Close">
+                                                <IconButton size='small' color="inherit" onClick={this.handleLike}>
+                                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                                </IconButton>
+                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
+
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
+
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" onClick={this.handleLike}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} />
-                                                </IconButton>
-                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
+
+                                                
                                             </div>
                                         </Paper>
                                     </div>
