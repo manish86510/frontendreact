@@ -162,8 +162,7 @@ class PostTextArea extends React.Component {
             }
         ).then(result => {
             if (result.status === 200) {
-                console.log(result);
-                               
+                {/*this.handleTagCreate()*/}
             } else {
                 this.setState({
                     isError: true
@@ -175,6 +174,34 @@ class PostTextArea extends React.Component {
             });
         });
         window.location.reload();
+    }
+
+    handleTagCreate = () => {
+      var postData = this.state.postData;
+      var getToken = localStorage.getItem('access');
+      // console.log("access :",JSON.parse(localStorage.getItem('access')).access);
+      axios.post("https://energeapi.do.viewyoursite.net/api/v1/post/",
+          postData,
+          {
+              headers: {
+                  Authorization: 'Bearer ' + getToken,
+              }
+          }
+      ).then(result => {
+          if (result.status === 200) {
+            
+              console.log(result);
+          } else {
+              this.setState({
+                  isError: true
+              });
+          }
+      }).catch(e => {
+          this.setState({
+              isError: true
+          });
+      });
+      window.location.reload();
     }
     
     showOpenFileDlg = () => {
