@@ -8,11 +8,52 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { Icon, IconButton } from "@material-ui/core";
+
 import { withStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
 
 
 const image = require("../img/login_image.png");
-const styles = theme => ({});
+const styles = theme => ({
+    username: {
+        borderRadius: 100,
+        border: '1px solid #00b894',
+        display: 'flex',
+        alignItems: 'center',
+        width: 400,
+        height: 40
+    },
+    password: {
+        borderRadius: 100,
+        border: '1px solid #00b894',
+        alignItems: 'center',
+        display: 'flex',
+        height: 40
+    },
+    cpassword: {
+        borderRadius: 100,
+        border: '1px solid #00b894',
+        display: 'flex',
+        alignItems: 'center',
+        width: 400,
+        height: 40
+    },
+    email: {
+        borderRadius: 100,
+        border: '1px solid #00b894',
+        display: 'flex',
+        alignItems: 'center',
+        width: 400,
+        height: 40
+    },
+    iconButton: {
+        fontSize: 15       
+      },
+});
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -86,51 +127,108 @@ class Register extends React.Component {
 
 
     render() {
+        const { classes } = this.props;
         return (
             <div className="Register" >
                 <h4 align="center" > Sign Up
             for </h4>
                 <h4 align="center"
-                    id="title"> Energe </h4>
+                    id="title"> Energe </h4><br></br>
                 <center>
                     <p>{ this.state.isError }</p>
                     <form onSubmit={this.handleSubmit} method = "post" >
                         <FormGroup controlId="username"
                             bsSize="large"
                             className="padb10">
-                            <FormControl 
+                            {/* <FormControl 
                                 autoFocus 
                                 type="text"
                                 placholder="username"
                                 onChange={this.handleUserName}
-                                value={this.state.username} />
+                                value={this.state.username} /> */}
+                            <Paper component="form" className={classes.username}>
+                            <IconButton type="submit" className={classes.iconButton} aria-label="user">
+                                <FontAwesomeIcon icon={faUser} />
+                            </IconButton>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="username"
+                                value={this.state.username}
+                                onChange={this.handleUserName}
+                                type="text"
+                                inputProps={{ 'aria-label': 'user' }}
+                            />
+                        </Paper>
                         </FormGroup >
+
                         <FormGroup controlId="email"
                             bsSize="large"
                             className="padb10" >
-                            <FormControl  type="email"
+                            {/* <FormControl  type="email"
                                 placeholder="email"
                                 onChange={this.handleEmail}
-                                value={this.state.email} />
+                                value={this.state.email} /> */}
+                            <Paper component="form" className={classes.email}>
+                            <IconButton type="submit" className={classes.iconButton} aria-label="email">
+                                <FontAwesomeIcon icon={faEnvelope} />
+                            </IconButton>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="email"
+                                onChange={this.handleEmail}
+                                value={this.state.email} 
+                                inputProps={{ 'aria-label': 'email' }}
+                            />
+                        </Paper>
                         </FormGroup>
+
                         <FormGroup controlId="password"
                             bsSize="large"
                             className="padb10" >
-                            <FormControl placeholder="password"
+                            {/* <FormControl placeholder="password"
                                 value={this.state.password}
                                 onChange={this.handlePassword}
-                                type="password" />
+                                type="password" /> */}
+                            <Paper component="form" className={classes.password}>
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                                <FontAwesomeIcon icon={faLock} />
+                            </IconButton>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="password"
+                                value={this.state.password}
+                                onChange={this.handlePassword}
+                                type="password"
+                                inputProps={{ 'aria-label': 'password' }}
+                            />
+                        </Paper>
                         </FormGroup>
+
                         <FormGroup controlId="cpassword"
                             bsSize="large"
                             className="padb10" >
-                            <FormControl placeholder="Confirm Password"
+                            {/* <FormControl placeholder="Confirm Password"
                                 value={this.state.confirm_password}
                                 onChange={this.handleConfirmPassword}
-                                type="password" />
+                                type="password" /> */}
+                            <Paper component="form" className={classes.cpassword}>
+                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword">
+                                <FontAwesomeIcon icon={faLock} />
+                            </IconButton>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="confirm Password"
+                                value={this.state.confirm_password}
+                                onChange={this.handleConfirmPassword}
+                                type="password"
+                                inputProps={{ 'aria-label': 'cpassword' }}
+                            />
+                        </Paper>
+
                         </FormGroup>
+                        <br></br>
                         <Button block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
-                    </form>
+                    </form><br></br>
                     <p> <a href="/login" > Already have an account ? Log in ! </a></p>
                 </center>
                 <div>
