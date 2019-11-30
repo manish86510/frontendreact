@@ -63,7 +63,6 @@ class Posts extends React.Component {
     }
     var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
     var getToken = localStorage.getItem('access');
-    debugger
     axios.post(
       url, my_data,
       {
@@ -113,9 +112,7 @@ class Posts extends React.Component {
 
                     <div style={{ paddingLeft: '2%' }}>
                       <IconButton size='small' color="inherit"
-                        // onClick={this.handleLike}>
                         onClick={this.handleLike.bind(this, tile.id)}>
-                        {/* key={tile} data-tile={tile} onClick={this.handleLike}> */}
                         <FontAwesomeIcon icon={faThumbsUp} />
                       </IconButton>
                       <span style={{ fontSize: 12 }}>{tile.like_count}</span>
