@@ -117,14 +117,17 @@ class Feed extends React.Component {
                                 {this.state.postList.map(tile => (
                                     <div>
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
+                                            <div class="bottom-left">Manish Kumar</div>
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>
                                                 <Avatar
                                                     src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
                                                 </Avatar>
-
                                                 <span style={{ padding: 20 }}>
                                                     <div><b>Awosome Project</b></div>
                                                     <div style={{ fontSize: 12 }}>@user . 300 followers</div>

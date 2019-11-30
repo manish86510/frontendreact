@@ -6,20 +6,25 @@ import axios from 'axios';
 export default function MyResult(api, mydata, method) {
     debugger;
     var token = localStorage.getItem('access');
-    if(method == "post"){
+    if (method == "post") {
         axios.post(api,
-        mydata,
-        {
-            headers: {
-                Authorization: 'Bearer ' + token,
+            mydata,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                }
             }
-        }
-        ).then(result => {
+        ).then(res => {
             debugger;
-            console.log(result);
-        });
+            return res;
+        }).catch(
+            error => {
+                console.log(error);
+            }
+        );
     }
-    if(method == "get"){
+
+    if (method == "get") {
         axios.get(api, mydata).then(result => {
             return result;
         });
