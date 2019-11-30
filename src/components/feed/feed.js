@@ -86,15 +86,25 @@ class Feed extends React.Component {
         // this.getPostList();
     }
 
-    handleLike = () => {
-        var like = 0
-        if(this.state.postList.like_count==0){
-            like+=1
-        }else{
-            like=-+1
+    handleLike = (tile) => {
+        var my_data={
+          post:tile,
         }
-        return like;
-    }
+        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+        var getToken = localStorage.getItem('access');
+        debugger
+        axios.post(
+          url, my_data,
+          {
+            headers: {
+              Authorization: 'Bearer ' + getToken,
+            }
+          }
+        ).then(res => {
+          debugger;
+          console.log(res.data)
+        })
+      }
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -121,7 +131,6 @@ class Feed extends React.Component {
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
-                                            <div class="bottom-left">Manish Kumar</div>
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>
@@ -132,7 +141,6 @@ class Feed extends React.Component {
                                                     <div><b>Awosome Project</b></div>
                                                     <div style={{ fontSize: 12 }}>@user . 300 followers</div>
                                                 </span>
-
                                             </ListItem>
 
                                             <div style={{ paddingLeft: '2%' }}>
@@ -140,18 +148,22 @@ class Feed extends React.Component {
                                             </div>
 
                                             <div style={{ paddingLeft: '2%' }}>
-                                                <IconButton size='small' color="inherit" onClick={this.handleLike}>
+                                                <IconButton size='small' color="inherit" onClick={this.handleLike.bind(this, tile.id)}>
                                                     <FontAwesomeIcon icon={faThumbsUp} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                <IconButton size='small' style={{ marginLeft: '5%' }} color="inherit" uaria-label="Close">
+
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
+
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
+
+                                                
                                             </div>
                                         </Paper>
                                     </div>
