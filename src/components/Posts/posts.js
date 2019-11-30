@@ -23,7 +23,7 @@ const styles = theme => ({
     listStyleType: "none",
     width: '100%',
     borderRadius: 30
-},
+  },
 });
 
 class Posts extends React.Component {
@@ -32,7 +32,7 @@ class Posts extends React.Component {
     this.state = {
       postList: [],
       value: 0,
-      username: ''
+
     };
     this.handleLike = this.handleLike.bind(this)
   }
@@ -41,45 +41,39 @@ class Posts extends React.Component {
     var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
     var getToken = localStorage.getItem('access');
     axios.get(
-        url,
-        {
-            headers: {
-                Authorization: 'Bearer ' + getToken,
-            }
+      url,
+      {
+        headers: {
+          Authorization: 'Bearer ' + getToken,
         }
+      }
     ).then(res => {
-        if (res.status == 200) {
-            console.log(res.data)
-            this.setState({
-                postList: res.data,
-            });
-        }
-    })
-    // this.getPostList();
-}
-  // handleChange = (event, newValue) => {
-  //   // console.log(newValue);
-  //   this.setState({ value: newValue });
-  // };
-  // handleLike () {
-  //   axios.get('https://energeapi.do.viewyoursite.net/api/v1/post/like/')
-  //     .then(response => this.setState({username: response.data}))
-  // }
-
-    handleLike () {
-      var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
-      // var getToken = localStorage.getItem('activity');
-      axios.get(
-        url,
-        {
-          "post": 0,
-          "activity": "string",
-        }
-    ).then(res => {
+      if (res.status == 200) {
         console.log(res.data)
         this.setState({
-            postList: res.data,
-            });
+          postList: res.data,
+        });
+      }
+    })
+    // this.getPostList();
+  }
+  handleLike = (tile) => {
+    var my_data={
+      post:tile,
+    }
+    var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+    var getToken = localStorage.getItem('access');
+    debugger
+    axios.post(
+      url, my_data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + getToken,
+        }
+      }
+    ).then(res => {
+      debugger;
+      console.log(res.data)
     })
   }
 
@@ -90,58 +84,57 @@ class Posts extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-        
-          </Grid>
-            <Grid item xs={12}>
-              <div>
-                    <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                          {this.state.postList.map(tile => (
-                              <div>
-                                <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                                    <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
-                                </GridListTile>
-                                <Paper className={classes.content}>
-                                    <ListItem>
-                                        <Avatar
-                                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
-                                        </Avatar>
 
-                                        <span style={{ padding: 20 }}>
-                                            <div><b>Awosome Project</b></div>
-                                            <div style={{ fontSize: 12 }}>@user . 300 followers</div>
-                                        </span>
+        </Grid>
+        <Grid item xs={12}>
+          <div>
+            <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
+              {this.state.postList.map(tile => (
+                <div>
+                  <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
+                    <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
+                  </GridListTile>
+                  <Paper className={classes.content}>
+                    <ListItem>
+                      <Avatar
+                        src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                      </Avatar>
 
-                                    </ListItem>
+                      <span style={{ padding: 20 }}>
+                        <div><b>Awosome Project</b></div>
+                        <div style={{ fontSize: 12 }}>@user . 300 followers</div>
+                      </span>
 
-                                    <div style={{ paddingLeft: '2%' }}>
-                                        {tile.about_post}
-                                    </div>
+                    </ListItem>
 
-                                    <div style={{ paddingLeft: '2%' }}>
+                    <div style={{ paddingLeft: '2%' }}>
+                      {tile.about_post}
+                    </div>
 
-                                        <IconButton size='small' color="inherit" 
-                                        onClick={this.handleLike}>
-                                            <FontAwesomeIcon icon={faThumbsUp} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>{tile.like_count}</span>
+                    <div style={{ paddingLeft: '2%' }}>
+                      <IconButton size='small' color="inherit"
+                        // onClick={this.handleLike}>
+                        onClick={this.handleLike.bind(this, tile.id)}>
+                        {/* key={tile} data-tile={tile} onClick={this.handleLike}> */}
+                        <FontAwesomeIcon icon={faThumbsUp} />
+                      </IconButton>
+                      <span style={{ fontSize: 12 }}>{tile.like_count}</span>
 
-                                        <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
-                                            <FontAwesomeIcon icon={faComment} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
+                      <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
+                        <FontAwesomeIcon icon={faComment} />
+                      </IconButton>
+                      <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
 
-                                        <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
-                                            <FontAwesomeIcon icon={faShareAlt} />
-                                        </IconButton>
-                                        <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-
-                                        
-                                    </div>
-                                </Paper>
-                            </div>
-                        ))}
-                            </Grid>
-                            </div>
+                      <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
+                        <FontAwesomeIcon icon={faShareAlt} />
+                      </IconButton>
+                      <span style={{ fontSize: 12 }}>{tile.share_count}</span>
+                    </div>
+                  </Paper>
+                </div>
+              ))}
+            </Grid>
+          </div>
         </Grid>
       </div>
     );

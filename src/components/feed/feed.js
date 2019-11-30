@@ -61,6 +61,7 @@ class Feed extends React.Component {
         }
     }
     componentDidMount() {
+        debugger;
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
         axios.get(
