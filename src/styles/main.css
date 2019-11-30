@@ -111,3 +111,8 @@ textarea.post-text-area {
     height: 30px;
     padding: 5px;
   }
+  .bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+  }

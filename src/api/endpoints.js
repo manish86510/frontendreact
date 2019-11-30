@@ -7,7 +7,7 @@ const endpoints = {
   profile_interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   profile_skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   profile_languages: 'https://energeapi.do.viewyoursite.net/user/language/',
-
+  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
+  create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
 };
-
 export default endpoints;

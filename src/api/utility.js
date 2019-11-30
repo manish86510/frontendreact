@@ -1,36 +1,32 @@
-import './endpoints';
+import React, { Component } from 'react';
+import endpoints from './endpoints';
 import axios from 'axios';
 
-function getToken() {
-    var refresh = localStorage.getItem('refresh');
-    axios.post(endpoints.get_token,{
-        refresh: refresh
-    }).then(result => {
-        if (result.status === 200) {
-            localStorage.setItem('access', result.data.access);
-        } else {
-            this.setState({
-                isError: true
-            });
-        }
-    }).catch(e => {
-        this.setState({
-            isError: true
-        });
-    });
-}
 
-function MyResult(api, mydata) {
-    getToken();
-    var getToken = localStorage.getItem('access');
-    axios.post(api,
-    mydata,
-    {
-        headers: {
-            Authorization: 'Bearer ' + getToken,
-        }
+export default function MyResult(api, mydata, method) {
+    debugger;
+    var token = localStorage.getItem('access');
+    if (method == "post") {
+        axios.post(api,
+            mydata,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                }
+            }
+        ).then(res => {
+            debugger;
+            return res;
+        }).catch(
+            error => {
+                console.log(error);
+            }
+        );
     }
-    ).then(result => {
-        return result;
-    });
+
+    if (method == "get") {
+        axios.get(api, mydata).then(result => {
+            return result;
+        });
+    }
 }
