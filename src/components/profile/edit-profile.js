@@ -22,6 +22,7 @@ import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+const $ = require('jquery');
 
 
 const AntSwitch = withStyles(theme => ({
@@ -76,18 +77,35 @@ class EditProfile extends React.Component{
         bio:'',
         email:'',
         image:'',  
+        interest: [],
+        skill: [],
+        language: [],
       },
-      interest: [],
-      skill: [],
-      language: [],
+      
+      autocomp:{
+        interest: [],
+        skill: [],
+        language: [],
+      
+      }
+      
       }
     }
 
 componentDidMount = () => {
+  $('.autocompleteInterest').hide();
+  $('.autocompleteSkill').hide();
+  $('.autocompleteLanguage').hide();
+
   this.getUserData();
   this.getInterestData(); 
   this.getSkillData();
   this.getLanguageData();
+  
+  this.getInterest();
+  this.getSkill();
+  this.getLanguage();
+    
 }
 getUserData = () => {
   axios.get(endpoints.profile_user, {
@@ -101,11 +119,67 @@ getUserData = () => {
     user.username = res.data[0].username
     user.bio = res.data[0].about
     user.email = res.data[0].email
-    // res.data.skills
     user.image = res.data[0].avatar
     this.setState({ user });
   });
 }
+
+getInterest = () => {
+  debugger;
+  axios.get(endpoints.interest, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const interest = this.state.autocomp.interest
+      
+      for (let i = 0; i < res.data.length; i++) {
+        interest.push(res.data[i])
+        }
+
+      this.setState({ interest: interest }) 
+    
+  });
+}
+
+getSkill = () => {
+  axios.get(endpoints.skills, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const skill = this.state.autocomp.skill
+      
+    for (let i = 0; i < res.data.length; i++) {
+      skill.push(res.data[i])
+      }
+
+    this.setState({ skill: skill })  
+   
+  });
+}
+getLanguage = () => {
+  axios.get(endpoints.languages, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    
+    const language = this.state.autocomp.language
+      
+    for (let i = 0; i < res.data.length; i++) {
+      language.push(res.data[i])
+      }
+
+    this.setState({ language: language })  
+    
+  });
+}
+
+
 
 getInterestData = () => {
   axios.get(endpoints.profile_interest, {
@@ -114,10 +188,10 @@ getInterestData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const interest = this.state.interest
+    const interest = this.state.user.interest
       
       for (let i = 0; i < res.data.length; i++) {
-        interest.push(res.data[i].interest_code)
+        interest.push(res.data[i])
         }
 
       this.setState({ interest: interest }) 
@@ -132,10 +206,10 @@ getSkillData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const skill = this.state.skill
+    const skill = this.state.user.skill
       
     for (let i = 0; i < res.data.length; i++) {
-      skill.push(res.data[i].skill)
+      skill.push(res.data[i])
       }
 
     this.setState({ skill: skill })  
@@ -150,10 +224,10 @@ getLanguageData = () => {
     }
    }).then(res => {
     
-    const language = this.state.language
+    const language = this.state.user.language
       
     for (let i = 0; i < res.data.length; i++) {
-      language.push(res.data[i].name)
+      language.push(res.data[i])
       }
 
     this.setState({ language: language })  
@@ -162,81 +236,141 @@ getLanguageData = () => {
 }
 
 
+  _editInterest= () => {
+    $('.autocompleteInterest').show();
+    $('.editInterest').hide();
+  
+  }
+  _editSkill= () => {
+    $('.autocompleteSkill').show();
+    $('.editSkill').hide();
+  }
+
+  _editLanguage= () => {
+    $('.autocompleteLanguage').show();
+    $('.editLanguage').hide();
+  }
+
+  handleInterestDelete  = (event) => {
+    axios.delete(endpoints.profile_interest + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+       "Deleted"
+     })
+  };
+
+
+  handleSkillDelete  = (event) => {
+    axios.delete(endpoints.profile_skills + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+    })
+  };
+  
+  handleLanguageDelete  = (event) => {
+    axios.delete(endpoints.profile_languages + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+    })
+  };
+  
     render() {
-
-      const top100Films = [
-        { title: 'The Shawshank Redemption', year: 1994 },
-        { title: 'The Godfather', year: 1972 },
-        { title: 'The Godfather: Part II', year: 1974 },
-        { title: 'The Dark Knight', year: 2008 },
-        { title: '12 Angry Men', year: 1957 },
-        { title: "Schindler's List", year: 1993 },
-      ];
-
-        const handleDelete = () => {
-            console.info('You clicked the delete icon.');
-          };
-
-      const elements = this.state.interest
-      const interest_items = []
+      const elements = this.state.user.interest
       const interest_items_ed = []
       
-    
       for (const [index, value] of elements.entries()) {
-        interest_items.push(
-          { title: value, year: {value} },
-           
-        )
         interest_items_ed.push(
-<Chip
-        //   // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-          label={value}
-          onDelete={handleDelete}
-        />
-
+        <Chip
+          // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+          id={value.id}
+          label={value.interest_code}
+          onDelete={this.handleInterestDelete}
+          />
         )
       }
 
 
-      const elements_skill = this.state.skill
-      const skill_items = []
-      for (let i = 0; i < elements_skill.length; i++) {
-        skill_items.push(
-          { title: elements_skill[i], year: elements_skill[i] },
+      const elements_in = this.state.autocomp.interest
+      const interest_items = []
+      
+      for (const [index, value] of elements_in.entries()) {
+        interest_items.push(
+          { title: value.interest, year: value.interest },
+           
+        )
+      }
 
-          // <Chip
+
+      const elements_skill = this.state.user.skill
+      const skill_items_ed = []                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+      for (let i = 0; i < elements_skill.length; i++) {
+        skill_items_ed.push(
+          <Chip
+          id={elements_skill[i].id}
+          label= {elements_skill[i].skill}
+          onDelete={this.handleSkillDelete}
           // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        //   label={elements_skill[i]}
-        //   onDelete={handleDelete}
-        // /> 
+          />
         )
         }
 
-      const elements_language = this.state.language
-      const language_items = []
+
+        const elements_sk = this.state.autocomp.skill
+        const skill_items = []
+        
+        for (let i = 0; i < elements_sk.length; i++) {
+          skill_items.push(
+            { title: elements_sk[i].skill, year: elements_sk[i].skill },
+          )
+          }
+
+      const elements_language = this.state.user.language
+      const language_ed = []
+
       for (let i = 0; i < elements_language.length; i++) {
-        language_items.push(
-          { title: elements_language[i], year: elements_language[i] },
-
-        //   <Chip
+        language_ed.push(
+          <Chip
         //   avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        //   label={elements_language[i]}
-        //   onDelete={handleDelete}
-        // /> 
+        id={elements_language[i].id}
+        label= {elements_language[i].name}
+        onDelete={this.handleLanguageDelete}
+          /> 
         )
-        }  
+        }
 
+
+        const elements_la = this.state.autocomp.language
+        const language_items = []
+        for (let i = 0; i < elements_la.length; i++) {
+          language_items.push(
+            { title: elements_la[i].language, year: elements_la[i].language },
+          )
+          }
+
+        
         
         return (
          <div>
         <Grid container spacing={3}>
           <Grid item xs={11}>
           <Grid container spacing={7}>
-          <Grid item xs={10}><Button variant="outlined" >
+          <Grid item xs={10}><Button variant="outlined" > 
             Cancel
           </Button>
           </Grid><Grid item xs={2}>
-          <Button  variant="contained" color="primary" >
+          <Button  variant="contained" color="primary" onClick={this.submit}>
           Done
           </Button></Grid>
           </Grid>
@@ -301,19 +435,22 @@ getLanguageData = () => {
                             <span style={{ fontSize: 10 }}>{this.state.user.bio}</span>
                             </div>
                             <br></br>
-                            <br></br>
                             <hr></hr>
                             {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Interests
                             </span>
                             </div> */}
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
-                            {/* {interest_items_ed} */}
-
-                            <div style={{ width: 500 }} >
+                            <div class='row editInterest' style={{ position: 'relative', left: 30 }}>
+                            {interest_items_ed}
+                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}} onClick={this._editInterest}/>
+      </Fab>
+                            </div>
+                            
+                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 500 }} >
+                            {/* {this._renderCancel} */}
                             <Autocomplete
-                            showResults='true'
                         multiple
                         id="tags-standard"
                         options={interest_items}
@@ -329,28 +466,28 @@ getLanguageData = () => {
                             fullWidth
                             // InputProps={{disableUnderline: true}}
                           />
-                        )}
-                      />
+                          )}
+                          />
+                     
                     </div>
-    
-
-     
+                    <br></br>
       
-      {/* <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
-      </Fab> */}
-      
-                            </div>
-
                             {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Skills
                             </span>
                             </div> */}
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            <div class='row editSkill' style={{ position: 'relative', left: 30 }}>
                             
-                            {/* {skill_items} */}
-                            <div style={{ width: 500 }}>
+                            {skill_items_ed}
+
+                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+                            <AddIcon style={{color: 'white'}} onClick={this._editSkill}/>
+                            </Fab>
+                            </div>
+
+                            <div class='autocompleteSkill' style={{ position: 'relative', left: 30, width: 500 }} >
+                            
                             <Autocomplete
         multiple
         id="tags-standard"
@@ -369,22 +506,24 @@ getLanguageData = () => {
         )}
       />
       </div>
+      <br></br>
      
-{/* <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
-      </Fab> */}
-</div>
 {/* <div class='row' style={{ position: 'relative', left: 30 }}>
 <span style={{ padding: 10, fontSize: 12}}>
   Languages
 </span>
 </div> */}
  
-<div class='row' style={{ position: 'relative', left: 30 }}>
-{/* {language_items} */}
+<div class='row editLanguage' style={{ position: 'relative', left: 30 }}>
+{language_ed}
+<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+                            <AddIcon style={{color: 'white'}} onClick={this._editLanguage}/>
+                            </Fab>
+                         
+</div>
 
-
-<div style={{ width: 500 }}>
+<div class='autocompleteLanguage' style={{ position: 'relative', left: 30, width: 500 }} >
+                          
                             <Autocomplete
         multiple
         id="tags-standard"
@@ -402,7 +541,6 @@ getLanguageData = () => {
           />
         )}
       />
-</div>
 </div>
 
 <p></p>

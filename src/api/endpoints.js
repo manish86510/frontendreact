@@ -8,6 +8,12 @@ const endpoints = {
   profile_skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   profile_languages: 'https://energeapi.do.viewyoursite.net/user/language/',
 
+  interest: 'https://energeapi.do.viewyoursite.net/interest/',
+  skills: 'https://energeapi.do.viewyoursite.net/skill/',
+  languages: 'https://energeapi.do.viewyoursite.net/language/',
+
+  
+
 };
 
 export default endpoints;
