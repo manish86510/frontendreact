@@ -155,17 +155,18 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
+      window.location.reload();
       get_auth_token();
       var token = localStorage.getItem('access');
       this.state.mediaData.file = this.fileArray;
       this.state.mediaData.post = res.data.id;
-      MyResult(endpoints.create_media, this.state.mediaData, "post");
+      //MyResult(endpoints.create_media, this.state.mediaData, "post");
       axios.post(endpoints.create_media, this.state.mediaData ,{
         headers:{
           Authorization: 'Bearer ' + token,
         }
       }).then(res => {
-        window.location.reload();
+        //window.location.reload();
       });
     }).catch(e => {
       console.log(e);
