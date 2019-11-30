@@ -64,6 +64,7 @@ class Feed extends React.Component {
         //     this.setState({
         //         postList: result.data,
         //     });
+
         // }
 
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
@@ -92,7 +93,6 @@ class Feed extends React.Component {
         }
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
         var getToken = localStorage.getItem('access');
-        debugger
         axios.post(
           url, my_data,
           {
@@ -101,8 +101,8 @@ class Feed extends React.Component {
             }
           }
         ).then(res => {
-          debugger;
-          console.log(res.data)
+          console.log(res.data);
+          window.location.reload();
         })
       }
     render() {
@@ -162,8 +162,6 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-
-                                                
                                             </div>
                                         </Paper>
                                     </div>
