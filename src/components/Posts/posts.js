@@ -18,12 +18,25 @@ import axios from 'axios';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-  },
-  gridList: {
+},
+conButton: {
+    float: "right",
+},
+gridList: {
     listStyleType: "none",
     width: '100%',
     borderRadius: 30
-  },
+},
+icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+},
+content: {
+    position: "relative",
+    width: "100%",
+    top: -50,
+    borderRadius: 15,
+    paddingBottom: 24
+}
 });
 
 class Posts extends React.Component {
@@ -38,25 +51,34 @@ class Posts extends React.Component {
   }
 
   componentDidMount() {
+    // var postData = null;
+    // var result = MyResult(endpoints.create_post, postData, "get");
+    // if (result.status == 200) {
+    //     this.setState({
+    //         postList: result.data,
+    //     });
+    // }
+
     var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
     var getToken = localStorage.getItem('access');
     axios.get(
-      url,
-      {
-        headers: {
-          Authorization: 'Bearer ' + getToken,
+        url,
+        {
+            headers: {
+                Authorization: 'Bearer ' + getToken,
+            }
         }
-      }
     ).then(res => {
-      if (res.status == 200) {
-        console.log(res.data)
-        this.setState({
-          postList: res.data,
-        });
-      }
+        if (res.status == 200) {
+            console.log(res.data)
+            this.setState({
+                postList: res.data,
+            });
+        }
     })
     // this.getPostList();
-  }
+}
+
   handleLike = (tile) => {
     var my_data={
       post:tile,
@@ -90,9 +112,13 @@ class Posts extends React.Component {
             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
               {this.state.postList.map(tile => (
                 <div>
-                  <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                    <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
-                  </GridListTile>
+                   <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
+                                            <div class="bottom-left">Manish Kumar</div>
+                                        </GridListTile>
                   <Paper className={classes.content}>
                     <ListItem>
                       <Avatar
