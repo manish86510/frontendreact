@@ -76,18 +76,21 @@ class EditProfile extends React.Component{
         username: '',
         bio:'',
         email:'',
-        image:'',  
+        image:'',
         interest: [],
         skill: [],
         language: [],
       },
-      
       autocomp:{
         interest: [],
         skill: [],
         language: [],
-      
-      }
+      },
+      selected:{
+        interest: [],
+        skill: [],
+        language: [],
+      }  
       
       }
     }
@@ -125,13 +128,13 @@ getUserData = () => {
 }
 
 getInterest = () => {
-  debugger;
   axios.get(endpoints.interest, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
+
     const interest = this.state.autocomp.interest
       
       for (let i = 0; i < res.data.length; i++) {
@@ -259,7 +262,9 @@ getLanguageData = () => {
       }
      }).then(res => {
        "Deleted"
-     })
+        window.location.reload();
+      })
+   
   };
 
 
@@ -271,7 +276,10 @@ getLanguageData = () => {
       }
      }).then(res => {
       "Deleted" 
+      window.location.reload();
+
     })
+   
   };
   
   handleLanguageDelete  = (event) => {
@@ -282,38 +290,94 @@ getLanguageData = () => {
       }
      }).then(res => {
       "Deleted" 
+      window.location.reload();
+
     })
+   
   };
 
-  handleSubmit = (event) => {
-    axios.post(endpoints.profile_interest + event.currentTarget.parentElement.id+'/', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-     }).then(res => {
-      "Deleted" 
-    })
+  handleInterestData = (event) => {
+    const selected_interest = this.state.selected.interest
+    selected_interest.push(
+      event.currentTarget.innerText
+    )
+    };
 
-    axios.post(endpoints.profile_skills + event.currentTarget.parentElement.id+'/', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-     }).then(res => {
-      "Deleted" 
-    })
+   handleSkillData = (event) => {
+    const selected_skill = this.state.selected.skill
+    selected_skill.push(
+      event.currentTarget.innerText
+    )
+   }
+   handleLanguageData = (event) => {
+    const selected_language = this.state.selected.language
+    selected_language.push(
+      event.currentTarget.innerText
+    )
+   }
 
-    axios.post(endpoints.profile_languages + event.currentTarget.parentElement.id+'/', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-     }).then(res => {
-      "Deleted" 
-    })
+  
+  handleSubmit= (event) => {
+    const inter = this.state.selected.interest
+    const sk = this.state.selected.skill
+    const lan = this.state.selected.language
     
-  };
+    if (this.state.selected.interest != ''){
+      for (let i = 0; i < inter.length; i++) {
+        const code = JSON.parse('{ "interest_code" : "'+inter[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_interest,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+    } 
+    window.location.reload();
+    }else if(this.state.selected.skill != ''){
+
+      for (let i = 0; i < sk.length; i++) {
+        const code = JSON.parse('{ "skill" : "'+sk[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_skills,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+
+    } 
+    window.location.reload();
+     
+    }else if(this.state.selected.language != ''){
+      for (let i = 0; i < lan.length; i++) {
+        const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_languages,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+      
+    } 
+    window.location.reload();
+
+    }
+
+      };
   
     render() {
       const elements = this.state.user.interest
@@ -482,10 +546,11 @@ getLanguageData = () => {
                             {/* {this._renderCancel} */}
                             <Autocomplete
                         multiple
-                        id="tags-standard"
+                        id="interest"
                         options={interest_items}
                         getOptionLabel={option => option.title}
                         // defaultValue={[top100Films[13]]}
+                        onChange={this.handleInterestData}
                         renderInput={params => (
                           <TextField
                             {...params}
@@ -524,6 +589,7 @@ getLanguageData = () => {
         options={skill_items}
         getOptionLabel={option => option.title}
         // defaultValue={[top100Films[13]]}
+        onChange={this.handleSkillData}
         renderInput={params => (
           <TextField
             {...params}
@@ -560,6 +626,7 @@ getLanguageData = () => {
         options={language_items}
         getOptionLabel={option => option.title}
         // defaultValue={[top100Films[13]]}
+        onChange={this.handleLanguageData}
         renderInput={params => (
           <TextField
             {...params}

@@ -12,6 +12,7 @@ const endpoints = {
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/language/',
 
+  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
+  create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
 };
-
 export default endpoints;
