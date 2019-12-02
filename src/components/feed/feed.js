@@ -22,6 +22,9 @@ import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import MyResult from '../../api/utility';
 import endpoints from '../../api/endpoints';
+import TextareaAutosize from 'react-textarea-autosize';
+
+
 
 
 const styles = theme => ({
@@ -54,8 +57,11 @@ class Feed extends React.Component {
         this.state = {
             postList: [],
             value: 0,
-            like_status: false
-        }
+            like_status: false,
+            show:false,
+            comments: '',
+        };
+        this.toggleComments = this.toggleComments.bind(this)
     }
     componentDidMount() {
         // var postData = null;
@@ -65,7 +71,6 @@ class Feed extends React.Component {
         //         postList: result.data,
         //     });
         // }
-
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -86,15 +91,66 @@ class Feed extends React.Component {
         // this.getPostList();
     }
 
-    handleLike = () => {
-        var like = 0
-        if(this.state.postList.like_count==0){
-            like+=1
-        }else{
-            like=-+1
+    handleLike = (tile) => {
+        var my_data={
+          post:tile,
         }
-        return like;
+        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+        var getToken = localStorage.getItem('access');
+        debugger
+        axios.post(
+          url, my_data,
+          {
+            headers: {
+              Authorization: 'Bearer ' + getToken,
+            }
+          }
+        ).then(res => {
+          console.log(res.data)
+        })
+      }
+
+    toggleComments = () => {
+        const {show} = this.state;
+        this.setState( { show: !show } )
     }
+
+    // postComments = (e) => {
+    //     debugger;
+    // e.preventDefault();
+    // let self = this;
+    // console.log(self.state.comments);
+    // axios.post("https://energeapi.do.viewyoursite.net/api/v1/post/comment/", {
+    //     comments: self.state.comments
+    // }).then(result => {
+    //     if (result.status === 200) {
+    //         console.log(result.data);
+    //         // this.setState({
+    //         //     isSuccess:"Email sent successfully, please check your mail to verify"
+    //         //     })
+    //         this.props.history.push({
+    //             // pathname: "/register"
+    //             pathname: "/home"
+    //         });
+    //     } else {
+    //         this.setState({
+    //             isError: "Something went wrong!"
+    //         });
+    //     }
+    // }).catch(e => {
+    //     this.setState({
+    //         isError: "Something went wrong!"
+    //     });
+    // });
+    // }
+    handleComments = e => {
+    console.log(e.target.value);
+    this.setState({
+        comments: e.target.value,
+    });
+    }
+      
+
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -121,7 +177,6 @@ class Feed extends React.Component {
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
-                                            <div class="bottom-left">Manish Kumar</div>
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>
@@ -132,7 +187,6 @@ class Feed extends React.Component {
                                                     <div><b>Awosome Project</b></div>
                                                     <div style={{ fontSize: 12 }}>@user . 300 followers</div>
                                                 </span>
-
                                             </ListItem>
 
                                             <div style={{ paddingLeft: '2%' }}>
@@ -140,12 +194,13 @@ class Feed extends React.Component {
                                             </div>
 
                                             <div style={{ paddingLeft: '2%' }}>
-                                                <IconButton size='small' color="inherit" onClick={this.handleLike}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                                <IconButton size='small' color="inherit" onClick={this.handleLike.bind(this, tile.id)}>
+                                                <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                
-                                                <IconButton size='small' style={{ marginLeft: '5%' }} color="inherit" uaria-label="Close">
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close"
+                                                onClick={ this.toggleComments }>
+  
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
@@ -155,8 +210,10 @@ class Feed extends React.Component {
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
 
-                                                
-                                            </div>
+                                         </div><br></br>
+                                         {this.state.show && <Boxes />}
+                                         {this.state.comments && <Boxes />}
+                                         
                                         </Paper>
                                     </div>
                                 ))}
@@ -166,6 +223,31 @@ class Feed extends React.Component {
                 </Grid>
             </div>
         );
+    }
+}
+
+class Boxes extends React.Component{
+    render(){
+        return (
+            
+            <form onSubmit={this.handleSubmit}
+            bsSize="small"
+            className="padb10">
+                {/* <TextareaAutosize aria-label="maximum height" rows={4} placeholder="Comments" className="commentsBox" */}
+                 {/* style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:190}} /><br></br> */}
+                 {/* <input type="text" placeholder="Comments" style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}/> */}
+                <textarea rows="3" cols="40" placeholder="Comments"
+                style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}></textarea><br></br>
+                <Button block bsSize="Large"
+                        type="submit"
+                        onClick={this.handleComments}
+                        className="padb10" 
+                        style={{ backgroundColor: '#0066cc', marginBottom:20, marginLeft: 95,fontSize:8}}>
+                        Send
+                </Button>            
+                </form>      
+        )
+        
     }
 }
 

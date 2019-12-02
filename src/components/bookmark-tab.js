@@ -5,7 +5,8 @@ import Tab from '@material-ui/core/Tab';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import Posts from './Posts/posts'
+import Posts from './Posts/posts';
+import Feed from './feed/feed';
 
 function TabContainer(props) {
   return (
@@ -54,7 +55,7 @@ class BookmarkTabs extends React.Component {
           <Tab label="Projects" />
           <Tab label="Events" />
         </Tabs>
-        {value == 0 && <TabContainer><Posts /></TabContainer>}
+        {value == 0 && <TabContainer><Feed /></TabContainer>}
         {value == 1 && <TabContainer><Posts /></TabContainer>}
         {value == 2 && <TabContainer><Posts /></TabContainer>}
       </div>

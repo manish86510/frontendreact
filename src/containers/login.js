@@ -37,9 +37,6 @@ const styles = theme => ({
         fontSize: 15       
       },
 });
-// function validateForm() {
-//     return username.length > 0 && password.length > 0;
-// }
 class Login extends React.Component {
     constructor(props) {
         super(props);

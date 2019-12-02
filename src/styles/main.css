@@ -116,3 +116,11 @@ textarea.post-text-area {
     bottom: 8px;
     left: 16px;
   }
+  .MuiIconButton-root:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: blue;
+  }
+  .MuiIconButton-root {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: blue;
+  }
