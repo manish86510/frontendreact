@@ -252,7 +252,7 @@ getLanguageData = () => {
   }
 
   handleInterestDelete  = (event) => {
-    axios.delete(endpoints.profile_interest + event.currentTarget.parentElement.id+'/', {
+    axios.delete(endpoints.profile_interest + event.currentTarget.parentElement.id  , {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.access,
@@ -283,6 +283,36 @@ getLanguageData = () => {
      }).then(res => {
       "Deleted" 
     })
+  };
+
+  handleSubmit = (event) => {
+    axios.post(endpoints.profile_interest + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+    })
+
+    axios.post(endpoints.profile_skills + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+    })
+
+    axios.post(endpoints.profile_languages + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+    })
+    
   };
   
     render() {
@@ -370,7 +400,7 @@ getLanguageData = () => {
             Cancel
           </Button>
           </Grid><Grid item xs={2}>
-          <Button  variant="contained" color="primary" onClick={this.submit}>
+          <Button  variant="contained" color="primary" onClick={this.handleSubmit}>
           Done
           </Button></Grid>
           </Grid>

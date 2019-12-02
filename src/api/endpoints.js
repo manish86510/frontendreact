@@ -12,8 +12,6 @@ const endpoints = {
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/language/',
 
-  
-
 };
 
 export default endpoints;
