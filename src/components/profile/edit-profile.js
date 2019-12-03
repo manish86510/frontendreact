@@ -80,6 +80,9 @@ class EditProfile extends React.Component{
         interest: [],
         skill: [],
         language: [],
+        linked_in:'',
+        education:'',
+        url:'',
       },
       autocomp:{
         interest: [],
@@ -117,13 +120,38 @@ getUserData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
   }).then(res => {
+    debugger;
     const user = this.state.user
     user.name = res.data[0].first_name+' '+res.data[0].last_name 
     user.username = res.data[0].username
     user.bio = res.data[0].about
     user.email = res.data[0].email
     user.image = res.data[0].avatar
+    user.url = res.data[0].enlarge_url
+    
     this.setState({ user });
+  });
+  axios.get(endpoints.profile_social_links, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const user = this.state.user
+    user.linked_in = res.data[0].name 
+    this.setState({ user });
+    
+  });
+  axios.get(endpoints.profile_education, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const user = this.state.user
+    user.education = res.data[0].attended_for 
+    this.setState({ user });
+    
   });
 }
 
@@ -322,7 +350,7 @@ getLanguageData = () => {
     const sk = this.state.selected.skill
     const lan = this.state.selected.language
     
-    if (this.state.selected.interest != ''){
+    if (this.state.selected.interest !== ''){
       for (let i = 0; i < inter.length; i++) {
         const code = JSON.parse('{ "interest_code" : "'+inter[i]+'" }')
         axios({
@@ -338,7 +366,7 @@ getLanguageData = () => {
       })
     } 
     window.location.reload();
-    }else if(this.state.selected.skill != ''){
+    }else if(this.state.selected.skill !== ''){
 
       for (let i = 0; i < sk.length; i++) {
         const code = JSON.parse('{ "skill" : "'+sk[i]+'" }')
@@ -357,7 +385,7 @@ getLanguageData = () => {
     } 
     window.location.reload();
      
-    }else if(this.state.selected.language != ''){
+    }else if(this.state.selected.language !=+ ''){
       for (let i = 0; i < lan.length; i++) {
         const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
         axios({
@@ -679,7 +707,7 @@ getLanguageData = () => {
 
                             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>www.linkedin.com</Grid>
+        <Grid item>{this.state.user.linked_in}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
@@ -708,7 +736,7 @@ getLanguageData = () => {
             </span>
             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>Bachelour of communications</Grid>
+        <Grid item>{this.state.user.education}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
@@ -730,7 +758,7 @@ getLanguageData = () => {
                             </span>
                             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>www.jackiechan.com</Grid>
+        <Grid item>{this.state.user.url}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
