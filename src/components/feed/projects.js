@@ -12,13 +12,13 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
-// import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import { height } from 'dom-helpers';
 import { maxHeight, borderRadius } from '@material-ui/system';
 import { white } from 'ansi-colors';
 import axios from 'axios';
 import AddPost from '../popup/add_post';
+import AddProject from '../popup/add_project';
 import '../../styles/main.css';
 import MyResult from '../../api/utility';
 import endpoints from '../../api/endpoints';
@@ -48,14 +48,13 @@ const styles = theme => ({
     }
 });
 
-class Feed extends React.Component {
+class Projects extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             postList: [],
             value: 0,
-            like_status: false,
-            post_type : this.props.post_type
+            like_status: false
         }
     }
     componentDidMount() {
@@ -114,22 +113,21 @@ class Feed extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <AddPost/>
+                        <AddProject/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>
-                            <b>. Feed .</b>
+                            <b>. Projects .</b>
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {this.state.postList.map(tile => (
-
-
                                     <div>
+                                        {/* {tile.post_type=="Project" ? '<h1>Project</h1>' : '<h1>Post</h1>'} */}
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
@@ -156,12 +154,10 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faThumbsUp} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
-
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
@@ -179,8 +175,8 @@ class Feed extends React.Component {
     }
 }
 
-Feed.propTypes = {
+Projects.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(Feed);
+export default withStyles(styles)(Projects);
