@@ -4,7 +4,6 @@ import axios from 'axios';
 
 
 export default function MyResult(api, mydata, method) {
-    debugger;
     var token = localStorage.getItem('access');
     if (method == "post") {
         axios.post(api,
@@ -15,7 +14,6 @@ export default function MyResult(api, mydata, method) {
                 }
             }
         ).then(res => {
-            debugger;
             return res;
         }).catch(
             error => {

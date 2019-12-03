@@ -97,7 +97,7 @@ function renderSuggestion(suggestion) {
   );
 }
 
-class PostTextArea extends React.Component {
+class ProjectTextArea extends React.Component {
   fileObj = [];
   fileArray = [];
   constructor(props) {
@@ -107,7 +107,7 @@ class PostTextArea extends React.Component {
         about_post: "",
         tags: "test",
         is_public: true,
-        post_type: "Post",
+        post_type: "Project",
         target_audience: "test",
         inputFile: ""
       },
@@ -155,7 +155,7 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      //window.location.reload();
+      window.location.reload();
       //get_auth_token();
       var token = localStorage.getItem('access');
       this.state.mediaData.file = this.fileArray;
@@ -167,7 +167,7 @@ class PostTextArea extends React.Component {
           Authorization: 'Bearer ' + token,
         }
       }).then(res => {
-        //window.location.reload();
+        window.location.reload();
       });
     }).catch(e => {
       console.log(e);
@@ -257,8 +257,8 @@ class PostTextArea extends React.Component {
   }
 }
 
-PostTextArea.propTypes = {
+ProjectTextArea.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(PostTextArea);
+export default withStyles(styles)(ProjectTextArea);
