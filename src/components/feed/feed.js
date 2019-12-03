@@ -22,6 +22,9 @@ import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import MyResult from '../../api/utility';
 import endpoints from '../../api/endpoints';
+import TextareaAutosize from 'react-textarea-autosize';
+
+
 
 
 const styles = theme => ({
@@ -55,9 +58,13 @@ class Feed extends React.Component {
             postList: [],
             value: 0,
             like_status: false,
-            post_type : this.props.post_type
+            show:false,
+            comments: '',
+        };
+        this.toggleComments = this.toggleComments.bind(this)
+            // post_type : this.props.post_type
         }
-    }
+    
     componentDidMount() {
         // var postData = null;
         // var result = MyResult(endpoints.create_post, postData, "get");
@@ -65,9 +72,7 @@ class Feed extends React.Component {
         //     this.setState({
         //         postList: result.data,
         //     });
-
         // }
-
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -102,11 +107,17 @@ class Feed extends React.Component {
             }
           }
         ).then(res => {
-          console.log(res.data);
+          console.log(res.data)
           window.location.reload();
         })
       }
 
+    toggleComments = () => {
+        const {show} = this.state;
+        this.setState( { show: !show } )
+    }
+
+      
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -153,11 +164,12 @@ class Feed extends React.Component {
 
                                             <div style={{ paddingLeft: '2%' }}>
                                                 <IconButton size='small' color="inherit" onClick={this.handleLike.bind(this, tile.id)}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                                <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close">
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close"
+                                                onClick={ this.toggleComments }>
+  
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
@@ -166,7 +178,11 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-                                            </div>
+
+                                         </div><br></br>
+                                         {this.state.show && <Boxes />}
+                                         
+                                            {/* </div> */}
                                         </Paper>
                                     </div>
                                 ))}
@@ -176,6 +192,32 @@ class Feed extends React.Component {
                 </Grid>
             </div>
         );
+    }
+}
+
+
+class Boxes extends React.Component{
+    render(){
+        return (
+            
+            <form onSubmit={this.handleSubmit}
+            bsSize="small"
+            className="padb10">
+                {/* <TextareaAutosize aria-label="maximum height" rows={4} placeholder="Comments" className="commentsBox" */}
+                 {/* style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:190}} /><br></br> */}
+                 {/* <input type="text" placeholder="Comments" style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}/> */}
+                <textarea rows="3" cols="40" placeholder="Comments"
+                style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}></textarea><br></br>
+                <Button block bsSize="Large"
+                        type="submit"
+                        onClick={this.handleComments}
+                        className="padb10" 
+                        style={{ backgroundColor: '#0066cc', marginBottom:20, marginLeft: 95,fontSize:8}}>
+                        Send
+                </Button>            
+                </form>      
+        )
+        
     }
 }
 

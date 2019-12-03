@@ -9,5 +9,6 @@ const endpoints = {
   profile_languages: 'https://energeapi.do.viewyoursite.net/user/language/',
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
+  user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/'
 };
 export default endpoints;

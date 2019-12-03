@@ -8741,6 +8741,19 @@ react-swipeable-views@^0.13.3:
     react-swipeable-views-utils "^0.13.3"
     warning "^4.0.1"
 
+react-textarea-autosize@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-7.1.2.tgz#70fdb333ef86bcca72717e25e623e90c336e2cda"
+  integrity sha512-uH3ORCsCa3C6LHxExExhF4jHoXYCQwE5oECmrRsunlspaDAbS4mGKNlWZqjLfInWtFQcf0o1n1jC/NGXFdUBCg==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    prop-types "^15.6.0"
+
+react-textfield@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-textfield/-/react-textfield-0.0.6.tgz#bbd29cfde9b8fc77e90fa05418d4c7cc4492407c"
+  integrity sha512-J6WucKMwXfAGRKJsaPa30s2ClNJU+chUVRa1CrAPsLH285kiSZXL78BH7CH6Cm3SH/NdQjqIHhs6tb7XBLUv3Q==
+
 react-themeable@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"

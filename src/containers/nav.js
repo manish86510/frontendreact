@@ -35,6 +35,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
+import InputBase from '@material-ui/core/InputBase';
 // import { borderRadius } from '@material-ui/system';
 // import { withRouter } from 'react-router-dom';
 
@@ -289,10 +290,16 @@ class SideNav extends React.Component {
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
                             <div style={{ display: 'inline-block' }}>
-                                <IconButton aria-label="search" size="medium">
-                                    <SearchOutlinedIcon />
+                                <IconButton aria-label="search">
+                                    {/* <SearchOutlinedIcon /> */}
+                                    <InputBase
+                                        className={classes.input}
+                                        placeholder="username"
+                                        value={this.state.username}
+                                        onChange={this.handleUserName}
+                                        inputProps={{ 'aria-label': 'user' }}
+                                    />
                                 </IconButton>
-                                
                             </div>
                         </Typography>
                         <div>
@@ -306,7 +313,6 @@ class SideNav extends React.Component {
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
                                 <div>@suman</div>
                             </div>
-
                             <Button onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
                                     src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
