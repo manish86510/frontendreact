@@ -106,15 +106,9 @@ class PostHotTopics extends React.Component {
                     <Card.Body>
                       <Paper className={classes.paper}>
                         <ListItem >
-                            <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                              {this.state.postList.map(tile => (
+                            <Grid >                             
                                 <div>
-                                  <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                                    <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width: '100%', height:300 }} />
-                                   
-                                    <div class="bottom-left">Manish Kumar</div>
-                                  </GridListTile >
-                                  <Paper className={classes.content}>
+                                <Paper className={classes.content}>
                                     <ListItem>
                                       <Avatar
                                         src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
@@ -125,8 +119,13 @@ class PostHotTopics extends React.Component {
                                       </span>
                                     </ListItem>
                                   </Paper> 
+
+                                  <GridListTile style={{ width: "100%", height: 350, borderRadius: 30 }}>
+                                    <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} style={{ border: 2, borderRadius: 2, width: '100%', height:320 }} />                                 
+                                    {/* <div class="bottom-left">Manish Kumar</div> */}
+                                  </GridListTile >
+                                 
                                 </div>                
-                              ))}
                                </Grid>                        
                           </ListItem>                        
                       </Paper>
