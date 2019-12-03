@@ -131,6 +131,96 @@ class PostHotTopics extends React.Component {
                       </Paper>
                     </Card.Body>
                   </Accordion.Collapse>
+
+                  <Accordion defaultActiveKey="1">
+                <Card>
+                  <Card.Header>
+                    <b>. expand your circle .</b>
+                    <div style={{ float: "right" }}>
+                      <IconButton size="small">
+                        <FontAwesomeIcon icon={faRedoAlt} />
+                      </IconButton>
+                      <IconButton size="small">
+                        <Accordion.Toggle style={{ float: "right" }} as={Button} variant="link" eventKey="1">
+                          <FontAwesomeIcon icon={faAngleDown} />
+                        </Accordion.Toggle>
+                      </IconButton>
+                    </div>
+                  </Card.Header>
+                  <Accordion.Collapse  eventKey="1">
+                    <Card.Body>
+                      <Paper className={classes.paper}>
+                        <ListItem>
+                          <Avatar
+                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                          </Avatar>
+                          <span style={{ padding: 20 }}>
+                            <div style={{ fontSize: 12 }} >
+                              @user . 300 followers
+                              {/* <span > */}
+                              {/* </span> */}
+                            </div>
+                          </span>
+                          <Chip
+                            style={{ float: "right" }}
+                            size="small"
+                            // icon={<FaceIcon />}
+                            label="connected"
+                            onClick={this.handleClick}
+                            onDelete={this.handleDelete}
+                          />
+                        </ListItem>
+                      </Paper>
+                      <Paper className={classes.paper}>
+                        <ListItem>
+                          <Avatar
+                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                          </Avatar>
+                          <span style={{ padding: 20 }}>
+                            <div style={{ fontSize: 12 }} >
+                              @user . 300 followers
+                              {/* <span > */}
+                              {/* </span> */}
+                            </div>
+                          </span>
+                          <Chip
+                            style={{ float: "right" }}
+                            size="small"
+                            // icon={<FaceIcon />}
+                            label="connected"
+                            onClick={this.handleClick}
+                            onDelete={this.handleDelete}
+                          />
+                        </ListItem>
+                      </Paper>
+                      <Paper className={classes.paper}>
+                        <ListItem>
+                          <Avatar
+                            src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                          </Avatar>
+                          <span style={{ padding: 20 }}>
+                            <div style={{ fontSize: 12 }} >
+                              @user . 300 followers
+                              {/* <span > */}
+                              {/* </span> */}
+                            </div>
+                          </span>
+                          <Chip
+                            style={{ float: "right" }}
+                            size="small"
+                            // icon={<FaceIcon />}
+                            label="connected"
+                            onClick={this.handleClick}
+                            onDelete={this.handleDelete}
+                          />
+                        </ListItem>
+                      </Paper>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+
+
                 </Card>
               </Accordion>             
            {/* </Paper> */}
