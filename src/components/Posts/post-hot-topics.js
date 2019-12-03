@@ -136,8 +136,7 @@ class PostHotTopics extends React.Component {
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                             index={this.state.activeStep}
                             onChangeIndex={this.handleStepChange}
-                            enableMouseEvents
-                          >
+                            enableMouseEvents>
                             {this.state.tutorialSteps.map((step, index) => (
                               <div key={step.label}>
                                 {Math.abs(this.state.activeStep - index) <= 2 ? (
@@ -210,7 +209,6 @@ class PostHotTopics extends React.Component {
 
                               {/* </span> */}
                             </div>
-
                           </span>
                           <Chip
                             style={{ float: "right" }}

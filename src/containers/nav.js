@@ -292,6 +292,7 @@ class SideNav extends React.Component {
                                 <IconButton aria-label="search" size="medium">
                                     <SearchOutlinedIcon />
                                 </IconButton>
+                                
                             </div>
                         </Typography>
                         <div>
