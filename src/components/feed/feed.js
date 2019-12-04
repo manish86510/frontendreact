@@ -152,12 +152,13 @@ class Feed extends React.Component {
         });
     }
     handleToggle = (tile) => {
-        debugger;
-        // const {show} = this.state;
+        console.log(this.state.comment_id);
+        if(this.state.comment_id == tile){
+            this.setState({show: !this.state.show});    
+        }else{
+            this.setState({show: true});
+        }       
         this.setState( { comment_id: tile } )
-        this.setState((currentState) => ({
-            show: !currentState.show, 
-        }));
     }
   
     render() {
