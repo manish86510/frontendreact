@@ -79,7 +79,7 @@ class ForgotPassword extends React.Component {
                         onChange = { e => setUsername(e.target.value) }
                         />  */}
                         <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="username">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="username" disabled>
                                 <FontAwesomeIcon icon={faUser} />
                             </IconButton>
                             <InputBase
@@ -107,7 +107,7 @@ class ForgotPassword extends React.Component {
                         onChange = { e => setPassword(e.target.value) }
                         type = "password" /> */}
                         <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
@@ -129,7 +129,7 @@ class ForgotPassword extends React.Component {
                         onChange = { e => setcPassword(e.target.value) }
                         type = "password" /> */}
                         <Paper component="form" className={classes.cpassword}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase

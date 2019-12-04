@@ -96,28 +96,13 @@ class Login extends React.Component {
                 <p>{this.state.isError}</p>
                 <form onSubmit={this.handleSubmit}
                     method="post">
-                    {/* <FormGroup controlId="username"
-                        bsSize="large"
-                        className="padb10" > */}
-                    {/* 
-                        <FormControl IconautoFocus type="text"
-                            placeholder="username"
-                            value={this.state.username}
-                            onChange={this.handleUserName}
-                            InputProps={{
-                                startAdornment: (
-                                    <IconButton size="small">
-                                        <FontAwesomeIcon icon={faUser} />
-                                    </IconButton>
-                                ),
-                            }}
-                        /> */}
+                    
                     <FormGroup
                         bsSize="small"
                         className="padb10"
                     >
                         <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="user">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
                                 <FontAwesomeIcon icon={faUser}/>
                             </IconButton>
                             <InputBase
@@ -138,7 +123,7 @@ class Login extends React.Component {
                             onChange={this.handlePassword}
                             type="password" /> */}
                         <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase

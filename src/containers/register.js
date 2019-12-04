@@ -147,7 +147,7 @@ class Register extends React.Component {
                                 onChange={this.handleUserName}
                                 value={this.state.username} /> */}
                             <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="user">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
                                 <FontAwesomeIcon icon={faUser} />
                             </IconButton>
                             <InputBase
@@ -169,7 +169,7 @@ class Register extends React.Component {
                                 onChange={this.handleEmail}
                                 value={this.state.email} /> */}
                             <Paper component="form" className={classes.email}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="email">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
                                 <FontAwesomeIcon icon={faEnvelope} />
                             </IconButton>
                             <InputBase
@@ -190,7 +190,7 @@ class Register extends React.Component {
                                 onChange={this.handlePassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
@@ -212,7 +212,7 @@ class Register extends React.Component {
                                 onChange={this.handleConfirmPassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.cpassword}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
