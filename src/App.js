@@ -9,7 +9,7 @@ import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
 import Profile from './components/profile/profile';
-import EditProfile from './components/profile/edit-profile';
+import EditProfile from './components/profile/Edit-profile';
 import Wallet from './components/wallet/wallet';
 import WalletCoins from './components/wallet/coins/WalletCoins';
 import MoreCoins from './components/wallet/coins/MoreCoins';
@@ -59,7 +59,7 @@ function App() {
         <Route path = "/bookmark" component = { Bookmark }/> 
         <Route path = "/notifications" component = { Notifications }/> 
         <Route path = "/profile" component = { Profile }/> 
-        <Route path = "/edit-profile" component = { EditProfile }/> 
+        <Route path = "/Edit-profile" component = { EditProfile }/> 
         <Route path = "/collaborate" component = { CollaboarateMain }/> 
         <Route path = "/events" component = { Events }/> 
         <Route path = "/wallet" component = { Wallet }/> 
