@@ -120,7 +120,6 @@ getUserData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
   }).then(res => {
-    debugger;
     const user = this.state.user
     user.name = res.data[0].first_name+' '+res.data[0].last_name 
     user.username = res.data[0].username
@@ -191,6 +190,7 @@ getSkill = () => {
    
   });
 }
+
 getLanguage = () => {
   axios.get(endpoints.languages, {
     headers: {
@@ -209,8 +209,6 @@ getLanguage = () => {
     
   });
 }
-
-
 
 getInterestData = () => {
   axios.get(endpoints.profile_interest, {
@@ -364,7 +362,7 @@ getLanguageData = () => {
       }).then(res => {
         "submit" 
       })
-    } 
+    }
     window.location.reload();
     }else if(this.state.selected.skill !== ''){
 
@@ -399,14 +397,19 @@ getLanguageData = () => {
       }).then(res => {
         "submit" 
       })
-      
-    } 
-    window.location.reload();
-
     }
-
+    window.location.reload();
+  }
       };
-  
+
+
+
+  handleNameEdit = (event) => {
+    debugger;
+    axios.put(endpoints.profile_user,
+       )
+
+  }
     render() {
       const elements = this.state.user.interest
       const interest_items_ed = []
@@ -508,7 +511,7 @@ getLanguageData = () => {
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Name
                             <IconButton size='small' color="inherit" aria-label="Close">
-                            <FontAwesomeIcon icon={faEdit} />
+                            <FontAwesomeIcon icon={faEdit} onClick={this.handleNameEdit}/>
                             </IconButton>
                             </span>
                             <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span></p>

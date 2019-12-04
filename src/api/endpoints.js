@@ -16,5 +16,8 @@ const endpoints = {
 
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
+
+  // ------------------------------Edit-------------------------------------
+
 };
 export default endpoints;
