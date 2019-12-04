@@ -294,7 +294,7 @@ class SideNav extends React.Component {
                                     {/* <SearchOutlinedIcon /> */}
                                     <InputBase
                                         className={classes.input}
-                                        placeholder="username"
+                                        placeholder="Search.."
                                         value={this.state.username}
                                         onChange={this.handleUserName}
                                         inputProps={{ 'aria-label': 'user' }}

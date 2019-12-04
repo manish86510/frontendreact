@@ -63,7 +63,6 @@ class PostHotTopics extends React.Component {
           }
         }
       ).then(res => {
-        console.log(res.data);
         if (res.status == 200) {
           this.setState({
             postList: res.data,

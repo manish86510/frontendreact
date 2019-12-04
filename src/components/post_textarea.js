@@ -13,6 +13,7 @@ import Autosuggest from 'react-autosuggest';
 import MyResult from '../api/utility';
 import endpoints from '../api/endpoints';
 import get_auth_token from '../api/auth_service';
+import Feed from './feed/feed';
 
 
 const styles = theme => ({
@@ -140,38 +141,39 @@ class PostTextArea extends React.Component {
 
   handlePostCreate = (event) => {
     event.preventDefault();
+    debugger;
     var postData = this.state.postData;
-    // var result = MyResult(endpoints.create_post, postData, "post");
-    // if(result){
-    //   console.log(result.data);
-      //window.location.reload();
-    // }
+    var result = MyResult(endpoints.create_post, postData, "post");
+    if(result){
+       return <Feed />;
+     }
     // this.state.mediaData.file = this.fileArray;
     // this.state.mediaData.post = result.data.id;
     // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
-    var token = localStorage.getItem('access');
-    axios.post(endpoints.create_post, postData ,{
-      headers:{
-        Authorization: 'Bearer ' + token,
-      }
-    }).then(res => {
-      //window.location.reload();
+    // var token = localStorage.getItem('access');
+    // axios.post(endpoints.create_post, postData ,{
+    //   headers:{
+    //     Authorization: 'Bearer ' + token,
+    //   }
+    // }).then(res => {
+      //this.componentDidMount();
+      // window.location.reload();
       //get_auth_token();
-      var token = localStorage.getItem('access');
-      this.state.mediaData.file = this.fileArray;
-      this.state.mediaData.post = res.data.id;
-      //MyResult(endpoints.create_media, this.state.mediaData, "post");
-      var mediaInfo = this.state.mediaData;
-      axios.post(endpoints.create_media, mediaInfo ,{
-        headers:{
-          Authorization: 'Bearer ' + token,
-        }
-      }).then(res => {
-        //window.location.reload();
-      });
-    }).catch(e => {
-      console.log(e);
-    });
+      // var token = localStorage.getItem('access');
+      // this.state.mediaData.file = this.fileArray;
+      // this.state.mediaData.post = res.data.id;
+      // //MyResult(endpoints.create_media, this.state.mediaData, "post");
+      // var mediaInfo = this.state.mediaData;
+      // axios.post(endpoints.create_media, mediaInfo ,{
+      //   headers:{
+      //     Authorization: 'Bearer ' + token,
+      //   }
+      // }).then(res => {
+      //   this.componentDidMount();
+      // });
+    // }).catch(e => {
+    //   console.log(e);
+    // });
   }
 
   showOpenFileDlg = () => {

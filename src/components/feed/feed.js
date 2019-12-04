@@ -58,7 +58,6 @@ class Feed extends React.Component {
         super(props);
         this.state = {
             postList: [],
-            // value: 0,
             like_status: false,
             isError: '',
             show:false,
@@ -77,7 +76,7 @@ class Feed extends React.Component {
         //         postList: result.data,
         //     });
         // }
-        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/get-post/";
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -88,7 +87,7 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                console.log(res.data)
+                console.log(res.data);
                 this.setState({
                     postList: res.data,
                 });
@@ -111,8 +110,7 @@ class Feed extends React.Component {
             }
           }
         ).then(res => {
-          console.log(res.data)
-          window.location.reload();
+            this.componentDidMount();
         })
       }
 
@@ -123,7 +121,6 @@ class Feed extends React.Component {
         // console.log(self.state.parent);
         var url = "https://energeapi.do.viewyoursite.net/api/v1/post/comment/"
         var getToken = localStorage.getItem('access');
-        debugger;
         axios.post(url, {
             post: tile,
             comment: self.state.comment,
@@ -133,11 +130,10 @@ class Feed extends React.Component {
                     Authorization: 'Bearer ' + getToken
                 }
         }).then(res => {
-            console.log(res.data)
-                window.location.reload();
+                this.componentDidMount();
         }).catch(tile => {
             this.setState({
-                isError: "User not found!"
+                isError: "Data not found!"
             });
             
         });
@@ -176,30 +172,32 @@ class Feed extends React.Component {
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {this.state.postList.map(tile => (
-
-
                                     <div>
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
+                                        {tile.post_media.map(userMedia => (
+                                            // { userMedia.file.map(mediaFile => (
+                                                <img src={userMedia.file} />
+                                            // ))}
+                                        ))}
+                                            {/* <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
                                             <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} /> */}
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>
                                                 <Avatar
                                                     src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
                                                 </Avatar>
+                                                {/* {tile.user.map(userData => (
                                                 <span style={{ padding: 20 }}>
-                                                    <div><b>Awosome Project</b></div>
-                                                    <div style={{ fontSize: 12 }}>@user . 300 followers</div>
+                                                    <div><b>{userData.username}</b></div>
+                                                    <div style={{ fontSize: 12 }}>@{userData.username} . 300 followers</div>
                                                 </span>
+                                                ))} */}
                                             </ListItem>
-
                                             <div style={{ paddingLeft: '2%' }}>
                                                 {tile.about_post}
                                             </div>
-
                                             <div style={{ paddingLeft: '2%' }}>
                                                 <IconButton size='small' color="inherit" onClick={this.handleLike.bind(this, tile.id)}>
                                                 <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
