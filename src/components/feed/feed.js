@@ -5,8 +5,11 @@ import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
+import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faShareAlt, faTag, faCoins, faUsers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import InputBase from '@material-ui/core/InputBase';
 import { Box } from '@material-ui/core';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -23,8 +26,6 @@ import '../../styles/main.css';
 import MyResult from '../../api/utility';
 import endpoints from '../../api/endpoints';
 import TextareaAutosize from 'react-textarea-autosize';
-
-
 
 
 const styles = theme => ({
@@ -48,7 +49,8 @@ const styles = theme => ({
         top: -50,
         borderRadius: 15,
         paddingBottom: 24
-    }
+    },
+   
 });
 
 class Feed extends React.Component {
@@ -56,15 +58,17 @@ class Feed extends React.Component {
         super(props);
         this.state = {
             postList: [],
-            value: 0,
+            // value: 0,
             like_status: false,
+            isError: '',
             show:false,
-            comments: '',
+            comment: '',
+            parent: '',
         };
-        this.toggleComments = this.toggleComments.bind(this)
+        this.postComments = this.postComments.bind(this)
+        this.handleToggle = this.handleToggle.bind(this)
             // post_type : this.props.post_type
-        }
-    
+        }   
     componentDidMount() {
         // var postData = null;
         // var result = MyResult(endpoints.create_post, postData, "get");
@@ -112,11 +116,45 @@ class Feed extends React.Component {
         })
       }
 
-    toggleComments = () => {
-        const {show} = this.state;
-        this.setState( { show: !show } )
+    postComments = (tile) => { 
+        // tile.preventDefault();
+        let self = this;
+        console.log(self.state.comment);
+        // console.log(self.state.parent);
+        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/comment/"
+        var getToken = localStorage.getItem('access');
+        debugger;
+        axios.post(url, {
+            post: tile,
+            comment: self.state.comment,
+        },  
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken
+                }
+        }).then(res => {
+            console.log(res.data)
+                window.location.reload();
+        }).catch(tile => {
+            this.setState({
+                isError: "User not found!"
+            });
+            
+        });
     }
-
+    handleComment = (tile) => {
+        console.log(tile.target.value);
+        // console.log(tile.target.value);
+        this.setState({
+        comment: tile.target.value,
+        // parent: tile.target.value,
+        });
+    }
+    handleToggle = (tile) => {
+        const {show} = this.state;
+        this.setState( { show_box: !show } )
+    }
+    
       
     render() {
         const { classes } = this.props;
@@ -167,8 +205,8 @@ class Feed extends React.Component {
                                                 <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" uaria-label="Close"
-                                                onClick={ this.toggleComments }>
+                                                <IconButton id= {tile.id} style={{ marginLeft: '5%' }} size='small' color="inherit" 
+                                                    onClick={this.handleToggle.bind(this, tile.id)}>
   
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
@@ -180,10 +218,34 @@ class Feed extends React.Component {
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
 
                                          </div><br></br>
-                                         {this.state.show && <Boxes />}
-                                         
-                                            {/* </div> */}
-                                        </Paper>
+
+                                         {this.state.show_box && 
+                                            <form onSubmit={this.handleSubmit}
+                                                bsSize="small"
+                                                className="padb10">
+                                                    <textarea className="textarea" rows="3" cols="40" name="comments" 
+                                                    
+                                                     placeholder="Add a comment"                                                   
+                                                     value={this.state.comment}
+                                                     onChange={this.handleComment}
+                                                     type="text"
+                                                     style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:50, width:500}}></textarea> <br></br>
+
+                                                    <Button block bsSize="Large"
+                                                            onClick={this.postComments.bind(this, tile.id)}
+                                                            className="padb10" 
+                                                            type="submit"
+                                                            style={{ backgroundColor: '#0066cc', 
+                                                            color: 'white', 
+                                                            marginBottom:20, 
+                                                            marginLeft: 95,
+                                                            fontSize:10,
+                                                            marginBottom: 40,}}>
+                                                            Post
+                                                    </Button>            
+                                               </form>
+                                                    }
+                                                    </Paper>
                                     </div>
                                 ))}
                             </Grid>
@@ -192,32 +254,6 @@ class Feed extends React.Component {
                 </Grid>
             </div>
         );
-    }
-}
-
-
-class Boxes extends React.Component{
-    render(){
-        return (
-            
-            <form onSubmit={this.handleSubmit}
-            bsSize="small"
-            className="padb10">
-                {/* <TextareaAutosize aria-label="maximum height" rows={4} placeholder="Comments" className="commentsBox" */}
-                 {/* style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:190}} /><br></br> */}
-                 {/* <input type="text" placeholder="Comments" style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}/> */}
-                <textarea rows="3" cols="40" placeholder="Comments"
-                style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:40, width:250}}></textarea><br></br>
-                <Button block bsSize="Large"
-                        type="submit"
-                        onClick={this.handleComments}
-                        className="padb10" 
-                        style={{ backgroundColor: '#0066cc', marginBottom:20, marginLeft: 95,fontSize:8}}>
-                        Send
-                </Button>            
-                </form>      
-        )
-        
     }
 }
 
