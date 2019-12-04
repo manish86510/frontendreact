@@ -58,14 +58,16 @@ class Feed extends React.Component {
         super(props);
         this.state = {
             postList: [],
+            value: 0,
             like_status: false,
             isError: '',
             show:false,
             comment: '',
             parent: '',
+            comment_id:0,
         };
-        this.postComments = this.postComments.bind(this)
-        this.handleToggle = this.handleToggle.bind(this)
+        this.postComments = this.postComments.bind(this);
+        // this.handleToggle = this.handleToggle.bind(this)
             // post_type : this.props.post_type
         }   
     componentDidMount() {
@@ -115,6 +117,13 @@ class Feed extends React.Component {
       }
 
     postComments = (tile) => { 
+        console.log(this.state.comment_id);
+        if(this.state.comment_id == tile){
+            this.setState({show: !this.state.show});    
+        }else{
+            this.setState({show: true});
+        }       
+        this.setState( { comment_id: tile } )
         // tile.preventDefault();
         let self = this;
         console.log(self.state.comment);
@@ -146,12 +155,16 @@ class Feed extends React.Component {
         // parent: tile.target.value,
         });
     }
-    handleToggle = (tile) => {
-        const {show} = this.state;
-        this.setState( { show_box: !show } )
-    }
-    
-      
+    // handleToggle = (tile) => {
+    //     console.log(this.state.comment_id);
+    //     if(this.state.comment_id == tile){
+    //         this.setState({show: !this.state.show});    
+    //     }else{
+    //         this.setState({show: true});
+    //     }       
+    //     this.setState( { comment_id: tile } )
+    // }
+  
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -176,7 +189,7 @@ class Feed extends React.Component {
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
                                         {tile.post_media.map(userMedia => (
                                             // { userMedia.file.map(mediaFile => (
-                                                <img src={userMedia.file} />
+                                                <img src={"https://energeapi.do.viewyoursite.net" + userMedia.file} />
                                             // ))}
                                         ))}
                                             {/* <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
@@ -203,9 +216,9 @@ class Feed extends React.Component {
                                                 <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                <IconButton id= {tile.id} style={{ marginLeft: '5%' }} size='small' color="inherit" 
-                                                    onClick={this.handleToggle.bind(this, tile.id)}>
-  
+
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" 
+                                                    onClick={this.postComments.bind(this, tile.id)}>
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
@@ -214,39 +227,38 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
+                                            </div><br></br>
 
-                                         </div><br></br>
-
-                                         {this.state.show_box && 
-                                            <form onSubmit={this.handleSubmit}
-                                                bsSize="small"
-                                                className="padb10">
-                                                    <textarea className="textarea" rows="3" cols="40" name="comments" 
-                                                    
-                                                     placeholder="Add a comment"                                                   
-                                                     value={this.state.comment}
-                                                     onChange={this.handleComment}
-                                                     type="text"
-                                                     style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:50, width:500}}></textarea> <br></br>
-
-                                                    <Button block bsSize="Large"
-                                                            onClick={this.postComments.bind(this, tile.id)}
-                                                            className="padb10" 
-                                                            type="submit"
-                                                            style={{ backgroundColor: '#0066cc', 
-                                                            color: 'white', 
-                                                            marginBottom:20, 
-                                                            marginLeft: 95,
-                                                            fontSize:10,
-                                                            marginBottom: 40,}}>
-                                                            Post
-                                                    </Button>            
-                                               </form>
-                                                    }
-                                                    </Paper>
-                                    </div>
-                                ))}
-                            </Grid>
+                                            {this.state.show && this.state.comment_id == tile.id &&
+                                                <form onSubmit={this.handleSubmit}
+                                                    bsSize="small"
+                                                    className="padb10">                                                       
+                                                        <textarea className="textarea"                                                        
+                                                        placeholder="Write a comment..."                                                   
+                                                        value={this.state.comment}
+                                                        onChange={this.handleComment}
+                                                        type="text"
+                                                        style={{paddingRight:50 , marginLeft: 95, height:29, 
+                                                        width:300, border:'1px solid #d8d5d5',
+                                                        backgroundColor: '#F2F4F4 ', borderRadius:6,}}></textarea>                                                   
+                                                            <Button block bsSize="Large"
+                                                                onClick={this.postComments.bind(this, tile.id)}
+                                                                className="padb10" 
+                                                                type="submit"
+                                                                style={{ backgroundColor: '#0066cc', 
+                                                                color: 'white', 
+                                                                marginBottom:22, 
+                                                                marginLeft: 2,
+                                                                fontSize:10,
+                                                                }}>
+                                                                Post
+                                                            </Button>                                                                                                                                                                    
+                                                </form>
+                                            }
+                                            </Paper>
+                                        </div>
+                                    ))}
+                            </Grid>                                                     
                         </div>
                     </Grid>
                 </Grid>
