@@ -67,7 +67,7 @@ class Feed extends React.Component {
             comment_id:0,
         };
         this.postComments = this.postComments.bind(this);
-        this.handleToggle = this.handleToggle.bind(this)
+        // this.handleToggle = this.handleToggle.bind(this)
             // post_type : this.props.post_type
         }   
     componentDidMount() {
@@ -118,6 +118,13 @@ class Feed extends React.Component {
       }
 
     postComments = (tile) => { 
+        console.log(this.state.comment_id);
+        if(this.state.comment_id == tile){
+            this.setState({show: !this.state.show});    
+        }else{
+            this.setState({show: true});
+        }       
+        this.setState( { comment_id: tile } )
         // tile.preventDefault();
         let self = this;
         console.log(self.state.comment);
@@ -151,15 +158,15 @@ class Feed extends React.Component {
         // parent: tile.target.value,
         });
     }
-    handleToggle = (tile) => {
-        console.log(this.state.comment_id);
-        if(this.state.comment_id == tile){
-            this.setState({show: !this.state.show});    
-        }else{
-            this.setState({show: true});
-        }       
-        this.setState( { comment_id: tile } )
-    }
+    // handleToggle = (tile) => {
+    //     console.log(this.state.comment_id);
+    //     if(this.state.comment_id == tile){
+    //         this.setState({show: !this.state.show});    
+    //     }else{
+    //         this.setState({show: true});
+    //     }       
+    //     this.setState( { comment_id: tile } )
+    // }
   
     render() {
         const { classes } = this.props;
@@ -212,7 +219,7 @@ class Feed extends React.Component {
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
 
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" 
-                                                    onClick={this.handleToggle.bind(this, tile.id)}>
+                                                    onClick={this.postComments.bind(this, tile.id)}>
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
