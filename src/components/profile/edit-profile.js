@@ -20,6 +20,9 @@ import {
 } from '@material-ui/core/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+const $ = require('jquery');
 
 
 const AntSwitch = withStyles(theme => ({
@@ -65,7 +68,6 @@ const theme = createMuiTheme({
 
 class EditProfile extends React.Component{
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -74,19 +76,42 @@ class EditProfile extends React.Component{
         username: '',
         bio:'',
         email:'',
-        image:'',  
+        image:'',
+        interest: [],
+        skill: [],
+        language: [],
+        linked_in:'',
+        education:'',
+        url:'',
       },
-      interest: '',
-      skill: '',
-      language: '',
+      autocomp:{
+        interest: [],
+        skill: [],
+        language: [],
+      },
+      selected:{
+        interest: [],
+        skill: [],
+        language: [],
+      }  
+      
       }
     }
 
 componentDidMount = () => {
+  $('.autocompleteInterest').hide();
+  $('.autocompleteSkill').hide();
+  $('.autocompleteLanguage').hide();
+
   this.getUserData();
   this.getInterestData(); 
   this.getSkillData();
   this.getLanguageData();
+  
+  this.getInterest();
+  this.getSkill();
+  this.getLanguage();
+    
 }
 getUserData = () => {
   axios.get(endpoints.profile_user, {
@@ -100,9 +125,88 @@ getUserData = () => {
     user.username = res.data[0].username
     user.bio = res.data[0].about
     user.email = res.data[0].email
-    // res.data.skills
     user.image = res.data[0].avatar
+    user.url = res.data[0].enlarge_url
+    
     this.setState({ user });
+  });
+  axios.get(endpoints.profile_social_links, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const user = this.state.user
+    user.linked_in = res.data[0].name 
+    this.setState({ user });
+    
+  });
+  axios.get(endpoints.profile_education, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const user = this.state.user
+    user.education = res.data[0].attended_for 
+    this.setState({ user });
+    
+  });
+}
+
+getInterest = () => {
+  axios.get(endpoints.interest, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+
+    const interest = this.state.autocomp.interest
+      
+      for (let i = 0; i < res.data.length; i++) {
+        interest.push(res.data[i])
+        }
+
+      this.setState({ interest: interest }) 
+    
+  });
+}
+
+getSkill = () => {
+  axios.get(endpoints.skills, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    const skill = this.state.autocomp.skill
+      
+    for (let i = 0; i < res.data.length; i++) {
+      skill.push(res.data[i])
+      }
+
+    this.setState({ skill: skill })  
+   
+  });
+}
+
+getLanguage = () => {
+  axios.get(endpoints.languages, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.access,
+    }
+   }).then(res => {
+    
+    const language = this.state.autocomp.language
+      
+    for (let i = 0; i < res.data.length; i++) {
+      language.push(res.data[i])
+      }
+
+    this.setState({ language: language })  
+    
   });
 }
 
@@ -113,10 +217,14 @@ getInterestData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const interest = res.data[0].interest_code;
-    this.setState({
-      interest
-    });
+    const interest = this.state.user.interest
+      
+      for (let i = 0; i < res.data.length; i++) {
+        interest.push(res.data[i])
+        }
+
+      this.setState({ interest: interest }) 
+    
   });
 }
 
@@ -127,10 +235,14 @@ getSkillData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-     const skill = res.data[0].skill;
-     this.setState({
-      skill
-     });
+    const skill = this.state.user.skill
+      
+    for (let i = 0; i < res.data.length; i++) {
+      skill.push(res.data[i])
+      }
+
+    this.setState({ skill: skill })  
+   
   });
 }
 getLanguageData = () => {
@@ -140,28 +252,250 @@ getLanguageData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
    }).then(res => {
-    const language = res.data[0].name;
-    this.setState({
-      language
-    });
+    
+    const language = this.state.user.language
+      
+    for (let i = 0; i < res.data.length; i++) {
+      language.push(res.data[i])
+      }
+
+    this.setState({ language: language })  
+    
   });
 }
 
 
+  _editInterest= () => {
+    $('.autocompleteInterest').show();
+    $('.editInterest').hide();
+  
+  }
+  _editSkill= () => {
+    $('.autocompleteSkill').show();
+    $('.editSkill').hide();
+  }
+
+  _editLanguage= () => {
+    $('.autocompleteLanguage').show();
+    $('.editLanguage').hide();
+  }
+
+  handleInterestDelete  = (event) => {
+    axios.delete(endpoints.profile_interest + event.currentTarget.parentElement.id  , {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+       "Deleted"
+        window.location.reload();
+      })
+   
+  };
+
+
+  handleSkillDelete  = (event) => {
+    axios.delete(endpoints.profile_skills + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+      window.location.reload();
+
+    })
+   
+  };
+  
+  handleLanguageDelete  = (event) => {
+    axios.delete(endpoints.profile_languages + event.currentTarget.parentElement.id+'/', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+     }).then(res => {
+      "Deleted" 
+      window.location.reload();
+
+    })
+   
+  };
+
+  handleInterestData = (event) => {
+    const selected_interest = this.state.selected.interest
+    selected_interest.push(
+      event.currentTarget.innerText
+    )
+    };
+
+   handleSkillData = (event) => {
+    const selected_skill = this.state.selected.skill
+    selected_skill.push(
+      event.currentTarget.innerText
+    )
+   }
+   handleLanguageData = (event) => {
+    const selected_language = this.state.selected.language
+    selected_language.push(
+      event.currentTarget.innerText
+    )
+   }
+
+  
+  handleSubmit= (event) => {
+    const inter = this.state.selected.interest
+    const sk = this.state.selected.skill
+    const lan = this.state.selected.language
+    
+    if (this.state.selected.interest !== ''){
+      for (let i = 0; i < inter.length; i++) {
+        const code = JSON.parse('{ "interest_code" : "'+inter[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_interest,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+    }
+    window.location.reload();
+    }else if(this.state.selected.skill !== ''){
+
+      for (let i = 0; i < sk.length; i++) {
+        const code = JSON.parse('{ "skill" : "'+sk[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_skills,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+
+    } 
+    window.location.reload();
+     
+    }else if(this.state.selected.language !=+ ''){
+      for (let i = 0; i < lan.length; i++) {
+        const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
+        axios({
+        method: 'post',
+        url: endpoints.profile_languages,
+        data: code,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
+        },
+      }).then(res => {
+        "submit" 
+      })
+    }
+    window.location.reload();
+  }
+      };
+
+
+
+  handleNameEdit = (event) => {
+    debugger;
+    axios.put(endpoints.profile_user,
+       )
+
+  }
     render() {
-        const handleDelete = () => {
-            console.info('You clicked the delete icon.');
-          };
+      const elements = this.state.user.interest
+      const interest_items_ed = []
+      
+      for (const [index, value] of elements.entries()) {
+        interest_items_ed.push(
+        <Chip
+          // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+          id={value.id}
+          label={value.interest_code}
+          onDelete={this.handleInterestDelete}
+          />
+        )
+      }
+
+
+      const elements_in = this.state.autocomp.interest
+      const interest_items = []
+      
+      for (const [index, value] of elements_in.entries()) {
+        interest_items.push(
+          { title: value.interest, year: value.interest },
+           
+        )
+      }
+
+
+      const elements_skill = this.state.user.skill
+      const skill_items_ed = []                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+      for (let i = 0; i < elements_skill.length; i++) {
+        skill_items_ed.push(
+          <Chip
+          id={elements_skill[i].id}
+          label= {elements_skill[i].skill}
+          onDelete={this.handleSkillDelete}
+          // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+          />
+        )
+        }
+
+
+        const elements_sk = this.state.autocomp.skill
+        const skill_items = []
+        
+        for (let i = 0; i < elements_sk.length; i++) {
+          skill_items.push(
+            { title: elements_sk[i].skill, year: elements_sk[i].skill },
+          )
+          }
+
+      const elements_language = this.state.user.language
+      const language_ed = []
+
+      for (let i = 0; i < elements_language.length; i++) {
+        language_ed.push(
+          <Chip
+        //   avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
+        id={elements_language[i].id}
+        label= {elements_language[i].name}
+        onDelete={this.handleLanguageDelete}
+          /> 
+        )
+        }
+
+
+        const elements_la = this.state.autocomp.language
+        const language_items = []
+        for (let i = 0; i < elements_la.length; i++) {
+          language_items.push(
+            { title: elements_la[i].language, year: elements_la[i].language },
+          )
+          }
+
+        
+        
         return (
          <div>
         <Grid container spacing={3}>
           <Grid item xs={11}>
           <Grid container spacing={7}>
-          <Grid item xs={10}><Button variant="outlined" >
+          <Grid item xs={10}><Button variant="outlined" > 
             Cancel
           </Button>
           </Grid><Grid item xs={2}>
-          <Button  variant="contained" color="primary" >
+          <Button  variant="contained" color="primary" onClick={this.handleSubmit}>
           Done
           </Button></Grid>
           </Grid>
@@ -177,7 +511,7 @@ getLanguageData = () => {
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Name
                             <IconButton size='small' color="inherit" aria-label="Close">
-                            <FontAwesomeIcon icon={faEdit} />
+                            <FontAwesomeIcon icon={faEdit} onClick={this.handleNameEdit}/>
                             </IconButton>
                             </span>
                             <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span></p>
@@ -226,99 +560,115 @@ getLanguageData = () => {
                             <span style={{ fontSize: 10 }}>{this.state.user.bio}</span>
                             </div>
                             <br></br>
-                            <br></br>
                             <hr></hr>
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Interests
                             </span>
-                            </div>
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
-                            
-                            <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={this.state.interest}
-        onDelete={handleDelete}
-      /> <Chip
-      // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-      label="Interests"
-      onDelete={handleDelete}
-    /> <Chip
-    // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-    label="Interests"
-    onDelete={handleDelete}
-  /> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Interests"
-  onDelete={handleDelete}
-/> <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Interests"
-        onDelete={handleDelete}
-      />
-      
-      <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
+                            </div> */}
+                            <div class='row editInterest' style={{ position: 'relative', left: 30 }}>
+                            {interest_items_ed}
+                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+        <AddIcon style={{color: 'white'}} onClick={this._editInterest}/>
       </Fab>
                             </div>
-
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            
+                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 500 }} >
+                            {/* {this._renderCancel} */}
+                            <Autocomplete
+                        multiple
+                        id="interest"
+                        options={interest_items}
+                        getOptionLabel={option => option.title}
+                        // defaultValue={[top100Films[13]]}
+                        onChange={this.handleInterestData}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            variant="standard"
+                            label="Interest"
+                            placeholder="Interest"
+                            margin="normal"
+                            fullWidth
+                            // InputProps={{disableUnderline: true}}
+                          />
+                          )}
+                          />
+                     
+                    </div>
+                    <br></br>
+      
+                            {/* <div class='row' style={{ position: 'relative', left: 30 }}>
                             <span style={{ padding: 10, fontSize: 12}}>
                             Skills
                             </span>
-                            </div>
-                            <div class='row' style={{ position: 'relative', left: 30 }}>
+                            </div> */}
+                            <div class='row editSkill' style={{ position: 'relative', left: 30 }}>
                             
-                            <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label={this.state.skill}
-        onDelete={handleDelete}
+                            {skill_items_ed}
+
+                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+                            <AddIcon style={{color: 'white'}} onClick={this._editSkill}/>
+                            </Fab>
+                            </div>
+
+                            <div class='autocompleteSkill' style={{ position: 'relative', left: 30, width: 500 }} >
+                            
+                            <Autocomplete
+        multiple
+        id="tags-standard"
+        options={skill_items}
+        getOptionLabel={option => option.title}
+        // defaultValue={[top100Films[13]]}
+        onChange={this.handleSkillData}
+        renderInput={params => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Skills"
+            placeholder="Favorites"
+            margin="normal"
+            fullWidth
+          />
+        )}
       />
-       <Chip
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        label="Skills"
-        onDelete={handleDelete}
-      /> <Chip
-      // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-      label="Skills"
-      onDelete={handleDelete}
-    /> <Chip
-    // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-    label="Skills"
-    onDelete={handleDelete}
-  /> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Skills"
-  onDelete={handleDelete}
-/>
-<Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
-      </Fab>
-</div>
-<div class='row' style={{ position: 'relative', left: 30 }}>
+      </div>
+      <br></br>
+     
+{/* <div class='row' style={{ position: 'relative', left: 30 }}>
 <span style={{ padding: 10, fontSize: 12}}>
   Languages
 </span>
-</div>
+</div> */}
  
-<div class='row' style={{ position: 'relative', left: 30 }}>
-  <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label={this.state.language}
-  onDelete={handleDelete}
-/>
-<Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Languages"
-  onDelete={handleDelete}
-/> <Chip
-  // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-  label="Languages"
-  onDelete={handleDelete}
-/>
+<div class='row editLanguage' style={{ position: 'relative', left: 30 }}>
+{language_ed}
 <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-        <AddIcon style={{color: 'white'}}/>
-      </Fab>
+                            <AddIcon style={{color: 'white'}} onClick={this._editLanguage}/>
+                            </Fab>
+                         
+</div>
+
+<div class='autocompleteLanguage' style={{ position: 'relative', left: 30, width: 500 }} >
+                          
+                            <Autocomplete
+        multiple
+        id="tags-standard"
+        options={language_items}
+        getOptionLabel={option => option.title}
+        // defaultValue={[top100Films[13]]}
+        onChange={this.handleLanguageData}
+        renderInput={params => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Languages"
+            placeholder="Favorites"
+            margin="normal"
+            fullWidth
+          />
+        )}
+      />
 </div>
 
 <p></p>
@@ -360,7 +710,7 @@ getLanguageData = () => {
 
                             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>www.linkedin.com</Grid>
+        <Grid item>{this.state.user.linked_in}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
@@ -389,7 +739,7 @@ getLanguageData = () => {
             </span>
             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>Bachelour of communications</Grid>
+        <Grid item>{this.state.user.education}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
@@ -411,7 +761,7 @@ getLanguageData = () => {
                             </span>
                             <Typography component="div" style={{ padding: 10}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
-                              <Grid item>www.jackiechan.com</Grid>
+        <Grid item>{this.state.user.url}</Grid>
                               <Grid item>
                                 <AntSwitch
                                   // checked={state.checkedC}
@@ -562,6 +912,7 @@ getLanguageData = () => {
         
         );
     }
+    
 }
 
 export default EditProfile;
