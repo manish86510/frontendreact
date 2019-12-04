@@ -58,7 +58,7 @@ class Feed extends React.Component {
         super(props);
         this.state = {
             postList: [],
-            // value: 0,
+            value: 0,
             like_status: false,
             isError: '',
             show:false,
@@ -210,9 +210,9 @@ class Feed extends React.Component {
                                                 <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
+
                                                 <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" 
                                                     onClick={this.handleToggle.bind(this, tile.id)}>
-  
                                                     <FontAwesomeIcon icon={faComment} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
@@ -221,42 +221,38 @@ class Feed extends React.Component {
                                                     <FontAwesomeIcon icon={faShareAlt} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.share_count}</span>
+                                            </div><br></br>
 
-                                         </div><br></br>
-
-                                         {/* {this.state.show_box &&  */}
-                                         {this.state.show && this.state.comment_id == tile.id &&
-                                            <form onSubmit={this.handleSubmit}
-                                                bsSize="small"
-                                                className="padb10">
-                                                    <textarea className="textarea" rows="3" cols="40" name="comments" 
-                                                    
-                                                     placeholder="Add a comment"                                                   
-                                                     value={this.state.comment}
-                                                     onChange={this.handleComment}
-                                                     type="text"
-                                                     style={{ backgroundColor: 'white', paddingRight:50 , 
-                                                     marginLeft: 95, height:50, 
-                                                     width:500, border:'1px solid #00b894',}}></textarea> <br></br>
-
-                                                    <Button block bsSize="Large"
-                                                            onClick={this.postComments.bind(this, tile.id)}
-                                                            className="padb10" 
-                                                            type="submit"
-                                                            style={{ backgroundColor: '#0066cc', 
-                                                            color: 'white', 
-                                                            marginBottom:20, 
-                                                            marginLeft: 95,
-                                                            fontSize:10,
-                                                            marginBottom: 40,}}>
-                                                            Post
-                                                    </Button>            
-                                               </form>
-                                                    }
-                                                    </Paper>
-                                    </div>
-                                ))}
-                            </Grid>                          
+                                            {this.state.show && this.state.comment_id == tile.id &&
+                                                <form onSubmit={this.handleSubmit}
+                                                    bsSize="small"
+                                                    className="padb10">                                                       
+                                                        <textarea className="textarea"                                                        
+                                                        placeholder="Write a comment..."                                                   
+                                                        value={this.state.comment}
+                                                        onChange={this.handleComment}
+                                                        type="text"
+                                                        style={{paddingRight:50 , marginLeft: 95, height:29, 
+                                                        width:300, border:'1px solid #d8d5d5',
+                                                        backgroundColor: '#F2F4F4 ', borderRadius:6,}}></textarea>                                                   
+                                                            <Button block bsSize="Large"
+                                                                onClick={this.postComments.bind(this, tile.id)}
+                                                                className="padb10" 
+                                                                type="submit"
+                                                                style={{ backgroundColor: '#0066cc', 
+                                                                color: 'white', 
+                                                                marginBottom:22, 
+                                                                marginLeft: 2,
+                                                                fontSize:10,
+                                                                }}>
+                                                                Post
+                                                            </Button>                                                                                                                                                                    
+                                                </form>
+                                            }
+                                            </Paper>
+                                        </div>
+                                    ))}
+                            </Grid>                                                     
                         </div>
                     </Grid>
                 </Grid>
