@@ -61,7 +61,7 @@ class Feed extends React.Component {
             // value: 0,
             like_status: false,
             isError: '',
-            show:true,
+            show:false,
             comment: '',
             parent: '',
             comment_id:0,
@@ -152,14 +152,14 @@ class Feed extends React.Component {
         });
     }
     handleToggle = (tile) => {
+        debugger;
         // const {show} = this.state;
         this.setState( { comment_id: tile } )
         this.setState((currentState) => ({
             show: !currentState.show, 
         }));
     }
-    
-      
+  
     render() {
         const { classes } = this.props;
         console.log(this.state.like_status);
@@ -224,7 +224,7 @@ class Feed extends React.Component {
                                          </div><br></br>
 
                                          {/* {this.state.show_box &&  */}
-                                         {!this.state.show && this.state.comment_id == tile.id &&
+                                         {this.state.show && this.state.comment_id == tile.id &&
                                             <form onSubmit={this.handleSubmit}
                                                 bsSize="small"
                                                 className="padb10">
