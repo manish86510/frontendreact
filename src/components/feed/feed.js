@@ -61,11 +61,12 @@ class Feed extends React.Component {
             // value: 0,
             like_status: false,
             isError: '',
-            show:false,
+            show:true,
             comment: '',
             parent: '',
+            comment_id:0,
         };
-        this.postComments = this.postComments.bind(this)
+        this.postComments = this.postComments.bind(this);
         this.handleToggle = this.handleToggle.bind(this)
             // post_type : this.props.post_type
         }   
@@ -151,8 +152,11 @@ class Feed extends React.Component {
         });
     }
     handleToggle = (tile) => {
-        const {show} = this.state;
-        this.setState( { show_box: !show } )
+        // const {show} = this.state;
+        this.setState( { comment_id: tile } )
+        this.setState((currentState) => ({
+            show: !currentState.show, 
+        }));
     }
     
       
@@ -205,7 +209,7 @@ class Feed extends React.Component {
                                                 <FontAwesomeIcon icon={faThumbsUp} style={{ color: '#0066cc' }} />
                                                 </IconButton>
                                                 <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                <IconButton id= {tile.id} style={{ marginLeft: '5%' }} size='small' color="inherit" 
+                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" 
                                                     onClick={this.handleToggle.bind(this, tile.id)}>
   
                                                     <FontAwesomeIcon icon={faComment} />
@@ -219,7 +223,8 @@ class Feed extends React.Component {
 
                                          </div><br></br>
 
-                                         {this.state.show_box && 
+                                         {/* {this.state.show_box &&  */}
+                                         {!this.state.show && this.state.comment_id == tile.id &&
                                             <form onSubmit={this.handleSubmit}
                                                 bsSize="small"
                                                 className="padb10">
@@ -229,7 +234,9 @@ class Feed extends React.Component {
                                                      value={this.state.comment}
                                                      onChange={this.handleComment}
                                                      type="text"
-                                                     style={{ backgroundColor: 'white', paddingRight:50 , marginLeft: 95, height:50, width:500}}></textarea> <br></br>
+                                                     style={{ backgroundColor: 'white', paddingRight:50 , 
+                                                     marginLeft: 95, height:50, 
+                                                     width:500, border:'1px solid #00b894',}}></textarea> <br></br>
 
                                                     <Button block bsSize="Large"
                                                             onClick={this.postComments.bind(this, tile.id)}
@@ -248,7 +255,7 @@ class Feed extends React.Component {
                                                     </Paper>
                                     </div>
                                 ))}
-                            </Grid>
+                            </Grid>                          
                         </div>
                     </Grid>
                 </Grid>

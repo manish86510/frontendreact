@@ -212,7 +212,7 @@ class Register extends React.Component {
                                 onChange={this.handleConfirmPassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.cpassword}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
+                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled> 
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase

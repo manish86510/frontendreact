@@ -96,7 +96,22 @@ class Login extends React.Component {
                 <p>{this.state.isError}</p>
                 <form onSubmit={this.handleSubmit}
                     method="post">
-                    
+                    {/* <FormGroup controlId="username"
+                        bsSize="large"
+                        className="padb10" > */}
+                    {/* 
+                        <FormControl IconautoFocus type="text"
+                            placeholder="username"
+                            value={this.state.username}
+                            onChange={this.handleUserName}
+                            InputProps={{
+                                startAdornment: (
+                                    <IconButton size="small">
+                                        <FontAwesomeIcon icon={faUser} />
+                                    </IconButton>
+                                ),
+                            }}
+                        /> */}
                     <FormGroup
                         bsSize="small"
                         className="padb10"
