@@ -7,10 +7,18 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import { toast } from 'react-toastify';
+import 'isomorphic-fetch';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const $ = require('jquery');
 
-
+// function sleep(delay = 0) {
+//   return new Promise(resolve => {
+//     setTimeout(resolve, delay);
+//   });
+// }
 
 class Interest extends React.Component{
 
@@ -40,8 +48,6 @@ getInterest = () => {
         Authorization: 'Bearer ' + localStorage.access,
       }
      }).then(res => {
-      debugger;
-
       const interest = this.state.autocomp.interest
         
         for (let i = 0; i < res.data.length; i++) {
@@ -78,19 +84,15 @@ getMe = () => {
         Authorization: 'Bearer ' + localStorage.access,
       }
      }).then(res => {
-       "Deleted"
+      toast.success("Deleted")
+      // this.props.history.push({
+      //   pathname: '/app/user/'
+      // });
       //  this.getInterestData();
       })
    
   };
 
-  handleInterestData = (event) => {
-    debugger;
-    const selected_interest = this.state.selected.interest
-    selected_interest.push(
-      event.currentTarget.innerText
-    )
-    };
 
   
   _editInterest= () => {
@@ -100,6 +102,38 @@ getMe = () => {
   }  
 
   render() {
+
+  // const [open, setOpen] = React.useState(false);
+  // const [options, setOptions] = React.useState([]);
+  // const loading = open && options.length === 0;
+
+  // React.useEffect(() => {
+  //   let active = true;
+
+  //   if (!loading) {
+  //     return undefined;
+  //   }
+
+  //   (async () => {
+  //     const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
+  //     await sleep(1e3); // For demo purposes.
+  //     const countries = await response.json();
+
+  //     if (active) {
+  //       setOptions(Object.keys(countries).map(key => countries[key].item[0]));
+  //     }
+  //   })();
+
+  //   return () => {
+  //     active = false;
+  //   };
+  // }, [loading]);
+
+  // React.useEffect(() => {
+  //   if (!open) {
+  //     setOptions([]);
+  //   }
+  // }, [open]);
     
     const elements = this.state.profile_interest
     const interest_ed = []
@@ -125,7 +159,7 @@ getMe = () => {
          
       )
     }
-
+    
     return(
         <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -139,12 +173,13 @@ getMe = () => {
                             
                             <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 500 }} >
                             {/* {this._renderCancel} */}
+              
                             <Autocomplete
                         multiple
                         id="interest"
                         options={interest_items}
                         getOptionLabel={option => option.title}
-                        // defaultValue={[top100Films[13]]}
+                        // defaultValue={[interest_items[0]]}
                         onChange={this.handleInterestData}
                         renderInput={params => (
                           <TextField
@@ -164,6 +199,7 @@ getMe = () => {
     
     </Grid>
     </Grid>
+    
       )
 }
 }

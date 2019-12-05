@@ -22,8 +22,7 @@ import endpoints from '../../api/endpoints';
 import InterestData from '../interest/interest';
 import SkillData from '../skills/skill';
 import LanguageData from '../language/language';
-
-
+import { toast } from 'react-toastify';
 const $ = require('jquery');
 
 
@@ -71,7 +70,6 @@ const theme = createMuiTheme({
 class EditProfile extends React.Component{
 
   constructor(props) {
-    debugger;
     super(props);
     this.state = {
       user: {
@@ -80,8 +78,6 @@ class EditProfile extends React.Component{
         bio:'',
         email:'',
         image:'',
-        skill: [],
-        language: [],
         linked_in:'',
         education:'',
         url:'',
@@ -111,13 +107,14 @@ getUserData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
   }).then(res => {
+    debugger;
     const user = this.state.user
-    user.name = res.data[0].first_name+' '+res.data[0].last_name 
-    user.username = res.data[0].username
-    user.bio = res.data[0].about
-    user.email = res.data[0].email
-    user.image = res.data[0].avatar
-    user.url = res.data[0].enlarge_url
+    user.name = res.data.first_name+' '+res.data.last_name 
+    user.username = res.data.username
+    user.bio = res.data.about
+    user.email = res.data.email
+    user.image = 'https://energeapi.do.viewyoursite.net/'+res.data.avatar
+    user.url = res.data.enlarge_url
     
     this.setState({ user });
   });
@@ -163,7 +160,7 @@ getUserData = () => {
           Authorization: 'Bearer ' + localStorage.access,
         },
       }).then(res => {
-        "submit" 
+        toast.success("submitted")
       })
     }
     window.location.reload();
@@ -180,7 +177,8 @@ getUserData = () => {
           Authorization: 'Bearer ' + localStorage.access,
         },
       }).then(res => {
-        "submit" 
+        toast.success("submitted")
+        
       })
 
     } 
@@ -198,7 +196,8 @@ getUserData = () => {
           Authorization: 'Bearer ' + localStorage.access,
         },
       }).then(res => {
-        "submit" 
+                toast.success("submitted")
+
       })
     }
     window.location.reload();
@@ -308,7 +307,6 @@ getUserData = () => {
                           <LanguageData/>
                           <p></p>
 <div class='row' style={{ position: 'relative', left: 30 }}>
-{/* <Grid container spacing={3}> */}
           <Grid item xs={6}>
           
         <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
@@ -323,8 +321,6 @@ getUserData = () => {
     <Grid item>Professional</Grid>
     <Grid item>
     <AntSwitch
-    // checked={state.checkedC}
-    // onChange={handleChange('checkedC')}
     value="checkedC"
     />
     </Grid>
@@ -388,7 +384,6 @@ getUserData = () => {
 </Grid>
                             <Grid item xs={6}>
                             <span style={{ padding: 10, fontSize: 12 , color:'grey'}}>
-                            
                             Url
                             <IconButton size='small' color="inherit" aria-label="Close">
                           <FontAwesomeIcon icon={faEdit} />
@@ -438,7 +433,6 @@ getUserData = () => {
                               <Grid item></Grid>
                             </Grid>
                             </Typography> 
-                            
                             </Grid>
             </div>
                                 <div class='row' style={{ position: 'relative', left: 30 }}>

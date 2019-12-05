@@ -143,7 +143,6 @@ getLanguageData = () => {
         id="tags-standard"
         options={language_items}
         getOptionLabel={option => option.title}
-        // defaultValue={[top100Films[13]]}
         onChange={this.handleLanguageData}
         renderInput={params => (
           <TextField

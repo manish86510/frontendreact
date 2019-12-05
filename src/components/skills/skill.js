@@ -146,7 +146,6 @@ getSkillData = () => {
         id="tags-standard"
         options={skill_items}
         getOptionLabel={option => option.title}
-        // defaultValue={[top100Films[13]]}
         onChange={this.handleSkillData}
         renderInput={params => (
           <TextField
