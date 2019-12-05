@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
+import EndPoint from '../api/endpoints';
 
 
 const image = require("../img/login_image.png");
@@ -51,8 +52,8 @@ const styles = theme => ({
         height: 40
     },
     iconButton: {
-        fontSize: 15       
-      },
+        fontSize: 15
+    },
 });
 class Register extends React.Component {
     constructor(props) {
@@ -69,19 +70,15 @@ class Register extends React.Component {
     postRegister = (e) => {
         e.preventDefault();
         let self = this;
-        console.log(self.state.username);
-        console.log(self.state.email);
-        console.log(self.state.password);
-        axios.post("https://energeapi.do.viewyoursite.net/", {
-            username: self.state.username,
-            email: self.state.email,
-            password: self.state.password
-        },{
+        let formData = new FormData();
+        formData.append('username', self.state.username);
+        formData.append('email', self.state.email);
+        formData.append('password', self.state.password);
+        axios.post(EndPoint.profile_user, formData, {
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
-          }
-        ).then(result => {
+        }).then(result => {
             if (result.status === 200) {
                 console.log(result.data);
                 // this.setState({
@@ -103,28 +100,24 @@ class Register extends React.Component {
         });
     }
 
-  handleUserName = e => {
-    console.log(e.target.value);
-    this.setState({
-      username: e.target.value,
-    });
-  }
-  handlePassword = e => {
-    console.log(e.target.value);
-    this.setState({
-      password: e.target.value,
-    });
-  }
+    handleUserName = e => {
+        this.setState({
+            username: e.target.value,
+        });
+    }
+    handlePassword = e => {
+        this.setState({
+            password: e.target.value,
+        });
+    }
 
     handleEmail = e => {
-        console.log(e.target.value);
         this.setState({
             email: e.target.value,
         });
     }
 
     handleConfirmPassword = e => {
-        console.log(e.target.value);
         this.setState({
             confirm_password: e.target.value,
         });
@@ -140,8 +133,8 @@ class Register extends React.Component {
                 <h4 align="center"
                     id="title"> Energe </h4><br></br>
                 <center>
-                    <p>{ this.state.isError }</p>
-                    <form onSubmit={this.handleSubmit} method = "post" >
+                    <p>{this.state.isError}</p>
+                    <form onSubmit={this.handleSubmit} method="post" >
                         <FormGroup controlId="username"
                             bsSize="large"
                             className="padb10">
@@ -152,18 +145,18 @@ class Register extends React.Component {
                                 onChange={this.handleUserName}
                                 value={this.state.username} /> */}
                             <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
-                                <FontAwesomeIcon icon={faUser} />
-                            </IconButton>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="username"
-                                value={this.state.username}
-                                onChange={this.handleUserName}
-                                type="text"
-                                inputProps={{ 'aria-label': 'user' }}
-                            />
-                        </Paper>
+                                <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
+                                    <FontAwesomeIcon icon={faUser} />
+                                </IconButton>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="username"
+                                    value={this.state.username}
+                                    onChange={this.handleUserName}
+                                    type="text"
+                                    inputProps={{ 'aria-label': 'user' }}
+                                />
+                            </Paper>
                         </FormGroup >
 
                         <FormGroup controlId="email"
@@ -174,17 +167,17 @@ class Register extends React.Component {
                                 onChange={this.handleEmail}
                                 value={this.state.email} /> */}
                             <Paper component="form" className={classes.email}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
-                                <FontAwesomeIcon icon={faEnvelope} />
-                            </IconButton>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="email"
-                                onChange={this.handleEmail}
-                                value={this.state.email} 
-                                inputProps={{ 'aria-label': 'email' }}
-                            />
-                        </Paper>
+                                <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                </IconButton>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="email"
+                                    onChange={this.handleEmail}
+                                    value={this.state.email}
+                                    inputProps={{ 'aria-label': 'email' }}
+                                />
+                            </Paper>
                         </FormGroup>
 
                         <FormGroup controlId="password"
@@ -195,18 +188,18 @@ class Register extends React.Component {
                                 onChange={this.handlePassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
-                                <FontAwesomeIcon icon={faLock} />
-                            </IconButton>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="password"
-                                value={this.state.password}
-                                onChange={this.handlePassword}
-                                type="password"
-                                inputProps={{ 'aria-label': 'password' }}
-                            />
-                        </Paper>
+                                <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
+                                    <FontAwesomeIcon icon={faLock} />
+                                </IconButton>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="password"
+                                    value={this.state.password}
+                                    onChange={this.handlePassword}
+                                    type="password"
+                                    inputProps={{ 'aria-label': 'password' }}
+                                />
+                            </Paper>
                         </FormGroup>
 
                         <FormGroup controlId="cpassword"
@@ -217,18 +210,18 @@ class Register extends React.Component {
                                 onChange={this.handleConfirmPassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.cpassword}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled> 
-                                <FontAwesomeIcon icon={faLock} />
-                            </IconButton>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="confirm Password"
-                                value={this.state.confirm_password}
-                                onChange={this.handleConfirmPassword}
-                                type="password"
-                                inputProps={{ 'aria-label': 'cpassword' }}
-                            />
-                        </Paper>
+                                <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
+                                    <FontAwesomeIcon icon={faLock} />
+                                </IconButton>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="confirm Password"
+                                    value={this.state.confirm_password}
+                                    onChange={this.handleConfirmPassword}
+                                    type="password"
+                                    inputProps={{ 'aria-label': 'cpassword' }}
+                                />
+                            </Paper>
 
                         </FormGroup>
                         <br></br>
@@ -245,7 +238,7 @@ class Register extends React.Component {
     }
 }
 Register.propTypes = {
-  children: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 export default withRouter(withStyles(styles)(Register));
