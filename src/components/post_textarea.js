@@ -141,39 +141,43 @@ class PostTextArea extends React.Component {
 
   handlePostCreate = (event) => {
     event.preventDefault();
-    debugger;
-    var postData = this.state.postData;
-    var result = MyResult(endpoints.create_post, postData, "post");
-    if(result){
-       return <Feed />;
-     }
+    // debugger;
+     var postData = this.state.postData;
+    // var result = MyResult(endpoints.create_post, postData, "post");
+    // if(result){
+    //    return <Feed />;
+    //  }
+    // debugger;
     // this.state.mediaData.file = this.fileArray;
     // this.state.mediaData.post = result.data.id;
     // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
-    // var token = localStorage.getItem('access');
-    // axios.post(endpoints.create_post, postData ,{
-    //   headers:{
-    //     Authorization: 'Bearer ' + token,
-    //   }
-    // }).then(res => {
+    var token = localStorage.getItem('access');
+    axios.post(endpoints.create_post, postData ,{
+      headers:{
+        Authorization: 'Bearer ' + token,
+      }
+    }).then(res => {
       //this.componentDidMount();
-      // window.location.reload();
+      //window.location.reload();
       //get_auth_token();
-      // var token = localStorage.getItem('access');
-      // this.state.mediaData.file = this.fileArray;
-      // this.state.mediaData.post = res.data.id;
-      // //MyResult(endpoints.create_media, this.state.mediaData, "post");
-      // var mediaInfo = this.state.mediaData;
-      // axios.post(endpoints.create_media, mediaInfo ,{
-      //   headers:{
-      //     Authorization: 'Bearer ' + token,
-      //   }
-      // }).then(res => {
-      //   this.componentDidMount();
-      // });
-    // }).catch(e => {
-    //   console.log(e);
-    // });
+      debugger;
+      var token = localStorage.getItem('access');
+      this.state.mediaData.file = this.fileArray;
+      this.state.mediaData.post = res.data.id;
+      //MyResult(endpoints.create_media, this.state.mediaData, "post");
+      var mediaInfo = this.state.mediaData;
+      axios.post(endpoints.create_media, mediaInfo ,{
+        headers:{
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        //debugger;
+        this.componentDidMount();
+      });
+    }).catch(e => {
+      console.log(e);
+    });
   }
 
   showOpenFileDlg = () => {
