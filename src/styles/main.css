@@ -23,6 +23,7 @@ textarea.post-text-area {
     border-radius: 10px;
     resize: none;
     padding: 15px 10px 10px 75px;
+    outline:none;
 }
 .mybtn {
     border-radius: 10px;

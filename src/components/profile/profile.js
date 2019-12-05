@@ -1,6 +1,6 @@
 import React from 'react';
 import SideNav from '../../containers/nav'
-import ProfileTabs from './edit-profile'
+import ProfileTabs from './Edit-profile'
 import Grid from '@material-ui/core/Grid';
 import HotTopics from './Hot-topics';
 

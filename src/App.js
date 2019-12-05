@@ -9,7 +9,7 @@ import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
 import Profile from './components/profile/profile';
-import EditProfile from './components/profile/edit-profile';
+import EditProfile from './components/profile/Edit-profile';
 import Wallet from './components/wallet/wallet';
 import WalletCoins from './components/wallet/coins/WalletCoins';
 import MoreCoins from './components/wallet/coins/MoreCoins';
@@ -21,7 +21,6 @@ import Notifications from './containers/Notifications';
 // import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
@@ -59,7 +58,7 @@ function App() {
         <Route path = "/bookmark" component = { Bookmark }/> 
         <Route path = "/notifications" component = { Notifications }/> 
         <Route path = "/profile" component = { Profile }/> 
-        <Route path = "/edit-profile" component = { EditProfile }/> 
+        <Route path = "/Edit-profile" component = { EditProfile }/> 
         <Route path = "/collaborate" component = { CollaboarateMain }/> 
         <Route path = "/events" component = { Events }/> 
         <Route path = "/wallet" component = { Wallet }/> 
