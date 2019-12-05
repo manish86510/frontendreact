@@ -4,6 +4,9 @@ import TextArea from '../components/textarea';
 import Feed from '../components/feed/feed';
 import PostHotTopics from '../components/Posts/post-hot-topics';
 import Grid from '@material-ui/core/Grid';
+import RecomendedCircle from '../components/circle/recomended-circle';
+import HotTopic from '../components/hot-topics/hot-topic';
+
 
 class Home extends React.Component {
     
@@ -14,7 +17,9 @@ class Home extends React.Component {
                         <Feed />
                     </Grid>
                     <Grid item xs={4}>
-                        <PostHotTopics />
+                        <HotTopic/>
+                        <br/><br/>
+                        <RecomendedCircle/>
                     </Grid>
                 </Grid>
         );

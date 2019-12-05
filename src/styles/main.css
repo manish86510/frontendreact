@@ -1,3 +1,6 @@
+/* *{
+    outline: none;
+} */
 .text-area-container{
     width: 100%;
     position: relative;
@@ -23,6 +26,7 @@ textarea.post-text-area {
     border-radius: 10px;
     resize: none;
     padding: 15px 10px 10px 75px;
+    outline:none;
 }
 .mybtn {
     border-radius: 10px;

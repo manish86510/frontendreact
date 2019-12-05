@@ -20,8 +20,6 @@ class Application extends React.Component {
           <Route exact path="/app" component={DashboardV2} />
           <Route exact path="/app/dashboard-v2" component={DashboardV2} />
           <Route exact path="/login" component={Login} />
-
-
         </Switch>
       </Dashboard>
     );
