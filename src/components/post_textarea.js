@@ -1,19 +1,15 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
+import MyResult from './../api/utility'
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import Autosuggest from 'react-autosuggest';
-import MyResult from '../api/utility';
 import endpoints from '../api/endpoints';
-import get_auth_token from '../api/auth_service';
-import Feed from './feed/feed';
 
 
 const styles = theme => ({
@@ -125,9 +121,13 @@ class PostTextArea extends React.Component {
   }
 
   handleChange = event => {
-    this.fileObj.push(event.target.files)
-    for (let i = 0; i < this.fileObj[0].length; i++) {
-      this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))
+    debugger;
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.fileArray.push(URL.createObjectURL(event.target.files[i]))
+      let formData = new FormData();
+      formData.append('file', this.fileArray);
+      formData.append('file_type', 'Image');
+      MyResult(endpoints.create_media, formData, "post");
     }
     this.setState({ file: this.fileArray })
   }
@@ -157,24 +157,20 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      //this.componentDidMount();
-      //window.location.reload();
-      //get_auth_token();
-      debugger;
-      var token = localStorage.getItem('access');
-      this.state.mediaData.file = this.fileArray;
-      this.state.mediaData.post = res.data.id;
-      //MyResult(endpoints.create_media, this.state.mediaData, "post");
-      var mediaInfo = this.state.mediaData;
-      axios.post(endpoints.create_media, mediaInfo ,{
-        headers:{
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        //debugger;
-        this.componentDidMount();
-      });
+      // let self = this;
+      // let formData = new FormData();
+      // var token = localStorage.getItem('access');
+      // formData.append('file', this.fileArray);
+      // formData.append('post', res.data.id);
+      // formData.append('file_type', 'Image');
+      // axios.post(endpoints.create_media, formData ,{
+      //   headers:{
+      //     Authorization: 'Bearer ' + token,
+      //   }
+      // }).then(res => {
+      //   //debugger;
+      //   this.componentDidMount();
+      // });
     }).catch(e => {
       console.log(e);
     });
@@ -230,19 +226,14 @@ class PostTextArea extends React.Component {
               <img src={url} alt="" width="200" />
             ))}
           </div>
-          <div id="tag">
-            <FormGroup controlId="password"
-              bsSize="large"
-              className="padb10" >
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps} className="searchuser" />
-              </FormGroup>
-          </div>
+          <Autocomplete
+            id="free-solo-demo"
+            freeSolo
+            options={languages.map(option => option.name)}
+            renderInput={params => (
+              <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
+            )}
+          />
           <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button>
           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
           <Box component="div" m={1} className={classes.con}>

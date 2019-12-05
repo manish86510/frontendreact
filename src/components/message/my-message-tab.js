@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
 import { ListItem } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import { Button, Avatar } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 
 const styles = theme => ({
@@ -117,7 +117,7 @@ class MyMessages extends React.Component {
                                             </Grid>
                                             <Grid item xs={1}>
                                                 {
-                                                    data.seen_status == false ?
+                                                    data.seen_status === false ?
                                                         <Fab color="primary" size="small" aria-label="add">1</Fab> : ""
                                                 }
 

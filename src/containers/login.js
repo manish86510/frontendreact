@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import React from "react";
+import { Button, FormGroup } from "react-bootstrap";
 import '../styles/Login.css'
 import axios from 'axios';
-import { useAuth } from "../context/auth";
-import { Link, Redirect } from "react-router-dom";
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Icon, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-// import { green } from "@material-ui/core/colors";
 
 const image = require("../img/login_image.png");
 const styles = theme => ({
@@ -161,7 +158,7 @@ class Login extends React.Component {
                 <p><a href="/register" > Don 't have an account? Sign up!</a></p>
             </center>
             <div>
-                <img src={image}
+                <img alt="footer" src={image}
                     style={
                         { width: "100%", height: "fit-content", bottom: 0, position: "static" }
                     } />

@@ -62,14 +62,14 @@ class PostHotTopics extends React.Component {
           }
         }
       ).then(res => {
-        debugger;
+
         if (res.status == 200) {
           this.setState({
             postList: res.data,
           });
         }
-      })
-      debugger;
+      });
+
       var userUrl = "https://energeapi.do.viewyoursite.net/";
       axios.get(
         userUrl,
@@ -79,8 +79,6 @@ class PostHotTopics extends React.Component {
           }
         }
       ).then(result => {
-        debugger;
-        console.log(result.data);
           this.setState({
             //userList: result.data,
           });

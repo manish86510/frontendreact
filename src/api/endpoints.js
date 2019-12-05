@@ -16,6 +16,9 @@ const endpoints = {
 
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
-  user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/'
+  user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/',
+  user_comments: 'https://energeapi.do.viewyoursite.net/api/v1/post/comment/',
+  user_like: 'https://energeapi.do.viewyoursite.net/api/v1/post/like/',
+  get_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/get-post/',
 };
 export default endpoints;
