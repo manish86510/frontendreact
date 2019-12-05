@@ -186,7 +186,7 @@ getMe = () => {
                         onChange={this.handleInterestData}
                         renderInput={params => (
                           <TextField
-                          onChange={this.handleInterestChange}
+                          onClick={this.handleInterestChange}
                             {...params}
                             variant="standard"
                             label="Interest"
