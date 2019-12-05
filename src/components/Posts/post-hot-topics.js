@@ -130,9 +130,9 @@ class PostHotTopics extends React.Component {
                                         <div style={{ fontSize: 12 }}>@user . 300 followers</div>
                                       </span>
                                   </ListItem>
-                                  {this.state.postList.map((tile, index) => (
+                                  {/* {this.state.postList.map((tile, index) => (
                                       <p>{tile.about_post} and {index}</p>
-                                  ))}
+                                  ))} */}
                                   <GridListTile style={{ width: "100%", height: 350, borderRadius: 30 }}>
                                     <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} style={{ border: 2, borderRadius: 2, width: '100%', height:320 }} />                                 
                                     {/* <div class="bottom-left">Manish Kumar</div> */}
@@ -162,7 +162,7 @@ class PostHotTopics extends React.Component {
                   <Accordion.Collapse  eventKey="1">
                     <Card.Body>
                       <Paper className={classes.paper}>
-                          {this.state.userList.map(tile => (
+                          {/* {this.state.userList.map(tile => (
                               <ListItem>
                               <Avatar
                                 src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
@@ -172,7 +172,7 @@ class PostHotTopics extends React.Component {
                               @{tile.username} . 300 followers
                               {/* <span > */}
                               {/* </span> */}
-                            </div>
+                            {/* </div>
                           </span>
                           <Chip
                             style={{ float: "right" }}
@@ -182,9 +182,9 @@ class PostHotTopics extends React.Component {
                             onClick={this.handleClick}
                             onDelete={this.handleDelete}
                           />
-                        </ListItem>     
-                            ))
-                            }
+                        </ListItem>      */}
+                            {/* ))
+                            } */} */}
                           
                       </Paper>
                     </Card.Body>

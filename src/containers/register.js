@@ -78,7 +78,7 @@ class Register extends React.Component {
             password: self.state.password
         },{
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+              'Content-Type': 'application/json'
             }
           }
         ).then(result => {
