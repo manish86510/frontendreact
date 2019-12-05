@@ -76,7 +76,12 @@ class Register extends React.Component {
             username: self.state.username,
             email: self.state.email,
             password: self.state.password
-        }).then(result => {
+        },{
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        ).then(result => {
             if (result.status === 200) {
                 console.log(result.data);
                 // this.setState({
@@ -147,7 +152,7 @@ class Register extends React.Component {
                                 onChange={this.handleUserName}
                                 value={this.state.username} /> */}
                             <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="user">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
                                 <FontAwesomeIcon icon={faUser} />
                             </IconButton>
                             <InputBase
@@ -169,7 +174,7 @@ class Register extends React.Component {
                                 onChange={this.handleEmail}
                                 value={this.state.email} /> */}
                             <Paper component="form" className={classes.email}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="email">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
                                 <FontAwesomeIcon icon={faEnvelope} />
                             </IconButton>
                             <InputBase
@@ -190,7 +195,7 @@ class Register extends React.Component {
                                 onChange={this.handlePassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
@@ -212,7 +217,7 @@ class Register extends React.Component {
                                 onChange={this.handleConfirmPassword}
                                 type="password" /> */}
                             <Paper component="form" className={classes.cpassword}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled> 
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
@@ -233,7 +238,7 @@ class Register extends React.Component {
                 </center>
                 <div>
                     <img src={image}
-                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "absolute" }} />
+                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "static" }} />
                 </div >
             </div >
         );

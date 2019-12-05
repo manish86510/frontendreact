@@ -64,7 +64,9 @@ function App() {
         <Route path = "/events" component = { Events }/> 
         <Route path = "/wallet" component = { Wallet }/> 
         <Route path = "/walletcoins" component = { WalletCoins }/> 
-        <Route path = "/morecoins" component = { MoreCoins }/> 
+        <Route path = "/morecoins" component = { MoreCoins }/>
+        <Route path = "/logout" component = {() => {localStorage.clear();
+        window.location.href = '/';}}/> 
         </SideNav>
         </Switch>
         </Router> 

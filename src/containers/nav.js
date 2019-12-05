@@ -35,6 +35,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
+import InputBase from '@material-ui/core/InputBase';
 // import { borderRadius } from '@material-ui/system';
 // import { withRouter } from 'react-router-dom';
 
@@ -123,7 +124,15 @@ class SideNav extends React.Component {
         open: false,
         userMenuOpen: false,
         rightSidebarOpen: false,
-        sideList: ''
+        sideList: '',
+        homeLink:true,
+        bookmarkLink:false,
+        bookmarkLink1:false,
+        bookmarkLink2:false,
+        eventsLink:false,
+        collabrationLink:false,
+        notificationLink:false,
+        home_title: ""
     };
     userMenuRef = null;
 
@@ -142,6 +151,7 @@ class SideNav extends React.Component {
     }
 
     nav = () => {
+        this.state.home_title = "Home";
         this.props.history.push({
             pathname: '/home',
         });
@@ -170,28 +180,84 @@ class SideNav extends React.Component {
     }
 
     mynav = () => {
+        this.state.home_title = "Home";
+        this.setState({
+            homeLink:true,
+            bookmarkLink:false,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            notificationLink:false,
+            collabrationLink:false,
+            eventsLink:false,
+        });
         this.props.history.push({ pathname: "/home" })
     }
     nav_bookmark = () => {
+        this.state.home_title = "Bookmark";
+        this.setState({
+            homeLink:false,
+            bookmarkLink:true,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            notificationLink:false,
+            collabrationLink:false,
+            eventsLink:false,
+        });
         this.props.history.push({ pathname: "/bookmark" })
     }
     handleMessageNav = () => {
+        this.state.home_title = "Message";
         this.props.history.push({ pathname: "/message" })
     }
     nav_notification = () => {
+        this.state.home_title = "Notifications";
+        this.setState({
+            homeLink:false,
+            bookmarkLink:false,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            notificationLink:true,
+            collabrationLink:false,
+            eventsLink:false,
+        });
         this.props.history.push({ pathname: "/notifications" })
     }
     nav_collaborate = () => {
+        this.state.home_title = "Collaborate";
+        this.setState({
+            homeLink:false,
+            bookmarkLink:false,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            notificationLink:false,
+            collabrationLink:true,
+            eventsLink:false,
+        });
         this.props.history.push({ pathname: "/collaborate" })
     }
     nav_profile = () => {
+        this.state.home_title = "Profile";
         this.props.history.push({ pathname: "/profile" })
     }
     nav_events = () => {
+        this.state.home_title = "Events";
+        this.setState({
+            homeLink:false,
+            bookmarkLink:false,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            notificationLink:false,
+            collabrationLink:false,
+            eventsLink:true,
+        });
         this.props.history.push({ pathname: "/events" })
     }
     nav_wallet = () => {
+        this.state.home_title = "Wallet";
         this.props.history.push({ pathname: "/wallet" })
+    }
+    nav_logout = () => {
+        this.props.history.push({ pathname: "/logout" })
     }
     handlelistSelected = () => {
 
@@ -221,11 +287,18 @@ class SideNav extends React.Component {
                         </IconButton>
                         <Typography variant="h6" noWrap className={classes.title}>
                             <div className={classes.pageTitle}>
-                                <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> Home
+                                <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
                             <div style={{ display: 'inline-block' }}>
-                                <IconButton aria-label="search" size="medium">
-                                    <SearchOutlinedIcon />
+                                <IconButton aria-label="search">
+                                    {/* <SearchOutlinedIcon /> */}
+                                    <InputBase
+                                        className={classes.input}
+                                        placeholder="Search.."
+                                        value={this.state.username}
+                                        onChange={this.handleUserName}
+                                        inputProps={{ 'aria-label': 'user' }}
+                                    />
                                 </IconButton>
                             </div>
                         </Typography>
@@ -240,7 +313,6 @@ class SideNav extends React.Component {
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
                                 <div>@suman</div>
                             </div>
-
                             <Button onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
                                     src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
@@ -257,7 +329,7 @@ class SideNav extends React.Component {
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
                                                     <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
                                                     <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
-                                                    <MenuItem onClick={this.handleUserMenuClose}>Logout</MenuItem>
+                                                    <MenuItem onClick={this.nav_logout}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
                                         </Paper>
@@ -312,7 +384,7 @@ class SideNav extends React.Component {
                     <List>
                         <ListItem
                             button
-                            selected={true}
+                            selected={this.state.homeLink}
                             onClick={this.mynav}
                             className={"menu-item"}
                         >
@@ -322,6 +394,7 @@ class SideNav extends React.Component {
                         </ListItem>
 
                         <ListItem button
+                            selected={ this.state.bookmarkLink }
                             onClick={this.nav_bookmark}
                             className={"menu-item"}>
                             <ListItemIcon>
@@ -329,7 +402,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
-                            onClick={this.handleMessageNav}
+                            selected={ this.state.notificationLink }
                             onClick={this.nav_notification}
                             className={"menu-item"}>
                             <ListItemIcon>
@@ -337,6 +410,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
+                            selected={ this.state.collabrationLink }
                             onClick={this.nav_collaborate}
                             className={"menu-item"}>
                             <ListItemIcon>
@@ -344,6 +418,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
+                            selected={ this.state.eventsLink }
                             onClick={this.nav_events}
                             className={"menu-item"}>
                             <ListItemIcon>
@@ -351,6 +426,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
+                            selected={ this.state.bookmarkLink1 }
                             onClick={this.nav_bookmark}
                             className={"menu-item"}>
                             <ListItemIcon>
@@ -358,6 +434,7 @@ class SideNav extends React.Component {
                             </ListItemIcon>
                         </ListItem>
                         <ListItem button
+                            selected={ this.state.bookmarkLink2 }
                             onClick={this.nav_bookmark}
                             className={"menu-item"}>
                             <ListItemIcon>

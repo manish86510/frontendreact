@@ -114,10 +114,9 @@ class Login extends React.Component {
                         /> */}
                     <FormGroup
                         bsSize="small"
-                        className="padb10"
-                    >
+                        className="padb10">
                         <Paper component="form" className={classes.username}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="user">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
                                 <FontAwesomeIcon icon={faUser}/>
                             </IconButton>
                             <InputBase
@@ -138,7 +137,7 @@ class Login extends React.Component {
                             onChange={this.handlePassword}
                             type="password" /> */}
                         <Paper component="form" className={classes.password}>
-                            <IconButton type="submit" className={classes.iconButton} aria-label="password">
+                            <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
                             </IconButton>
                             <InputBase
@@ -150,7 +149,6 @@ class Login extends React.Component {
                             />
                         </Paper>
                     </FormGroup>
-
                     <br></br><p className="padb10"> <a href="/forgetpass"> Forgot your password ? Reset! </a></p>
                     <br></br>
                     <Button block bsSize="large"
@@ -165,7 +163,7 @@ class Login extends React.Component {
             <div>
                 <img src={image}
                     style={
-                        { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }
+                        { width: "100%", height: "fit-content", bottom: 0, position: "static" }
                     } />
             </div>
         </div>
