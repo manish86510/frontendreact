@@ -8,7 +8,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
-
+import endpoints from '../../api/endpoints';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -20,12 +21,37 @@ class Circle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: 0,
+      folowList: []
     }
   }
+
+  componentDidMount() {
+    var url = endpoints.user_followers;
+    var getToken = localStorage.getItem('access');
+    axios.get(
+        url,
+        {
+            headers: {
+                Authorization: 'Bearer ' + getToken,
+            }
+        }
+    ).then(res => {
+      debugger;
+        if (res.status == 200) {
+            this.setState({
+                followList: res.data,
+            });
+            console.log(this.state.followList);
+        }
+    })
+  }
+
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
+    
   };
+
   render() {
     const { classes } = this.props;
     var value = this.state.value;
