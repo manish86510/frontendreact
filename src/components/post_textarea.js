@@ -99,7 +99,8 @@ class PostTextArea extends React.Component {
         is_public: true,
         post_type: "Post",
         target_audience: "test",
-        inputFile: ""
+        inputFile: "",
+        media_id:[]
       },
       mediaData: {
         post: '',
@@ -108,7 +109,6 @@ class PostTextArea extends React.Component {
       },
       value: '',
       suggestions: [],
-      media:[]
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -128,7 +128,7 @@ class PostTextArea extends React.Component {
       }
     }).then(res => {
       var media_id=res.data.media_id;
-      this.state.media.append(media_id);
+      this.state.postData.media_id.append(media_id);
     }).catch(e => {
       console.log(e);
     });
@@ -153,7 +153,7 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-
+          alert("Post updated successfully");
     }).catch(e => {
       console.log(e);
     });
