@@ -366,7 +366,7 @@ class SideNav extends React.Component {
                             </div>
                             <Button variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
-                                    src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                                    src={"https://image.flaticon.com/icons/png/512/44/44948.png"}>
                                 </Avatar>
                             </Button>
 
