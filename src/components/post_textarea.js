@@ -107,14 +107,14 @@ class PostTextArea extends React.Component {
         file_type: "Image"
       },
       value: '',
-      suggestions: []
+      suggestions: [],
+      media:[]
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = event => {
-    debugger;
     for (let i = 0; i < event.target.files.length; i++) {
       this.fileArray.push(URL.createObjectURL(event.target.files[i]));
       let formData = new FormData();
@@ -127,7 +127,8 @@ class PostTextArea extends React.Component {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => {
-        console.log(res.data);
+      var media_id=res.data.media_id;
+      this.state.media.append(media_id);
     }).catch(e => {
       console.log(e);
     });
@@ -242,7 +243,6 @@ class PostTextArea extends React.Component {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {/* <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button> */}
-
            <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>

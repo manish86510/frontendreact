@@ -24,11 +24,32 @@ class FeedComments extends React.Component {
             comment: '',
             parent: '',
             comment_id:0,
+            comments:[]
         };
         this.postComments = this.postComments.bind(this);
         // this.handleToggle = this.handleToggle.bind(this)
             // post_type : this.props.post_type
         }
+
+        componentDidMount() {
+            var getToken = localStorage.getItem('access');
+            // axios.get(
+            //     endpoints.user_comments, { post:this.props.pid }, 
+            //     {
+            //         headers: {
+            //             Authorization: 'Bearer ' + getToken,
+            //         }
+            //     }
+            // ).then(res => {
+            //     if (res.status == 200) {
+            //         this.setState({
+            //             comments: res.data
+            //         })
+            //         console.log(res.data);
+            //     }
+            // })
+        }
+
     postComments = (post_id) => { 
         if(this.state.comment_id == post_id){
             this.setState({show: !this.state.show});    
@@ -56,22 +77,27 @@ class FeedComments extends React.Component {
         });
     }
 
+    handleComment = (tile) => {
+        this.setState({
+            comment: tile.target.value,
+        });
+    }
+
     render() {
         const { classes, comments, pid } = this.props;
         return (
             <div>
                 {(comments!=null && comments!=undefined)?(comments.map(comment=> (<p>{comment.comment}</p>))): undefined}
-
                  <form onSubmit={this.handleSubmit}
                         bsSize="small"
-                        className="padb10">                                                       
+                        className="padb10">
                             <textarea className="textarea"                                                        
                             placeholder="Write a comment..."                                                   
                             value={this.state.comment}
                             onChange={this.handleComment}
                             type="text"></textarea>                                                   
                                 <Button variant="contained"  block bsSize="Large"
-                                    onClick={this.postComments.bind(this, pid)}
+                                    // onClick={this.postComments.bind(this, pid)}
                                     className="commentbtn" 
                                     type="submit">
                                     Post

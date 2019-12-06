@@ -14,6 +14,7 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import FeedComments from './feed-comments';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
+import { blue } from '@material-ui/core/colors';
 
 const styles = theme => ({
     card:{
@@ -28,6 +29,9 @@ const styles = theme => ({
         borderTopRightRadius: 20,
         background: '#ffffff',
         marginTop: -20
+    },
+    iconActive:{
+        color:blue,
     }
 });
 
@@ -50,12 +54,6 @@ class FeedCard extends React.Component {
             console.log("Working");
         })
       }
-
-    handleComment = (tile) => {
-        this.setState({
-            comment: tile.target.value,
-        });
-    }
 
     render() {
         const { classes, post } = this.props;
@@ -84,9 +82,18 @@ class FeedCard extends React.Component {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <IconButton size='small'>
-                        <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
-                    </IconButton>
+                    
+                    {
+                        post.like_count>0?(
+                            <IconButton size='small' style={{ color: 'blue' }}>
+                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                            </IconButton>
+                        ):(
+                            <IconButton size='small'>
+                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                            </IconButton>
+                        )
+                    }
                     <span style={{ fontSize: 12 }}>{post.like_count}</span>
                     <IconButton size='small'>
                         <ChatBubbleOutlineOutlinedIcon />

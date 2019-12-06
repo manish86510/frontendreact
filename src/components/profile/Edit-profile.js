@@ -124,7 +124,7 @@ getUserData = () => {
     }
    }).then(res => {
     const user = this.state.user
-    user.linked_in = res.data[0].name 
+    user.linked_in = res.data.name 
     this.setState({ user });
     
   });
@@ -135,7 +135,7 @@ getUserData = () => {
     }
    }).then(res => {
     const user = this.state.user
-    user.education = res.data[0].attended_for 
+    user.education = res.data.attended_for 
     this.setState({ user });
     
   });

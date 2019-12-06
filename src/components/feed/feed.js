@@ -94,7 +94,7 @@ class Feed extends React.Component {
                             </Grid>                                                     
                         </div>
                     </Grid>
-                </Grid>
+                </Grid> 
             </div>
         );
     }

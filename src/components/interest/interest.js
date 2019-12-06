@@ -9,6 +9,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { toast } from 'react-toastify';
 import 'isomorphic-fetch';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const $ = require('jquery');
 
