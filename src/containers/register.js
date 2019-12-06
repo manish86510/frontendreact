@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup } from "react-bootstrap";
+import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
@@ -235,8 +235,5 @@ class Register extends React.Component {
         );
     }
 }
-Register.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withRouter(withStyles(styles)(Register));

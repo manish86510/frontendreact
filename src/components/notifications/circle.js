@@ -128,8 +128,5 @@ class Circle extends React.Component {
   }
 }
 
-Circle.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Circle);

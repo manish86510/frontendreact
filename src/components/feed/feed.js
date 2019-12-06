@@ -1,14 +1,13 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import axios from 'axios';
 import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
-
+import PostTextArea from '../post_textarea';
 
 const styles = theme => ({
     root: {
@@ -75,7 +74,8 @@ class Feed extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <AddPost/>
+                        {/* <AddPost/> */}
+                        <PostTextArea/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -99,8 +99,5 @@ class Feed extends React.Component {
     }
 }
 
-Feed.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Feed);

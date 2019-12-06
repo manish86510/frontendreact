@@ -32,8 +32,5 @@ class Notifications extends React.Component {
         );
     }
 }
-Notifications.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Notifications);

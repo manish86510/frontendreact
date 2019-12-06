@@ -2,26 +2,15 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
-import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
+import { Avatar, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faShareAlt, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Box } from '@material-ui/core';
-import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import InfoIcon from '@material-ui/icons/Info';
-import { height } from 'dom-helpers';
-import { maxHeight, borderRadius } from '@material-ui/system';
-import { white } from 'ansi-colors';
 import axios from 'axios';
-import AddPost from '../popup/add_post';
 import AddProject from '../popup/add_project';
-import '../../styles/main.css';
-import MyResult from '../../api/utility';
-import endpoints from '../../api/endpoints';
+
 
 
 const styles = theme => ({
@@ -175,8 +164,5 @@ class Projects extends React.Component {
     }
 }
 
-Projects.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Projects);

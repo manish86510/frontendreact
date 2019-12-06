@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -134,8 +133,5 @@ class MyMessages extends React.Component {
     }
 }
 
-MyMessages.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(MyMessages);

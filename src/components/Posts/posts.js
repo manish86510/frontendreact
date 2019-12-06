@@ -1,25 +1,15 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { Avatar, Grow, Divider, ListItem } from '@material-ui/core';
+import { Avatar, ListItem } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { TextField } from 'react-textfield';
 
 
-import { faComment, faShareAlt, faTag, faCoins, faUsers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import AddPost from '../popup/add_post';
-import { Box } from '@material-ui/core';
+import { faComment, faShareAlt, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import InputBase from '@material-ui/core/InputBase';
-import TextareaAutosize from 'react-textarea-autosize';
 import '../../styles/main.css'
 
 const styles = theme => ({
@@ -183,7 +173,4 @@ class Posts extends React.Component {
     );
   }
 }
-Posts.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 export default withStyles(styles)(Posts);

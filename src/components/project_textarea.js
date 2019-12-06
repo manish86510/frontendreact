@@ -1,18 +1,12 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
-import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import Autosuggest from 'react-autosuggest';
-import MyResult from '../api/utility';
 import endpoints from '../api/endpoints';
-import get_auth_token from '../api/auth_service';
 
 
 const styles = theme => ({
@@ -132,9 +126,11 @@ class ProjectTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
-    this.state.postData.about_post = e.target.value;
+    let data = this.state.postData;
+    data.about_post = e.target.value;
+
     this.setState({
-      postData: this.state.postData,
+      postData: data,
     });
   }
 
@@ -225,9 +221,6 @@ class ProjectTextArea extends React.Component {
             ))}
           </div>
           <div id="tag">
-            <FormGroup controlId="password"
-              bsSize="large"
-              className="padb10" >
               <Autosuggest
                 suggestions={suggestions}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -235,7 +228,6 @@ class ProjectTextArea extends React.Component {
                 getSuggestionValue={getSuggestionValue}
                 renderSuggestion={renderSuggestion}
                 inputProps={inputProps} className="searchuser" />
-              </FormGroup>
           </div>
           <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button>
           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
@@ -256,9 +248,5 @@ class ProjectTextArea extends React.Component {
     )
   }
 }
-
-ProjectTextArea.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(ProjectTextArea);

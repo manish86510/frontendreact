@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, FormGroup } from "react-bootstrap";
 import '../styles/Login.css';
+import { Button, FormGroup } from '@material-ui/core';
 import { IconButton } from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'

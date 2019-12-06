@@ -1,12 +1,7 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
-import { Box } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 const styles = theme => ({
     con: {
@@ -103,8 +98,5 @@ class TextArea extends React.Component {
     }
 }
 
-TextArea.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(TextArea);

@@ -1,22 +1,11 @@
 import React from 'react';
-import PostHotTopics from './Posts/post-hot-topics';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
-import MessageTabs from './message/message-box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import MyMessages from './message/my-message-tab';
 import MessageBox from './message/message-box'
 
-function TabContainer(props) {
-    return (
-        <Typography component="div" style={{ padding: 8 * 3 }}>
-            {props.children}
-        </Typography>
-    );
-}
 
 const styles = theme => ({
     paper: {
@@ -56,8 +45,8 @@ class Message extends React.Component {
                                 <Tab label="My Messages" />
                                 <Tab label="Requests" />
                             </Tabs>
-                            {value == 0 && <TabContainer><MyMessages /></TabContainer>}
-                            {value == 1 && <TabContainer>Hello1</TabContainer>}
+                            {value == 0 &&  <MyMessages /> }
+                            {value == 1 &&  <MyMessages /> }
                         </div>
                     </Grid>
                     <Grid item xs={5}>
@@ -68,8 +57,5 @@ class Message extends React.Component {
         );
     }
 }
-Message.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Message);

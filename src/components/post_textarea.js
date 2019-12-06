@@ -2,9 +2,9 @@ import React from 'react';
 import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
+import { Button, Grid } from '@material-ui/core'
 import MyResult from './../api/utility'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -84,16 +84,6 @@ function getSuggestions(value) {
   return languages.filter(language => regex.test(language.name));
 }
 
-function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return (
-    <span>{suggestion.name}</span>
-  );
-}
-
 class PostTextArea extends React.Component {
   fileObj = [];
   fileArray = [];
@@ -121,7 +111,6 @@ class PostTextArea extends React.Component {
   }
 
   handleChange = event => {
-    debugger;
     for (let i = 0; i < event.target.files.length; i++) {
       this.fileArray.push(URL.createObjectURL(event.target.files[i]))
       let formData = new FormData();
@@ -141,36 +130,15 @@ class PostTextArea extends React.Component {
 
   handlePostCreate = (event) => {
     event.preventDefault();
-    // debugger;
-     var postData = this.state.postData;
-    // var result = MyResult(endpoints.create_post, postData, "post");
-    // if(result){
-    //    return <Feed />;
-    //  }
-    // debugger;
-    // this.state.mediaData.file = this.fileArray;
-    // this.state.mediaData.post = result.data.id;
-    // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
+    var postData = this.state.postData;
+
     var token = localStorage.getItem('access');
-    axios.post(endpoints.create_post, postData ,{
-      headers:{
+    axios.post(endpoints.create_post, postData, {
+      headers: {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      // let self = this;
-      // let formData = new FormData();
-      // var token = localStorage.getItem('access');
-      // formData.append('file', this.fileArray);
-      // formData.append('post', res.data.id);
-      // formData.append('file_type', 'Image');
-      // axios.post(endpoints.create_media, formData ,{
-      //   headers:{
-      //     Authorization: 'Bearer ' + token,
-      //   }
-      // }).then(res => {
-      //   //debugger;
-      //   this.componentDidMount();
-      // });
+
     }).catch(e => {
       console.log(e);
     });
@@ -200,16 +168,12 @@ class PostTextArea extends React.Component {
   };
 
   render() {
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: "Tag your friends",
-      value,
-      onChange: this.onChange
-    }
+    const { value } = this.state;
+
     const { classes } = this.props;
     return (
-      <div>
-        <Paper className={classes.Paper}>
+      <Grid container direction="row" justify="flex-start" alignItems="center">
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
               <Avatar src={"https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"} />
@@ -221,41 +185,31 @@ class PostTextArea extends React.Component {
               onChange={this.HandleTextArea}
             />
           </div>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <div id="images">
             {(this.fileArray || []).map(url => (
               <img src={url} alt="" width="200" />
             ))}
           </div>
-          <Autocomplete
+          {/* <Autocomplete
             id="free-solo-demo"
             freeSolo
             options={languages.map(option => option.name)}
             renderInput={params => (
               <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
             )}
-          />
-          <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button>
-          <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
-          <Box component="div" m={1} className={classes.con}>
-            <Fab
-              style={{ width: '100%', height: 30, borderRadius: 5 }}
-              variant="extended"
-              size="medium"
-              color="primary"
-              aria-label="add"
-              className={classes.button}
-              onClick={this.handlePostCreate}>
-              Post
-            </Fab>
-          </Box>
-        </Paper>
-      </div>
+          /> */}
+
+          {/* <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button> */}
+
+          {/* <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} /> */}
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Button style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button>
+        </Grid>
+      </Grid>
     )
   }
 }
-
-PostTextArea.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 export default withStyles(styles)(PostTextArea);

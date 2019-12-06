@@ -25,6 +25,14 @@ textarea.post-text-area {
     padding: 15px 10px 10px 75px;
     outline:none;
 }
+
+button.MuiButton-textPrimary {
+  color: #fff;
+  background: #43a047;
+  border-radius: 50pc;
+}
+
+/*
 .mybtn {
     border-radius: 10px;
     border: 0px;
@@ -145,3 +153,4 @@ textarea.post-text-area {
   margin-left: 2;
   font-size:10
 }
+*/

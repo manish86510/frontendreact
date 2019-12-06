@@ -42,17 +42,13 @@ class FeedCard extends React.Component {
       }
 
     handleComment = (tile) => {
-        console.log(tile.target.value);
-        // console.log(tile.target.value);
         this.setState({
-        comment: tile.target.value,
-        // parent: tile.target.value,
+            comment: tile.target.value,
         });
     }
 
     render() {
         const { classes, post } = this.props;
-        console.log(post);
         return (
             <Card className={classes.card}>
                 <CardActionArea>
