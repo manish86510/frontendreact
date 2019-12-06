@@ -16,7 +16,6 @@ const $ = require('jquery');
 class Interest extends React.Component{
 
   constructor(props) {
-
     super(props);
     this.state = {
         profile_interest: [],
@@ -28,6 +27,7 @@ class Interest extends React.Component{
         loading: '',
 
       }
+   
     }
 
  
@@ -147,8 +147,7 @@ getMe = () => {
   render() {
     const elements = this.state.profile_interest
     const interest_ed = []
-    const interest_his = []
-    
+ 
     for (const [index, value] of elements.entries()) {
       interest_ed.push(
       <Chip
@@ -158,10 +157,8 @@ getMe = () => {
         onDelete={this.handleInterestDelete}
         />
       )
-
-      interest_his.push(
-        { title: value.interest_code, year: value.interest_code },
-      )
+    
+    
     }
   
     const elements_in = this.state.autocompleteData
@@ -198,6 +195,8 @@ getMe = () => {
                         onChange={this.handleInterestData}
                         loading={this.state.loading}
                         // defaultValue={[interest_his[0]]}
+                        // defaultValue={[top100Films[0]]}
+
                         renderInput={params => (
                           <TextField
                           onChange={this.handleInterestChange}
@@ -232,6 +231,5 @@ getMe = () => {
       )
 }
 }
-
 
 export default Interest;
