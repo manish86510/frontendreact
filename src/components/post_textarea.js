@@ -11,6 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import endpoints from '../api/endpoints';
 import ImageIcon from '@material-ui/icons/Image';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 
 const styles = theme => ({
@@ -207,7 +208,14 @@ class PostTextArea extends React.Component {
 
               <Button variant="contained" color="primary" onClick={this.showOpenFileDlg}>
                 <ImageIcon/>
+                &nbsp;
                 Photos/Videos
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="contained" color="primary" onClick={this.showOpenFileDlg}>
+                <LocalOfferIcon/>
+                &nbsp;
+                Tag Friends
               </Button>
               &nbsp;&nbsp;
               <Button variant="contained" color="primary" onClick={this.handlePostCreate}>Post</Button>
