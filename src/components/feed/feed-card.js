@@ -17,7 +17,17 @@ import axios from 'axios';
 
 const styles = theme => ({
     card:{
-        marginBottom: 30
+        marginBottom: 30,
+        borderRadius: 20
+    },
+    cardMedia: {
+        minHeight: 240,
+    },
+    cardContent:{
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        background: '#ffffff',
+        marginTop: -20
     }
 });
 
@@ -51,28 +61,28 @@ class FeedCard extends React.Component {
         const { classes, post } = this.props;
         return (
             <Card className={classes.card}>
-                <CardActionArea>
-                    {
-                        post.post_media.length>0?(
-                            <CardMedia
-                                component="img"
-                                height="220"
-                                image={post.post_media[0].file}
-                            />
-                        ):(
-                            <CardMedia
-                                component="img"
-                                height="220"
-                                image="https://picsum.photos/seed/picsum/690/388"
-                            />
-                        )
-                    }
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {post.about_post}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
+                {
+                    post.post_media.length>0?(
+                        <CardMedia
+                            // component="img"
+                            className={classes.cardMedia}
+                            height="220"
+                            image={post.post_media[0].file}
+                        />
+                    ):(
+                        <CardMedia
+                            // component="img"
+                            className={classes.cardMedia}
+                            height="220"
+                            image="https://picsum.photos/seed/picsum/690/388"
+                        />
+                    )
+                }
+                <CardContent className={classes.cardContent}>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {post.about_post}
+                    </Typography>
+                </CardContent>
                 <CardActions>
                     <IconButton size='small'>
                         <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>

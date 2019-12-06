@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import { Avatar, ListItem } from '@material-ui/core';
+import { Avatar, ListItem, Button } from '@material-ui/core';
 
 
 
@@ -78,16 +78,16 @@ class Event extends React.Component {
 
           <Grid item xs={12}>
             <center>
-            <button className="eventBtn">This Week</button>
-            <button className="eventBtn">This Month</button>
-            <button className="eventBtn">Next Month</button>
+            <Button variant="contained"  className="eventBtn">This Week</Button>
+            <Button variant="contained"  className="eventBtn">This Month</Button>
+            <Button variant="contained"  className="eventBtn">Next Month</Button>
             </center>
           </Grid>
           <Grid item xs={10}>
-            <button className="eventBtnl">Event Invitations</button>
+            <Button variant="contained"  className="eventBtnl">Event Invitations</Button>
           </Grid>
           <Grid item xs={10}>
-            <button className="eventBtnl">Past Invitations</button>
+            <Button variant="contained"  className="eventBtnl">Past Invitations</Button>
           </Grid>
           <Grid item xs={5}>
             <Paper className={classes.paper}>

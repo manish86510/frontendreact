@@ -91,7 +91,7 @@ class ForgotPassword extends React.Component {
                             />
                         </Paper>
                     </FormGroup><br></br>
-                    <Button block bsSize="large"
+                    <Button variant="contained"  block bsSize="large"
                         type="submit"
                         className="padb10" >
                         Reset Password</Button>
@@ -142,7 +142,7 @@ class ForgotPassword extends React.Component {
                             />
                         </Paper>
                     </FormGroup><br></br>
-                    <Button block bsSize="large"
+                    <Button variant="contained"  block bsSize="large"
                         type="submit"
                         className="padb10"
 >

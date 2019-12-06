@@ -78,6 +78,7 @@ class Feed extends React.Component {
                         <PostTextArea/>
                     </Grid>
                 </Grid>
+                
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>

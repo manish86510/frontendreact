@@ -59,7 +59,7 @@ class RecomendedCircle extends React.Component {
                             </ListItemAvatar>
                             <ListItemText primary="@user" secondary="2k followers"></ListItemText>
                             <ListItemSecondaryAction>
-                                <Button color="primary">Connect</Button>
+                                <Button variant="contained"  color="primary">Connect</Button>
                             </ListItemSecondaryAction>
                         </ListItem>
                         <Divider />
@@ -69,7 +69,7 @@ class RecomendedCircle extends React.Component {
                             </ListItemAvatar>
                             <ListItemText primary="@user" secondary="2k followers"></ListItemText>
                             <ListItemSecondaryAction>
-                                <Button color="primary">Connect</Button>
+                                <Button variant="contained"  color="primary">Connect</Button>
                             </ListItemSecondaryAction>
                         </ListItem>
                     </List>

@@ -227,11 +227,11 @@ getUserData = () => {
         <Grid container spacing={3}>
           <Grid item xs={11}>
           <Grid container spacing={7}>
-          <Grid item xs={10}><Button variant="outlined" > 
+          <Grid item xs={10}><Button variant="contained"  variant="outlined" > 
             Cancel
           </Button>
           </Grid><Grid item xs={2}>
-          <Button  variant="contained" color="primary" onClick={this.handleSubmit}>
+          <Button variant="contained"   variant="contained" color="primary" onClick={this.handleSubmit}>
           Done
           </Button></Grid>
           </Grid>

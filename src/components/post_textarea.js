@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import endpoints from '../api/endpoints';
+import ImageIcon from '@material-ui/icons/Image';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 
 const styles = theme => ({
@@ -90,6 +92,7 @@ class PostTextArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      tag_friends: false,
       postData: {
         about_post: "",
         tags: "test",
@@ -115,7 +118,7 @@ class PostTextArea extends React.Component {
     for (let i = 0; i < event.target.files.length; i++) {
       this.fileArray.push(URL.createObjectURL(event.target.files[i]));
       let formData = new FormData();
-      formData.append('file', "Selection_005.png");
+      formData.append('file', event.target.files[i]);
       formData.append('file_type', 'Image');
       var token = localStorage.getItem('access');
     axios.post(endpoints.create_media, formData, {
@@ -125,7 +128,7 @@ class PostTextArea extends React.Component {
       }
     }).then(res => {
       debugger;
-        console.log(res);
+        console.log(res.data);
     }).catch(e => {
       console.log(e);
     });
@@ -167,6 +170,11 @@ class PostTextArea extends React.Component {
     });
   };
 
+  tagFriendClick = ()=>{
+    let tag = !this.state.tag_friends;
+    this.setState({tag_friends: tag});
+  }
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
@@ -183,7 +191,7 @@ class PostTextArea extends React.Component {
     const { value } = this.state;
     const { classes } = this.props;
     return (
-      <Grid container direction="row" justify="flex-start" alignItems="center">
+      <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
@@ -192,32 +200,54 @@ class PostTextArea extends React.Component {
             <TextareaAutosize
               aria-label="empty textarea"
               placeholder="Write something..."
-              className={"post-text-area"}
+              className={"textarea"}
               onChange={this.HandleTextArea}
             />
+            <div className={"post-image-thumbnail"}>
+            {(this.fileArray || []).map(url => (
+              <div className={"image-thumbnail"}>
+                <img src={url} alt="" width="200" />
+            </div>
+            ))}
+            </div>
+            <div>
+              {
+                this.state.tag_friends?(
+                  <Autocomplete
+                    freeSolo
+                    options={languages.map(option => option.name)}
+                    renderInput={params => (
+                      <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
+                    )}
+                  />
+                ):undefined
+              }
+            </div>
+            <div style={{textAlign: 'right', position: 'relative'}}>
+              <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />
+              <Button variant="contained" color="primary" onClick={this.showOpenFileDlg}>
+                <ImageIcon/>
+                &nbsp;
+                Photos/Videos
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="contained" color="primary" onClick={this.tagFriendClick}>
+                <LocalOfferIcon/>
+                &nbsp;
+                Tag Friends
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="contained" color="primary" onClick={this.handlePostCreate}>Post</Button>
+            </div>
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <div id="images">
-            {(this.fileArray || []).map(url => (
-              <img src={url} alt="" width="200" />
-            ))}
-          </div>
-          <Autocomplete
-            id="free-solo-demo"
-            freeSolo
-            options={languages.map(option => option.name)}
-            renderInput={params => (
-              <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
-            )}
-          /> 
-
-           <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button> 
+          {/* <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button> */}
 
            <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Button style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button>
+          {/* <Button variant="contained"  style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button> */}
         </Grid>
       </Grid>
     )

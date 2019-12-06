@@ -147,7 +147,7 @@ class Login extends React.Component {
                     </FormGroup>
                     <br></br><p className="padb10"> <a href="/forgetpass"> Forgot your password ? Reset! </a></p>
                     <br></br>
-                    <Button block bsSize="large"
+                    <Button variant="contained"  block bsSize="large"
                         type="submit"
                         onClick={this.postLogin}
                         className="padb10" >
