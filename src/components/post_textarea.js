@@ -8,7 +8,7 @@ import { Box } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { FormGroup } from "react-bootstrap";
 import Autosuggest from 'react-autosuggest';
 import MyResult from '../api/utility';
 import endpoints from '../api/endpoints';
@@ -141,7 +141,6 @@ class PostTextArea extends React.Component {
 
   handlePostCreate = (event) => {
     event.preventDefault();
-    debugger;
     var postData = this.state.postData;
     var result = MyResult(endpoints.create_post, postData, "post");
     if(result){

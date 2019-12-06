@@ -21,7 +21,6 @@ import Notifications from './containers/Notifications';
 // import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';

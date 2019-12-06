@@ -37,7 +37,6 @@ class Circle extends React.Component {
             }
         }
     ).then(res => {
-      debugger;
         if (res.status == 200) {
             this.setState({
                 followList: res.data,

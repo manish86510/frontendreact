@@ -107,7 +107,6 @@ getUserData = () => {
       Authorization: 'Bearer ' + localStorage.access,
     }
   }).then(res => {
-    debugger;
     const user = this.state.user
     user.name = res.data.first_name+' '+res.data.last_name 
     user.username = res.data.username
@@ -143,7 +142,6 @@ getUserData = () => {
 }
   
   handleSubmit= (event) => {
-    // debugger;
     const inter = this.state.selected.interest
     const sk = this.state.selected.skill
     const lan = this.state.selected.language
