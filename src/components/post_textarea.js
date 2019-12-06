@@ -127,7 +127,6 @@ class PostTextArea extends React.Component {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => {
-      debugger;
         console.log(res.data);
     }).catch(e => {
       console.log(e);
