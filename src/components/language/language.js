@@ -144,7 +144,7 @@ getLanguageData = () => {
         options={language_items}
         getOptionLabel={option => option.title}
         onChange={this.handleLanguageData}
-        defaultValue={[this.state.autocomp]}
+        defaultValue={[this.state.selected.language]}
         renderInput={params => (
           <TextField
             {...params}

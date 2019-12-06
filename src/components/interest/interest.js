@@ -11,54 +11,12 @@ import { toast } from 'react-toastify';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
 const $ = require('jquery');
-
-function sleep(delay = 0) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
-}
-
-function Asynchronous() {
-
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = open && options.length === 0;
-
-  React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-      await sleep(1e3); // For demo purposes.
-      const countries = await response.json();
-
-      if (active) {
-        setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
-
-}
 
 class Interest extends React.Component{
 
   constructor(props) {
+
     super(props);
     this.state = {
         profile_interest: [],
@@ -70,14 +28,12 @@ class Interest extends React.Component{
         loading: '',
 
       }
-     
     }
 
  
   componentDidMount() {
     this.getMe();
     this.getInterest();
-
 }
 
 debounce_timer = null;
@@ -162,7 +118,9 @@ getMe = () => {
           }
   
         this.setState({ profile_interest: profile_interest }) 
+        
       
+
     });
   }
 
@@ -182,13 +140,14 @@ getMe = () => {
   _editInterest= () => {
     $('.autocompleteInterest').show();
     $('.editInterest').hide();
+    const data = this.state 
   
   }  
 
   render() {
-    
     const elements = this.state.profile_interest
     const interest_ed = []
+    const interest_his = []
     
     for (const [index, value] of elements.entries()) {
       interest_ed.push(
@@ -199,8 +158,12 @@ getMe = () => {
         onDelete={this.handleInterestDelete}
         />
       )
-    }
 
+      interest_his.push(
+        { title: value.interest_code, year: value.interest_code },
+      )
+    }
+  
     const elements_in = this.state.autocompleteData
     const interest_items = []
     
@@ -210,8 +173,8 @@ getMe = () => {
          
       )
     }
-    debugger;
 
+   
     
     return(
         <Grid container spacing={3}>
@@ -223,8 +186,7 @@ getMe = () => {
 
                             <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
         <AddIcon style={{color: 'white'}} onClick={this._editInterest}/>
-      </Fab>
-                            </div>
+      </Fab></div>
                             
                             <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 650 }} >
               
@@ -233,10 +195,9 @@ getMe = () => {
                         id="interest"
                         options={interest_items}
                         getOptionLabel={option => option.title}
-                        // defaultValue={[interest_items[0]]}
                         onChange={this.handleInterestData}
                         loading={this.state.loading}
-                        defaultValue={[this.state.profile_interest]}
+                        // defaultValue={[interest_his[0]]}
                         renderInput={params => (
                           <TextField
                           onChange={this.handleInterestChange}
