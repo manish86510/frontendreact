@@ -8,6 +8,8 @@ import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
 import PostTextArea from '../post_textarea';
+import Drawer from '@material-ui/core/Drawer';
+
 
 const styles = theme => ({
     root: {
@@ -71,7 +73,7 @@ class Feed extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         {/* <AddPost/> */}
@@ -94,7 +96,7 @@ class Feed extends React.Component {
                             </Grid>                                                     
                         </div>
                     </Grid>
-                </Grid> 
+                </Grid>
             </div>
         );
     }

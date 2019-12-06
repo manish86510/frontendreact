@@ -14,12 +14,12 @@ const endpoints = {
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/language/',
 
-  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
+  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/media/',
   user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/',
   user_comments: 'https://energeapi.do.viewyoursite.net/api/v1/comment/',
   user_like: 'https://energeapi.do.viewyoursite.net/api/v1/like/',
   get_post: 'https://energeapi.do.viewyoursite.net/api/v1/get-post/',
-  user_list: 'http://127.0.0.1:8000/follower-user-list/',
+  user_list: 'https://energeapi.do.viewyoursite.net/follower-user-list/',
 };
 export default endpoints;
