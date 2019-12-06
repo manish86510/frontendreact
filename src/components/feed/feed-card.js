@@ -88,7 +88,7 @@ class FeedCard extends React.Component {
                     <span style={{ fontSize: 12 }}>{post.share_count}</span>
                 </CardActions>
                 <CardActions>
-                    <FeedComments comments={post.post_comment} pid={post.id} />
+                    <FeedComments pid={post.id} />
                 </CardActions>
             </Card>
         );

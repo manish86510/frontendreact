@@ -118,6 +118,7 @@ class ProjectTextArea extends React.Component {
   }
 
   handleChange = event => {
+    debugger;
     this.fileObj.push(event.target.files)
     for (let i = 0; i < this.fileObj[0].length; i++) {
       this.fileArray.push(URL.createObjectURL(this.fileObj[0][i]))

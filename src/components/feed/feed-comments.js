@@ -62,9 +62,9 @@ class FeedComments extends React.Component {
         const { classes, comments, pid } = this.props;
         return (
             <div>
-                { comments.map(comment=> (
+                {/* { comments.map(comment=> (
                 <p>{comment.comment}</p>
-                ))}
+                ))} */}
                  <form onSubmit={this.handleSubmit}
                         bsSize="small"
                         className="padb10">                                                       
@@ -86,7 +86,6 @@ class FeedComments extends React.Component {
 }
 
 FeedComments.propTypes = {
-    comments: PropTypes.object.isRequired,
     pid: PropTypes.object.isRequired
 };
 

@@ -111,12 +111,24 @@ class PostTextArea extends React.Component {
   }
 
   handleChange = event => {
+    debugger;
     for (let i = 0; i < event.target.files.length; i++) {
-      this.fileArray.push(URL.createObjectURL(event.target.files[i]))
+      this.fileArray.push(URL.createObjectURL(event.target.files[i]));
       let formData = new FormData();
-      formData.append('file', this.fileArray);
+      formData.append('file', "Selection_005.png");
       formData.append('file_type', 'Image');
-      MyResult(endpoints.create_media, formData, "post");
+      var token = localStorage.getItem('access');
+    axios.post(endpoints.create_media, formData, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      debugger;
+        console.log(res);
+    }).catch(e => {
+      console.log(e);
+    });
     }
     this.setState({ file: this.fileArray })
   }
@@ -169,7 +181,6 @@ class PostTextArea extends React.Component {
 
   render() {
     const { value } = this.state;
-
     const { classes } = this.props;
     return (
       <Grid container direction="row" justify="flex-start" alignItems="center">
@@ -192,18 +203,18 @@ class PostTextArea extends React.Component {
               <img src={url} alt="" width="200" />
             ))}
           </div>
-          {/* <Autocomplete
+          <Autocomplete
             id="free-solo-demo"
             freeSolo
             options={languages.map(option => option.name)}
             renderInput={params => (
               <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
             )}
-          /> */}
+          /> 
 
-          {/* <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button> */}
+           <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button> 
 
-          {/* <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} /> */}
+           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Button style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button>
