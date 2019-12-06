@@ -1,7 +1,6 @@
 import React from 'react';
-import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
+import { TextareaAutosize, Avatar, Paper, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import axios from 'axios';
@@ -229,7 +228,8 @@ class ProjectTextArea extends React.Component {
                 renderSuggestion={renderSuggestion}
                 inputProps={inputProps} className="searchuser" />
           </div>
-          <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button>
+          <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button>
+          
           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
           <Box component="div" m={1} className={classes.con}>
             <Fab

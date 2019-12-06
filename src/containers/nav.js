@@ -309,7 +309,7 @@ class SideNav extends React.Component {
                                 <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
                                 <div>@suman</div>
                             </div>
-                            <Button onClick={this.handleUserMenuToggle} ref="userMenuRef">
+                            <Button variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
                                     src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
                                 </Avatar>

@@ -1,11 +1,10 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import TextField from '@material-ui/core/TextField';
 import '../../styles/main.css';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 const styles = theme => ({
     card:{
@@ -31,7 +30,6 @@ class FeedComments extends React.Component {
             // post_type : this.props.post_type
         }
     postComments = (post_id) => { 
-        debugger;
         if(this.state.comment_id == post_id){
             this.setState({show: !this.state.show});    
         }else{
@@ -62,9 +60,8 @@ class FeedComments extends React.Component {
         const { classes, comments, pid } = this.props;
         return (
             <div>
-                { comments.map(comment=> (
-                <p>{comment.comment}</p>
-                ))}
+                {(comments!=null && comments!=undefined)?(comments.map(comment=> (<p>{comment.comment}</p>))): undefined}
+
                  <form onSubmit={this.handleSubmit}
                         bsSize="small"
                         className="padb10">                                                       
@@ -73,12 +70,12 @@ class FeedComments extends React.Component {
                             value={this.state.comment}
                             onChange={this.handleComment}
                             type="text"></textarea>                                                   
-                                <button block bsSize="Large"
+                                <Button variant="contained"  block bsSize="Large"
                                     onClick={this.postComments.bind(this, pid)}
                                     className="commentbtn" 
                                     type="submit">
                                     Post
-                                </button>                                                                                                                                                                    
+                                </Button>                                                                                                                                                                    
                     </form>
             </div>
         );

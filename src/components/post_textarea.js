@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import endpoints from '../api/endpoints';
+import ImageIcon from '@material-ui/icons/Image';
 
 
 const styles = theme => ({
@@ -172,7 +173,7 @@ class PostTextArea extends React.Component {
 
     const { classes } = this.props;
     return (
-      <Grid container direction="row" justify="flex-start" alignItems="center">
+      <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
@@ -181,9 +182,36 @@ class PostTextArea extends React.Component {
             <TextareaAutosize
               aria-label="empty textarea"
               placeholder="Write something..."
-              className={"post-text-area"}
+              className={"textarea"}
               onChange={this.HandleTextArea}
             />
+            <div className={"post-image-thumbnail"}>
+              <div className={"image-thumbnail"}>
+                <img src="https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"/>
+              </div>
+              <div className={"image-thumbnail"}>
+                <img src="https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"/>
+                </div>
+              <div className={"image-thumbnail"}>
+                <img src="https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"/>
+                </div>
+              <div className={"image-thumbnail"}>
+                <img src="https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"/>
+              </div>
+              {/* <div className={"image-thumbnail"}>
+                +
+              </div> */}
+            </div>
+            <div style={{textAlign: 'right', position: 'relative'}}>
+              <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />
+
+              <Button variant="contained" color="primary" onClick={this.showOpenFileDlg}>
+                <ImageIcon/>
+                Photos/Videos
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="contained" color="primary" onClick={this.handlePostCreate}>Post</Button>
+            </div>
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -201,12 +229,12 @@ class PostTextArea extends React.Component {
             )}
           /> */}
 
-          {/* <button className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</button> */}
+          {/* <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button> */}
 
           {/* <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} /> */}
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Button style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button>
+          {/* <Button variant="contained"  style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button> */}
         </Grid>
       </Grid>
     )
