@@ -14,8 +14,7 @@ import {
   } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
-import HotTopics from '../../../components/profile/Hot-topics';
-import SideNav from '../../../containers/nav'
+import HotTopics from '../../../components/hot-topics/hot-topic';
 
 
 const BootstrapInput = withStyles(theme => ({

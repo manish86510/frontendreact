@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextArea from '../components/textarea';
 import Feed from '../components/feed/feed';
-import PostHotTopics from '../components/Posts/post-hot-topics';
+import PostHotTopics from '../components/hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 import RecomendedCircle from '../components/circle/recomended-circle';
 import HotTopic from '../components/hot-topics/hot-topic';

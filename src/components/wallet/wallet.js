@@ -2,7 +2,7 @@ import React from 'react';
 import SideNav from '../../containers/nav'
 import WalletTabs from './WalletTabs'
 import Grid from '@material-ui/core/Grid';
-import HotTopics from '../profile/Hot-topics';
+import HotTopics from '../hot-topics/hot-topic';
 
 
 
