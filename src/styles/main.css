@@ -1,7 +1,4 @@
-/* *{
-    outline: none;
-} */
-.text-area-container{
+ .text-area-container{
     width: 100%;
     position: relative;
 }
@@ -28,6 +25,14 @@ textarea.post-text-area {
     padding: 15px 10px 10px 75px;
     outline:none;
 }
+
+button.MuiButton-textPrimary {
+  color: #fff;
+  background: #43a047;
+  border-radius: 50pc;
+}
+
+/*
 .mybtn {
     border-radius: 10px;
     border: 0px;
@@ -119,7 +124,7 @@ textarea.post-text-area {
     position: absolute;
     bottom: 8px;
     left: 16px;
-  }
+  } 
   .MuiIconButton-root:hover {
     background-color: rgba(0, 0, 0, 0.08);
     color: blue;
@@ -128,3 +133,24 @@ textarea.post-text-area {
     background-color: rgba(0, 0, 0, 0.08);
     color: blue;
   }
+  .MuiOutlinedInput-input {
+    padding: 6.5px 14px;
+}
+
+.MuiInputBase-input {
+    color: currentColor;
+    width: 100%;
+    height: 20px;
+    border: 0;
+    display: block;
+    min-width: 0;
+    background: none;
+}
+.commentbtn{
+  background: #0066cc;
+  color: #fff;
+  margin-bottom: 22px;
+  margin-left: 2;
+  font-size:10
+}
+*/

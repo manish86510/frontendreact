@@ -2,7 +2,7 @@ import React from 'react';
 import SideNav from '../../containers/nav'
 import ProfileTabs from './Edit-profile'
 import Grid from '@material-ui/core/Grid';
-import HotTopics from './Hot-topics';
+import HotTopics from '../hot-topics/hot-topic';
 
 
 class Profile extends React.Component{

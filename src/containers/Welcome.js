@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import React from "react";
 import '../styles/Login.css'
-import axios from 'axios';
-import { useAuth } from "../context/auth";
-import { Link, Redirect } from "react-router-dom";
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import Img from "react-image";
 import { withRouter } from 'react-router-dom'; 
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -40,8 +35,4 @@ class Login extends React.Component {
         );
     }
 }
-Login.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 export default withRouter(withStyles(styles)(Login));

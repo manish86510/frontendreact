@@ -1,25 +1,11 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
 import Circle from './circle';
 import You from './you'
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
 
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const styles = theme => ({
   root: {
@@ -39,7 +25,7 @@ class NotificationTab extends React.Component {
     this.setState({ value: newValue });
   };
   render() {
-    const { classes, children } = this.props;
+    const { classes } = this.props;
     var value = this.state.value;
     // console.log(value);
     return (
@@ -54,15 +40,12 @@ class NotificationTab extends React.Component {
           <Tab label="Your Circle" />
           <Tab label="You" />
         </Tabs>
-        {value == 0 && <TabContainer><Circle /></TabContainer>}
-        {value == 1 && <TabContainer><You /></TabContainer>}
+        {value == 0 &&  <Circle /> }
+        {value == 1 &&  <You /> }
       </div>
     );
   }
 }
 
-NotificationTab.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(NotificationTab);

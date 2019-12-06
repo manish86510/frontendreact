@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import React from "react";
 import '../styles/Login.css';
-import { Icon, IconButton } from "@material-ui/core";
+import { Button, FormGroup } from '@material-ui/core';
+import { IconButton } from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import Paper from '@material-ui/core/Paper';
@@ -14,7 +14,7 @@ import { PropTypes } from 'prop-types';
 // function validateForm() {
 //     return username.length > 0 && password.length > 0;
 // }
-const image = require("../img/login_image.png");
+// const image = require("../img/login_image.png");
 const styles = theme => ({
     username: {
         borderRadius: 100,
@@ -150,7 +150,7 @@ class ForgotPassword extends React.Component {
                 </form>
             </center>
             <div >
-                <img src={Img}
+                <img alt="img" src={Img}
                     style={
                         { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }}
                 />

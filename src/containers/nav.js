@@ -146,10 +146,6 @@ class SideNav extends React.Component {
     //     <SettingsOutlinedIcon />
     // ];
 
-    constructor(props) {
-        super(props);
-    }
-
     nav = () => {
         this.state.home_title = "Home";
         this.props.history.push({

@@ -14,7 +14,7 @@ import {
   } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
-import HotTopics from '../../../components/profile/Hot-topics';
+import HotTopics from '../../hot-topics/hot-topic';
 import SideNav from '../../../containers/nav'
 
 

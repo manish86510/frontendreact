@@ -207,8 +207,5 @@ class Collaborate extends React.Component {
   }
 }
 
-Collaborate.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Collaborate);

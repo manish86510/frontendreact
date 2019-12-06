@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import endpoints from './endpoints';
 import axios from 'axios';
 
@@ -14,10 +14,10 @@ export default function MyResult(api, mydata, method) {
                 }
             }
         ).then(res => {
-            return res;
-        }).catch(
-            error => {
-                console.log(error);
+            debugger;
+            return res.data;
+        }).catch(res => {
+                return res.data;
             }
         );
     }
