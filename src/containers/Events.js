@@ -16,12 +16,12 @@ const styles = theme => ({
 });
 
 class Events extends React.Component {
-    constructor(props) {
-        super(props);
-    };
+    // constructor(props) {
+    //     super(props);
+    // };
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         return (
             <div>
                 <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
@@ -36,8 +36,5 @@ class Events extends React.Component {
         );
     }
 }
-Events.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Events);

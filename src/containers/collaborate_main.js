@@ -15,12 +15,9 @@ const styles = theme => ({
 });
 
 class CollaborateMain extends React.Component {
-    constructor(props) {
-        super(props);
-    };
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         return (
             <div>
                 <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
@@ -36,8 +33,5 @@ class CollaborateMain extends React.Component {
         );
     }
 }
-CollaborateMain.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(CollaborateMain);

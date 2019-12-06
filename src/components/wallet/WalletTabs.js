@@ -75,19 +75,19 @@ class WalletInfo extends React.Component{
 
       <List>
       <ListItem>
-                <Button style={{borderRadius: '25px', width:'160px'}} variant="outlined" >
+                <Button variant="contained"  style={{borderRadius: '25px', width:'160px'}} variant="outlined" >
                 Send Coins
                 </Button>
                 </ListItem>
                 <ListItem>
 
-                <Button style={{borderRadius: '25px', width:'160px'}} variant="outlined"  >
+                <Button variant="contained"  style={{borderRadius: '25px', width:'160px'}} variant="outlined"  >
                     Request Coins
                 </Button>
                 </ListItem>
                 <ListItem>
 
-                <Button style={{borderRadius: '25px', width:'160px', backgroundColor:'#6fc1a5'}} variant="contained" color="primary" >
+                <Button variant="contained"  style={{borderRadius: '25px', width:'160px', backgroundColor:'#6fc1a5'}} variant="contained" color="primary" >
                     Buy More
                 </Button>
                 </ListItem>

@@ -25,18 +25,21 @@ import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
 import Verify_mail from './containers/verify_mail'
-
+// main: '#4eb894',
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#43a047',
+            main: '#4eb894',
+            contrastText: '#ffffff'
         },
         secondary: Colors.pink,
     },
 });
-console.log(theme);
+
+console.log('theme', theme);
+
 function App() {
-    const [authTokens, setAuthTokens] = useState();
+    const [setAuthTokens] = useState();
     const setTokens = (data) => {
         localStorage.setItem("tokens", JSON.stringify(data));
         setAuthTokens(data);
