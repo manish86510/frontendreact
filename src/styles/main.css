@@ -64,7 +64,8 @@ button.MuiButton-containedPrimary,
 button.MuiButton-textPrimary {
   /* color: #fff;
   background: #43a047; */
-  border-radius: 50pc;
+  border-radius: 50px;
+  text-transform: capitalize;
 }
 
 /*

@@ -159,12 +159,14 @@ class SideNav extends React.Component {
     handleDrawerClose = () => {
         this.setState({ open: false });
     };
+
     handleUserMenuClose = () => {
         this.setState({
             userMenuOpen: false,
             rightSidebarOpen: true
         });
     };
+    
     handleUserMenuToggle = () => {
         this.setState({ userMenuOpen: !this.state.userMenuOpen });
     };
