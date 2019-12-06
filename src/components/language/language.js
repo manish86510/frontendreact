@@ -136,7 +136,7 @@ getLanguageData = () => {
                          
 </div>
 
-<div class='autocompleteLanguage' style={{ position: 'relative', left: 30, width: 500 }} >
+<div class='autocompleteLanguage' style={{ position: 'relative', left: 30, width: 650 }} >
                           
                             <Autocomplete
         multiple
@@ -144,6 +144,7 @@ getLanguageData = () => {
         options={language_items}
         getOptionLabel={option => option.title}
         onChange={this.handleLanguageData}
+        defaultValue={[this.state.autocomp]}
         renderInput={params => (
           <TextField
             {...params}

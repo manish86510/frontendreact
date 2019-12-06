@@ -20,14 +20,41 @@ function sleep(delay = 0) {
   });
 }
 
-// function autosuggest(abc){
-//   const [open, setOpen] = React.useState(false);
-//   const [options, setOptions] = React.useState([]);
-//   const loading = open && options.length === 0;
+function Asynchronous() {
 
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const loading = open && options.length === 0;
 
-// }
+  React.useEffect(() => {
+    let active = true;
 
+    if (!loading) {
+      return undefined;
+    }
+
+    (async () => {
+      const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
+      await sleep(1e3); // For demo purposes.
+      const countries = await response.json();
+
+      if (active) {
+        setOptions(Object.keys(countries).map(key => countries[key].item[0]));
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
+
+}
 
 class Interest extends React.Component{
 
@@ -53,44 +80,35 @@ class Interest extends React.Component{
 
 }
 
+debounce_timer = null;
+
 retrieveDataAsynchronously(searchText){
-  this.setState({ autocompleteData: [] }) 
-          
-  let _this = this;
-
-  // Url of your website that process the data and returns a
-  let url = endpoints.interest+`?querystring=${searchText}`;
+  if(this.debounce_timer!=null){
+    clearTimeout(this.debounce_timer);
+  }
+  this.debounce_timer = setTimeout(()=>{
+    this.setState({ autocompleteData: [] });
   
-  // Configure a basic AJAX request to your server side API
-  // that returns the data according to the sent text
+    let url = endpoints.interest+`?querystring=${searchText}`;
 
-  axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          }
-         }).then(res => {
-          const autocompleteData = this.state.autocompleteData
-            
-            for (let i = 0; i < res.data.length; i++) {
-              autocompleteData.push(res.data[i])
-              }
-            
-            this.setState({ autocompleteData: autocompleteData }) 
-        });
+    axios.get(url, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.access,
+            }
+          }).then(res => {
+    
+            const autocompleteData = this.state.autocompleteData
+              
+              for (let i = 0; i < res.data.length; i++) {
+                autocompleteData.push(res.data[i])
+                }
+              
+              this.setState({ autocompleteData: autocompleteData }) 
+          });
+  }, 500);
+  
 
-  // return (
-  //   <Paper {...containerProps} square>
-  //     {
-  //       loading_suggestions == true ?
-  //         <div style={{ textAlign: 'left', padding: 10 }}>
-  //           <CircularProgress size={24} thickness={4} />
-  //           <span style={{ paddingLeft: 10 }}>Loading...</span>
-  //         </div> : ''
-  //     }
-  //     {children}
-  //   </Paper>
-  // );
 }
 
 
@@ -160,8 +178,6 @@ getMe = () => {
       })
    
   };
-
-
   
   _editInterest= () => {
     $('.autocompleteInterest').show();
@@ -171,7 +187,6 @@ getMe = () => {
 
   render() {
     
-
     const elements = this.state.profile_interest
     const interest_ed = []
     
@@ -195,10 +210,14 @@ getMe = () => {
          
       )
     }
+    debugger;
+
     
     return(
         <Grid container spacing={3}>
         <Grid item xs={12}>
+
+   
         <div class='row editInterest' style={{ position: 'relative', left: 30 }}>
                             {interest_ed}
 
@@ -207,8 +226,7 @@ getMe = () => {
       </Fab>
                             </div>
                             
-                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 500 }} >
-                            {/* {this._renderCancel} */}
+                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 650 }} >
               
                             <Autocomplete
                         multiple
@@ -218,9 +236,10 @@ getMe = () => {
                         // defaultValue={[interest_items[0]]}
                         onChange={this.handleInterestData}
                         loading={this.state.loading}
+                        defaultValue={[this.state.profile_interest]}
                         renderInput={params => (
                           <TextField
-                          onKeyPress={this.handleInterestChange}
+                          onChange={this.handleInterestChange}
                           // onClick={this.handleInterestChange}
                             {...params}
                             variant="standard"

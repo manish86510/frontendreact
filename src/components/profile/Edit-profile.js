@@ -243,7 +243,7 @@ getUserData = () => {
             <br></br>
                 {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
                 <div class='row' style={{  padding: 10,  height:95}} >
-                    <div class="col-md-6">
+                    <div class="col-xs-6">
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
                             src={this.state.user.image}>
                             </img>
