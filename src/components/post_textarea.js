@@ -1,11 +1,8 @@
 import React from 'react';
-import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
+import { TextareaAutosize, Avatar } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
-import { Box } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
 import { Button, Grid } from '@material-ui/core'
-import MyResult from './../api/utility'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';

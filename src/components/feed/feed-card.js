@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,15 +10,11 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import FeedComments from './feed-comments';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
-import { blue } from '@material-ui/core/colors';
 
 
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Button from '@material-ui/core/Button';
@@ -42,9 +37,6 @@ const styles = theme => ({
         borderTopRightRadius: 20,
         background: '#ffffff',
         marginTop: -20
-    },
-    iconActive:{
-        color:blue,
     }
 });
 
@@ -78,7 +70,7 @@ class FeedCard extends React.Component {
     postDetail = ()=>{
         this.setState({open_post_details: !this.state.open_post_details});
     }
-    
+
     onDrawerClose = ()=>{
         this.setState({open_post_details: !this.state.open_post_details});
     }
@@ -93,7 +85,7 @@ class FeedCard extends React.Component {
                             // component="img"
                             className={classes.cardMedia}
                             height="220"
-                            image={"https://energeapi.do.viewyoursite.net"+ post.post_media[0].file}
+                            image={post.post_media[0].file}
                         />
                     ):(
                         <CardMedia
@@ -103,7 +95,7 @@ class FeedCard extends React.Component {
                             image="https://picsum.photos/seed/picsum/690/388"
                         />
                     )
-                }
+                }   
                 <CardContent className={classes.cardContent}>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
@@ -144,9 +136,9 @@ class FeedCard extends React.Component {
                     </IconButton>
                     <span style={{ fontSize: 12 }}>{post.share_count}</span>
                 </CardActions>
-                <CardActions>
+                {/* <CardActions>
                     <FeedComments pid={post.id} />
-                </CardActions>
+                </CardActions> */}
                 {
                     this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
                 }

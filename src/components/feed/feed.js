@@ -3,12 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 import axios from 'axios';
-import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
 import PostTextArea from '../post_textarea';
-import Drawer from '@material-ui/core/Drawer';
 
 
 const styles = theme => ({
@@ -40,7 +38,7 @@ class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
+            postList: null,
             value: 0,
             like_status: false,
             isError: '',
@@ -52,20 +50,17 @@ class Feed extends React.Component {
         this.handleScroll = this.handleScroll.bind(this);
         }
     componentDidMount() {
-        
         var url = endpoints.create_post;
         var getToken = localStorage.getItem('access');
         axios.get(
-            url,{page:1},
+            url,
             {
                 headers: {
                     Authorization: 'Bearer ' + getToken,
                 }
             }
         ).then(res => {
-            debugger;
             if (res.status == 200) {
-                console.log(res.data);
                 this.setState({
                     postList: res.data,
                 });
@@ -84,7 +79,7 @@ class Feed extends React.Component {
         var windows_height = window.innerHeight;
         var scroll_height = feed.offsetHeight;
         // var scrollPercent = (scroll_height-windows_height)/100;
-        var scrollPercent = (scroll_top / scroll_height) * 100;
+        var scrollPercent = (windows_height / scroll_height) * 100;
         if(scrollPercent > 80) {
             console.log('the scroll things', event);
             // this.componentDidMount();
@@ -111,9 +106,13 @@ class Feed extends React.Component {
                     <Grid item xs={12}>
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                                {this.state.postList.map(post => (
-                                        <FeedCard post={post}/>
-                                ))}
+                                {
+                                    (this.state.postList!=null && this.state.postList!=undefined)?(
+                                        this.state.postList.results.map(post => (
+                                                <FeedCard post={post}/>
+                                        ))
+                                    ): undefined
+                                }
                             </Grid>                                                     
                         </div>
                     </Grid>
