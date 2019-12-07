@@ -78,7 +78,7 @@ class RecomendedCircle extends React.Component {
 
                 <CardContent>
                     <List className={classes.root} dense>
-                        {
+                        {/* {
                             (this.state.circle!=null && this.state.circle!=undefined)?(
                                 this.state.circle.recults.map((user, index)=>(
                                     <ListItem alignItems="flex-start">
@@ -92,7 +92,7 @@ class RecomendedCircle extends React.Component {
                                     </ListItem>
                                 ))        
                             ):undefined
-                        }
+                        } */}
                         {/* <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />

@@ -23,6 +23,8 @@ import InterestData from '../interest/interest';
 import SkillData from '../skills/skill';
 import LanguageData from '../language/language';
 import { toast } from 'react-toastify';
+import ProfileCard from './profile-card';
+
 const $ = require('jquery');
 
 
@@ -72,17 +74,7 @@ class EditProfile extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        name: '',
-        username: '',
-        bio:'',
-        email:'',
-        image:'',
-        linked_in:'',
-        education:'',
-        url:'',
-      },
-      
+      user: {},
       selected:{
         interest: [],
         skill: [],
@@ -101,23 +93,8 @@ componentDidMount = () => {
     
 }
 getUserData = () => {
-  debugger;
-  axios.get(endpoints.profile_user, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.access,
-    }
-  }).then(res => {
-    const user = this.state.user
-    user.name = res.data.first_name+' '+res.data.last_name 
-    user.username = res.data.username
-    user.bio = res.data.about
-    user.email = res.data.email
-    user.image = 'https://energeapi.do.viewyoursite.net/'+res.data.avatar
-    user.url = res.data.enlarge_url
-    
-    this.setState({ user });
-  });
+  
+  
   axios.get(endpoints.profile_social_links, {
     headers: {
       'Content-Type': 'application/json',
@@ -225,10 +202,13 @@ getUserData = () => {
     // })
   }
     render() {
-     
-  
         return (
          <div>
+           {
+             this.state.user!=null?(<ProfileCard profile={this.state.user}/>): undefined
+           }
+
+           <br/><br/><br/>
         <Grid container spacing={3}>
           <Grid item xs={11}>
           <Grid container spacing={7}>
