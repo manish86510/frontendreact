@@ -68,7 +68,6 @@ retrieveDataAsynchronously(searchText){
 }
 
 
-
 handleInterestChange  = (e) => {
   this.setState({
       value: e.target.value
@@ -114,13 +113,11 @@ getMe = () => {
       const profile_interest = this.state.profile_interest
         
         for (let i = 0; i < res.data.length; i++) {
-            profile_interest.push(res.data[i])
+            profile_interest.push(res.data[i].interest_code)
           }
   
         this.setState({ profile_interest: profile_interest }) 
         
-      
-
     });
   }
 
@@ -140,11 +137,24 @@ getMe = () => {
   _editInterest= () => {
     $('.autocompleteInterest').show();
     $('.editInterest').hide();
-    const data = this.state 
+    const elements = this.state.profile_interest
+    const interest_his = []
+ 
+    for (const [index, value] of elements.entries()) {
+      
+      interest_his.push(
+        { title: value.interest_code, year: value.interest_code },
+      )
+    }
+    // debugger;
+    // const interest_his = this.state.selected.interest 
+    // this.setState({ interest_his: interest_his }) 
+
   
   }  
 
   render() {
+    
     const elements = this.state.profile_interest
     const interest_ed = []
  
@@ -152,12 +162,11 @@ getMe = () => {
       interest_ed.push(
       <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        id={value.id}
-        label={value.interest_code}
+        id={value}
+        label={value}
         onDelete={this.handleInterestDelete}
         />
       )
-    
     
     }
   
@@ -170,8 +179,7 @@ getMe = () => {
          
       )
     }
-
-   
+ 
     
     return(
         <Grid container spacing={3}>
@@ -188,13 +196,15 @@ getMe = () => {
                             <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 650 }} >
               
                             <Autocomplete
+                        value={this.state.profile_interest}
+                        // items={this.state.profile_interest}
                         multiple
                         id="interest"
                         options={interest_items}
                         getOptionLabel={option => option.title}
                         onChange={this.handleInterestData}
                         loading={this.state.loading}
-                        // defaultValue={[interest_his[0]]}
+                        // defaultValue={[this.state.selected.interest]}
                         // defaultValue={[top100Films[0]]}
 
                         renderInput={params => (

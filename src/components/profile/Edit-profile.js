@@ -101,6 +101,7 @@ componentDidMount = () => {
     
 }
 getUserData = () => {
+  debugger;
   axios.get(endpoints.profile_user, {
     headers: {
       'Content-Type': 'application/json',
