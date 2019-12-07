@@ -3,12 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
 import axios from 'axios';
-import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
 import PostTextArea from '../post_textarea';
-import Drawer from '@material-ui/core/Drawer';
 
 
 const styles = theme => ({
@@ -40,7 +38,7 @@ class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
+            postList: null,
             value: 0,
             like_status: false,
             isError: '',
@@ -49,7 +47,7 @@ class Feed extends React.Component {
             parent: '',
             comment_id:0,
         };
-        }   
+    }   
     componentDidMount() {
         var url = endpoints.get_post;
         var getToken = localStorage.getItem('access');
@@ -67,7 +65,7 @@ class Feed extends React.Component {
                     postList: res.data,
                 });
             }
-        })
+        });
     }
    
     render() {
@@ -90,9 +88,13 @@ class Feed extends React.Component {
                     <Grid item xs={12}>
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                                {this.state.postList.map(post => (
-                                        <FeedCard post={post}/>
-                                ))}
+                                {
+                                    (this.state.postList!=null && this.state.postList!=undefined)?(
+                                        this.state.postList.results.map(post => (
+                                                <FeedCard post={post}/>
+                                        ))
+                                    ): undefined
+                                }
                             </Grid>                                                     
                         </div>
                     </Grid>

@@ -13,13 +13,16 @@ const endpoints = {
   interest: 'https://energeapi.do.viewyoursite.net/interest/',
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/language/',
-
-  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/',
-  create_media: 'https://energeapi.do.viewyoursite.net/api/v1/media/',
-  user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/',
-  user_comments: 'https://energeapi.do.viewyoursite.net/api/v1/comment/',
-  user_like: 'https://energeapi.do.viewyoursite.net/api/v1/like/',
-  get_post: 'https://energeapi.do.viewyoursite.net/api/v1/get-post/',
   user_list: 'https://energeapi.do.viewyoursite.net/follower-user-list/',
+
+  user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/',
+  user_comments: 'https://energeapi.do.viewyoursite.net/api/v1/post/comment/',
+  user_like: 'https://energeapi.do.viewyoursite.net/api/v1/post/like/',
+
+  create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
+  create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
+  get_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
+
+  recomended_followers: 'https://energeapi.do.viewyoursite.net/user/recommended/'
 };
 export default endpoints;

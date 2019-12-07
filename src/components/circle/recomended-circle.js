@@ -16,7 +16,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/styles';
-
+import axios from 'axios';
+import endpoints from '../../api/endpoints';
 
 
 const styles = theme => ({
@@ -32,6 +33,33 @@ const styles = theme => ({
 });
 
 class RecomendedCircle extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            circle: null
+        };
+    }
+
+    componentDidMount(){
+        var url = endpoints.recomended_followers;
+        var getToken = localStorage.getItem('access');
+        axios.get(
+            url,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken,
+                }
+            }
+        ).then(res => {
+            if (res.status == 200) {
+                this.setState({
+                    circle: res.data,
+                });
+            }
+        });
+    }
 
     render() {
         const { classes } = this.props;
@@ -50,7 +78,22 @@ class RecomendedCircle extends React.Component {
 
                 <CardContent>
                     <List className={classes.root} dense>
-                        <ListItem alignItems="flex-start">
+                        {
+                            (this.state.circle!=null && this.state.circle!=undefined)?(
+                                this.state.circle.recults.map((user, index)=>(
+                                    <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                                        </ListItemAvatar>
+                                        <ListItemText primary="@user" secondary="2k followers"></ListItemText>
+                                        <ListItemSecondaryAction>
+                                            <Button variant="contained"  color="primary">Connect</Button>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                ))        
+                            ):undefined
+                        }
+                        {/* <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                             </ListItemAvatar>
@@ -68,7 +111,7 @@ class RecomendedCircle extends React.Component {
                             <ListItemSecondaryAction>
                                 <Button variant="contained"  color="primary">Connect</Button>
                             </ListItemSecondaryAction>
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                 </CardContent>
             </Card>
