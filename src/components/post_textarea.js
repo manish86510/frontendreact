@@ -153,6 +153,7 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
+      debugger;
           alert("Post updated successfully");
     }).catch(e => {
       console.log(e);
