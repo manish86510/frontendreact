@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,9 +10,19 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import FeedComments from './feed-comments';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
+
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Button from '@material-ui/core/Button';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Avatar from '@material-ui/core/Avatar';
+import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
+import FeedDetail from './feed-details';
+
 
 const styles = theme => ({
     card:{
@@ -32,6 +41,13 @@ const styles = theme => ({
 });
 
 class FeedCard extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            open_post_details: false
+        };
+    }
     
     handleLike = (tile) => {
         var my_data={
@@ -49,12 +65,14 @@ class FeedCard extends React.Component {
         ).then(res => {
             console.log("Working");
         })
-      }
+    }
 
-    handleComment = (tile) => {
-        this.setState({
-            comment: tile.target.value,
-        });
+    postDetail = ()=>{
+        this.setState({open_post_details: !this.state.open_post_details});
+    }
+
+    onDrawerClose = ()=>{
+        this.setState({open_post_details: !this.state.open_post_details});
     }
 
     render() {
@@ -67,7 +85,7 @@ class FeedCard extends React.Component {
                             // component="img"
                             className={classes.cardMedia}
                             height="220"
-                            image={post.post_media[0].file}
+                            image={"https://energeapi.do.viewyoursite.net"+ post.post_media[0].file}
                         />
                     ):(
                         <CardMedia
@@ -79,14 +97,35 @@ class FeedCard extends React.Component {
                     )
                 }
                 <CardContent className={classes.cardContent}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {post.about_post}
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                        </ListItemAvatar>
+                        <ListItemText primary="Site Admin" secondary="@siteadmin &#8226; followers"></ListItemText>
+                        <ListItemSecondaryAction>
+                            <IconButton size='small'>
+                                <AttachMoneyOutlinedIcon/>
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Typography variant="body2" color="textSecondary" component="div" style={{padding: '5px 12px'}}>
+                        {post.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."}
+                        <Button color="primary" onClick={this.postDetail} >Show More</Button>
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <IconButton size='small'>
-                        <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
-                    </IconButton>
+                <CardActions style={{padding: '8px 25px'}}>
+                    
+                    {
+                        post.like_count>0?(
+                            <IconButton size='small'>
+                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                            </IconButton>
+                        ):(
+                            <IconButton size='small'>
+                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                            </IconButton>
+                        )
+                    }
                     <span style={{ fontSize: 12 }}>{post.like_count}</span>
                     <IconButton size='small'>
                         <ChatBubbleOutlineOutlinedIcon />
@@ -97,9 +136,12 @@ class FeedCard extends React.Component {
                     </IconButton>
                     <span style={{ fontSize: 12 }}>{post.share_count}</span>
                 </CardActions>
-                <CardActions>
-                    <FeedComments comments={post.post_comment} pid={post.id} />
-                </CardActions>
+                {/* <CardActions>
+                    <FeedComments pid={post.id} />
+                </CardActions> */}
+                {
+                    this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
+                }
             </Card>
         );
     }

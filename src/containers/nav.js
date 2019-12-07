@@ -13,13 +13,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import WbIncandescentOutlinedIcon from '@material-ui/icons/WbIncandescentOutlined';
-import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
-import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import MailOutlineOutlinedIcon from '@material-ui/icons/MailOutlineOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import Popper from '@material-ui/core/Popper';
@@ -30,17 +23,18 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PropTypes } from 'prop-types';
 import '../styles/side-nav.css'
 import { Button, Avatar, Grow, Divider } from '@material-ui/core';
-// import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
+
+
+import Icon from '@material-ui/core/Icon';
 // import { borderRadius } from '@material-ui/system';
 // import { withRouter } from 'react-router-dom';
 
 
 const drawerWidth = 240;
+
+
 
 
 const styles = theme => ({
@@ -132,19 +126,55 @@ class SideNav extends React.Component {
         eventsLink:false,
         collabrationLink:false,
         notificationLink:false,
-        home_title: ""
+        home_title: "",
+        menuArray: [
+            {
+                "title": "Home",
+                "icon": "home",
+                "selected": true,
+                "link": "/home",
+            },
+            {
+                "title": "Bookmark",
+                "icon": "explore",
+                "selected": false,
+                "link": "/bookmark",
+            },
+            {
+                "title": "Notification",
+                "icon": "notifications",
+                "selected": false,
+                "link": "/notifications",
+            },
+            {
+                "title": "Collaborate",
+                "icon": "wb_incandescent",
+                "selected": false,
+                "link": "/collaborate",
+            },
+            {
+                "title": "Events",
+                "icon": "date_range",
+                "selected": false,
+                "link": "/events",
+            },
+            {
+                "title": "Tag",
+                "icon": "local_offer",
+                "selected": false,
+                "link": "/tags",
+            },
+            {
+                "title": "Settings",
+                "icon": "settings",
+                "selected": false,
+                "link": "/settings",
+            },
+        ]
     };
     userMenuRef = null;
 
-    // menuList = [
-    //     <HomeOutlinedIcon />,
-    //     <ExploreOutlinedIcon />,
-    //     <NotificationsNoneOutlinedIcon />,
-    //     <WbIncandescentOutlinedIcon />,
-    //     <DateRangeOutlinedIcon />,
-    //     <LocalOfferOutlinedIcon />,
-    //     <SettingsOutlinedIcon />
-    // ];
+    
 
     nav = () => {
         this.state.home_title = "Home";
@@ -261,6 +291,20 @@ class SideNav extends React.Component {
 
     }
 
+    routeNav = (menu)=>{
+        let menu_list = this.state.menuArray;
+        menu_list.map((item)=>{
+            item.selected = false;
+            if(menu.link===item.link){
+                item.selected = true;
+            }
+        });
+
+        this.setState({menuArray: menu_list});
+
+        this.props.history.push({ pathname: menu.link });
+    };
+
     render() {
         const { classes, children } = this.props;
         return (
@@ -313,7 +357,7 @@ class SideNav extends React.Component {
                             </div>
                             <Button variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
-                                    src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
+                                    src={"https://image.flaticon.com/icons/png/512/44/44948.png"}>
                                 </Avatar>
                             </Button>
 
@@ -352,155 +396,33 @@ class SideNav extends React.Component {
                             [classes.drawerClose]: !this.state.open,
                         }),
                     }}
-                    open={this.state.open}
-                >
+                    open={this.state.open}>
                     <div className={classes.toolbar}>
                         <IconButton onClick={this.handleDrawerClose}>
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
-                    {/* <List>
+                       
+                    <List>
                         {
-                            this.menuList.map((item, index) => (
-                                <ListItem button key={"menu_item_" + index}
-                                onClick={this.mynav}
-                                className={"menu-item"}>
-                                    <ListItemIcon>
-                                        {item}
+                            this.state.menuArray.map((menu, index) => (
+                                <ListItem
+                                    button
+                                    selected={menu.selected}
+                                    data-menu={menu}
+                                    onClick={() => this.routeNav(menu)}
+                                    className={"menu-item"}>
+                                    <ListItemIcon className={classes.iconWrapper}>
+                                        <Icon color={menu.selected?"primary":""} className={"material-icons-outlined "+menu.icon}>{menu.icon}</Icon>
                                     </ListItemIcon>
                                 </ListItem>
                             ))
                         }
-                        {
-                            ['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text} className={"menu-item"}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            </ListItem>
-                        ))
-                        }
-                    </List> */}
-                    <List>
-                        <ListItem
-                            button
-                            selected={this.state.homeLink}
-                            onClick={this.mynav}
-                            className={"menu-item"}
-                        >
-                            <ListItemIcon>
-                                <HomeOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-
-                        <ListItem button
-                            selected={ this.state.bookmarkLink }
-                            onClick={this.nav_bookmark}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <ExploreOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-                        <ListItem button
-                            selected={ this.state.notificationLink }
-                            onClick={this.nav_notification}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <NotificationsNoneOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-                        <ListItem button
-                            selected={ this.state.collabrationLink }
-                            onClick={this.nav_collaborate}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <WbIncandescentOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-                        <ListItem button
-                            selected={ this.state.eventsLink }
-                            onClick={this.nav_events}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <DateRangeOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-                        <ListItem button
-                            selected={ this.state.bookmarkLink1 }
-                            onClick={this.nav_bookmark}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <LocalOfferOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
-                        <ListItem button
-                            selected={ this.state.bookmarkLink2 }
-                            onClick={this.nav_bookmark}
-                            className={"menu-item"}>
-                            <ListItemIcon>
-                                <SettingsOutlinedIcon />
-                            </ListItemIcon>
-                        </ListItem>
                     </List>
                 </Drawer>
-                <Drawer
-                    anchor="right"
-                    open={this.state.rightSidebarOpen}
-                >
-                    {/* <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <MenuItem onClick={this.handleMenuItems} key={text}>{text}</MenuItem>
-                        ))}
-                    </MenuList> */}
 
-                    <List style={{ width: 350 }}>
-                        <ListItem>
-                            <Avatar
-                                src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
-                            </Avatar>
-
-                            <div style={{ padding: 20 }}>
-                                <div><b>Awosome Project</b></div>
-                                <div>Suman Kumar@suman</div>
-                            </div>
-                            <IconButton color="inherit" aria-label="Close" style={{ float: 'right' }}>
-                                <CloseIcon onClick={this.handleMenuItems} />
-                            </IconButton><br />
-
-                        </ListItem>
-                        <div style={{ paddingLeft: 20 }}>
-                            <IconButton size='small' color="inherit" aria-label="Close">
-                                <FontAwesomeIcon icon={faComment} />
-                            </IconButton>
-                            <span style={{ paddingLeft: 10, fontSize: 12 }}>51</span>
-                            <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
-                                <FontAwesomeIcon icon={faShareAlt} />
-                            </IconButton>
-                            <span style={{ paddingLeft: 10, fontSize: 12 }}>51</span>
-                            <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
-                                <FontAwesomeIcon icon={faTag} />
-                            </IconButton>
-                        </div>
-                        <Divider />
-                    </List>
-                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
-                    </div><br />
-                    <div style={{ textAlign: 'justify', width: 350, padding: [5, 20, 5, 20] }}>
-                        <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
-                            <FontAwesomeIcon icon={faCoins} />
-                        </IconButton>
-                        <span style={{ paddingLeft: 10, fontSize: 12 }}>$250</span>
-                        <IconButton style={{ paddingLeft: 10 }} size='small' color="inherit" aria-label="Close">
-                            <FontAwesomeIcon icon={faUsers} />
-                        </IconButton>
-                        <span style={{ paddingLeft: 10, fontSize: 12 }}>10</span>
-                        <br />
-                    </div>
-                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
-                    </div><br />
-                    <div style={{ textAlign: 'justify', width: 350, padding: 20 }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin bibendum egestas ex, vel ultrices est varius ac. Cras pulvinar vitae velit vitae iaculis. Curabitur ut nisi risus. Ut vestibulum libero non tortor ultrices venenatis. Mauris consequat odio at purus fermentum maximus. Curabitur ac semper justo.
-                    </div><br />
+                <Drawer anchor="right" open={this.state.rightSidebarOpen}>
+                    
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />

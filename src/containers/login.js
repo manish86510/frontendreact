@@ -27,6 +27,7 @@ const styles = theme => ({
         border: '1px solid #00b894',
         alignItems: 'center',
         display: 'flex',
+        width: 400,
         height: 40
     },
     iconButton: {
@@ -126,12 +127,8 @@ class Login extends React.Component {
                     </FormGroup >
                     {/* <br></br> */}
                     <FormGroup controlId="password"
-                        bsSize="large"
+                        bsSize="small"
                         className="padb10" >
-                        {/* <FormControl value={this.state.password}
-                            placeholder="password"
-                            onChange={this.handlePassword}
-                            type="password" /> */}
                         <Paper component="form" className={classes.password}>
                             <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
@@ -159,7 +156,7 @@ class Login extends React.Component {
             <div>
                 <img alt="footer" src={image}
                     style={
-                        { width: "100%", height: "fit-content", bottom: 0, position: "static" }
+                        { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
                     } />
             </div>
         </div>

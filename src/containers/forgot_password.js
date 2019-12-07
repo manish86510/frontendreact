@@ -11,10 +11,7 @@ import Img from "react-image";
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-// function validateForm() {
-//     return username.length > 0 && password.length > 0;
-// }
-// const image = require("../img/login_image.png");
+
 const styles = theme => ({
     username: {
         borderRadius: 100,
@@ -29,6 +26,7 @@ const styles = theme => ({
         border: '1px solid #00b894',
         alignItems: 'center',
         display: 'flex',
+        width: 400,
         height: 40
     },
     cpassword: {
@@ -152,7 +150,7 @@ class ForgotPassword extends React.Component {
             <div >
                 <img alt="img" src={Img}
                     style={
-                        { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }}
+                        { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }}
                 />
             </div>
         </div>
