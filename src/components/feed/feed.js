@@ -8,6 +8,8 @@ import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
 import PostTextArea from '../post_textarea';
+import Drawer from '@material-ui/core/Drawer';
+
 
 const styles = theme => ({
     root: {
@@ -47,18 +49,21 @@ class Feed extends React.Component {
             parent: '',
             comment_id:0,
         };
-        }   
+        this.handleScroll = this.handleScroll.bind(this);
+        }
     componentDidMount() {
-        var url = endpoints.get_post;
+        
+        var url = endpoints.create_post;
         var getToken = localStorage.getItem('access');
         axios.get(
-            url,
+            url,{page:1},
             {
                 headers: {
                     Authorization: 'Bearer ' + getToken,
                 }
             }
         ).then(res => {
+            debugger;
             if (res.status == 200) {
                 console.log(res.data);
                 this.setState({
@@ -66,12 +71,30 @@ class Feed extends React.Component {
                 });
             }
         })
+        window.addEventListener('scroll', this.handleScroll);
     }
-   
+      
+      componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+      
+      handleScroll(event) {
+        var feed = document.getElementById("feed_content");
+        var scroll_top = feed.scrollTop;
+        var windows_height = window.innerHeight;
+        var scroll_height = feed.offsetHeight;
+        // var scrollPercent = (scroll_height-windows_height)/100;
+        var scrollPercent = (scroll_top / scroll_height) * 100;
+        if(scrollPercent > 80) {
+            console.log('the scroll things', event);
+            // this.componentDidMount();
+        }
+      };
+
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div id="feed_content" ref={this.handleScroll}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         {/* <AddPost/> */}
@@ -94,7 +117,7 @@ class Feed extends React.Component {
                             </Grid>                                                     
                         </div>
                     </Grid>
-                </Grid> 
+                </Grid>
             </div>
         );
     }

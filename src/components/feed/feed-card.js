@@ -16,6 +16,19 @@ import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { blue } from '@material-ui/core/colors';
 
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Button from '@material-ui/core/Button';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Avatar from '@material-ui/core/Avatar';
+import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
+import FeedDetail from './feed-details';
+
+
 const styles = theme => ({
     card:{
         marginBottom: 30,
@@ -36,6 +49,13 @@ const styles = theme => ({
 });
 
 class FeedCard extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            open_post_details: false
+        };
+    }
     
     handleLike = (tile) => {
         var my_data={
@@ -53,7 +73,15 @@ class FeedCard extends React.Component {
         ).then(res => {
             console.log("Working");
         })
-      }
+    }
+
+    postDetail = ()=>{
+        this.setState({open_post_details: !this.state.open_post_details});
+    }
+    
+    onDrawerClose = ()=>{
+        this.setState({open_post_details: !this.state.open_post_details});
+    }
 
     render() {
         const { classes, post } = this.props;
@@ -65,7 +93,7 @@ class FeedCard extends React.Component {
                             // component="img"
                             className={classes.cardMedia}
                             height="220"
-                            image={post.post_media[0].file}
+                            image={"https://energeapi.do.viewyoursite.net"+ post.post_media[0].file}
                         />
                     ):(
                         <CardMedia
@@ -77,15 +105,27 @@ class FeedCard extends React.Component {
                     )
                 }
                 <CardContent className={classes.cardContent}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {post.about_post}
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                        </ListItemAvatar>
+                        <ListItemText primary="Site Admin" secondary="@siteadmin &#8226; followers"></ListItemText>
+                        <ListItemSecondaryAction>
+                            <IconButton size='small'>
+                                <AttachMoneyOutlinedIcon/>
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Typography variant="body2" color="textSecondary" component="div" style={{padding: '5px 12px'}}>
+                        {post.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."}
+                        <Button color="primary" onClick={this.postDetail} >Show More</Button>
                     </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions style={{padding: '8px 25px'}}>
                     
                     {
                         post.like_count>0?(
-                            <IconButton size='small' style={{ color: 'blue' }}>
+                            <IconButton size='small'>
                             <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
                             </IconButton>
                         ):(
@@ -107,6 +147,9 @@ class FeedCard extends React.Component {
                 <CardActions>
                     <FeedComments pid={post.id} />
                 </CardActions>
+                {
+                    this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
+                }
             </Card>
         );
     }

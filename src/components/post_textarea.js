@@ -99,7 +99,6 @@ class PostTextArea extends React.Component {
         is_public: true,
         post_type: "Post",
         target_audience: "test",
-        inputFile: "",
         media_id:[]
       },
       mediaData: {
@@ -121,17 +120,18 @@ class PostTextArea extends React.Component {
       formData.append('file', event.target.files[i]);
       formData.append('file_type', 'Image');
       var token = localStorage.getItem('access');
-    axios.post(endpoints.create_media, formData, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => {
-      var media_id=res.data.media_id;
-      this.state.postData.media_id.append(media_id);
-    }).catch(e => {
-      console.log(e);
-    });
+      axios.post(endpoints.create_media, formData, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        let post_data = this.state.postData;
+        post_data.media_id.push(res.data.media_id[0]);
+        this.setState({postData: post_data});
+      }).catch(e => {
+        console.log(e);
+      });
     }
     this.setState({ file: this.fileArray })
   }
@@ -153,7 +153,6 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      debugger;
           alert("Post updated successfully");
     }).catch(e => {
       console.log(e);
@@ -161,9 +160,7 @@ class PostTextArea extends React.Component {
   }
 
   showOpenFileDlg = () => {
-    this.setState({
-      inputFile: this.inputOpenFileRef.current.click()
-    });
+    this.inputOpenFileRef.current.click();
   }
   onChange = (event, { newValue, method }) => {
     this.setState({
