@@ -13,21 +13,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const $ = require('jquery');
 
-function sleep(delay = 0) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
-}
-
-// function autosuggest(abc){
-//   const [open, setOpen] = React.useState(false);
-//   const [options, setOptions] = React.useState([]);
-//   const loading = open && options.length === 0;
-
-
-// }
-
-
 class Interest extends React.Component{
 
   constructor(props) {
@@ -42,56 +27,46 @@ class Interest extends React.Component{
         loading: '',
 
       }
-     
+   
     }
 
  
   componentDidMount() {
     this.getMe();
     this.getInterest();
-
 }
+
+debounce_timer = null;
 
 retrieveDataAsynchronously(searchText){
-  this.setState({ autocompleteData: [] }) 
-          
-  let _this = this;
-
-  // Url of your website that process the data and returns a
-  let url = endpoints.interest+`?querystring=${searchText}`;
+  debugger;
+  if(this.debounce_timer!=null){
+    clearTimeout(this.debounce_timer);
+  }
+  this.debounce_timer = setTimeout(()=>{
+    this.setState({ autocompleteData: [] });
   
-  // Configure a basic AJAX request to your server side API
-  // that returns the data according to the sent text
+    let url = endpoints.interest+`?querystring=${searchText}`;
 
-  axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          }
-         }).then(res => {
-          const autocompleteData = this.state.autocompleteData
-            
-            for (let i = 0; i < res.data.length; i++) {
-              autocompleteData.push(res.data[i])
-              }
-            
-            this.setState({ autocompleteData: autocompleteData }) 
-        });
+    axios.get(url, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.access,
+            }
+          }).then(res => {
+    
+            const autocompleteData = this.state.autocompleteData
+              
+              for (let i = 0; i < res.data.length; i++) {
+                autocompleteData.push(res.data[i])
+                }
+              
+              this.setState({ autocompleteData: autocompleteData }) 
+          });
+  }, 500);
+  
 
-  // return (
-  //   <Paper {...containerProps} square>
-  //     {
-  //       loading_suggestions == true ?
-  //         <div style={{ textAlign: 'left', padding: 10 }}>
-  //           <CircularProgress size={24} thickness={4} />
-  //           <span style={{ paddingLeft: 10 }}>Loading...</span>
-  //         </div> : ''
-  //     }
-  //     {children}
-  //   </Paper>
-  // );
 }
-
 
 
 handleInterestChange  = (e) => {
@@ -112,20 +87,23 @@ handleInterestChange  = (e) => {
 }
 
 getInterest = () => {
+  var getToken = localStorage.getItem('access');
     axios.get(endpoints.interest, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
+        Authorization: 'Bearer ' + getToken,
       }
      }).then(res => {
+       debugger;
       const interest = this.state.autocomp.interest
         
-        for (let i = 0; i < res.data.length; i++) {
-          interest.push(res.data[i])
+        for (let i = 0; i < res.data.results.length; i++) {
+          interest.push(res.data.results[i])
           }
   
         this.setState({ interest: interest }) 
       
+    }).catch(error=> {
+        console.log(error);
     });
   }
 
@@ -139,11 +117,11 @@ getMe = () => {
       const profile_interest = this.state.profile_interest
         
         for (let i = 0; i < res.data.length; i++) {
-            profile_interest.push(res.data[i])
+            profile_interest.push(res.data[i].interest_code)
           }
   
         this.setState({ profile_interest: profile_interest }) 
-      
+        
     });
   }
 
@@ -159,32 +137,43 @@ getMe = () => {
       })
    
   };
-
-
   
   _editInterest= () => {
     $('.autocompleteInterest').show();
     $('.editInterest').hide();
+    const elements = this.state.profile_interest
+    const interest_his = []
+ 
+    for (const [index, value] of elements.entries()) {
+      
+      interest_his.push(
+        { title: value.interest_code, year: value.interest_code },
+      )
+    }
+    // debugger;
+    // const interest_his = this.state.selected.interest 
+    // this.setState({ interest_his: interest_his }) 
+
   
   }  
 
   render() {
     
-
     const elements = this.state.profile_interest
     const interest_ed = []
-    
+ 
     for (const [index, value] of elements.entries()) {
       interest_ed.push(
       <Chip
         // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        id={value.id}
-        label={value.interest_code}
+        id={value}
+        label={value}
         onDelete={this.handleInterestDelete}
         />
       )
+    
     }
-
+  
     const elements_in = this.state.autocompleteData
     const interest_items = []
     
@@ -194,32 +183,37 @@ getMe = () => {
          
       )
     }
+ 
     
     return(
         <Grid container spacing={3}>
         <Grid item xs={12}>
+
+   
         <div class='row editInterest' style={{ position: 'relative', left: 30 }}>
                             {interest_ed}
 
                             <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
         <AddIcon style={{color: 'white'}} onClick={this._editInterest}/>
-      </Fab>
-                            </div>
+      </Fab></div>
                             
-                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 500 }} >
-                            {/* {this._renderCancel} */}
+                            <div class='autocompleteInterest' style={{ position: 'relative', left: 30, width: 650 }} >
               
                             <Autocomplete
+                        value={this.state.profile_interest}
+                        // items={this.state.profile_interest}
                         multiple
                         id="interest"
                         options={interest_items}
                         getOptionLabel={option => option.title}
-                        // defaultValue={[interest_items[0]]}
                         onChange={this.handleInterestData}
                         loading={this.state.loading}
+                        // defaultValue={[this.state.selected.interest]}
+                        // defaultValue={[top100Films[0]]}
+
                         renderInput={params => (
                           <TextField
-                          onKeyPress={this.handleInterestChange}
+                          onChange={this.handleInterestChange}
                           // onClick={this.handleInterestChange}
                             {...params}
                             variant="standard"
@@ -251,6 +245,5 @@ getMe = () => {
       )
 }
 }
-
 
 export default Interest;
