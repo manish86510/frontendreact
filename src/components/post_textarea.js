@@ -2,14 +2,15 @@ import React from 'react';
 import { TextareaAutosize, Avatar } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, CircularProgress } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
+import constants from '../api/constant';
 import endpoints from '../api/endpoints';
 import ImageIcon from '@material-ui/icons/Image';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-
+import { PropTypes } from 'prop-types';
 
 const styles = theme => ({
   con: {
@@ -90,6 +91,7 @@ class PostTextArea extends React.Component {
     super(props);
     this.state = {
       tag_friends: false,
+      loading: false,
       postData: {
         about_post: "",
         tags: "test",
@@ -140,18 +142,69 @@ class PostTextArea extends React.Component {
     });
   }
 
-  handlePostCreate = (event) => {
-    event.preventDefault();
-    var postData = this.state.postData;
+  getUrls = ()=>{
+    var text = this.state.postData.about_post;
+    var links = [];
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    text.replace(urlRegex, function(url) {
+      if(url.indexOf("youtube")>-1){
+        links.push({
+          'url': url,
+          'mediaType': 'youtube'
+        });
+      }
+    });
+    return links;
+  }
 
+  retrivePost = (post_id)=>{
+    var token = localStorage.getItem('access');
+    axios.get(endpoints.POST+post_id, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      }
+    }).then(res => {
+        this.props.onPostCreated(res.data);
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+
+  clearForm = ()=>{
+    var postData = {
+      about_post: "",
+      tags: "test",
+      is_public: true,
+      post_type: "Post",
+      target_audience: "test",
+      media_id:[]
+    };
+    var mediaData={
+      post: '',
+      file: [],
+      file_type: "Image"
+    };
+    this.setState({postData: postData, mediaData: mediaData, loading: false});
+  }
+
+  handlePostCreate = (event) => {
+    this.setState({loading: true});
+    event.preventDefault();
+    var links = this.getUrls();
+    var postData = this.state.postData;
+    postData.media = links
+    
     var token = localStorage.getItem('access');
     axios.post(endpoints.create_post, postData, {
       headers: {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-          alert("Post updated successfully");
+      this.clearForm();
+      this.retrivePost(res.data.id);
     }).catch(e => {
+      this.setState({loading: false});
       console.log(e);
     });
   }
@@ -183,19 +236,19 @@ class PostTextArea extends React.Component {
   };
 
   render() {
-    const { value } = this.state;
     const { classes } = this.props;
     return (
       <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
-              <Avatar src={"https://media4.s-nbcnews.com/j/newscms/2019_25/2907176/190623-south-bend-shooting-pub-cs-1006a_a0b76f34c22ed225bcf4f4b9b607321b.fit-760w.jpg"} />
+              <Avatar src={localStorage.getItem('userInfo'.avatar)} />
             </div>
             <TextareaAutosize
               aria-label="empty textarea"
               placeholder="Write something..."
               className={"textarea"}
+              value={this.state.postData.about_post}
               onChange={this.HandleTextArea}
             />
             <div className={"post-image-thumbnail"}>
@@ -220,19 +273,24 @@ class PostTextArea extends React.Component {
             </div>
             <div style={{textAlign: 'right', position: 'relative'}}>
               <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />
-              <Button variant="contained" color="primary" onClick={this.showOpenFileDlg}>
+              <Button variant="contained" color="primary" onClick={this.showOpenFileDlg} disabled={this.state.loading}>
                 <ImageIcon/>
                 &nbsp;
                 Photos/Videos
               </Button>
               &nbsp;&nbsp;
-              <Button variant="contained" color="primary" onClick={this.tagFriendClick}>
+              <Button variant="contained" color="primary" onClick={this.tagFriendClick} disabled={this.state.loading}>
                 <LocalOfferIcon/>
                 &nbsp;
                 Tag Friends
               </Button>
               &nbsp;&nbsp;
-              <Button variant="contained" color="primary" onClick={this.handlePostCreate}>Post</Button>
+              <Button variant="contained" color="primary" onClick={this.handlePostCreate} disabled={this.state.loading}>
+                {
+                  this.state.loading?(<CircularProgress size={15}/>):undefined
+                }
+                &nbsp;Post
+              </Button>
             </div>
           </div>
         </Grid>
@@ -247,4 +305,7 @@ class PostTextArea extends React.Component {
     )
   }
 }
+PostTextArea.propTypes = {
+  onPostCreated: PropTypes.func.isRequired,
+};
 export default withStyles(styles)(PostTextArea);
