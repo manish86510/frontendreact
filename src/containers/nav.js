@@ -36,6 +36,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
+import NotificationAutoComplete from '../components/autocomplete/notification-auto';
 // import { borderRadius } from '@material-ui/system';
 // import { withRouter } from 'react-router-dom';
 
@@ -289,10 +290,12 @@ class SideNav extends React.Component {
                             <div className={classes.pageTitle}>
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
-                            <div style={{ display: 'inline-block' }}>
+                            <div>
+                               <NotificationAutoComplete />
+                            </div>
+                            {/* <div style={{ display: 'inline-block' }}>
                                 <IconButton aria-label="search">
-                                    {/* <SearchOutlinedIcon /> */}
-                                    <InputBase
+                                     <InputBase
                                         className={classes.input}
                                         placeholder="Search.."
                                         value={this.state.username}
@@ -300,7 +303,7 @@ class SideNav extends React.Component {
                                         inputProps={{ 'aria-label': 'user' }}
                                     />
                                 </IconButton>
-                            </div>
+                            </div> */}
                         </Typography>
                         <div>
                             <IconButton aria-label="search" size="medium">

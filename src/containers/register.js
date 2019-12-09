@@ -4,7 +4,7 @@ import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { IconButton } from "@material-ui/core";
 
@@ -225,7 +225,7 @@ class Register extends React.Component {
                         <br></br>
                         <Button block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
                     </form><br></br>
-                    <p> <a href="/login" > Already have an account ? Log in ! </a></p>
+                    <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
                 <div>
                     <img src={image}
