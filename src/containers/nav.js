@@ -126,6 +126,7 @@ class SideNav extends React.Component {
         eventsLink:false,
         collabrationLink:false,
         notificationLink:false,
+        userProfile: JSON.parse(localStorage.getItem("userInfo")),
         home_title: "",
         menuArray: [
             {
@@ -305,7 +306,6 @@ class SideNav extends React.Component {
 
     render() {
         const { classes, children } = this.props;
-        console.log(localStorage.getItem('userInfo.username'));
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -353,12 +353,17 @@ class SideNav extends React.Component {
                                 <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
-                                <div style={{ fontWeight: 'bold' }}>{localStorage.getItem('userInfo.first_name')+" "+localStorage.getItem('userInfo.last_name')}</div>
-                                <div>{"@"+JSON.parse(localStorage.getItem('userInfo.username'))}</div>
+                                <div style={{ fontWeight: 'bold' }}>
+                                {
+                                    this.state.userProfile.first_name+" "+ this.state.userProfile.last_name
+                                }
+                                </div>
+
+                                <div>{"@"+this.state.userProfile.username}</div>
                             </div>
                             <IconButton className={classes.profile} variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
-                                    src={localStorage.getItem('userInfo.avatar')}>
+                                    src={"https://energeapi.do.viewyoursite.net"+this.state.userProfile.avatar}>
                                 </Avatar>
                             </IconButton>
 

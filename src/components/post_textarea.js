@@ -92,6 +92,7 @@ class PostTextArea extends React.Component {
     this.state = {
       tag_friends: false,
       loading: false,
+      userProfile: JSON.parse(localStorage.getItem("userInfo")),
       postData: {
         about_post: "",
         tags: "test",
@@ -242,7 +243,7 @@ class PostTextArea extends React.Component {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
-              <Avatar src={localStorage.getItem('userInfo'.avatar)} />
+              <Avatar src={"https://energeapi.do.viewyoursite.net"+this.state.userProfile.avatar} />
             </div>
             <TextareaAutosize
               aria-label="empty textarea"
