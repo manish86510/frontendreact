@@ -20,6 +20,7 @@ import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
+import { faSitemap } from '@fortawesome/free-solid-svg-icons';
 import YoutubePlayer from './youtube-player';
 
 const styles = theme => ({
@@ -63,20 +64,29 @@ class FeedDetail extends React.Component{
                 <List>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                            <Avatar alt="Remy Sharp" src={post.user.avatar} />
                         </ListItemAvatar>
-                        <ListItemText primary="Site Admin" secondary="@siteadmin &#8226; 5k followers"></ListItemText>
+                        <ListItemText primary="Site Admin" secondary={"@"+post.user.username+ " "+post.user.followers_count+" followers"}></ListItemText>
                     </ListItem>
                 </List>
-
                 {
-                    (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
-                        <YoutubePlayer video_url={post.post_media[0].media_url}/> 
+                    post.post_media.length>0?(
+                        (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
+                            <YoutubePlayer video_url={post.post_media[0].media_url}/> 
+                        ):(
+                            <CardMedia
+                                // component="img"
+                                className={classes.cardMedia}
+                                height="220"
+                                image={post.post_media[0].file}
+                            />
+                        )
                     ):(
                         <CardMedia
+                            // component="img"
                             className={classes.cardMedia}
                             height="220"
-                            image={post.post_media[0].file}
+                            image="https://picsum.photos/seed/picsum/690/388"
                         />
                     )
                 }

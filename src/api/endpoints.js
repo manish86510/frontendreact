@@ -4,7 +4,7 @@ const endpoints = {
   // get_token: base_uri.base_uri + '/token/',
   get_token: 'https://energeapi.do.viewyoursite.net/api/token/refresh',
   TOKEN: 'https://energeapi.do.viewyoursite.net/api/token/',
-  profile_user: 'https://energeapi.do.viewyoursite.net/',
+  profile_user: 'https://energeapi.do.viewyoursite.net/user/register/',
   profile_interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   profile_skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   profile_languages: 'https://energeapi.do.viewyoursite.net/user/language/',
