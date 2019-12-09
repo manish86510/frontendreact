@@ -182,7 +182,7 @@ getSkillData = () => {
                             </Fab>
                             </div>
 
-                            <div class='autocompleteSkill' style={{ position: 'relative', left: 30, width: 500 }} >
+                            <div class='autocompleteSkill' style={{ position: 'relative', left: 30, width: 650 }} >
                             
                             <Autocomplete
         multiple

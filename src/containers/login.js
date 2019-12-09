@@ -3,7 +3,8 @@ import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import { withRouter } from 'react-router-dom';
+// import Img from "react-image";
+import { Link, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from "@material-ui/core";
@@ -156,7 +157,7 @@ class Login extends React.Component {
                             />
                         </Paper>
                     </FormGroup>
-                    <br></br><p className="padb10"> <a href="/forgetpass"> Forgot your password ? Reset! </a></p>
+                    <br></br><p className="padb10"> <Link to="/forgetpass"> Forgot your password ? Reset! </Link></p>
                     <br></br>
                     <Button variant="contained"  block bsSize="large"
                         type="submit"
@@ -165,7 +166,7 @@ class Login extends React.Component {
                         Log in
             </Button><br></br>
                 </form>
-                <p><a href="/register" > Don 't have an account? Sign up!</a></p>
+                <p><Link to="/register" > Don 't have an account? Sign up!</Link></p>
             </center>
             <div>
                 <img alt="footer" src={image}

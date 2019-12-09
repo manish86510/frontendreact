@@ -3,7 +3,8 @@ import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import { withRouter } from 'react-router-dom';
+// import Img from "react-image";
+import { Link, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { IconButton, CircularProgress } from "@material-ui/core";
 
@@ -245,7 +246,7 @@ class Register extends React.Component {
                         &nbsp; Sign up 
                         </Button>
                     </form><br></br>
-                    <p> <a href="/login" > Already have an account ? Log in ! </a></p>
+                    <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
                 <div>
                     <img src={image}

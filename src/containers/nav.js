@@ -330,10 +330,12 @@ class SideNav extends React.Component {
                             <div className={classes.pageTitle}>
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
+                            {/* <div>
+                               <NotificationAutoComplete />
+                            </div> */}
                             <div style={{ display: 'inline-block' }}>
                                 <IconButton aria-label="search">
-                                    {/* <SearchOutlinedIcon /> */}
-                                    <InputBase
+                                     <InputBase
                                         className={classes.input}
                                         placeholder="Search.."
                                         value={this.state.username}

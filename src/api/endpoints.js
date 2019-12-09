@@ -12,9 +12,9 @@ const endpoints = {
   profile_education: 'https://energeapi.do.viewyoursite.net/user/education/',
   PROFILE: 'https://energeapi.do.viewyoursite.net/user/me/',
   
-  interest: 'https://energeapi.do.viewyoursite.net/interest/',
+  interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
-  languages: 'https://energeapi.do.viewyoursite.net/language/',
+  languages: 'https://energeapi.do.viewyoursite.net/user/language/',
   user_list: 'https://energeapi.do.viewyoursite.net/follower-user-list/',
 
   follow: 'https://energeapi.do.viewyoursite.net/user/follower/',
