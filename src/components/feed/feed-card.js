@@ -12,8 +12,6 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
-
-
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -22,7 +20,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import FeedDetail from './feed-details';
-
+import YoutubePlayer from './youtube-player';
 
 const styles = theme => ({
     card:{
@@ -63,7 +61,7 @@ class FeedCard extends React.Component {
             }
           }
         ).then(res => {
-            console.log("Working");
+            this.props.onLike(this.props.post);
         })
     }
 
@@ -77,16 +75,21 @@ class FeedCard extends React.Component {
 
     render() {
         const { classes, post } = this.props;
+        var markup = {__html: post.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
         return (
             <Card className={classes.card}>
                 {
                     post.post_media.length>0?(
-                        <CardMedia
-                            // component="img"
-                            className={classes.cardMedia}
-                            height="220"
-                            image={post.post_media[0].file}
-                        />
+                        (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
+                            <YoutubePlayer video_url={post.post_media[0].media_url}/> 
+                        ):(
+                            <CardMedia
+                                // component="img"
+                                className={classes.cardMedia}
+                                height="220"
+                                image={post.post_media[0].file}
+                            />
+                        )
                     ):(
                         <CardMedia
                             // component="img"
@@ -95,13 +98,13 @@ class FeedCard extends React.Component {
                             image="https://picsum.photos/seed/picsum/690/388"
                         />
                     )
-                }   
+                }
                 <CardContent className={classes.cardContent}>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                            <Avatar alt="Remy Sharp" src={post.user.avatar} />
                         </ListItemAvatar>
-                        <ListItemText primary="Site Admin" secondary="@siteadmin &#8226; followers"></ListItemText>
+                        <ListItemText primary={post.user.first_name+" "+post.user.last_name} secondary={"@"+post.user.username+" "+ post.user.followers_count +" followers"}></ListItemText>
                         <ListItemSecondaryAction>
                             <IconButton size='small'>
                                 <AttachMoneyOutlinedIcon/>
@@ -109,7 +112,7 @@ class FeedCard extends React.Component {
                         </ListItemSecondaryAction>
                     </ListItem>
                     <Typography variant="body2" color="textSecondary" component="div" style={{padding: '5px 12px'}}>
-                        {post.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."}
+                        <div dangerouslySetInnerHTML={markup}></div>
                         <Button color="primary" onClick={this.postDetail} >Show More</Button>
                     </Typography>
                 </CardContent>
@@ -127,7 +130,7 @@ class FeedCard extends React.Component {
                         )
                     }
                     <span style={{ fontSize: 12 }}>{post.like_count}</span>
-                    <IconButton size='small'>
+                    <IconButton size='small' onClick={this.postDetail}>
                         <ChatBubbleOutlineOutlinedIcon />
                     </IconButton>
                     <span style={{ fontSize: 12 }}>{post.comment_count}</span>
@@ -150,6 +153,7 @@ class FeedCard extends React.Component {
 
 FeedCard.propTypes = {
     post: PropTypes.object.isRequired,
+    onLike: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(FeedCard);

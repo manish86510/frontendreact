@@ -20,7 +20,7 @@ import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
-
+import YoutubePlayer from './youtube-player';
 
 const styles = theme => ({
     card:{
@@ -68,12 +68,18 @@ class FeedDetail extends React.Component{
                         <ListItemText primary="Site Admin" secondary="@siteadmin &#8226; 5k followers"></ListItemText>
                     </ListItem>
                 </List>
-                <CardMedia
-                    // component="img"
-                    className={classes.cardMedia}
-                    height="220"
-                    image={post.post_media[0].file}
-                />
+
+                {
+                    (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
+                        <YoutubePlayer video_url={post.post_media[0].media_url}/> 
+                    ):(
+                        <CardMedia
+                            className={classes.cardMedia}
+                            height="220"
+                            image={post.post_media[0].file}
+                        />
+                    )
+                }
                 <Typography variant="body2" color="textSecondary" component="div" dangerouslySetInnerHTML={markup} style={{padding: '5px 12px'}}/>
 
                 <CardActions style={{padding: '8px 25px'}}>

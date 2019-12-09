@@ -25,6 +25,7 @@ import '../styles/side-nav.css'
 import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
+import constants from './../api/constant';
 
 
 import Icon from '@material-ui/core/Icon';
@@ -33,9 +34,6 @@ import Icon from '@material-ui/core/Icon';
 
 
 const drawerWidth = 240;
-
-
-
 
 const styles = theme => ({
     root: {
@@ -108,7 +106,9 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-
+    profile: {
+        padding:2,
+    }
 });
 
 
@@ -299,14 +299,13 @@ class SideNav extends React.Component {
                 item.selected = true;
             }
         });
-
         this.setState({menuArray: menu_list});
-
         this.props.history.push({ pathname: menu.link });
     };
 
     render() {
         const { classes, children } = this.props;
+        console.log(localStorage.getItem('userInfo.username'));
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -352,14 +351,14 @@ class SideNav extends React.Component {
                                 <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
-                                <div style={{ fontWeight: 'bold' }}>Suman Kumar</div>
-                                <div>@suman</div>
+                                <div style={{ fontWeight: 'bold' }}>{localStorage.getItem('userInfo.first_name')+" "+localStorage.getItem('userInfo.last_name')}</div>
+                                <div>{"@"+JSON.parse(localStorage.getItem('userInfo.username'))}</div>
                             </div>
-                            <Button variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
+                            <IconButton className={classes.profile} variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 <Avatar
-                                    src={"https://image.flaticon.com/icons/png/512/44/44948.png"}>
+                                    src={localStorage.getItem('userInfo.avatar')}>
                                 </Avatar>
-                            </Button>
+                            </IconButton>
 
                             <Popper open={this.state.userMenuOpen} role={undefined} transition disablePortal anchorEl={this.refs.userMenuRef}>
                                 {({ TransitionProps, placement }) => (

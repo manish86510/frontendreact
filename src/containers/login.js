@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
+import endpoints from "../api/endpoints";
 
 const image = require("../img/login_image.png");
 const styles = theme => ({
@@ -44,20 +45,33 @@ class Login extends React.Component {
             password: '',
         }
     }
+    getProfile = ()=>{
+        var url = endpoints.PROFILE;
+        var token = localStorage.getItem('access');
+        axios.get(url, {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            }}).then(result => {
+            if (result.status === 200) {
+                localStorage.setItem('userInfo', JSON.stringify(result.data));
+                this.props.history.push({
+                    pathname: "/home"
+                });
+            }
+        });
+    }
     postLogin = (e) => {
         e.preventDefault();
         let self = this;
-        axios.post("https://energeapi.do.viewyoursite.net/api/token/", {
+        var url = endpoints.TOKEN;
+        axios.post(url , {
             username: self.state.username,
             password: self.state.password
         }).then(result => {
             if (result.status === 200) {
-                console.log(result.data);
                 localStorage.setItem('access', result.data.access);
                 localStorage.setItem('refresh', result.data.refresh);
-                this.props.history.push({
-                    pathname: "/home"
-                });
+                this.getProfile();
             } else {
                 this.setState({
                     isError: "User not found!"

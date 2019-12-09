@@ -31,7 +31,7 @@ const styles = theme => ({
         borderRadius: 15,
         paddingBottom: 24
     },
-   
+
 });
 
 class Feed extends React.Component {
@@ -42,15 +42,18 @@ class Feed extends React.Component {
             value: 0,
             like_status: false,
             isError: '',
-            show:false,
+            show: false,
             comment: '',
             parent: '',
-            comment_id:0,
+            comment_id: 0,
         };
         this.handleScroll = this.handleScroll.bind(this);
-        }
-    componentDidMount() {
+    }
+    loadFeed = ()=>{
         var url = endpoints.create_post;
+        if(this.state.postList!=null && this.state.postList.length>0){
+            url = this.state.postList.next;
+        }
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -61,30 +64,84 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                this.setState({
-                    postList: res.data,
-                });
+                // debugger;
+                var data = this.state.postList;
+                if(data!=null){
+                    for(var i=0;i<res.data.results.length;i++){
+                        data.results.push(res.data.results[i]);
+                    }
+
+                    data.count = data.count + res.data.count;
+                    data.next = res.data.next;
+                    data.previous = res.data.previous;
+                    
+                    this.setState({
+                        postList: data,
+                    });
+                }
+                else{
+                    this.setState({
+                        postList: res.data,
+                    });   
+                }
             }
-        })
-        window.addEventListener('scroll', this.handleScroll);
+        });
     }
-      
-      componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-      };
-      
-      handleScroll(event) {
-        var feed = document.getElementById("feed_content");
-        var scroll_top = feed.scrollTop;
-        var windows_height = window.innerHeight;
-        var scroll_height = feed.offsetHeight;
-        // var scrollPercent = (scroll_height-windows_height)/100;
-        var scrollPercent = (windows_height / scroll_height) * 100;
-        if(scrollPercent > 80) {
-            console.log('the scroll things', event);
-            // this.componentDidMount();
+    componentDidMount() {
+        this.loadFeed();
+        window.addEventListener('scroll', this.handleScroll);
+        // let self = this;
+        // window.setTimeout(function(){
+        //     debugger;
+        //     window.addEventListener('scroll', self.handleScroll);
+        // }, 2000);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll');
+    };
+
+    onPostCreated = (newPost)=>{
+        var posts = this.state.postList;
+        posts.results.splice(0, 0, newPost);
+        this.setState({postList: posts});
+    }
+
+    handleScroll(event) {
+        var totalHeight = document.body.scrollHeight;
+        var scrollPosition = window.pageYOffset+328;
+        var x = (scrollPosition*100)/totalHeight;
+        // var str = "totalHeight="+totalHeight+", scrollPosition="+scrollPosition+", x="+x;
+        // console.log("Percentage", str);
+        if(x>70){
+            // this.loadFeed();
         }
-      };
+    };
+
+    retrivePost = (post_id)=>{
+        var token = localStorage.getItem('access');
+        axios.get(endpoints.POST+post_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          }
+        }).then(res => {
+            if (res.status == 200) {
+                var data = this.state.postList;
+                for(var i=0;i<data.results.length;i++){
+                    if(data.results[i].id==post_id){
+                        data.results[i] = res.data;
+                        break;
+                    }
+                }
+
+                this.setState({postList: data});
+            }
+        });
+      }
+
+    onLike = (post)=>{
+        this.retrivePost(post.id);
+    }
 
     render() {
         const { classes } = this.props;
@@ -93,10 +150,10 @@ class Feed extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         {/* <AddPost/> */}
-                        <PostTextArea/>
+                        <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
                 </Grid>
-                
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>
@@ -107,13 +164,13 @@ class Feed extends React.Component {
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {
-                                    (this.state.postList!=null && this.state.postList!=undefined)?(
+                                    (this.state.postList != null && this.state.postList != undefined) ? (
                                         this.state.postList.results.map(post => (
-                                                <FeedCard post={post}/>
+                                            <FeedCard post={post} onLike={this.onLike} />
                                         ))
-                                    ): undefined
+                                    ) : undefined
                                 }
-                            </Grid>                                                     
+                            </Grid>
                         </div>
                     </Grid>
                 </Grid>
