@@ -6,7 +6,7 @@ import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
 import { Link, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { IconButton } from "@material-ui/core";
+import { IconButton, CircularProgress } from "@material-ui/core";
 
 import { withStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -62,11 +62,13 @@ class Register extends React.Component {
             isError: '',
             username: '',
             email: '',
-            password: ''
+            password: '',
+            loading: false
         }
     }
 
     postRegister = (e) => {
+        this.setState({loading: true});
         e.preventDefault();
         let self = this;
         let formData = new FormData();
@@ -78,13 +80,10 @@ class Register extends React.Component {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(result => {
+            this.setState({loading: false});
             if (result.status === 200) {
                 console.log(result.data);
-                // this.setState({
-                //     isSuccess:"Email sent successfully, please check your mail to verify"
-                //     })
                 this.props.history.push({
-                    // pathname: "/register"
                     pathname: "/verify"
                 });
             } else {
@@ -94,7 +93,8 @@ class Register extends React.Component {
             }
         }).catch(e => {
             this.setState({
-                isError: "Something went wrong!"
+                isError: "Something went wrong!",
+                loading: false
             });
         });
     }
@@ -219,7 +219,15 @@ class Register extends React.Component {
                             </Paper>
                         </FormGroup>
                         <br></br>
-                        <Button variant="contained"  block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
+                        <Button variant="contained"  
+                        disabled={this.state.loading}
+                        block bsSize="large" color="primary" 
+                        type="submit" onClick={this.postRegister} className="padb10"> 
+                        {
+                            this.state.loading?(<CircularProgress size={15}/>):undefined
+                        }
+                        &nbsp; Sign up 
+                        </Button>
                     </form><br></br>
                     <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
