@@ -29,8 +29,8 @@ class FeedComments extends React.Component {
             comment_on_post: 45
         };
     }
-
-    componentDidMount() {
+    
+    loadComments = ()=>{
         var getToken = localStorage.getItem('access');
         var url = endpoints.post_comments + "?post_id=" + this.props.post.id;
         axios.get(
@@ -47,6 +47,17 @@ class FeedComments extends React.Component {
             console.log("this.state", this.state);
         })
     }
+    componentDidMount() {
+        this.loadComments();
+    }
+
+    onCommented = (newComment)=>{
+        this.loadComments();
+        // debugger;
+        // let comments = this.state.comments;
+        // comments.results.splice(0, 0, newComment);
+        // this.setState({ comments: comments });
+    }
 
     replyComment = (comment_id)=>{
         this.setState({comment_on_post: comment_id});
@@ -61,9 +72,9 @@ class FeedComments extends React.Component {
                         (
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}></Avatar>
+                                    <Avatar alt={post.user.username} src={post.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary="@Site Admin" secondary={
+                                <ListItemText primary={"@"+post.user.username} secondary={
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
                                         {
@@ -73,18 +84,18 @@ class FeedComments extends React.Component {
                                 }>
 
                                 </ListItemText>
-                                {
+                                {/* {
                                     (this.state.comment_on_post!=comment.id && this.state.comment_on_post>-1)?(
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
                                         </ListItemSecondaryAction>
                                     ): undefined
-                                }
+                                } */}
                             </ListItem>
                         )
                     )) : undefined}
                 </List>
-                <CreateComment parent={-1} post={post}/>
+                <CreateComment parent={-1} post={post} onCommented={this.onCommented}/>
                 {/* {
                     this.state.comment_on_post<0?<CreateComment parent={-1} post={post}/>:undefined
                 } */}
