@@ -16,7 +16,7 @@ const endpoints = {
   user_list: 'https://energeapi.do.viewyoursite.net/follower-user-list/',
 
   user_followers: 'https://energeapi.do.viewyoursite.net/user/follower/',
-  user_comments: 'https://energeapi.do.viewyoursite.net/api/v1/post/comment/',
+  post_comments: 'https://energeapi.do.viewyoursite.net/api/v1/post/comment/',
   user_like: 'https://energeapi.do.viewyoursite.net/api/v1/post/like/',
 
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',

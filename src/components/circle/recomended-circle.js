@@ -79,19 +79,19 @@ class RecomendedCircle extends React.Component {
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.circle!=null && this.state.circle!=undefined)?(
-                                this.state.circle.recults.map((user, index)=>(
-                                    <ListItem alignItems="flex-start">
-                                        <ListItemAvatar>
-                                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                                        </ListItemAvatar>
-                                        <ListItemText primary="@user" secondary="2k followers"></ListItemText>
-                                        <ListItemSecondaryAction>
-                                            <Button variant="contained"  color="primary">Connect</Button>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                ))        
-                            ):undefined
+                            // (this.state.circle!=null && this.state.circle!=undefined)?(
+                            //     this.state.circle.recults.map((user, index)=>(
+                            //         <ListItem alignItems="flex-start">
+                            //             <ListItemAvatar>
+                            //                 <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                            //             </ListItemAvatar>
+                            //             <ListItemText primary="@user" secondary="2k followers"></ListItemText>
+                            //             <ListItemSecondaryAction>
+                            //                 <Button variant="contained"  color="primary">Connect</Button>
+                            //             </ListItemSecondaryAction>
+                            //         </ListItem>
+                            //     ))        
+                            // ):undefined
                         }
                         {/* <ListItem alignItems="flex-start">
                             <ListItemAvatar>

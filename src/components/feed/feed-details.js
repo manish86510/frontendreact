@@ -19,6 +19,7 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
+import FeedComments from './feed-comments';
 
 
 const styles = theme => ({
@@ -71,7 +72,7 @@ class FeedDetail extends React.Component{
                     // component="img"
                     className={classes.cardMedia}
                     height="220"
-                    image={"https://energeapi.do.viewyoursite.net"+ post.post_media[0].file}
+                    image={post.post_media[0].file}
                 />
                 <Typography variant="body2" color="textSecondary" component="div" dangerouslySetInnerHTML={markup} style={{padding: '5px 12px'}}/>
 
@@ -101,7 +102,9 @@ class FeedDetail extends React.Component{
                             <ShareOutlinedIcon />
                         </IconButton>
                 </CardActions>
-
+                <CardActions>
+                    <FeedComments post={post}/>
+                </CardActions>
             </Drawer>
         )
     }

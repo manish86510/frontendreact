@@ -47,9 +47,10 @@ class Feed extends React.Component {
             parent: '',
             comment_id:0,
         };
-    }   
+        this.handleScroll = this.handleScroll.bind(this);
+        }
     componentDidMount() {
-        var url = endpoints.get_post;
+        var url = endpoints.create_post;
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -60,18 +61,35 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                console.log(res.data);
                 this.setState({
                     postList: res.data,
                 });
             }
-        });
+        })
+        window.addEventListener('scroll', this.handleScroll);
     }
-   
+      
+      componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+      
+      handleScroll(event) {
+        var feed = document.getElementById("feed_content");
+        var scroll_top = feed.scrollTop;
+        var windows_height = window.innerHeight;
+        var scroll_height = feed.offsetHeight;
+        // var scrollPercent = (scroll_height-windows_height)/100;
+        var scrollPercent = (windows_height / scroll_height) * 100;
+        if(scrollPercent > 80) {
+            console.log('the scroll things', event);
+            // this.componentDidMount();
+        }
+      };
+
     render() {
         const { classes } = this.props;
         return (
-            <div>
+            <div id="feed_content" ref={this.handleScroll}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
                         {/* <AddPost/> */}

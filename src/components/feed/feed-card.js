@@ -85,7 +85,7 @@ class FeedCard extends React.Component {
                             // component="img"
                             className={classes.cardMedia}
                             height="220"
-                            image={"https://energeapi.do.viewyoursite.net"+ post.post_media[0].file}
+                            image={post.post_media[0].file}
                         />
                     ):(
                         <CardMedia
@@ -95,7 +95,7 @@ class FeedCard extends React.Component {
                             image="https://picsum.photos/seed/picsum/690/388"
                         />
                     )
-                }
+                }   
                 <CardContent className={classes.cardContent}>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
