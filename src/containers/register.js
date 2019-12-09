@@ -3,7 +3,6 @@ import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-// import Img from "react-image";
 import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { IconButton, CircularProgress } from "@material-ui/core";
@@ -60,6 +59,7 @@ class Register extends React.Component {
         this.state = {
             isSuccess: '',
             isError: '',
+            fullname: '',
             username: '',
             email: '',
             password: '',
@@ -71,7 +71,12 @@ class Register extends React.Component {
         this.setState({loading: true});
         e.preventDefault();
         let self = this;
+        var index = this.state.fullname.indexOf(" ");
+        var firstName = this.state.fullname.substr(0, index);
+        var lastName = this.state.fullname.substr(index + 1);
         let formData = new FormData();
+        formData.append('first_name', firstName);
+        formData.append('last_name', lastName);
         formData.append('username', self.state.username);
         formData.append('email', self.state.email);
         formData.append('password', self.state.password);
@@ -110,6 +115,12 @@ class Register extends React.Component {
         });
     }
 
+    handleFullname = e => {
+        this.setState({
+            fullname: e.target.value,
+        });
+    }
+
     handleEmail = e => {
         this.setState({
             email: e.target.value,
@@ -134,15 +145,28 @@ class Register extends React.Component {
                 <center>
                     <p>{this.state.isError}</p>
                     <form onSubmit={this.handleSubmit} method="post" >
+
+                    <FormGroup controlId="fullname"
+                            bsSize="large"
+                            className="padb10">
+                            <Paper component="form" className={classes.username}>
+                                <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
+                                    <FontAwesomeIcon icon={faUser} />
+                                </IconButton>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="fullname"
+                                    value={this.state.fullname}
+                                    onChange={this.handleFullname}
+                                    type="text"
+                                    inputProps={{ 'aria-label': 'fullname' }}
+                                />
+                            </Paper>
+                        </FormGroup >
+
                         <FormGroup controlId="username"
                             bsSize="large"
                             className="padb10">
-                            {/* <FormControl 
-                                autoFocus 
-                                type="text"
-                                placholder="username"
-                                onChange={this.handleUserName}
-                                value={this.state.username} /> */}
                             <Paper component="form" className={classes.username}>
                                 <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
                                     <FontAwesomeIcon icon={faUser} />
@@ -161,10 +185,6 @@ class Register extends React.Component {
                         <FormGroup controlId="email"
                             bsSize="large"
                             className="padb10" >
-                            {/* <FormControl  type="email"
-                                placeholder="email"
-                                onChange={this.handleEmail}
-                                value={this.state.email} /> */}
                             <Paper component="form" className={classes.email}>
                                 <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
                                     <FontAwesomeIcon icon={faEnvelope} />
@@ -182,10 +202,6 @@ class Register extends React.Component {
                         <FormGroup controlId="password"
                             bsSize="large"
                             className="padb10" >
-                            {/* <FormControl placeholder="password"
-                                value={this.state.password}
-                                onChange={this.handlePassword}
-                                type="password" /> */}
                             <Paper component="form" className={classes.password}>
                                 <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                     <FontAwesomeIcon icon={faLock} />
@@ -210,7 +226,7 @@ class Register extends React.Component {
                                 </IconButton>
                                 <InputBase
                                     className={classes.input}
-                                    placeholder="confirm Password"
+                                    placeholder="confirm password"
                                     value={this.state.confirm_password}
                                     onChange={this.handleConfirmPassword}
                                     type="password"

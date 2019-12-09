@@ -72,9 +72,9 @@ class FeedComments extends React.Component {
                         (
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
-                                    <Avatar alt={post.user.username} src={post.user.avatar}></Avatar>
+                                    <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={"@"+post.user.username} secondary={
+                                <ListItemText primary={"@"+comment.user.username} secondary={
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
                                         {

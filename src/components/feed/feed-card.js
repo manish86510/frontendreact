@@ -113,7 +113,12 @@ class FeedCard extends React.Component {
                     </ListItem>
                     <Typography variant="body2" color="textSecondary" component="div" style={{padding: '5px 12px'}}>
                         <div dangerouslySetInnerHTML={markup}></div>
-                        <Button color="primary" onClick={this.postDetail} >Show More</Button>
+                        {
+                            post.about_post.length>150?(
+                                <Button color="primary" onClick={this.postDetail} >Show More</Button>
+                            ):undefined
+                        }
+                        
                     </Typography>
                 </CardContent>
                 <CardActions style={{padding: '8px 25px'}}>
