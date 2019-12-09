@@ -84,9 +84,10 @@ class FeedComments extends React.Component {
                         )
                     )) : undefined}
                 </List>
-                {
+                <CreateComment parent={-1} post={post}/>
+                {/* {
                     this.state.comment_on_post<0?<CreateComment parent={-1} post={post}/>:undefined
-                }
+                } */}
 
             </div>
         );

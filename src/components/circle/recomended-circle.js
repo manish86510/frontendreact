@@ -38,7 +38,8 @@ class RecomendedCircle extends React.Component {
         super(props);
 
         this.state = {
-            circle: null
+            recomendedCircle: null,
+            text: 'Test'
         };
     }
 
@@ -54,9 +55,29 @@ class RecomendedCircle extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                this.setState({
-                    circle: res.data,
-                });
+                this.setState({recomendedCircle: res.data});
+            }
+        });
+    }
+
+    connect = (user_id) =>{
+        var url = endpoints.follow;
+        var getToken = localStorage.getItem('access');
+        var data = {
+            'follower': user_id
+        };
+        axios.post(
+            url,
+            data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken,
+                }
+            }
+        ).then(res => {
+            if (res.status == 200) {
+                document.getElementById(user_id).innerHTML = "connected";
+                // this.setState({recomendedCircle: res.data});
             }
         });
     }
@@ -78,21 +99,21 @@ class RecomendedCircle extends React.Component {
 
                 <CardContent>
                     <List className={classes.root} dense>
-                        {/* {
-                            (this.state.circle!=null && this.state.circle!=undefined)?(
-                                this.state.circle.recults.map((user, index)=>(
+                        {
+                            (this.state.recomendedCircle!=null && this.state.recomendedCircle!=undefined)?(
+                                this.state.recomendedCircle.results.map((user, index)=>(
                                     <ListItem alignItems="flex-start">
                                         <ListItemAvatar>
-                                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                                            <Avatar alt="Remy Sharp" src={user.avatar} />
                                         </ListItemAvatar>
-                                        <ListItemText primary="@user" secondary="2k followers"></ListItemText>
+                                        <ListItemText primary={"@"+user.username} secondary={user.followers_count+" followers"}></ListItemText>
                                         <ListItemSecondaryAction>
-                                            <Button variant="contained"  color="primary">Connect</Button>
+                                            <Button variant="contained" color="primary" onClick={this.connect.bind(this, user.pk)} id={user.pk}>Connect</Button>
                                         </ListItemSecondaryAction>
                                     </ListItem>
                                 ))        
                             ):undefined
-                        } */}
+                        }
                         {/* <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
