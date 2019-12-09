@@ -44,7 +44,7 @@
                                                         style={{paddingRight:50 , marginLeft: 95, height:29, 
                                                         width:300, border:'1px solid #d8d5d5',
                                                         backgroundColor: '#F2F4F4 ', borderRadius:6,}}></textarea>                                                   
-                                                            <Button block bsSize="Large"
+                                                            <Button variant="contained"  block bsSize="Large"
                                                                 onClick={this.postComments.bind(this, tile.id)}
                                                                 className="padb10" 
                                                                 type="submit"

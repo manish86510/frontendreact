@@ -5,11 +5,6 @@ import HotTopic from '../hot-topics/hot-topic';
 
 
 class EventTopics extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     return (
       <div>

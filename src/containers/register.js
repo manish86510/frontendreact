@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup } from "react-bootstrap";
+import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
@@ -31,6 +31,7 @@ const styles = theme => ({
         border: '1px solid #00b894',
         alignItems: 'center',
         display: 'flex',
+        width: 400,
         height: 40
     },
     cpassword: {
@@ -203,10 +204,6 @@ class Register extends React.Component {
                         <FormGroup controlId="cpassword"
                             bsSize="large"
                             className="padb10" >
-                            {/* <FormControl placeholder="Confirm Password"
-                                value={this.state.confirm_password}
-                                onChange={this.handleConfirmPassword}
-                                type="password" /> */}
                             <Paper component="form" className={classes.cpassword}>
                                 <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
                                     <FontAwesomeIcon icon={faLock} />
@@ -220,23 +217,19 @@ class Register extends React.Component {
                                     inputProps={{ 'aria-label': 'cpassword' }}
                                 />
                             </Paper>
-
                         </FormGroup>
                         <br></br>
-                        <Button block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
+                        <Button variant="contained"  block bsSize="large" type="submit" onClick={this.postRegister} className="padb10"> Sign up </Button>
                     </form><br></br>
                     <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
                 <div>
                     <img src={image}
-                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "static" }} />
+                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }} />
                 </div >
             </div >
         );
     }
 }
-Register.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withRouter(withStyles(styles)(Register));

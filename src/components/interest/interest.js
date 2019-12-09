@@ -11,14 +11,22 @@ import { toast } from 'react-toastify';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
 const $ = require('jquery');
 
-// function sleep(delay = 0) {
-//   return new Promise(resolve => {
-//     setTimeout(resolve, delay);
-//   });
+function sleep(delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(resolve, delay);
+  });
+}
+
+// function autosuggest(abc){
+//   const [open, setOpen] = React.useState(false);
+//   const [options, setOptions] = React.useState([]);
+//   const loading = open && options.length === 0;
+
+
 // }
+
 
 class Interest extends React.Component{
 
@@ -26,19 +34,81 @@ class Interest extends React.Component{
     super(props);
     this.state = {
         profile_interest: [],
-        autocomp:{
-          interest: [],
-        },
         selected:{
           interest: [],
-        }
+        },
+        value: "",
+        autocompleteData: [],
+        loading: '',
+
       }
+     
     }
-    
-componentDidMount = () => {
+
+ 
+  componentDidMount() {
     this.getMe();
     this.getInterest();
 
+}
+
+retrieveDataAsynchronously(searchText){
+  this.setState({ autocompleteData: [] }) 
+          
+  let _this = this;
+
+  // Url of your website that process the data and returns a
+  let url = endpoints.interest+`?querystring=${searchText}`;
+  
+  // Configure a basic AJAX request to your server side API
+  // that returns the data according to the sent text
+
+  axios.get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.access,
+          }
+         }).then(res => {
+          const autocompleteData = this.state.autocompleteData
+            
+            for (let i = 0; i < res.data.length; i++) {
+              autocompleteData.push(res.data[i])
+              }
+            
+            this.setState({ autocompleteData: autocompleteData }) 
+        });
+
+  // return (
+  //   <Paper {...containerProps} square>
+  //     {
+  //       loading_suggestions == true ?
+  //         <div style={{ textAlign: 'left', padding: 10 }}>
+  //           <CircularProgress size={24} thickness={4} />
+  //           <span style={{ paddingLeft: 10 }}>Loading...</span>
+  //         </div> : ''
+  //     }
+  //     {children}
+  //   </Paper>
+  // );
+}
+
+
+
+handleInterestChange  = (e) => {
+  this.setState({
+      value: e.target.value
+  });
+  /**
+   * Handle the remote request with the current text !
+   */
+  if (e.target.value.length > 2){
+    this.state.loading = '';
+    this.retrieveDataAsynchronously(e.target.value);
+   console.log("The Input Text has changed to ", e.target.value);
+  }
+  else{
+    this.state.loading = 'load';
+  }
 }
 
 getInterest = () => {
@@ -85,10 +155,7 @@ getMe = () => {
       }
      }).then(res => {
       toast.success("Deleted")
-      // this.props.history.push({
-      //   pathname: '/app/user/'
-      // });
-      //  this.getInterestData();
+  
       })
    
   };
@@ -102,39 +169,8 @@ getMe = () => {
   }  
 
   render() {
-
-  // const [open, setOpen] = React.useState(false);
-  // const [options, setOptions] = React.useState([]);
-  // const loading = open && options.length === 0;
-
-  // React.useEffect(() => {
-  //   let active = true;
-
-  //   if (!loading) {
-  //     return undefined;
-  //   }
-
-  //   (async () => {
-  //     const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-  //     await sleep(1e3); // For demo purposes.
-  //     const countries = await response.json();
-
-  //     if (active) {
-  //       setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-  //     }
-  //   })();
-
-  //   return () => {
-  //     active = false;
-  //   };
-  // }, [loading]);
-
-  // React.useEffect(() => {
-  //   if (!open) {
-  //     setOptions([]);
-  //   }
-  // }, [open]);
     
+
     const elements = this.state.profile_interest
     const interest_ed = []
     
@@ -149,8 +185,7 @@ getMe = () => {
       )
     }
 
-
-    const elements_in = this.state.autocomp.interest
+    const elements_in = this.state.autocompleteData
     const interest_items = []
     
     for (const [index, value] of elements_in.entries()) {
@@ -181,8 +216,11 @@ getMe = () => {
                         getOptionLabel={option => option.title}
                         // defaultValue={[interest_items[0]]}
                         onChange={this.handleInterestData}
+                        loading={this.state.loading}
                         renderInput={params => (
                           <TextField
+                          onKeyPress={this.handleInterestChange}
+                          // onClick={this.handleInterestChange}
                             {...params}
                             variant="standard"
                             label="Interest"
@@ -190,13 +228,23 @@ getMe = () => {
                             margin="normal"
                             fullWidth
                             // InputProps={{disableUnderline: true}}
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <React.Fragment>
+                                   {/* {<CircularProgress color="inherit" size={20} />} */}
+                            
+                                   {this.state.loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                   {params.InputProps.endAdornment}
+                                 </React.Fragment>
+                               ),
+                             }}
                           />
                           )}
                           />
                      
+                     
                     </div>
-    
-    
     </Grid>
     </Grid>
     

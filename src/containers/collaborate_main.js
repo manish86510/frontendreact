@@ -33,8 +33,5 @@ class CollaborateMain extends React.Component {
         );
     }
 }
-CollaborateMain.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(CollaborateMain);

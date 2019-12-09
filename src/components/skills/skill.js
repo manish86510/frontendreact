@@ -22,7 +22,9 @@ class Skill extends React.Component{
         },
         selected:{
           skill: [],
-        }
+        },
+        value: "",
+        autocompleteData: []
       }
     }
     
@@ -32,6 +34,47 @@ componentDidMount = () => {
 
 }
 
+retrieveDataAsynchronously(searchText){
+  let _this = this;
+
+  // Url of your website that process the data and returns a
+  let url = endpoints.skills+`?querystring=${searchText}`;
+  
+  
+  // Configure a basic AJAX request to your server side API
+  // that returns the data according to the sent text
+
+  axios.get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.access,
+          }
+         }).then(res => {
+          const autocompleteData = this.state.autocompleteData
+            
+            for (let i = 0; i < res.data.length; i++) {
+              autocompleteData.push(res.data[i])
+              }
+      
+            this.setState({ autocompleteData: autocompleteData }) 
+          
+        });
+
+  
+}
+
+handleSkillChange  = (e) => {
+  this.setState({
+      value: e.target.value
+  });
+
+  /**
+   * Handle the remote request with the current text !
+   */
+  this.retrieveDataAsynchronously(e.target.value);
+
+  console.log("The Input Text has changed to ", e.target.value);
+}
 
 getSkill = () => {
   axios.get(endpoints.skills, {

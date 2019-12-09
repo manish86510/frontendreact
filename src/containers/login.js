@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup } from "react-bootstrap";
+import { Button, FormGroup } from '@material-ui/core';
 import '../styles/Login.css'
 import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
@@ -28,6 +28,7 @@ const styles = theme => ({
         border: '1px solid #00b894',
         alignItems: 'center',
         display: 'flex',
+        width: 400,
         height: 40
     },
     iconButton: {
@@ -127,12 +128,8 @@ class Login extends React.Component {
                     </FormGroup >
                     {/* <br></br> */}
                     <FormGroup controlId="password"
-                        bsSize="large"
+                        bsSize="small"
                         className="padb10" >
-                        {/* <FormControl value={this.state.password}
-                            placeholder="password"
-                            onChange={this.handlePassword}
-                            type="password" /> */}
                         <Paper component="form" className={classes.password}>
                             <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
@@ -148,7 +145,7 @@ class Login extends React.Component {
                     </FormGroup>
                     <br></br><p className="padb10"> <Link to="/forgetpass"> Forgot your password ? Reset! </Link></p>
                     <br></br>
-                    <Button block bsSize="large"
+                    <Button variant="contained"  block bsSize="large"
                         type="submit"
                         onClick={this.postLogin}
                         className="padb10" >
@@ -160,13 +157,12 @@ class Login extends React.Component {
             <div>
                 <img alt="footer" src={image}
                     style={
-                        { width: "100%", height: "fit-content", bottom: 0, position: "static" }
+                        { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
                     } />
             </div>
         </div>
         );
     }
 }
-
 
 export default withRouter(withStyles(styles)(Login));

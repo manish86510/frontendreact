@@ -1,15 +1,23 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import TextField from '@material-ui/core/TextField';
 import '../../styles/main.css';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
+import { Button, Typography } from '@material-ui/core';
+import { ListItem, Avatar, TextField, List } from '@material-ui/core';
+
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import CreateComment from '../Posts/create-comment';
 
 const styles = theme => ({
-    card:{
+    card: {
         marginBottom: 30
+    },
+    left5: {
+        marginLeft: 5
     }
 });
 
@@ -17,77 +25,76 @@ class FeedComments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
-            value: 0,
-            like_status: false,
-            isError: '',
-            show:false,
-            comment: '',
-            parent: '',
-            comment_id:0,
+            comments: null,
+            comment_on_post: 45
         };
-        this.postComments = this.postComments.bind(this);
-        // this.handleToggle = this.handleToggle.bind(this)
-            // post_type : this.props.post_type
-        }
-    postComments = (post_id) => { 
-        debugger;
-        if(this.state.comment_id == post_id){
-            this.setState({show: !this.state.show});    
-        }else{
-            this.setState({show: true});
-        }       
-        this.setState( { comment_id: post_id } )
-        let self = this;
-        var url = endpoints.user_comments;
+    }
+
+    componentDidMount() {
         var getToken = localStorage.getItem('access');
-        axios.post(url, {
-            post: post_id,
-            comment: self.state.comment,
-        },
+        var url = endpoints.post_comments + "?post_id=" + this.props.post.id;
+        axios.get(
+            url,
             {
                 headers: {
-                    Authorization: 'Bearer ' + getToken
+                    Authorization: 'Bearer ' + getToken,
                 }
-        }).then(res => {
-                this.componentDidMount();
-        }).catch(res => {
-            this.setState({
-                isError: "Data not found!"
-            });
-        });
+            }
+        ).then(res => {
+            if (res.status == 200) {
+                this.setState({ comments: res.data });
+            }
+            console.log("this.state", this.state);
+        })
+    }
+
+    replyComment = (comment_id)=>{
+        this.setState({comment_on_post: comment_id});
     }
 
     render() {
-        const { classes, comments, pid } = this.props;
+        const {post} = this.props;
         return (
-            <div>
-                { comments.map(comment=> (
-                <p>{comment.comment}</p>
-                ))}
-                 <form onSubmit={this.handleSubmit}
-                        bsSize="small"
-                        className="padb10">                                                       
-                            <textarea className="textarea"                                                        
-                            placeholder="Write a comment..."                                                   
-                            value={this.state.comment}
-                            onChange={this.handleComment}
-                            type="text"></textarea>                                                   
-                                <button block bsSize="Large"
-                                    onClick={this.postComments.bind(this, pid)}
-                                    className="commentbtn" 
-                                    type="submit">
-                                    Post
-                                </button>                                                                                                                                                                    
-                    </form>
+            <div style={{width: '100%'}}>
+                <List>
+                    {(this.state.comments != null && this.state.comments != undefined) ? (this.state.comments.results.map(comment =>
+                        (
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}></Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary="@Site Admin" secondary={
+                                    <React.Fragment>
+                                        <Typography>{comment.comment}</Typography>
+                                        {
+                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} post={post}/>:undefined
+                                        }
+                                    </React.Fragment>
+                                }>
+
+                                </ListItemText>
+                                {
+                                    (this.state.comment_on_post!=comment.id && this.state.comment_on_post>-1)?(
+                                        <ListItemSecondaryAction>
+                                            <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
+                                        </ListItemSecondaryAction>
+                                    ): undefined
+                                }
+                            </ListItem>
+                        )
+                    )) : undefined}
+                </List>
+                {
+                    this.state.comment_on_post<0?<CreateComment parent={-1} post={post}/>:undefined
+                }
+
             </div>
         );
     }
 }
 
 FeedComments.propTypes = {
-    comments: PropTypes.object.isRequired,
-    pid: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(FeedComments);

@@ -2,7 +2,7 @@ import React from 'react';
 import SideNav from '../../../containers/nav'
 import SrCoins from '../coins/srcoins'
 import Grid from '@material-ui/core/Grid';
-import HotTopics from '../../hot-topics/hot-topic';
+import HotTopics from '../../../components/hot-topics/hot-topic';
 
 
 class Wallet extends React.Component{

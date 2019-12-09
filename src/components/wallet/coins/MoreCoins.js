@@ -14,8 +14,7 @@ import {
   } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import InputBase from '@material-ui/core/InputBase';
-import HotTopics from '../../hot-topics/hot-topic';
-import SideNav from '../../../containers/nav'
+import HotTopics from '../../../components/hot-topics/hot-topic';
 
 
 const BootstrapInput = withStyles(theme => ({
@@ -223,7 +222,7 @@ class WalletInfo extends React.Component{
           <br></br>
           Remember this action is irrerversible
           </Grid>
-          <Button style={{borderRadius: '25px', width:'130px' , backgroundColor:'#6fc1a5'}} variant="contained"  color='primary'>
+          <Button variant="contained"  style={{borderRadius: '25px', width:'130px' , backgroundColor:'#6fc1a5'}} variant="contained"  color='primary'>
             Send
            </Button>
        

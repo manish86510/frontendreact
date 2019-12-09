@@ -1,15 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
-import { ListItem } from '@material-ui/core';
+import { ListItem, Button, Avatar, Fab } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import { Avatar } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
+
 
 const styles = theme => ({
     searchBox: {
@@ -94,9 +92,9 @@ class MyMessages extends React.Component {
                                     readOnly: true,
                                 }}
                             />
-                            <button onClick={this.handle} xl={2} className={classes.icon} aria-label="search" style={{ backgroundColor: "red", borderRadius: "0px 30px 30px 0px" }}>
+                            <Button variant="contained"  onClick={this.handle} xl={2} className={classes.icon} aria-label="search" style={{ backgroundColor: "red", borderRadius: "0px 30px 30px 0px" }}>
                                 <text>Ignore all</text>
-                            </button>
+                            </Button>
                         </Paper>
                     </Grid>
 
@@ -134,8 +132,5 @@ class MyMessages extends React.Component {
     }
 }
 
-MyMessages.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(MyMessages);

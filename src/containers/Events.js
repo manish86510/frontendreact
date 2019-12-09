@@ -36,8 +36,5 @@ class Events extends React.Component {
         );
     }
 }
-Events.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Events);

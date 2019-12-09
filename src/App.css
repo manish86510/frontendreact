@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
 .App {
   text-align: center;
 }
@@ -19,4 +20,15 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.MuiAvatar-root.MuiAvatar-circle {
+  border-radius: 15px/7px !important;
+}
+
+.post-detail .MuiDrawer-paper{
+  width: 45%;
+  padding: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }

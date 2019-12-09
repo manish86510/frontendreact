@@ -1,13 +1,10 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { Avatar, ListItem, Button } from '@material-ui/core';
+
+
 
 
 const styles = theme => ({
@@ -81,16 +78,16 @@ class Event extends React.Component {
 
           <Grid item xs={12}>
             <center>
-            <button className="eventBtn">This Week</button>
-            <button className="eventBtn">This Month</button>
-            <button className="eventBtn">Next Month</button>
+            <Button variant="contained"  className="eventBtn">This Week</Button>
+            <Button variant="contained"  className="eventBtn">This Month</Button>
+            <Button variant="contained"  className="eventBtn">Next Month</Button>
             </center>
           </Grid>
           <Grid item xs={10}>
-            <button className="eventBtnl">Event Invitations</button>
+            <Button variant="contained"  className="eventBtnl">Event Invitations</Button>
           </Grid>
           <Grid item xs={10}>
-            <button className="eventBtnl">Past Invitations</button>
+            <Button variant="contained"  className="eventBtnl">Past Invitations</Button>
           </Grid>
           <Grid item xs={5}>
             <Paper className={classes.paper}>
@@ -142,8 +139,5 @@ class Event extends React.Component {
   }
 }
 
-Event.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Event);

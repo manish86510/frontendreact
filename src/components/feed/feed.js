@@ -1,13 +1,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 import { Box } from '@material-ui/core';
 import axios from 'axios';
-import AddPost from '../popup/add_post';
 import '../../styles/main.css';
 import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
+import PostTextArea from '../post_textarea';
 
 
 const styles = theme => ({
@@ -39,7 +38,7 @@ class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
+            postList: null,
             value: 0,
             like_status: false,
             isError: '',
@@ -48,9 +47,10 @@ class Feed extends React.Component {
             parent: '',
             comment_id:0,
         };
-        }   
+        this.handleScroll = this.handleScroll.bind(this);
+        }
     componentDidMount() {
-        var url = endpoints.get_post;
+        var url = endpoints.create_post;
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -61,23 +61,42 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                console.log(res.data);
                 this.setState({
                     postList: res.data,
                 });
             }
         })
+        window.addEventListener('scroll', this.handleScroll);
     }
-   
+      
+      componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+      
+      handleScroll(event) {
+        var feed = document.getElementById("feed_content");
+        var scroll_top = feed.scrollTop;
+        var windows_height = window.innerHeight;
+        var scroll_height = feed.offsetHeight;
+        // var scrollPercent = (scroll_height-windows_height)/100;
+        var scrollPercent = (windows_height / scroll_height) * 100;
+        if(scrollPercent > 80) {
+            console.log('the scroll things', event);
+            // this.componentDidMount();
+        }
+      };
+
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div id="feed_content" ref={this.handleScroll}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <AddPost/>
+                        {/* <AddPost/> */}
+                        <PostTextArea/>
                     </Grid>
                 </Grid>
+                
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>
@@ -87,9 +106,13 @@ class Feed extends React.Component {
                     <Grid item xs={12}>
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                                {this.state.postList.map(post => (
-                                        <FeedCard post={post}/>
-                                ))}
+                                {
+                                    (this.state.postList!=null && this.state.postList!=undefined)?(
+                                        this.state.postList.results.map(post => (
+                                                <FeedCard post={post}/>
+                                        ))
+                                    ): undefined
+                                }
                             </Grid>                                                     
                         </div>
                     </Grid>
@@ -99,8 +122,5 @@ class Feed extends React.Component {
     }
 }
 
-Feed.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Feed);

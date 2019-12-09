@@ -124,7 +124,7 @@ getUserData = () => {
     }
    }).then(res => {
     const user = this.state.user
-    user.linked_in = res.data[0].name 
+    user.linked_in = res.data.name 
     this.setState({ user });
     
   });
@@ -135,7 +135,7 @@ getUserData = () => {
     }
    }).then(res => {
     const user = this.state.user
-    user.education = res.data[0].attended_for 
+    user.education = res.data.attended_for 
     this.setState({ user });
     
   });
@@ -202,7 +202,11 @@ getUserData = () => {
   }
       };
 
-
+  handlePhotoEdit = (event) => {
+  
+  
+  
+  }
 
   handleNameEdit = (event) => {
     // const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
@@ -231,35 +235,40 @@ getUserData = () => {
             Cancel
           </Button>
           </Grid><Grid item xs={2}>
-          <Button  variant="contained" color="primary" onClick={this.handleSubmit}>
+          <Button variant="contained" color="primary" onClick={this.handleSubmit}>
           Done
           </Button></Grid>
           </Grid>
           <Paper> 
             <br></br>
                 {/* <Avatar alt="Remy Sharp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" className={classes.avatar} /> */}
-                <div class='row' style={{  padding: 5,  height:95}} >
+                <div class='row' style={{  padding: 10,  height:95}} >
                     <div class="col-md-6">
                             <img style={{width: 100, height: 100, borderRadius: '25px'}}  align="left"
                             src={this.state.user.image}>
                             </img>
-
+                            <IconButton size='small' color="inherit" aria-label="Close">
+                            <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit}/>
+                            </IconButton>
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Name
                             <IconButton size='small' color="inherit" aria-label="Close">
                             <FontAwesomeIcon icon={faEdit} onClick={this.handleNameEdit}/>
                             </IconButton>
                             </span>
-                            <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span></p>
+                            <br></br>
+                            <span style={{ padding: 10, fontSize: 12}}>{this.state.user.name}</span>
+                            <br></br>
                             <span style={{ padding: 10, fontSize: 12, color: 'grey' }}>
                             Username
                             <IconButton size='small' color="inherit" aria-label="Close">
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
-        <p><span style={{ padding: 10, fontSize: 12}}>{this.state.user.username}</span></p>
+                            <br></br>
+                            <span style={{ padding: 10, fontSize: 12}}>{this.state.user.username}</span>
                             </div>
-                            <div class="col-md-6">
+                            {/* <div class="col-md-6">
                            <Typography component="div" style={{position: 'absolute', right: 15}}>
                             <Grid component="label" container alignItems="center" spacing={1}>
                               <Grid item>Private Profile</Grid>
@@ -273,7 +282,7 @@ getUserData = () => {
                               <Grid item></Grid>
                             </Grid>
                             </Typography> 
-                            </div>
+                            </div> */}
                             </div>
 
                             <div class='row' style={{ height: 35, padding: 20, fontSize: 12 }} >
@@ -282,7 +291,8 @@ getUserData = () => {
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </div>
-
+                            <br></br>
+                            
                             <div class='row' style={{ height: 45 }} >
                             <span style={{ padding: 20, fontSize: 12, color: 'grey' }}>
                             Bio
@@ -290,11 +300,10 @@ getUserData = () => {
                             <FontAwesomeIcon icon={faEdit} />
                             </IconButton>
                             </span>
+                            <br></br>
+                            <span style={{ padding: 20, fontSize: 10 }}>{this.state.user.bio}</span>
                             </div>
                             
-                            <div class='row' style={{ position: 'absolute', left: 100 }}>
-                            <span style={{ fontSize: 10 }}>{this.state.user.bio}</span>
-                            </div>
                             <br></br>
                             <hr></hr>
                            

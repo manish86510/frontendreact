@@ -6,9 +6,8 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
-import { ListItem, Box } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import { Button, Avatar } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 
 const styles = theme => ({
@@ -249,8 +248,5 @@ class MessagesBox extends React.Component {
     }
 }
 
-MessagesBox.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(MessagesBox);

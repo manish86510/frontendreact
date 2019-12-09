@@ -1,9 +1,8 @@
 import React from 'react';
-import PostHotTopics from './Posts/post-hot-topics';
+import PostHotTopics from './hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 import BookmarkTabs from './bookmark-tab'
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
 
 
 
@@ -29,15 +28,11 @@ class Bookmark extends React.Component {
                         <BookmarkTabs />
                     </Grid>
                     <Grid item xs={4}>
-                        <PostHotTopics />
+                        <h1>Hot topics</h1>
                     </Grid>
                 </Grid>
             </div>
         );
     }
 }
-Bookmark.propTypes = {
-    children: PropTypes.node.isRequired,
-};
-
 export default withStyles(styles)(Bookmark);
