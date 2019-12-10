@@ -13,7 +13,7 @@ class Wallet extends React.Component{
 
     render() {
         return (
-                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
+                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
                     <Grid item xs={8}>
                         <WalletTabs />
                     </Grid>

@@ -132,7 +132,7 @@ class WalletInfo extends React.Component{
 
 
         return (
-            <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
+            <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
                 <Grid item xs={8}>
             <Grid container spacing={2}>
               <Grid item xs={11}>

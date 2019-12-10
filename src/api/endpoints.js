@@ -4,13 +4,14 @@ const endpoints = {
   // get_token: base_uri.base_uri + '/token/',
   get_token: 'https://energeapi.do.viewyoursite.net/api/token/refresh',
   TOKEN: 'https://energeapi.do.viewyoursite.net/api/token/',
-  profile_user: 'https://energeapi.do.viewyoursite.net/user/register/',
+  profile_user: 'https://energeapi.do.viewyoursite.net/user/me/',
   profile_interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   profile_skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   profile_languages: 'https://energeapi.do.viewyoursite.net/user/language/',
   profile_social_links: 'https://energeapi.do.viewyoursite.net/user/social-link/',
   profile_education: 'https://energeapi.do.viewyoursite.net/user/education/',
   PROFILE: 'https://energeapi.do.viewyoursite.net/user/me/',
+  PROFILE_UPDATE: 'https://energeapi.do.viewyoursite.net/user/profile-update',
   
   interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   skills: 'https://energeapi.do.viewyoursite.net/skill/',
@@ -29,7 +30,7 @@ const endpoints = {
   POST: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
   get_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
-
+  HOT_topic: 'https://energeapi.do.viewyoursite.net/api/v1/post/hot-topic/',
   recomended_followers: 'https://energeapi.do.viewyoursite.net/user/recommended/'
 };
 export default endpoints;

@@ -12,10 +12,10 @@ import axios from 'axios';
 import endpoints from '../../api/endpoints';
 
 const styles = theme => ({
-  cardContainer:{
+  cardContainer: {
     padding: 10,
   },
-  gridItem:{
+  gridItem: {
     display: 'inline-block',
     height: 150,
     margin: 5,
@@ -33,121 +33,136 @@ const styles = theme => ({
 
 
 class ProfileCard extends React.Component {
+  fileObj = [];
+  fileArray = [];
   constructor(props) {
     super(props);
     this.state = {
       checkedA: true,
       user: {},
-      selected:{
+      selected: {
         interest: [],
         skill: [],
-        language: [],      
+        language: [],
+      },
+      file: null,
+
     }
+    this.inputOpenFileRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
   }
-  this.inputOpenFileRef = React.createRef();
-}
 
+  componentDidMount = () => {
+    this.getUserData();
+  }
 
+  getUserData = () => {
+    axios.get(endpoints.profile_user, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.access,
+      }
+    }).then(res => {
+      this.setState({ user: res.data });
+    });
 
-componentDidMount = () => {
-  this.getUserData();
-}
-    
+  }
 
+  handleProfilePicChange = event => {
+    let formData = new FormData();
+    formData.append('avatar', event.target.files[0]);
+    var token = localStorage.getItem('access');
+    axios.put(endpoints.PROFILE_UPDATE, formData, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      if(res.status==200){
+        window.localStorage.setItem('userInfo', JSON.stringify(res.data));
+        this.setState({user: res.data});
+      }
+    }).catch(e => {
 
-
-getUserData = () => {
-  // debugger;
-
-  
-  axios.get(endpoints.profile_user, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.access,
-    }
-  }).then(res => {
-    // debugger;
-    this.setState({ user: res.data });
-
-    // user.name = res.data.first_name+' '+res.data.last_name 
-    // user.username = res.data.username
-    // user.bio = res.data.about
-    // user.email = res.data.email
-    // user.image = 'https://energeapi.do.viewyoursite.net/'+res.data.avatar
-    // user.url = res.data.enlarge_url
-    
-    // this.setState({ user });
-  });
-
-}
+    });
+  }
 
   handleChange = name => event => {
     this.setState({ checkedA: event.target.checked });
   };
 
-  handlePhotoEdit = (event) => {
-    debugger;
+
+  showOpenFileDlg = () => {
     this.inputOpenFileRef.current.click();
-}
+  }
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue
+    });
+  };
 
   render() {
     const { classes } = this.props;
-    const url = 'energeapi.do.viewyoursite.net'+this.state.user.avatar;
+    const url = 'energeapi.do.viewyoursite.net' + this.state.user.avatar;
     return (
-        <Card className={classes.cardContainer}>
-          <div style={{position: 'relative'}}>
-            <div className={classes.gridItem}>
-                <CardMedia className={classes.media} className={classes.profile_image} onClick={this.handlePhotoEdit}
-                // image={url}
-                image='https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg'
-                 />
-                <a href="#">Change Profile Photo</a>
-            </div>
-            <div className={classes.gridItem} style={{padding: '1px 10px'}}>
-                <label>
-                  Name
+      <Card className={classes.cardContainer}>
+        <div style={{ position: 'relative' }}>
+          <div className={classes.gridItem}>
+            <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {
+              this.inputOpenFileRef.current.click();
+            }}
+            image={"https://energeapi.do.viewyoursite.net"+this.state.user.avatar} />
+            {/* <div className={"image-thumbnail"}>
+              <img src={this.state.file} alt="" width="200" />
+            </div> */}
+            <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleProfilePicChange} style={{ display: "none" }} />
+            <a href="#" onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
+          </div>
+          <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
+            <label>
+              Name
                   <IconButton size='small' color="inherit" aria-label="Close">
-                      <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-                  </IconButton>
-                </label>
-                <div>{this.state.user.first_name}{this.state.user.last_name}</div>
-                <br/>
-                <label>
-                  Username
+                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
+              </IconButton>
+            </label>
+            <div>{this.state.user.first_name}&nbsp;{this.state.user.last_name}</div>
+            <br />
+            <label>
+              Username
                   <IconButton size='small' color="inherit" aria-label="Close">
-                    <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-                  </IconButton>
-                </label>
-                <div>{this.state.user.username}</div>
-            </div>
+                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
+              </IconButton>
+            </label>
+            <div>{this.state.user.username}</div>
+          </div>
 
-            <div className={"bioContainer"}>
-              <label>
-                Bio
+          <div className={"bioContainer"}>
+            <label>
+              Bio
                 <IconButton size='small' color="inherit" aria-label="Close">
-                  <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-                </IconButton>
-              </label>
-              <div>
+                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
+              </IconButton>
+            </label>
+            <div>
               {this.state.user.about}
             </div>
 
             <FormControlLabel
-                  style={{position: 'absolute', top:0, right: 0}}
-                  control={
-                    <Switch
-                      checked={this.state.checkedA}
-                      onChange={this.handleChange('checkedA')}
-                      value="checkedA"
-                      inputProps={{ 'aria-label': 'secondary checkbox' }}
-                      color="primary"
-                    />
-                  }
-                  label="Private Profile"
+              style={{ position: 'absolute', top: 0, right: 0 }}
+              control={
+                <Switch
+                  checked={this.state.checkedA}
+                  onChange={this.handleChange('checkedA')}
+                  value="checkedA"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  color="primary"
                 />
-            </div> 
-            </div> 
-        </Card>
+              }
+              label="Private Profile"
+            />
+          </div>
+        </div>
+      </Card>
     );
   }
 }
