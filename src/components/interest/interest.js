@@ -56,9 +56,9 @@ retrieveDataAsynchronously(searchText){
           }).then(res => {
     
             const autocompleteData = this.state.autocompleteData
-              
-              for (let i = 0; i < res.data.length; i++) {
-                autocompleteData.push(res.data[i])
+              debugger;
+              for (let i = 0; i < res.data.results.length; i++) {
+                autocompleteData.push(res.data.results[i])
                 }
               
               this.setState({ autocompleteData: autocompleteData }) 
@@ -193,7 +193,7 @@ getMe = () => {
         <div class='row editInterest' style={{ position: 'relative', left: 30 }}>
                             {interest_ed}
 
-                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
+                            <Fab color="grey" aria-label="add" >
         <AddIcon style={{color: 'white'}} onClick={this._editInterest}/>
       </Fab></div>
                             
