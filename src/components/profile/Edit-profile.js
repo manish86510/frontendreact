@@ -235,7 +235,7 @@ class EditProfile extends React.Component {
           this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
         }
         <Card>
-          <InterestCard />
+          <InterestData />
           <SkillCard />
           <LanguageCard />
           <div className={classes.root}>

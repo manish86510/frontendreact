@@ -1,17 +1,11 @@
 import React from 'react';
 import { withStyles, useTheme } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { PropTypes } from 'prop-types';
 import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Icon from '@material-ui/core/Icon';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const styles = theme => ({
     cardContainer: {
@@ -77,6 +71,11 @@ class InterestCard extends React.Component {
         });
     }
 
+    searchInterestList = () => {
+        debugger;
+        
+    }
+
     toggleEditing = () => {
         this.setState({
             isEditing: !this.state.isEditing
@@ -85,16 +84,46 @@ class InterestCard extends React.Component {
 
     renderInterestList = () => {
         return (
-            this.state.interest.map((interest, index) => (
-                <Chip id={interest.id} label={interest.interest} onDelete={this.handleDelete} color="primary" variant="outlined" />
-            ))
+            <div>
+                <div>
+                    {this.state.interest.map((interest, index) => (
+                        <Chip id={interest.id} label={interest.interest} onDelete={this.handleDelete} color="primary" variant="outlined" />
+                    ))}
+                </div>
+                <div style={{ position: 'absolute', top: '50%', right: 0 }}>
+                    <Icon onClick={this.toggleEditing} className="fa fa-plus-circle" style={{ fontSize: 30 }} />
+                </div>
+            </div>
         );
     }
 
     renderInterstForm = () => {
         return (
-            <div>Hello</div>
-            
+            <div>
+                <div style={{ width: 900 }}>
+                <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={this.state.interest}
+                    getOptionLabel={option => option.title}
+                    // defaultValue={[top100Films[13]]}
+                    
+                    renderInput={params => (
+                    <TextField
+                        {...params}
+                        onChange={this.searchInterestList}
+                        variant="standard"
+                        placeholder="Interest"
+                        fullWidth
+                    />
+                    )}
+                />
+                </div>
+                <div style={{ position: 'absolute', top: '50%', right: 0 }}>
+                    <Icon onClick={this.toggleEditing} className="fa fa-close" style={{ fontSize: 30 }} />
+                </div>
+            </div>
+
         )
     }
 
@@ -116,9 +145,7 @@ class InterestCard extends React.Component {
                             this.state.isEditing ? this.renderInterstForm() : this.renderInterestList()
                         }
                     </div>
-                    <div style={{ position: 'absolute', top: '50%', right: 0 }}>
-                        <Icon onClick={this.toggleEditing} className="fa fa-plus-circle" style={{ fontSize: 30 }} />
-                    </div>
+
                 </div>
             </div>
         );
