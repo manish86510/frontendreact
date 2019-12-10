@@ -37,8 +37,7 @@ class ProfileCard extends React.Component {
   fileArray = [];
   constructor(props) {
     super(props);
-
-    ; this.state = {
+    this.state = {
       checkedA: true,
       user: {},
       selected: {
@@ -53,14 +52,9 @@ class ProfileCard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
-
   componentDidMount = () => {
     this.getUserData();
   }
-
-
-
 
   getUserData = () => {
     axios.get(endpoints.profile_user, {
@@ -85,6 +79,7 @@ class ProfileCard extends React.Component {
       }
     }).then(res => {
       if(res.status==200){
+        window.localStorage.setItem('userInfo', JSON.stringify(res.data));
         this.setState({user: res.data});
       }
     }).catch(e => {
@@ -121,7 +116,7 @@ class ProfileCard extends React.Component {
               <img src={this.state.file} alt="" width="200" />
             </div> */}
             <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleProfilePicChange} style={{ display: "none" }} />
-            <a href="" onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
+            <a href="#" onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
           </div>
           <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
             <label>

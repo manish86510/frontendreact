@@ -84,7 +84,6 @@ class FeedCard extends React.Component {
                             <YoutubePlayer video_url={post.post_media[0].media_url}/> 
                         ):(
                             <CardMedia
-                                // component="img"
                                 className={classes.cardMedia}
                                 height="220"
                                 image={post.post_media[0].file}

@@ -26,11 +26,7 @@ import { Button, Avatar, Grow, Divider } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
 import constants from './../api/constant';
-
-
 import Icon from '@material-ui/core/Icon';
-// import { borderRadius } from '@material-ui/system';
-// import { withRouter } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -114,74 +110,87 @@ const styles = theme => ({
 
 
 class SideNav extends React.Component {
-    state = {
-        open: false,
-        userMenuOpen: false,
-        sideList: '',
-        homeLink:true,
-        bookmarkLink:false,
-        bookmarkLink1:false,
-        bookmarkLink2:false,
-        eventsLink:false,
-        collabrationLink:false,
-        notificationLink:false,
-        userProfile: JSON.parse(localStorage.getItem("userInfo")),
-        home_title: "",
-        menuArray: [
-            {
-                "title": "Home",
-                "icon": "home",
-                "selected": true,
-                "link": "/home",
-            },
-            {
-                "title": "Bookmark",
-                "icon": "explore",
-                "selected": false,
-                "link": "/bookmark",
-            },
-            {
-                "title": "Notification",
-                "icon": "notifications",
-                "selected": false,
-                "link": "/notifications",
-            },
-            {
-                "title": "Collaborate",
-                "icon": "wb_incandescent",
-                "selected": false,
-                "link": "/collaborate",
-            },
-            {
-                "title": "Events",
-                "icon": "date_range",
-                "selected": false,
-                "link": "/events",
-            },
-            {
-                "title": "Tag",
-                "icon": "local_offer",
-                "selected": false,
-                "link": "/tags",
-            },
-            {
-                "title": "Settings",
-                "icon": "settings",
-                "selected": false,
-                "link": "/settings",
-            },
-        ]
-    };
+    timer = null;
+    constructor(props){
+        super(props);
+        this.state = {
+            open: false,
+            userMenuOpen: false,
+            sideList: '',
+            homeLink:true,
+            bookmarkLink:false,
+            bookmarkLink1:false,
+            bookmarkLink2:false,
+            eventsLink:false,
+            collabrationLink:false,
+            notificationLink:false,
+            userProfile: JSON.parse(localStorage.getItem("userInfo")),
+            home_title: "",
+            menuArray: [
+                {
+                    "title": "Home",
+                    "icon": "home",
+                    "selected": true,
+                    "link": "/home",
+                },
+                {
+                    "title": "Bookmark",
+                    "icon": "explore",
+                    "selected": false,
+                    "link": "/bookmark",
+                },
+                {
+                    "title": "Notification",
+                    "icon": "notifications",
+                    "selected": false,
+                    "link": "/notifications",
+                },
+                {
+                    "title": "Collaborate",
+                    "icon": "wb_incandescent",
+                    "selected": false,
+                    "link": "/collaborate",
+                },
+                {
+                    "title": "Events",
+                    "icon": "date_range",
+                    "selected": false,
+                    "link": "/events",
+                },
+                {
+                    "title": "Tag",
+                    "icon": "local_offer",
+                    "selected": false,
+                    "link": "/tags",
+                },
+                {
+                    "title": "Settings",
+                    "icon": "settings",
+                    "selected": false,
+                    "link": "/settings",
+                },
+            ]
+        };
+    }
+    componentWillUnmount(){
+        
+    }
+    componentDidMount(){
+        this.timer = setInterval(() => {
+            this.setState({userProfile: JSON.parse(localStorage.getItem("userInfo"))});
+            console.log('State Updated');
+        }, 1000);
+    }
+
     userMenuRef = null;
-
     
-
     nav = () => {
         this.state.home_title = "Home";
         this.props.history.push({
             pathname: '/home',
         });
     }
+
     handleDrawerOpen = () => {
         this.setState({ open: true });
     };
@@ -322,27 +331,22 @@ class SideNav extends React.Component {
                             <div className={classes.pageTitle}>
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
-                            {/* <div>
-                               <NotificationAutoComplete />
-                            </div> */}
                             <div style={{ display: 'inline-block' }}>
-                                <IconButton aria-label="search">
-                                     <InputBase
-                                        className={classes.input}
-                                        placeholder="Search.."
-                                        value={this.state.username}
-                                        onChange={this.handleUserName}
-                                        inputProps={{ 'aria-label': 'user' }}
-                                    />
-                                </IconButton>
+                                    <InputBase
+                                    className={classes.input}
+                                    placeholder="Search.."
+                                    value={this.state.username}
+                                    onChange={this.handleUserName}
+                                    inputProps={{ 'aria-label': 'user' }}
+                                />
                             </div>
                         </Typography>
                         <div>
-                            <IconButton aria-label="search" size="medium">
-                                <MailOutlineOutlinedIcon onClick={this.handleMessageNav}/>
+                            <IconButton aria-label="search" onClick={this.handleMessageNav} size="medium">
+                                <MailOutlineOutlinedIcon />
                             </IconButton>
-                            <IconButton aria-label="search" size="medium">
-                                <MonetizationOnOutlinedIcon onClick={this.nav_wallet} />
+                            <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
+                                <MonetizationOnOutlinedIcon />
                             </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontWeight: 'bold' }}>
@@ -405,13 +409,16 @@ class SideNav extends React.Component {
                         {
                             this.state.menuArray.map((menu, index) => (
                                 <ListItem
+                                    key={'key_nav_menu_'+index}
                                     button
                                     selected={menu.selected}
                                     data-menu={menu}
                                     onClick={() => this.routeNav(menu)}
                                     className={"menu-item"}>
                                     <ListItemIcon className={classes.iconWrapper}>
-                                        <Icon color={menu.selected?"primary":""} className={"material-icons-outlined "+menu.icon}>{menu.icon}</Icon>
+                                        <Icon 
+                                        // color={menu.selected?"primary":"default"} 
+                                        className={"material-icons-outlined "+menu.icon}>{menu.icon}</Icon>
                                     </ListItemIcon>
                                 </ListItem>
                             ))
