@@ -53,10 +53,9 @@ class Login extends React.Component {
             headers: {
               Authorization: 'Bearer ' + token,
             }}).then(result => {
-                debugger;
             if (result.status === 200) {
                 localStorage.setItem('userInfo', JSON.stringify(result.data));
-                if(result.data.first_name != null){
+                if(result.data.avatar != null){
                     this.props.history.push({
                         pathname: "/home"
                     });
