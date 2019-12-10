@@ -213,11 +213,6 @@ class PostTextArea extends React.Component {
   showOpenFileDlg = () => {
     this.inputOpenFileRef.current.click();
   }
-  onChange = (event, { newValue, method }) => {
-    this.setState({
-      value: newValue
-    });
-  };
 
   tagFriendClick = ()=>{
     let tag = !this.state.tag_friends;
