@@ -32,7 +32,7 @@ class HotTopic extends React.Component {
         super(props);
         this.state = {
             isError: '',
-            postList: null 
+            postData: null 
         };
     }
 
@@ -43,25 +43,9 @@ class HotTopic extends React.Component {
             {
                 headers: {Authorization: 'Bearer ' + getToken}
             }).then(res => {
-                var data = this.state.postList;
-                if(data!=null){
-                    for(var i=0;i<res.data.results.length;i++){
-                        data.results.push(res.data.results[i]);
-                    }
-
-                    data.count = data.count + res.data.count;
-                    data.next = res.data.next;
-                    data.previous = res.data.previous;
-                    
                     this.setState({
-                        postList: data,
+                        postData: JSON.stringify(res.data.about_post)
                     });
-                }
-                else{
-                    this.setState({
-                        postList: res.data,
-                    });   
-                }
             }).catch(res => {
                 this.setState({
                     isError: "Data not found!"
@@ -91,11 +75,12 @@ class HotTopic extends React.Component {
                 } */}
 
                 <CardMedia className={classes.media} image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
-                <CardContent>                        
+                <CardContent>         
                     <Typography variant="body2" color="textSecondary" component="p">
-                        kjsdfuhs fdsg dfg dfg d ghd fdfgdf
+                        This is my new post.
                     </Typography>
                 </CardContent>
+                {/* <p>{(this.state.postData.about_post!=null)?("working"):undefined}</p>    */}
             </Card>
         );
     }

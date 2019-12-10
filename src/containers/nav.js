@@ -370,7 +370,6 @@ class SideNav extends React.Component {
                                         </Avatar>
                                     )
                                 }
-
                             </IconButton>
 
                             <Popper open={this.state.userMenuOpen} role={undefined} transition disablePortal anchorEl={this.refs.userMenuRef}>
