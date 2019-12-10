@@ -109,7 +109,7 @@ class ProfileCard extends React.Component {
         <div style={{ position: 'relative' }}>
           <div className={classes.gridItem}>
             {
-              (this.state.userProfile.avatar!=null && this.state.userProfile.avatar!='')?(
+              (this.state.user.avatar!=null && this.state.user.avatar!='')?(
                 <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {this.inputOpenFileRef.current.click();}}
                 image={"https://energeapi.do.viewyoursite.net"+this.state.user.avatar} />
               ):(
