@@ -366,7 +366,7 @@ class SideNav extends React.Component {
 
                                     ):(
                                         <Avatar
-                                            src={"https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiz5MLzjKvmAhWv4zgGHRbaAd0QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.clevelanddentalhc.com%2Fstaff%2Fsample-avatar%2F&psig=AOvVaw13dJlBGEChBvRy2zeWmGia&ust=1576067980886104"}>
+                                            src={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"}>
                                         </Avatar>
                                     )
                                 }
