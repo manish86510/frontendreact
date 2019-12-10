@@ -57,6 +57,17 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing(2),
   },
+  cardContainer: {
+    padding: 10,
+},
+interest_heading: {
+    fontSize: '20px',
+    color: '#0f543ec7',
+    fontWeight: '700'
+},
+interest_container: {
+    padding: '10px',
+},
 });
 
 
@@ -235,11 +246,40 @@ class EditProfile extends React.Component {
           this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
         }
         <Card>
-          <InterestData />
-          <SkillCard />
-          <LanguageCard />
+          {/* <SkillData />
+          <LanguageData /> */}
           <div className={classes.root}>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+              <div className={classes.interest_container}>
+                    <label className={classes.interest_heading}>
+                        Interests
+                    </label>
+                </div>
+                <div>
+                  <InterestData />      
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div className={classes.interest_container}>
+                    <label className={classes.interest_heading}>
+                        Skills
+                    </label>
+                </div>
+                <div>
+                  <SkillData />      
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div className={classes.interest_container}>
+                    <label className={classes.interest_heading}>
+                        Languages
+                    </label>
+                </div>
+                <div>
+                  <LanguageData />      
+                </div>
+              </Grid>
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>

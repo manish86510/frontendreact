@@ -14,7 +14,6 @@ export default function MyResult(api, mydata, method) {
                 }
             }
         ).then(res => {
-            debugger;
             return res.data;
         }).catch(res => {
                 return res.data;

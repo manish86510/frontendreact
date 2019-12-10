@@ -42,7 +42,6 @@ class SkillCard extends React.Component {
     }
 
     handleDelete = () => {
-        debugger;
         console.info('You clicked the delete icon.');
     };
 

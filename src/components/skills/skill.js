@@ -4,209 +4,231 @@ import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+import { Close} from '@material-ui/icons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import { TextField, IconButton} from '@material-ui/core';
+import { toast } from 'react-toastify';
+import 'isomorphic-fetch';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const $ = require('jquery');
 
-
-class Skill extends React.Component{
+class Skill extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        profile_skill: [],
-        autocomp:{
-          skill: [],
-        },
-        selected:{
-          skill: [],
-        },
-        value: "",
-        autocompleteData: []
-      }
+      profile_skill: [],
+      selected: {
+        skill: [],
+        newSkill:[],
+      },
+      value: "",
+      autocompleteData: [],
+      loading: false,
+      isEdit: false,
     }
-    
-componentDidMount = () => {
-    this.getSkillData();
+
+  }
+
+
+  componentDidMount() {
+    // this.getMe();
     this.getSkill();
+  }
 
-}
+  debounce_timer = null;
 
-retrieveDataAsynchronously(searchText){
-  let _this = this;
-
-  // Url of your website that process the data and returns a
-  let url = endpoints.skills+`?querystring=${searchText}`;
-  
-  
-  // Configure a basic AJAX request to your server side API
-  // that returns the data according to the sent text
-
-  axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          }
-         }).then(res => {
-          const autocompleteData = this.state.autocompleteData
-            
-            for (let i = 0; i < res.data.length; i++) {
-              autocompleteData.push(res.data[i])
-              }
-      
-            this.setState({ autocompleteData: autocompleteData }) 
-          
-        });
-
-  
-}
-
-handleSkillChange  = (e) => {
-  this.setState({
-      value: e.target.value
-  });
-
-  /**
-   * Handle the remote request with the current text !
-   */
-  this.retrieveDataAsynchronously(e.target.value);
-
-  console.log("The Input Text has changed to ", e.target.value);
-}
-
-getSkill = () => {
-  axios.get(endpoints.skills, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.access,
+  retrieveDataAsynchronously(searchText) {
+    if (this.debounce_timer != null) {
+      clearTimeout(this.debounce_timer);
     }
-   }).then(res => {
-    const skill = this.state.autocomp.skill
-      
-    for (let i = 0; i < res.data.length; i++) {
-      skill.push(res.data[i])
-      }
+    this.setState({ autocompleteData: [], loading: true });
+    this.debounce_timer = setTimeout(() => {
 
-    this.setState({ skill: skill })  
-   
-  });
-}
+      let url = endpoints.interest + `?querystring=${searchText}`;
 
-_editSkill= () => {
-  $('.autocompleteSkill').show();
-  $('.editSkill').hide();
-}
-
-
-getSkillData = () => {
-    axios.get(endpoints.profile_skills, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-     }).then(res => {
-      const profile_skill = this.state.profile_skill
-        
-      for (let i = 0; i < res.data.length; i++) {
-        profile_skill.push(res.data[i])
+      axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.access,
         }
-  
-      this.setState({ profile_skill: profile_skill })  
-     
+      }).then(res => {
+
+        const autocompleteData = this.state.autocompleteData
+        for (let i = 0; i < res.data.results.length; i++) {
+          autocompleteData.push(res.data.results[i])
+        }
+
+        this.setState({ autocompleteData: autocompleteData, loading: false });
+      }).catch((err)=>{
+        this.setState({ autocompleteData: [], loading: false });
+      });
+    }, 500);
+
+
+  }
+
+
+  handleSkillChange = (e) => {
+    debugger;
+    // this.setState({loading: true });
+    this.setState({
+      value: e.target.value
+    });
+
+    /**
+     * Handle the remote request with the current text !
+     */
+
+    // if (e.target.value.length > 2) {
+      this.retrieveDataAsynchronously(e.target.value);
+    // }
+  }
+
+  getSkill = () => {
+    var getToken = localStorage.getItem('access');
+    axios.get(endpoints.my_skills, {
+      headers: {
+        Authorization: 'Bearer ' + getToken,
+      }
+    }).then(res => {
+      const skill = this.state.selected.skill
+      for (let i = 0; i < res.data.length; i++) {
+        skill.push({title:res.data[i].skill, id:res.data[i].id})
+      }
+      this.setState({ skill: skill })
+    }).catch(error => {
+      console.log(error);
     });
   }
 
-  handleSkillDelete  = (event) => {
-    axios.delete(endpoints.profile_skills + event.currentTarget.parentElement.id+'/', {
+  handleSkillDelete = (event) => {
+    axios.delete(endpoints.my_Skill + event.currentTarget.parentElement.id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.access,
       }
-     }).then(res => {
-      "Deleted" 
-      window.location.reload();
+    }).then(res => {
+      toast.success("Deleted")
 
     })
-   
+
   };
 
   handleSkillData = (event) => {
-    const selected_skill = this.state.selected.skill
-    selected_skill.push(
-      event.currentTarget.innerText
-    )
-   }
- 
+    const newSkill = this.state.selected.newSkill;
+    newSkill.push({title:event.currentTarget.innerText})
+    this.setState({newSkill:newSkill});
+  }
+
+  toggleEdit = ()=>{
+    this.setState({
+      isEdit: !this.state.isEdit
+  });
+  }
+
+  submit = async()=>{
+    const newSkill = this.state.selected.newSkill;
+    for (var i = 0; i < newSkill.length; i++) {
+      const res =
+        await axios
+          .post(endpoints.my_languages, JSON.stringify({ "skill": newSkill[i].skill }), {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + localStorage.access,
+            },
+          });
+    }    
+  }
+
+  
 
   render() {
-    
-    const elements_skill = this.state.profile_skill
-    const skill_items_ed = []                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-
-    for (let i = 0; i < elements_skill.length; i++) {
-      skill_items_ed.push(
-        <Chip
-        id={elements_skill[i].id}
-        label= {elements_skill[i].skill}
-        onDelete={this.handleSkillDelete}
-        // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-        />
-      )
-      }
-
-
-    const elements_sk = this.state.autocomp.skill
+    const elements_in = this.state.autocompleteData
     const skill_items = []
-    
-    for (let i = 0; i < elements_sk.length; i++) {
+
+    for (const [index, value] of elements_in.entries()) {
       skill_items.push(
-        { title: elements_sk[i].skill, year: elements_sk[i].skill },
+        { skill: value.skill, id:value.id},
       )
-      }  
+    }
 
 
+    return (
+      <div style={{padding: '10px 20px'}}>
+      <Grid container spacing={3}>
+       {this.state.isEdit == false ?
+        <Grid item xs={12} md={12} lg={12}>
+          <Grid container direction="row" justify="left" alignItems="center">
+            <Grid item xs={10} md={10} lg={11}>
+            {this.state.selected.skill.map((skill, index) => (
+              <Chip id={skill.id} label={skill.title} style={{margin:5}}/>
+            ))}              
+            </Grid>
+            <Grid item xs={2} md={2} lg={1}>
+              {/* <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                <AddIcon/>
+              </IconButton> */}
+              <Icon onClick={this.toggleEdit} className="fa fa-plus-circle" style={{ fontSize: 25, float:'right' }} />
+            </Grid>
+          </Grid>
+        </Grid>
+       :
+        <Grid item xs={12} md={12} lg={12}>
+          <Grid container direction="row" justify="left" alignItems="center">
+            <Grid item xs={10} md={10} lg={11}>
+              <Autocomplete
+                defaultValue={this.state.selected.skill}
+                multiple
+                id="Skill"
+                options={skill_items}
+                getOptionLabel={option => option.title}
+                onChange={this.handleSkillData}
+                onDelete={this.handleSkillDelete}
+                // closeIcon={null}
+                disableClearable={true}
+                renderInput={params => (
+                  <TextField
+                    onChange={this.handleSkillChange}
+                    {...params}
+                    variant="outlined"
+                    label="Skill"
+                    placeholder="Skill"
+                    margin="normal"
+                    fullWidth
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {this.state.loading ? <CircularProgress color="inherit" size={25} /> : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={2} md={2} lg={1}>
+              {/* <IconButton color="primary" onClick={this.submit}>
+                <AddIcon/>
+              </IconButton>
+              <IconButton color="primary" onClick={this.toggleEdit}>
+                <Close/>
+              </IconButton> */}
+              <Icon onClick={this.submit} className="fa fa-check" style={{ fontSize: 25, marginLeft:10 }} />
+              <Icon onClick={this.toggleEdit} className="fa fa-close" style={{ fontSize: 25, float:'right' }} />
+            </Grid>
+          </Grid>
+         </Grid>
+       }
+       </Grid>
+       </div>
 
-    return(
-        <Grid container spacing={3}>
-        <Grid item xs={12}>
-
-    <div class='row editSkill' style={{ position: 'relative', left: 30 }}>
-                            
-                            {skill_items_ed}
-
-
-                            <Fab color="grey" aria-label="add" style={{height:10, width: 40, position:'absolute', right:60}} >
-                            <AddIcon style={{color: 'white'}} onClick={this._editSkill}/>
-                            </Fab>
-                            </div>
-
-                            <div class='autocompleteSkill' style={{ position: 'relative', left: 30, width: 650 }} >
-                            
-                            <Autocomplete
-        multiple
-        id="tags-standard"
-        options={skill_items}
-        getOptionLabel={option => option.title}
-        onChange={this.handleSkillData}
-        renderInput={params => (
-          <TextField
-            {...params}
-            variant="standard"
-            label="Skills"
-            placeholder="Favorites"
-            margin="normal"
-            fullWidth
-          />
-        )}
-      />
-      </div>
-    </Grid>
-    </Grid>
-      )
+    )
+  }
 }
-}
-
 
 export default Skill;
