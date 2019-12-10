@@ -108,13 +108,17 @@ class ProfileCard extends React.Component {
       <Card className={classes.cardContainer}>
         <div style={{ position: 'relative' }}>
           <div className={classes.gridItem}>
-            <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {
-              this.inputOpenFileRef.current.click();
-            }}
-            image={"https://energeapi.do.viewyoursite.net"+this.state.user.avatar} />
-            {/* <div className={"image-thumbnail"}>
-              <img src={this.state.file} alt="" width="200" />
-            </div> */}
+            {
+              (this.state.userProfile.avatar!=null && this.state.userProfile.avatar!='')?(
+                <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {this.inputOpenFileRef.current.click();}}
+                image={"https://energeapi.do.viewyoursite.net"+this.state.user.avatar} />
+              ):(
+              <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {this.inputOpenFileRef.current.click();}}
+              image={"https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiz5MLzjKvmAhWv4zgGHRbaAd0QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.clevelanddentalhc.com%2Fstaff%2Fsample-avatar%2F&psig=AOvVaw13dJlBGEChBvRy2zeWmGia&ust=1576067980886104"} />
+              )
+
+            }
+
             <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleProfilePicChange} style={{ display: "none" }} />
             <a href="#" onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
           </div>

@@ -358,9 +358,19 @@ class SideNav extends React.Component {
                                 <div>{"@"+this.state.userProfile.username}</div>
                             </div>
                             <IconButton className={classes.profile} variant="contained"  onClick={this.handleUserMenuToggle} ref="userMenuRef">
-                                <Avatar
-                                    src={"https://energeapi.do.viewyoursite.net"+this.state.userProfile.avatar}>
-                                </Avatar>
+                                {
+                                    (this.state.userProfile.avatar!=null && this.state.userProfile.avatar!='')?(
+                                        <Avatar
+                                            src={"https://energeapi.do.viewyoursite.net"+this.state.userProfile.avatar}>
+                                        </Avatar>
+
+                                    ):(
+                                        <Avatar
+                                            src={"https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiz5MLzjKvmAhWv4zgGHRbaAd0QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.clevelanddentalhc.com%2Fstaff%2Fsample-avatar%2F&psig=AOvVaw13dJlBGEChBvRy2zeWmGia&ust=1576067980886104"}>
+                                        </Avatar>
+                                    )
+                                }
+
                             </IconButton>
 
                             <Popper open={this.state.userMenuOpen} role={undefined} transition disablePortal anchorEl={this.refs.userMenuRef}>
