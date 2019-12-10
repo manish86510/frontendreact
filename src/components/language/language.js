@@ -104,7 +104,6 @@ class Language extends React.Component {
   }
 
   handleLanguageDelete = (event) => {
-    debugger;
     axios.delete(endpoints.my_languages + event.currentTarget.parentElement.id, {
       headers: {
         'Content-Type': 'application/json',

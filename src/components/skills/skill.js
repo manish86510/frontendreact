@@ -72,7 +72,6 @@ class Skill extends React.Component {
 
 
   handleSkillChange = (e) => {
-    debugger;
     // this.setState({loading: true });
     this.setState({
       value: e.target.value

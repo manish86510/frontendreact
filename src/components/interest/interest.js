@@ -107,7 +107,6 @@ class Interest extends React.Component {
         Authorization: 'Bearer ' + localStorage.access,
       }
     }).then(res => {
-      debugger;
       // toast.success("Deleted")
       this.getInterest();
     })
