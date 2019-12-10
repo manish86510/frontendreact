@@ -117,7 +117,6 @@ class SideNav extends React.Component {
     state = {
         open: false,
         userMenuOpen: false,
-        rightSidebarOpen: false,
         sideList: '',
         homeLink:true,
         bookmarkLink:false,
@@ -193,20 +192,13 @@ class SideNav extends React.Component {
 
     handleUserMenuClose = () => {
         this.setState({
-            userMenuOpen: false,
-            rightSidebarOpen: true
+            userMenuOpen: false
         });
     };
     
     handleUserMenuToggle = () => {
         this.setState({ userMenuOpen: !this.state.userMenuOpen });
     };
-
-    handleMenuItems = () => {
-        this.setState({
-            rightSidebarOpen: false
-        });
-    }
 
     mynav = () => {
         this.state.home_title = "Home";
@@ -376,7 +368,7 @@ class SideNav extends React.Component {
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
                                                     <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
-                                                    <MenuItem onClick={this.handleUserMenuClose}>My account</MenuItem>
+                                                    <MenuItem >My account</MenuItem>
                                                     <MenuItem onClick={this.nav_logout}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
@@ -427,9 +419,6 @@ class SideNav extends React.Component {
                     </List>
                 </Drawer>
 
-                <Drawer anchor="right" open={this.state.rightSidebarOpen}>
-                    
-                </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     {children}

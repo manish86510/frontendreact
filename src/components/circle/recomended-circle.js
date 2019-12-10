@@ -77,7 +77,6 @@ class RecomendedCircle extends React.Component {
         ).then(res => {
             if (res.status == 200) {
                 document.getElementById(user_id).innerHTML = "connected";
-
                 // this.setState({recomendedCircle: res.data});
             }
         });

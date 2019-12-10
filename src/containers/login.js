@@ -53,11 +53,19 @@ class Login extends React.Component {
             headers: {
               Authorization: 'Bearer ' + token,
             }}).then(result => {
+                debugger;
             if (result.status === 200) {
                 localStorage.setItem('userInfo', JSON.stringify(result.data));
-                this.props.history.push({
-                    pathname: "/home"
-                });
+                if(result.data.first_name != null){
+                    this.props.history.push({
+                        pathname: "/home"
+                    });
+                }else{
+                    this.props.history.push({
+                        pathname: "/profile"
+                    });
+                }
+                
             }
         });
     }
@@ -161,6 +169,7 @@ class Login extends React.Component {
                     <br></br>
                     <Button variant="contained"  block bsSize="large"
                         type="submit"
+                        color="primary"
                         onClick={this.postLogin}
                         className="padb10" >
                         Log in
