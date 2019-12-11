@@ -99,7 +99,7 @@ class Register extends React.Component {
                 });
             } else {
                 this.setState({
-                    isError: "Something went wrong!"
+                    isError: "User already exists!",
                 });
             }
         }).catch(e => {

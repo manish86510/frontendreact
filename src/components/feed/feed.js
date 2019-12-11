@@ -51,7 +51,7 @@ class Feed extends React.Component {
     }
     loadFeed = ()=>{
         var url = endpoints.create_post;
-        if(this.state.postList!=null && this.state.postList.length>0){
+        if(this.state.postList!=null){
             url = this.state.postList.next;
         }
         var getToken = localStorage.getItem('access');
@@ -64,13 +64,11 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                // debugger;
                 var data = this.state.postList;
                 if(data!=null){
                     for(var i=0;i<res.data.results.length;i++){
                         data.results.push(res.data.results[i]);
                     }
-
                     data.count = data.count + res.data.count;
                     data.next = res.data.next;
                     data.previous = res.data.previous;
@@ -111,10 +109,8 @@ class Feed extends React.Component {
         var totalHeight = document.body.scrollHeight;
         var scrollPosition = window.pageYOffset+328;
         var x = (scrollPosition*100)/totalHeight;
-        // var str = "totalHeight="+totalHeight+", scrollPosition="+scrollPosition+", x="+x;
-        // console.log("Percentage", str);
-        if(x>70){
-            // this.loadFeed();
+        if(x>80){
+            this.loadFeed();
         }
     };
 
@@ -133,12 +129,10 @@ class Feed extends React.Component {
                         break;
                     }
                 }
-
                 this.setState({postList: data});
             }
         });
       }
-
     onLike = (post)=>{
         this.retrivePost(post.id);
     }
@@ -153,7 +147,6 @@ class Feed extends React.Component {
                         <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
                 </Grid>
-
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>

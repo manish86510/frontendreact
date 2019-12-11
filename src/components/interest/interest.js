@@ -62,8 +62,6 @@ class Interest extends React.Component {
         this.setState({ autocompleteData: [], loading: false });
       });
     }, 500);
-
-
   }
 
 
@@ -141,7 +139,6 @@ class Interest extends React.Component {
     const emptyNewInterest = this.state.selected;
     emptyNewInterest.newInterest = [];
     this.setState({'isEdit':false, newInterest:emptyNewInterest})   
-    
   }
 
   

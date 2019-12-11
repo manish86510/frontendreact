@@ -178,7 +178,6 @@ class SideNav extends React.Component {
     componentDidMount(){
         this.timer = setInterval(() => {
             this.setState({userProfile: JSON.parse(localStorage.getItem("userInfo"))});
-            console.log('State Updated');
         }, 1000);
     }
 
