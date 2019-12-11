@@ -7,6 +7,7 @@ import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField, IconButton} from '@material-ui/core';
 import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -17,10 +18,10 @@ class Skill extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile_interest: [],
+      profile_skill: [],
       selected: {
-        interest: [],
-        newInterest:[],
+        skill: [],
+        newSkill:[],
       },
       value: "",
       autocompleteData: [],
@@ -31,7 +32,12 @@ class Skill extends React.Component {
   }
 
   componentDidMount() {
-    this.getInterest();
+    this.getSkill();
+    toast.configure({
+      autoClose: 1500,
+      draggable: false,
+    });
+    
   }
 
   debounce_timer = null;
@@ -43,7 +49,7 @@ class Skill extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.interest + `?querystring=${searchText}`;
+      let url = endpoints.skills + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -51,7 +57,6 @@ class Skill extends React.Component {
           Authorization: 'Bearer ' + localStorage.access,
         }
       }).then(res => {
-
         const autocompleteData = this.state.autocompleteData
         for (let i = 0; i < res.data.results.length; i++) {
           autocompleteData.push(res.data.results[i])
@@ -67,7 +72,7 @@ class Skill extends React.Component {
   }
 
 
-  handleInterestChange = (e) => {
+  handleSkillChange = (e) => {
     // this.setState({loading: true });
     this.setState({
       value: e.target.value
@@ -82,41 +87,40 @@ class Skill extends React.Component {
     // }
   }
 
-  getInterest = () => {
+  getSkill = () => {
     var getToken = localStorage.getItem('access');
-    axios.get(endpoints.my_interest, {
+    axios.get(endpoints.my_skills, {
       headers: {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      const interest = this.state.selected;
+      const skill = this.state.selected;
       // for (let i = 0; i < res.data.length; i++) {
       //   interest.push({title:res.data[i].interest_code, id:res.data[i].id})
       // }
-      interest.interest = res.data
-      this.setState({ interest: interest })
+      skill.skill = res.data
+      this.setState({ skill: skill })
     }).catch(error => {
       console.log(error);
     });
   }
 
-  handleInterestDelete = (event) => {
-    axios.delete(endpoints.my_interest + event.currentTarget.parentElement.id, {
+  handleSkillDelete = (event) => {
+    axios.delete(endpoints.my_skills + event.currentTarget.parentElement.id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.access,
       }
     }).then(res => {
-      // toast.success("Deleted")
-      this.getInterest();
+      toast.success("Deleted")
+      this.getSkill();
     })
-
   };
 
-  handleInterestData = (event) => {
-    const newInterest = this.state.selected.newInterest;
-    newInterest.push({title:event.currentTarget.innerText})
-    this.setState({newInterest:newInterest});
+  handleSkillData = (event) => {
+    const newSkill = this.state.selected.newSkill;
+    newSkill.push({skill:event.currentTarget.innerText})
+    this.setState({newSkill:newSkill});
   }
 
   toggleEdit = ()=>{
@@ -126,21 +130,21 @@ class Skill extends React.Component {
   }
 
   submit = async()=>{
-    const newInterest = this.state.selected.newInterest;
-    for (var i = 0; i < newInterest.length; i++) {
+    const newSkill = this.state.selected.newSkill;
+    for (var i = 0; i < newSkill.length; i++) {
       const res =
         await axios
-          .post(endpoints.my_interest, JSON.stringify({ "interest_code": newInterest[i].title }), {
+          .post(endpoints.my_skills, JSON.stringify({ "skill": newSkill[i].skill }), {
             headers: {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + localStorage.access,
             },
           });
     } 
-    this.getInterest();
-    const emptyNewInterest = this.state.selected;
-    emptyNewInterest.newInterest = [];
-    this.setState({'isEdit':false, newInterest:emptyNewInterest})   
+    this.getSkill();
+    const emptyNewSkill = this.state.selected;
+    emptyNewSkill.newSkill = [];
+    this.setState({'isEdit':false, newSkill:emptyNewSkill})   
     
   }
 
@@ -148,24 +152,24 @@ class Skill extends React.Component {
 
   render() {
     const elements_in = this.state.autocompleteData
-    const interest_items = []
+    const skill_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      interest_items.push(
-        { interest_code: value.interest, id:value.id},
+      skill_items.push(
+        { skill: value.skill, id:value.id},
       )
     }
 
 
     return (
-      <div style={{padding: '10px 20px'}}>
+      <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
        {this.state.isEdit == false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="left" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
-            {this.state.selected.interest.map((interest, index) => (
-              <Chip id={interest.id} label={interest.interest_code} style={{margin:5}} />
+            {this.state.selected.skill.map((skill, index) => (
+              <Chip id={skill.id} label={skill.skill} style={{margin:5}} />
             ))}              
             </Grid>
             <Grid item xs={2} md={2} lg={1}>
@@ -181,28 +185,29 @@ class Skill extends React.Component {
           <Grid container direction="row" justify="left" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
               <Autocomplete
-                defaultValue={this.state.selected.interest}
+                defaultValue={this.state.selected.skill}
                 multiple
-                id="interest"
-                options={interest_items}
-                getOptionLabel={option => option.interest_code}
-                onChange={this.handleInterestData}
-                isClearable={this.state.selected.interest.some(v => !v.isFixed)}
+                id="skill"
+                options={skill_items}
+                getOptionLabel={option => option.skill}
+                onChange={this.handleSkillData}
+                isClearable={this.state.selected.skill.some(v => !v.isFixed)}
                 // closeIcon={null}
                 disableClearable={true}
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
                       id={option.id}
-                      label={option.interest_code}
+                      label={option.skill}
                       {...getTagProps({ option })}
-                      onDelete={this.handleInterestDelete}
+                      onDelete={this.handleSkillDelete}
+                      
                     />
                   ))
                 }
                 renderInput={params => (
                   <TextField
-                    onChange={this.handleInterestChange}
+                    onChange={this.handleSkillChange}
                     {...params}
                     variant="outlined"
                     placeholder="Interest"

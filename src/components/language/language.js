@@ -3,38 +3,44 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
-import { Close} from '@material-ui/icons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField, IconButton} from '@material-ui/core';
-import { toast } from 'react-toastify';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const $ = require('jquery');
 
-class Language extends React.Component {
+class Skill extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       selected: {
         language: [],
-        newlanguage:[],
+        newLanguage:[],
       },
       value: "",
       autocompleteData: [],
       loading: false,
       isEdit: false,
+      data:[],
     }
 
   }
 
-
   componentDidMount() {
-    // this.getMe();
     this.getLanguage();
+    fetch('/data.json')
+      .then(res => res.json())
+      .then(this.onLoad);
+  }
+
+  onLoad = (data) => {
+    const self = this;
+    self.setState({
+      data: data,
+    });
   }
 
   debounce_timer = null;
@@ -46,7 +52,7 @@ class Language extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.interest + `?querystring=${searchText}`;
+      let url = endpoints.languages + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -54,12 +60,10 @@ class Language extends React.Component {
           Authorization: 'Bearer ' + localStorage.access,
         }
       }).then(res => {
-
         const autocompleteData = this.state.autocompleteData
         for (let i = 0; i < res.data.results.length; i++) {
           autocompleteData.push(res.data.results[i])
         }
-
         this.setState({ autocompleteData: autocompleteData, loading: false });
       }).catch((err)=>{
         this.setState({ autocompleteData: [], loading: false });
@@ -69,6 +73,28 @@ class Language extends React.Component {
 
   }
 
+//   retriveLanguage = (searchText) =>{
+//     if (this.debounce_timer != null) {
+//       clearTimeout(this.debounce_timer);
+//     }
+//     this.setState({ autocompleteData: [], loading: true });
+//     const autocompleteData = [];
+//     let data = this.state.data,
+//     searchString = searchText.trim().toLowerCase();
+//     this.debounce_timer = setTimeout(() => {
+//     if(searchString.length > 2){
+//       data.filter(language => {
+//         const checkReturn = language.name.toLowerCase().match( searchString );
+//         if(checkReturn != null){
+//           autocompleteData.push({'name':language.name, 'id':language.id})
+//           this.setState({ autocompleteData: autocompleteData, loading: false });
+//         }
+//       });
+//   }else{
+//     this.setState({ autocompleteData: [], loading: false });
+//   }
+// }, 500);
+// }
 
   handleLanguageChange = (e) => {
     // this.setState({loading: true });
@@ -93,10 +119,10 @@ class Language extends React.Component {
       }
     }).then(res => {
       const language = this.state.selected;
-      language.language = res.data;
       // for (let i = 0; i < res.data.length; i++) {
-      //   language.push({name:res.data[i].name, id:res.data[i].id})
+      //   interest.push({title:res.data[i].interest_code, id:res.data[i].id})
       // }
+      language.language = res.data
       this.setState({ language: language })
     }).catch(error => {
       console.log(error);
@@ -110,15 +136,15 @@ class Language extends React.Component {
         Authorization: 'Bearer ' + localStorage.access,
       }
     }).then(res => {
-      toast.success("Deleted")
-
+      // toast.success("Deleted")
+      this.getLanguage();
     })
 
   };
 
   handleLanguageData = (event) => {
     const newLanguage = this.state.selected.newLanguage;
-    newLanguage.push({name:event.currentTarget.innerText})
+    newLanguage.push({language:event.currentTarget.innerText})
     this.setState({newLanguage:newLanguage});
   }
 
@@ -131,55 +157,51 @@ class Language extends React.Component {
   submit = async()=>{
     const newLanguage = this.state.selected.newLanguage;
     for (var i = 0; i < newLanguage.length; i++) {
+      const data = {
+        name:newLanguage[i].language,
+        read:"yes",
+        write:"yes",
+        speak:"yes",
+      }
       const res =
         await axios
-          .post(endpoints.my_language, JSON.stringify({ "name": newLanguage[i].name }), {
+          .post(endpoints.my_languages, JSON.stringify(data), {
             headers: {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + localStorage.access,
             },
           });
-    }    
-    this.language();
+    } 
+    this.getLanguage();
+    const emptyNewLangugage = this.state.selected;
+    emptyNewLangugage.newLanguage = [];
+    this.setState({'isEdit':false, newLanguage:emptyNewLangugage})   
+    
   }
 
   
 
   render() {
-
-    // const elements = this.state.profile_interest
-    // const interest_ed = []
-
-    // for (const [index, value] of elements.entries()) {
-    //   interest_ed.push(
-    //     <Chip
-    //       // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-    //       id={value}
-    //       label={value}
-    //       onDelete={this.handleInterestDelete}
-    //     />
-    //   )
-    // }
-
     const elements_in = this.state.autocompleteData
     const language_items = []
 
     for (const [index, value] of elements_in.entries()) {
       language_items.push(
-        { name: value.name, id:value.id},
+        { name: value.language, id:value.id},
       )
     }
+    console.log(this.state.autocompleteData)
 
 
     return (
-      <div style={{padding: '10px 20px'}}>
+      <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
        {this.state.isEdit == false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="left" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
             {this.state.selected.language.map((language, index) => (
-              <Chip id={language.id} label={language.name} style={{margin:5}}/>
+              <Chip id={language.id} label={language.name} style={{margin:5}} />
             ))}              
             </Grid>
             <Grid item xs={2} md={2} lg={1}>
@@ -193,15 +215,15 @@ class Language extends React.Component {
        :
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="left" alignItems="center">
-          <Grid item xs={10} md={10} lg={11}>
-              <Autocomplete
-                defaultValue={this.state.selected.interest}
+            <Grid item xs={10} md={10} lg={11}>
+            <Autocomplete
+                defaultValue={this.state.selected.language}
                 multiple
-                id="language"
+                id="interest"
                 options={language_items}
                 getOptionLabel={option => option.name}
                 onChange={this.handleLanguageData}
-                isClearable={this.state.selected.language.some(v => !v.isFixed)}
+                // isClearable={this.state.selected.interest.some(v => !v.isFixed)}
                 // closeIcon={null}
                 disableClearable={true}
                 renderTags={(value, getTagProps) =>
@@ -216,10 +238,10 @@ class Language extends React.Component {
                 }
                 renderInput={params => (
                   <TextField
-                    onChange={this.handleInterestChange}
+                    onChange={this.handleLanguageChange}
                     {...params}
                     variant="outlined"
-                    placeholder="Language"
+                    placeholder="Interest"
                     margin="normal"
                     fullWidth
                     InputProps={{
@@ -255,4 +277,4 @@ class Language extends React.Component {
   }
 }
 
-export default Language;
+export default Skill;

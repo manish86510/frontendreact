@@ -43,7 +43,7 @@ class Interest extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.interest + `?querystring=${searchText}`;
+      let url = endpoints.interest + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -158,7 +158,7 @@ class Interest extends React.Component {
 
 
     return (
-      <div style={{padding: '10px 20px'}}>
+      <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
        {this.state.isEdit == false ?
         <Grid item xs={12} md={12} lg={12}>

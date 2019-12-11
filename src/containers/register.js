@@ -76,8 +76,13 @@ class Register extends React.Component {
         var firstName = this.state.fullname.substr(0, index);
         var lastName = this.state.fullname.substr(index + 1);
         let formData = new FormData();
-        formData.append('first_name', firstName);
-        formData.append('last_name', lastName);
+        if(index==-1){
+            formData.append('first_name', lastName);
+            formData.append('last_name', firstName);
+        }else{
+            formData.append('first_name', firstName);
+            formData.append('last_name', lastName);
+        }
         formData.append('username', self.state.username);
         formData.append('email', self.state.email);
         formData.append('password', self.state.password);
@@ -156,7 +161,7 @@ class Register extends React.Component {
                                 </IconButton>
                                 <InputBase
                                     className={classes.input}
-                                    placeholder="fullname"
+                                    placeholder="full name"
                                     value={this.state.fullname}
                                     onChange={this.handleFullname}
                                     type="text"
@@ -174,7 +179,7 @@ class Register extends React.Component {
                                 </IconButton>
                                 <InputBase
                                     className={classes.input}
-                                    placeholder="username"
+                                    placeholder="user name"
                                     value={this.state.username}
                                     onChange={this.handleUserName}
                                     type="text"
