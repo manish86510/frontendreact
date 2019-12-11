@@ -89,7 +89,7 @@ class HotTopic extends React.Component {
                 }
                 {
                     (this.state.media_url == null && this.state.mediaFile == null)?(
-                            <CardMedia className={classes.media} image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
+                            <CardMedia className={classes.media} image="https://picsum.photos/seed/picsum/690/388" />
                     ):undefined
                 }
                 <CardContent>         

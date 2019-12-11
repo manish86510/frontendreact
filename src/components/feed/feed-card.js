@@ -35,6 +35,9 @@ const styles = theme => ({
         borderTopRightRadius: 20,
         background: '#ffffff',
         marginTop: -20
+    },
+    iconColor:{
+        color: '#2D3986'
     }
 });
 
@@ -47,9 +50,9 @@ class FeedCard extends React.Component {
         };
     }
     
-    handleLike = (tile) => {
+    handleLike = (post_data) => {
         var my_data={
-          post:tile,
+          post:post_data,
         }
         var url = endpoints.user_like;
         var getToken = localStorage.getItem('access');
@@ -121,15 +124,14 @@ class FeedCard extends React.Component {
                     </Typography>
                 </CardContent>
                 <CardActions style={{padding: '8px 25px'}}>
-                    
                     {
-                        post.like_count>0?(
-                            <IconButton size='small'>
-                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                        post.is_like==true?(
+                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
+                                <ThumbUpAltOutlinedIcon/>
                             </IconButton>
                         ):(
-                            <IconButton size='small'>
-                            <ThumbUpAltOutlinedIcon onClick={this.handleLike.bind(this, post.id)}/>
+                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)}>
+                                <ThumbUpAltOutlinedIcon />
                             </IconButton>
                         )
                     }

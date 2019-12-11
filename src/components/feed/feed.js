@@ -51,7 +51,7 @@ class Feed extends React.Component {
     }
     loadFeed = ()=>{
         var url = endpoints.create_post;
-        if(this.state.postList!=null && this.state.postList.length>0){
+        if(this.state.postList!=null){
             url = this.state.postList.next;
         }
         var getToken = localStorage.getItem('access');
@@ -69,7 +69,6 @@ class Feed extends React.Component {
                     for(var i=0;i<res.data.results.length;i++){
                         data.results.push(res.data.results[i]);
                     }
-
                     data.count = data.count + res.data.count;
                     data.next = res.data.next;
                     data.previous = res.data.previous;
@@ -110,10 +109,8 @@ class Feed extends React.Component {
         var totalHeight = document.body.scrollHeight;
         var scrollPosition = window.pageYOffset+328;
         var x = (scrollPosition*100)/totalHeight;
-        // var str = "totalHeight="+totalHeight+", scrollPosition="+scrollPosition+", x="+x;
-        // console.log("Percentage", str);
-        if(x>70){
-            // this.loadFeed();
+        if(x>80){
+            this.loadFeed();
         }
     };
 
@@ -136,7 +133,6 @@ class Feed extends React.Component {
             }
         });
       }
-
     onLike = (post)=>{
         this.retrivePost(post.id);
     }

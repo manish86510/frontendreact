@@ -133,9 +133,9 @@ class ProfileCard extends React.Component {
             <br />
             <label>
               Username
-                  <IconButton size='small' color="inherit" aria-label="Close">
+                  {/* <IconButton size='small' color="inherit" aria-label="Close">
                 <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-              </IconButton>
+              </IconButton> */}
             </label>
             <div>{this.state.user.username}</div>
           </div>

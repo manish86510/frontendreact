@@ -22,6 +22,10 @@ const endpoints = {
   post_comments: 'https://energeapi.do.viewyoursite.net/api/v1/post/comment/',
   user_like: 'https://energeapi.do.viewyoursite.net/api/v1/post/like/',
 
+  my_interest:'https://energeapi.do.viewyoursite.net/user/my-interest/',
+  my_languages:'https://energeapi.do.viewyoursite.net/user/language/',
+  my_skills:'https://energeapi.do.viewyoursite.net/user/skill/',
+
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   POST: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
