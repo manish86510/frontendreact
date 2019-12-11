@@ -64,7 +64,6 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                // debugger;
                 var data = this.state.postList;
                 if(data!=null){
                     for(var i=0;i<res.data.results.length;i++){
@@ -133,7 +132,6 @@ class Feed extends React.Component {
                         break;
                     }
                 }
-
                 this.setState({postList: data});
             }
         });
@@ -153,7 +151,6 @@ class Feed extends React.Component {
                         <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
                 </Grid>
-
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Box component="div" m={2}>
