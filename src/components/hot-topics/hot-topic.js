@@ -32,7 +32,9 @@ class HotTopic extends React.Component {
         super(props);
         this.state = {
             isError: '',
-            postData: null 
+            postData: null,
+            mediaFile: null,
+            media_url: null
         };
     }
 
@@ -46,6 +48,17 @@ class HotTopic extends React.Component {
                     this.setState({
                         postData: JSON.stringify(res.data.about_post)
                     });
+                    if(res.data.post_media[0].media_type != null && res.data.post_media[0].media_url != null){
+                        this.setState({
+                            media_url: res.data.post_media[0].media_url
+                        });
+                    }else{
+                    if(res.data.post_media[0].file != null){
+                        this.setState({
+                            mediaFile: res.data.post_media[0].file
+                        });
+                    }
+                }
             }).catch(res => {
                 this.setState({
                     isError: "Data not found!"
@@ -66,18 +79,22 @@ class HotTopic extends React.Component {
                     </IconButton>
                 }>
                 </CardHeader>
-                {/* {
-                    (this.state.postList.about_post.length>0)?(
-                            <p>working</p>
-                    ):(
-                        <CardMedia className={classes.media} image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
-                    )
-                } */}
-
-                <CardMedia className={classes.media} image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg" />
+                {(this.state.media_url != null)?(
+                    <YoutubePlayer video_url={this.state.media_url}/>
+                ):undefined
+                }
+                {(this.state.mediaFile != null)?(
+                        <CardMedia className={classes.media} image={this.state.mediaFile} />
+                ):undefined
+                }
+                {
+                    (this.state.media_url == null && this.state.mediaFile == null)?(
+                            <CardMedia className={classes.media} image="https://picsum.photos/seed/picsum/690/388" />
+                    ):undefined
+                }
                 <CardContent>         
                     <Typography variant="body2" color="textSecondary" component="p">
-                        This is my new post.
+                    {this.state.postData}
                     </Typography>
                 </CardContent>
                 {/* <p>{(this.state.postData.about_post!=null)?("working"):undefined}</p>    */}

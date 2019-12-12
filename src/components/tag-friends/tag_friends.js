@@ -23,7 +23,6 @@ class Language extends React.Component {
       value: null,
       autocompleteData: [],
       loading: false,
-      isEdit: false,
     }
 
   }
@@ -167,26 +166,9 @@ class Language extends React.Component {
     return (
       <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
-       {this.state.isEdit == false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
-            {this.state.selected.language.map((language, index) => (
-              <Chip key={'key_my_language_'+language.id} id={language.id} label={language.name} style={{margin:5}} />
-            ))}              
-            </Grid>
-            <Grid item xs={2} md={2} lg={1}>
-              {/* <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
-                <AddIcon/>
-              </IconButton> */}
-              <Icon onClick={this.toggleEdit} className="fa fa-plus-circle" style={{ fontSize: 25, float:'right' }} />
-            </Grid>
-          </Grid>
-        </Grid>
-       :
-        <Grid item xs={12} md={12} lg={12}>
-          <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
+            <Grid item xs={11} md={11} lg={11}>
               <Autocomplete
                 value={this.state.selected.language}
                 multiple
@@ -205,13 +187,14 @@ class Language extends React.Component {
                       onDelete={()=>{
                         if(option.created == true){
                           this.renderDeleteItem(value, option)
-                        }else{
+                        }
+                        // else{
                           // delete from api when option.created==false
                           //call api for delete interest from my interest table
-                          if(option.created==false){
-                          this.handleLanguageDelete(option, index);
-                        }
-                        }
+                        //   if(option.created==false){
+                        //   this.handleLanguageDelete(option, index);
+                        // }
+                        // }
                       }}
                     />
                   ))
@@ -236,19 +219,19 @@ class Language extends React.Component {
                 )}
               />
             </Grid>
-            <Grid item xs={2} md={2} lg={1}>
+            {/* <Grid item xs={2} md={2} lg={1}> */}
               {/* <IconButton color="primary" onClick={this.submit}>
                 <AddIcon/>
               </IconButton>
               <IconButton color="primary" onClick={this.toggleEdit}>
                 <Close/>
               </IconButton> */}
-              <Icon onClick={this.submit} className="fa fa-check" style={{ fontSize: 25, marginLeft:10 }} />
-              <Icon onClick={this.toggleEdit} className="fa fa-close" style={{ fontSize: 25, float:'right' }} />
-            </Grid>
+              {/* <Icon onClick={this.submit} className="fa fa-check" style={{ fontSize: 25, marginLeft:10 }} />
+              <Icon onClick={this.toggleEdit} className="fa fa-close" style={{ fontSize: 25, float:'right' }} /> */}
+            {/* </Grid> */}
           </Grid>
          </Grid>
-       }
+       {/* } */}
        </Grid>
        </div>
 

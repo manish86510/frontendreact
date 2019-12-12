@@ -11,6 +11,8 @@ import endpoints from '../api/endpoints';
 import ImageIcon from '@material-ui/icons/Image';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { PropTypes } from 'prop-types';
+import Chip from '@material-ui/core/Chip';
+import TagFriends from './tag-friends/tag_friends';
 
 const styles = theme => ({
   con: {
@@ -108,6 +110,7 @@ class PostTextArea extends React.Component {
       },
       value: '',
       suggestions: [],
+      selected : null
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -137,6 +140,7 @@ class PostTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
+    debugger;
     this.state.postData.about_post = e.target.value;
     this.setState({
       postData: this.state.postData,
@@ -257,13 +261,7 @@ class PostTextArea extends React.Component {
             <div>
               {
                 this.state.tag_friends?(
-                  <Autocomplete
-                    freeSolo
-                    options={languages.map(option => option.name)}
-                    renderInput={params => (
-                      <TextField {...params} label="Tag Friends" margin="normal" variant="outlined" fullWidth />
-                    )}
-                  />
+                  <TagFriends />
                 ):undefined
               }
             </div>
