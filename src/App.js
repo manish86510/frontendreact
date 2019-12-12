@@ -9,7 +9,7 @@ import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
 import Profile from './components/profile/profile';
-import EditProfile from './components/profile/edit-profile';
+import EditProfile from './components/profile/Edit-profile';
 import Wallet from './components/wallet/wallet';
 import WalletCoins from './components/wallet/coins/WalletCoins';
 import MoreCoins from './components/wallet/coins/MoreCoins';
@@ -21,21 +21,25 @@ import Notifications from './containers/Notifications';
 // import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
-
+import Welcome from './containers/Welcome';
+import Verify_mail from './containers/verify_mail'
+// main: '#4eb894',
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#43a047',
+            main: '#4eb894',
+            contrastText: '#ffffff'
         },
         secondary: Colors.pink,
     },
 });
-console.log(theme);
+
+console.log('theme', theme);
+
 function App() {
-    const [authTokens, setAuthTokens] = useState();
+    const [setAuthTokens] = useState();
     const setTokens = (data) => {
         localStorage.setItem("tokens", JSON.stringify(data));
         setAuthTokens(data);
@@ -49,18 +53,22 @@ function App() {
         <Route exact path = "/login" component = { Login }/> 
         <Route path = "/register" component = { Register }/> 
         <Route path = "/forgetpass" component = { ForgotPassword }/>
+        <Route path = "/verify" component = { Verify_mail }/>
+        <Route path = "/verify_mail/:id" component = { Welcome }/>
         <SideNav>
         <Route path = "/home" component = { Home }/> 
         <Route path = "/message" component = { Message }/> 
         <Route path = "/bookmark" component = { Bookmark }/> 
         <Route path = "/notifications" component = { Notifications }/> 
         <Route path = "/profile" component = { Profile }/> 
-        <Route path = "/edit-profile" component = { EditProfile }/> 
+        <Route path = "/Edit-profile" component = { EditProfile }/> 
         <Route path = "/collaborate" component = { CollaboarateMain }/> 
         <Route path = "/events" component = { Events }/> 
         <Route path = "/wallet" component = { Wallet }/> 
         <Route path = "/walletcoins" component = { WalletCoins }/> 
-        <Route path = "/morecoins" component = { MoreCoins }/> 
+        <Route path = "/morecoins" component = { MoreCoins }/>
+        <Route path = "/logout" component = {() => {localStorage.clear();
+        window.location.href = '/';}}/> 
         </SideNav>
         </Switch>
         </Router> 

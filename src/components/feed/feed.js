@@ -1,27 +1,12 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import { Button, Avatar, Grow, Divider, ListItem } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faShareAlt, faTag, faCoins, faUsers, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Box } from '@material-ui/core';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-// import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import { height } from 'dom-helpers';
-import { maxHeight, borderRadius } from '@material-ui/system';
-import { white } from 'ansi-colors';
 import axios from 'axios';
-import AddPost from '../popup/add_post';
 import '../../styles/main.css';
-import MyResult from '../../api/utility';
+import FeedCard from './feed-card';
 import endpoints from '../../api/endpoints';
+import PostTextArea from '../post_textarea';
 
 
 const styles = theme => ({
@@ -45,28 +30,30 @@ const styles = theme => ({
         top: -50,
         borderRadius: 15,
         paddingBottom: 24
-    }
+    },
+
 });
 
 class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
+            postList: null,
             value: 0,
-            like_status: false
-        }
+            like_status: false,
+            isError: '',
+            show: false,
+            comment: '',
+            parent: '',
+            comment_id: 0,
+        };
+        this.handleScroll = this.handleScroll.bind(this);
     }
-    componentDidMount() {
-        // var postData = null;
-        // var result = MyResult(endpoints.create_post, postData, "get");
-        // if (result.status == 200) {
-        //     this.setState({
-        //         postList: result.data,
-        //     });
-        // }
-
-        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+    loadFeed = ()=>{
+        var url = endpoints.create_post;
+        if(this.state.postList!=null){
+            url = this.state.postList.next;
+        }
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -77,32 +64,87 @@ class Feed extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                console.log(res.data)
-                this.setState({
-                    postList: res.data,
-                });
+                var data = this.state.postList;
+                if(data!=null){
+                    for(var i=0;i<res.data.results.length;i++){
+                        data.results.push(res.data.results[i]);
+                    }
+                    data.count = data.count + res.data.count;
+                    data.next = res.data.next;
+                    data.previous = res.data.previous;
+                    
+                    this.setState({
+                        postList: data,
+                    });
+                }
+                else{
+                    this.setState({
+                        postList: res.data,
+                    });   
+                }
             }
-        })
-        // this.getPostList();
+        });
+    }
+    componentDidMount() {
+        this.loadFeed();
+        window.addEventListener('scroll', this.handleScroll);
+        // let self = this;
+        // window.setTimeout(function(){
+        //     debugger;
+        //     window.addEventListener('scroll', self.handleScroll);
+        // }, 2000);
     }
 
-    handleLike = () => {
-        var like = 0
-        if(this.state.postList.like_count==0){
-            like+=1
-        }else{
-            like=-+1
-        }
-        return like;
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    };
+
+    onPostCreated = (newPost)=>{
+        var posts = this.state.postList;
+        posts.results.splice(0, 0, newPost);
+        this.setState({postList: posts});
     }
+
+    handleScroll(event) {
+        var totalHeight = document.body.scrollHeight;
+        var scrollPosition = window.pageYOffset+328;
+        var x = (scrollPosition*100)/totalHeight;
+        if(x>80){
+            this.loadFeed();
+        }
+    };
+
+    retrivePost = (post_id)=>{
+        var token = localStorage.getItem('access');
+        axios.get(endpoints.POST+post_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          }
+        }).then(res => {
+            if (res.status == 200) {
+                var data = this.state.postList;
+                for(var i=0;i<data.results.length;i++){
+                    if(data.results[i].id==post_id){
+                        data.results[i] = res.data;
+                        break;
+                    }
+                }
+                this.setState({postList: data});
+            }
+        });
+      }
+    onLike = (post)=>{
+        this.retrivePost(post.id);
+    }
+
     render() {
         const { classes } = this.props;
-        console.log(this.state.like_status);
         return (
-            <div className={classes.root}>
+            <div id="feed_content" ref={this.handleScroll}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <AddPost/>
+                        {/* <AddPost/> */}
+                        <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -114,45 +156,13 @@ class Feed extends React.Component {
                     <Grid item xs={12}>
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
-                                {this.state.postList.map(tile => (
-                                    <div>
-                                        <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ borderRadius: 30 }} />
-                                        </GridListTile>
-                                        <Paper className={classes.content}>
-                                            <ListItem>
-                                                <Avatar
-                                                    src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"}>
-                                                </Avatar>
-
-                                                <span style={{ padding: 20 }}>
-                                                    <div><b>Awosome Project</b></div>
-                                                    <div style={{ fontSize: 12 }}>@user . 300 followers</div>
-                                                </span>
-
-                                            </ListItem>
-
-                                            <div style={{ paddingLeft: '2%' }}>
-                                                {tile.about_post}
-                                            </div>
-
-                                            <div style={{ paddingLeft: '2%' }}>
-                                                <IconButton size='small' color="inherit" onClick={this.handleLike}>
-                                                    <FontAwesomeIcon icon={faThumbsUp} />
-                                                </IconButton>
-                                                <span style={{ fontSize: 12 }}>{tile.like_count}</span>
-                                                <IconButton size='small' style={{ marginLeft: '5%' }} color="inherit" uaria-label="Close">
-                                                    <FontAwesomeIcon icon={faComment} />
-                                                </IconButton>
-                                                <span style={{ fontSize: 12 }}>{tile.comment_count}</span>
-                                                <IconButton style={{ marginLeft: '5%' }} size='small' color="inherit" aria-label="Close">
-                                                    <FontAwesomeIcon icon={faShareAlt} />
-                                                </IconButton>
-                                                <span style={{ fontSize: 12 }}>{tile.share_count}</span>
-                                            </div>
-                                        </Paper>
-                                    </div>
-                                ))}
+                                {
+                                    (this.state.postList != null && this.state.postList != undefined) ? (
+                                        this.state.postList.results.map(post => (
+                                            <FeedCard post={post} onLike={this.onLike} />
+                                        ))
+                                    ) : undefined
+                                }
                             </Grid>
                         </div>
                     </Grid>
@@ -162,8 +172,5 @@ class Feed extends React.Component {
     }
 }
 
-Feed.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Feed);

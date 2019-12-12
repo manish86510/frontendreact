@@ -1,24 +1,9 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
 import Event from './event';
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const styles = theme => ({
   root: {
@@ -54,16 +39,13 @@ class EventsTabs extends React.Component {
           <Tab label="Today" />
           <Tab label="Tomorrow" />
         </Tabs>
-        {value == 0 && <TabContainer><Event /></TabContainer>}
-        {value == 1 && <TabContainer><Event /></TabContainer>}
-        {value == 2 && <TabContainer><Event /></TabContainer>}
+        {value == 0 && <Event />}
+        {value == 1 && <Event />}
+        {value == 2 && <Event />}
       </div>
     );
   }
 }
 
-EventsTabs.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(EventsTabs);

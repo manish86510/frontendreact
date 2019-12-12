@@ -1,24 +1,10 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
-import Posts from './Posts/posts'
-
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+import Posts from './Posts/posts';
+import Feed from './feed/feed';
+import Projects from './feed/projects';
 
 const styles = theme => ({
   root: {
@@ -38,7 +24,7 @@ class BookmarkTabs extends React.Component {
     this.setState({ value: newValue });
   };
   render() {
-    const { classes, children } = this.props;
+    const { classes } = this.props;
     var value = this.state.value;
     // console.log(value);
     return (
@@ -54,16 +40,13 @@ class BookmarkTabs extends React.Component {
           <Tab label="Projects" />
           <Tab label="Events" />
         </Tabs>
-        {value == 0 && <TabContainer><Posts /></TabContainer>}
-        {value == 1 && <TabContainer><Posts /></TabContainer>}
-        {value == 2 && <TabContainer><Posts /></TabContainer>}
+        {value == 0 &&  <Feed /> }
+        {value == 1 &&  <Projects /> }
+        {value == 2 &&  <Posts /> }
       </div>
     );
   }
 }
 
-BookmarkTabs.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(BookmarkTabs);

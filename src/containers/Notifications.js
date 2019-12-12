@@ -15,15 +15,11 @@ const styles = theme => ({
 });
 
 class Notifications extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         return (
             <div>
-                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={16}>
+                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
                     <Grid item xs={8}>
                         <NotificationTabs />
                         {/* hello */}
@@ -36,8 +32,5 @@ class Notifications extends React.Component {
         );
     }
 }
-Notifications.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default withStyles(styles)(Notifications);
