@@ -5,12 +5,11 @@ import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField, IconButton} from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const $ = require('jquery');
+// const $ = require('jquery');
 
 class Skill extends React.Component {
 
@@ -130,8 +129,7 @@ class Skill extends React.Component {
   submit = async()=>{
     const selected = this.state.selected;
     for (var i = 0; i < selected.skill.length; i++) {
-      if(selected.skill[i].created == true){
-        const res =
+      if(selected.skill[i].created === true){
         await axios
           .post(endpoints.my_skills, JSON.stringify({ "skill": selected.skill[i].skill }), {
             headers: {
@@ -150,8 +148,7 @@ class Skill extends React.Component {
     const skill_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      debugger;
-      if(this.state.selected.skill.some(item => value.skill === item.skill) == false){
+      if(this.state.selected.skill.some(item => value.skill === item.skill) === false){
         skill_items.push(
           { skill: value.skill, id:-1, created: true},
         )
@@ -162,7 +159,7 @@ class Skill extends React.Component {
     return (
       <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
-       {this.state.isEdit == false ?
+       {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
@@ -198,12 +195,12 @@ class Skill extends React.Component {
                       label={option.skill}
                       {...getTagProps({ option })}
                       onDelete={()=>{
-                        if(option.created == true){
+                        if(option.created === true){
                           this.renderDeleteItem(value, option)
                         }else{
                           // delete from api when option.created==false
                           //call api for delete interest from my interest table
-                          if(option.created==false){
+                          if(option.created===false){
                           this.handleSkillDelete(option, index);
                         }
                         }

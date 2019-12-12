@@ -110,7 +110,8 @@ class PostTextArea extends React.Component {
       },
       value: '',
       suggestions: [],
-      selected : null
+      selected : null,
+      tag_friend_list : [],
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -140,7 +141,6 @@ class PostTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
-    debugger;
     this.state.postData.about_post = e.target.value;
     this.setState({
       postData: this.state.postData,
@@ -235,6 +235,12 @@ class PostTextArea extends React.Component {
     });
   };
 
+  friendListData = (data) =>{
+    const state = this.state;
+    state.tag_friend_list = data;
+    this.setState({state:state});
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -259,11 +265,7 @@ class PostTextArea extends React.Component {
             ))}
             </div>
             <div>
-              {
-                this.state.tag_friends?(
-                  <TagFriends />
-                ):undefined
-              }
+              {this.state.tag_friends?(<TagFriends friend_list_data={this.friendListData} />):undefined}
             </div>
             <div style={{textAlign: 'right', position: 'relative'}}>
               <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />

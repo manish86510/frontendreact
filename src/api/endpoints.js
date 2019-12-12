@@ -31,6 +31,7 @@ const endpoints = {
   create_media: 'https://energeapi.do.viewyoursite.net/api/v1/post/media/',
   get_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   HOT_topic: 'https://energeapi.do.viewyoursite.net/api/v1/post/hot-topic/',
-  recomended_followers: 'https://energeapi.do.viewyoursite.net/user/recommended/'
+  recomended_followers: 'https://energeapi.do.viewyoursite.net/user/recommended/',
+  friend_list :'https://energeapi.do.viewyoursite.net/user/friends-list/',
 };
 export default endpoints;
