@@ -66,7 +66,7 @@ interest_heading: {
     fontWeight: '700'
 },
 interest_container: {
-    padding: '10px',
+    padding: '5px 10px',
 },
 });
 
@@ -245,10 +245,7 @@ class EditProfile extends React.Component {
         {
           this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
         }
-        <Card>
-          {/* <InterestData /> */}
-          {/* <SkillCard /> */}
-          {/* <LanguageCard /> */}
+        <Card style={{marginTop:"10px"}}>
           <div className={classes.root}>
             <Grid container spacing={3}>
               <Grid item xs={12}>

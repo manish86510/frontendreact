@@ -14,7 +14,7 @@ const endpoints = {
   PROFILE_UPDATE: 'https://energeapi.do.viewyoursite.net/user/profile-update',
   
   interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
-  skills: 'https://energeapi.do.viewyoursite.net/skill/',
+  skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/user/language/',
   user_list: 'https://energeapi.do.viewyoursite.net/follower-user-list/',
 
@@ -23,8 +23,8 @@ const endpoints = {
   user_like: 'https://energeapi.do.viewyoursite.net/api/v1/post/like/',
 
   my_interest:'https://energeapi.do.viewyoursite.net/user/my-interest/',
-  my_languages:'https://energeapi.do.viewyoursite.net/user/language/',
-  my_skills:'https://energeapi.do.viewyoursite.net/user/skill/',
+  my_languages:'https://energeapi.do.viewyoursite.net/user/my-language/',
+  my_skills:'https://energeapi.do.viewyoursite.net/user/my-skill/',
 
   create_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   POST: 'https://energeapi.do.viewyoursite.net/api/v1/post/',

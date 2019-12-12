@@ -12,6 +12,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { PropTypes } from 'prop-types';
 import Chip from '@material-ui/core/Chip';
+import TagFriends from './tag-friends/tag_friends';
 
 const styles = theme => ({
   con: {
@@ -213,41 +214,6 @@ class PostTextArea extends React.Component {
     });
   }
 
-  retrieveDataAsynchronously(searchText) {
-    if (this.debounce_timer != null) {
-      clearTimeout(this.debounce_timer);
-    }
-    this.setState({ autocompleteData: [], loading: true });
-    this.debounce_timer = setTimeout(() => {
-
-      let url = endpoints.interest + `?querystring=${searchText}`;
-
-      axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.access,
-        }
-      }).then(res => {
-
-        const autocompleteData = this.state.autocompleteData
-        for (let i = 0; i < res.data.results.length; i++) {
-          autocompleteData.push(res.data.results[i])
-        }
-
-        this.setState({ autocompleteData: autocompleteData, loading: false });
-      }).catch((err)=>{
-        this.setState({ autocompleteData: [], loading: false });
-      });
-    }, 500);
-  }
-
-  handleTagChange = (e) => {
-    this.setState({
-      value: e.target.value
-    });
-      this.retrieveDataAsynchronously(e.target.value);
-  }
-
   showOpenFileDlg = () => {
     this.inputOpenFileRef.current.click();
   }
@@ -269,22 +235,8 @@ class PostTextArea extends React.Component {
     });
   };
 
-  handleTagFriendData = (event) => {
-    const newInterest = this.state.selected.newFriend;
-    newInterest.push({title:event.currentTarget.innerText})
-    this.setState({newInterest:newInterest});
-  }
-
   render() {
     const { classes } = this.props;
-    const elements_in = languages
-    const tag_friends_list = []
-
-    for (const [index, value] of elements_in.entries()) {
-      tag_friends_list.push(
-        { interest_code: value.name, id:index},
-      )
-    }
     return (
       <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -309,46 +261,7 @@ class PostTextArea extends React.Component {
             <div>
               {
                 this.state.tag_friends?(
-                  <Autocomplete
-                    defaultValue={elements_in.name}
-                    multiple
-                    id="tagFriends"
-                    options={tag_friends_list}
-                    getOptionLabel={option => option.interest_code}
-                    onChange={this.handleInterestData}
-                    // isClearable={this.state.selected.interest.some(v => !v.isFixed)}
-                    // closeIcon={null}
-                    disableClearable={true}
-                    // renderTags={(value, getTagProps) =>
-                    //   languages.map((option, index) => (
-                    //     <Chip
-                    //       id={index}
-                    //       label={option.name}
-                    //       {...getTagProps({ option })}
-                    //       onDe
-                    //     />
-                    //   ))
-                    // }
-                    renderInput={params => (
-                      <TextField
-                        onChange={this.handleTagChange}
-                        {...params}
-                        variant="outlined"
-                        placeholder="Tag Friends"
-                        margin="normal"
-                        fullWidth
-                        InputProps={{
-                          ...params.InputProps,
-                          endAdornment: (
-                            <React.Fragment>
-                              {this.state.loading ? <CircularProgress color="inherit" size={25} /> : null}
-                              {/* {params.InputProps.endAdornment} */}
-                            </React.Fragment>
-                          ),
-                        }}
-                      />
-                    )}
-                  />
+                  <TagFriends />
                 ):undefined
               }
             </div>

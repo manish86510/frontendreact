@@ -97,6 +97,7 @@ class HotTopic extends React.Component {
                     {this.state.postData}
                     </Typography>
                 </CardContent>
+                {/* <p>{(this.state.postData.about_post!=null)?("working"):undefined}</p>    */}
             </Card>
         );
     }
