@@ -45,7 +45,6 @@ class FriendsList extends React.Component {
     }
 
     componentDidMount(){
-        debugger;
         var url = endpoints.friends_list;
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -63,27 +62,6 @@ class FriendsList extends React.Component {
         });
     }
 
-    connect = (user_id) =>{
-        var url = endpoints.follow;
-        var getToken = localStorage.getItem('access');
-        var data = {
-            'follower': user_id
-        };
-        axios.post(
-            url,
-            data,
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getToken,
-                }
-            }
-        ).then(res => {
-            if (res.status == 200) {
-                document.getElementById(user_id).innerHTML = "connected";
-                // this.setState({recomendedCircle: res.data});
-            }
-        });
-    }
 
     render() {
         const { classes } = this.props;
