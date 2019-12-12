@@ -14,10 +14,10 @@ export default function MyResult(api, mydata, method) {
                 Authorization: 'Bearer ' + token,
             }
         }
-        ).then(result => {
-            debugger;
-            console.log(result);
-        });
+        ).then(function (result) {
+            
+            console.log(result);}
+        );
     }
     if(method == "get"){
         axios.get(api, mydata).then(result => {

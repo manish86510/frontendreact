@@ -144,6 +144,7 @@ class PostTextArea extends React.Component {
         // this.state.mediaData.file = this.fileArray;
         // this.state.mediaData.post = result.data.id;
         // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
+
         window.location.reload();
     }
     
