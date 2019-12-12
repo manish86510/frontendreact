@@ -35,3 +35,4 @@ const endpoints = {
   friends_list: 'https://energeapi.do.viewyoursite.net/user/friends-list/'
 };
 export default endpoints;
+
