@@ -31,6 +31,14 @@ class TagFriends extends React.Component {
     // this.getTagFriendList();
   }
 
+  componentWillReceiveProps = () =>{
+    if(this.props.clear_tags_friends === true){
+      const selected = this.state.selected;
+      selected.tag_friends = [];
+      this.setState({ selected: selected });
+    }
+  }
+
   debounce_timer = null;
 
   retrieveDataAsynchronously(searchText) {
