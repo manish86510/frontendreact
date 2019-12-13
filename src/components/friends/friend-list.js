@@ -16,6 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import { withRouter } from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -59,6 +60,12 @@ class FriendsList extends React.Component {
         });
     }
 
+    handleFriendListClick=(friendInfo)=>{
+        console.log(friendInfo);
+        this.props.history.push({
+            pathname:"/profile/"+friendInfo.pk
+        });
+    }
 
     render() {
         const { classes } = this.props;
@@ -80,7 +87,11 @@ class FriendsList extends React.Component {
                         {
                             (this.state.friendList!=null && this.state.friendList!=undefined)?(
                                 this.state.friendList.map((user, index)=>(
-                                    <ListItem alignItems="flex-start">
+                                    <ListItem 
+                                        button
+                                        alignItems="flex-start"
+                                        onClick={this.handleFriendListClick.bind(this, user.follower)}
+                                    >
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={user.follower.avatar} />
                                         </ListItemAvatar>
@@ -96,4 +107,4 @@ class FriendsList extends React.Component {
     }
 }
 
-export default withStyles(styles)(FriendsList);
+export default withRouter(withStyles(styles)(FriendsList));
