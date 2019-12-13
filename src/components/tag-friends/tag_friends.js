@@ -40,7 +40,7 @@ class TagFriends extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.friend_list + `?search=${searchText}`;
+      let url = endpoints.friends_list + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -127,28 +127,28 @@ class TagFriends extends React.Component {
   });
   }
 
-  submit = async()=>{
-    const selected = this.state.selected;
-    for (var i = 0; i < selected.tag_friends.length; i++) {
-      if(selected.tag_friends[i].created == true){
-        const data = {
-          name: selected.tag_friends[i].name,
-          read:"yes",
-          speak:"yes",
-          write:"yes",
-        }
-        const res =
-        await axios
-          .post(endpoints.my_languages, JSON.stringify(data), {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + localStorage.access,
-            },
-          });
-      }      
-    } 
-    this.setState({'isEdit':false, selected:selected})   
-  }
+  // submit = async()=>{
+  //   const selected = this.state.selected;
+  //   for (var i = 0; i < selected.tag_friends.length; i++) {
+  //     if(selected.tag_friends[i].created === true){
+  //       const data = {
+  //         name: selected.tag_friends[i].name,
+  //         read:"yes",
+  //         speak:"yes",
+  //         write:"yes",
+  //       }
+  //       const res =
+  //       await axios
+  //         .post(endpoints.my_languages, JSON.stringify(data), {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: 'Bearer ' + localStorage.access,
+  //           },
+  //         });
+  //     }      
+  //   } 
+  //   this.setState({'isEdit':false, selected:selected})   
+  // }
   
 
   render() {
@@ -156,9 +156,9 @@ class TagFriends extends React.Component {
     const tag_friends_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      if(this.state.selected.tag_friends.some(item => value.language === item.name) == false){
+      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) == false){
         tag_friends_items.push(
-          { name: value.language, id:-1, created: true},
+          { name: value.follower.first_name + " " + value.follower.last_name, id:value.follower.pk},
         )
       }
     }
@@ -186,16 +186,7 @@ class TagFriends extends React.Component {
                       label={option.name}
                       {...getTagProps({ option })}
                       onDelete={()=>{
-                        if(option.created == true){
                           this.renderTagFriendsItem(value, option)
-                        }
-                        // else{
-                          // delete from api when option.created==false
-                          //call api for delete interest from my interest table
-                        //   if(option.created==false){
-                        //   this.handleLanguageDelete(option, index);
-                        // }
-                        // }
                       }}
                     />
                   ))

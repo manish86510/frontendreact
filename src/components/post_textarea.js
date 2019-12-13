@@ -101,7 +101,8 @@ class PostTextArea extends React.Component {
         is_public: true,
         post_type: "Post",
         target_audience: "test",
-        media_id:[]
+        media_id:[],
+        tag_friend_list : [],
       },
       mediaData: {
         post: '',
@@ -111,7 +112,6 @@ class PostTextArea extends React.Component {
       value: '',
       suggestions: [],
       selected : null,
-      tag_friend_list : [],
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -183,7 +183,8 @@ class PostTextArea extends React.Component {
       is_public: true,
       post_type: "Post",
       target_audience: "test",
-      media_id:[]
+      media_id:[],
+      tag_friend_list:[],
     };
     var mediaData={
       post: '',
@@ -236,9 +237,14 @@ class PostTextArea extends React.Component {
   };
 
   friendListData = (data) =>{
-    const state = this.state;
-    state.tag_friend_list = data;
-    this.setState({state:state});
+    const postData = this.state.postData;
+    for (let i = 0; i < data.length; i++) {
+      if(this.state.postData.tag_friend_list.indexOf(data[i].id) === -1){
+        postData.tag_friend_list.push(data[i].id)
+      }
+    }
+    this.setState({postData:postData});
+
   }
 
   render() {

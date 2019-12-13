@@ -12,7 +12,7 @@ const endpoints = {
   profile_education: 'https://energeapi.do.viewyoursite.net/user/education/',
   PROFILE: 'https://energeapi.do.viewyoursite.net/user/me/',
   PROFILE_UPDATE: 'https://energeapi.do.viewyoursite.net/user/profile-update',
-  
+
   interest: 'https://energeapi.do.viewyoursite.net/user/interest/',
   skills: 'https://energeapi.do.viewyoursite.net/user/skill/',
   languages: 'https://energeapi.do.viewyoursite.net/user/language/',
@@ -32,6 +32,7 @@ const endpoints = {
   get_post: 'https://energeapi.do.viewyoursite.net/api/v1/post/',
   HOT_topic: 'https://energeapi.do.viewyoursite.net/api/v1/post/hot-topic/',
   recomended_followers: 'https://energeapi.do.viewyoursite.net/user/recommended/',
-  friend_list :'https://energeapi.do.viewyoursite.net/user/friends-list/',
+  friends_list: 'https://energeapi.do.viewyoursite.net/user/friends-list/'
 };
 export default endpoints;
+
