@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import RecomendedCircle from '../circle/recomended-circle';
 import HotTopic from '../hot-topics/hot-topic';
+import FriendsList from '../friends/friend-list'
 
 
 const styles = theme => ({
@@ -34,6 +35,9 @@ class NotificationTopics extends React.Component {
     return (
       <div className={classes.root}>
         <HotTopic/>
+        <br/>
+        <br/>
+        <FriendsList />
         <br/>
         <br/>
         <RecomendedCircle/>

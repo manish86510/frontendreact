@@ -6,8 +6,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Typography from '@material-ui/core/Typography';
-
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -38,7 +36,6 @@ class FriendsList extends React.Component {
         super(props);
 
         this.state = {
-            recomendedCircle: null,
             text: 'Test',
             friendList:null,
         };
