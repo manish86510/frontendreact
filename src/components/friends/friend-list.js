@@ -69,7 +69,7 @@ class FriendsList extends React.Component {
             <Card>
                 <CardHeader
                 title={
-                    <Typography className={classes.cardHeader}>Friends</Typography>
+                    <Typography className={classes.cardHeader}>Friends List</Typography>
                 }
                 action={
                     <IconButton aria-label="refresh">
