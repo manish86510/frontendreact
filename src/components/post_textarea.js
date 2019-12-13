@@ -101,7 +101,8 @@ class PostTextArea extends React.Component {
         is_public: true,
         post_type: "Post",
         target_audience: "test",
-        media_id:[]
+        media_id:[],
+        tags_friends : [],
       },
       mediaData: {
         post: '',
@@ -110,7 +111,8 @@ class PostTextArea extends React.Component {
       },
       value: '',
       suggestions: [],
-      selected : null
+      selected : null,
+      clear_tags_friends:false,
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -140,7 +142,6 @@ class PostTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
-    debugger;
     this.state.postData.about_post = e.target.value;
     this.setState({
       postData: this.state.postData,
@@ -177,20 +178,22 @@ class PostTextArea extends React.Component {
   }
 
   clearForm = ()=>{
+    debugger;
     var postData = {
       about_post: "",
       tags: "test",
       is_public: true,
       post_type: "Post",
       target_audience: "test",
-      media_id:[]
+      media_id:[],
+      tags_friends:[],
     };
     var mediaData={
       post: '',
       file: [],
       file_type: "Image"
     };
-    this.setState({postData: postData, mediaData: mediaData, loading: false});
+    this.setState({postData: postData, clear_tags_friends:true, tag_friends:false, mediaData: mediaData, loading: false});
   }
 
   handlePostCreate = (event) => {
@@ -206,6 +209,7 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
+      debugger;
       this.clearForm();
       this.retrivePost(res.data.id);
     }).catch(e => {
@@ -235,6 +239,17 @@ class PostTextArea extends React.Component {
     });
   };
 
+  friendListData = (data) =>{
+    const postData = this.state.postData;
+    for (let i = 0; i < data.length; i++) {
+      if(this.state.postData.tags_friends.indexOf(data[i].id) === -1){
+        postData.tags_friends.push(data[i].id)
+      }
+    }
+    this.setState({postData:postData});
+
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -259,11 +274,7 @@ class PostTextArea extends React.Component {
             ))}
             </div>
             <div>
-              {
-                this.state.tag_friends?(
-                  <TagFriends />
-                ):undefined
-              }
+              {this.state.tag_friends?(<TagFriends friend_list_data={this.friendListData} clear_tags_friends={this.state.clear_tags_friends} />):undefined}
             </div>
             <div style={{textAlign: 'right', position: 'relative'}}>
               <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />

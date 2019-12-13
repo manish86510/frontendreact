@@ -12,13 +12,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const $ = require('jquery');
 
-class Language extends React.Component {
+class TagFriends extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       selected: {
-        language: [],
+        tag_friends: [],
       },
       value: null,
       autocompleteData: [],
@@ -28,7 +28,15 @@ class Language extends React.Component {
   }
 
   componentDidMount() {
-    this.getLanguage();
+    // this.getTagFriendList();
+  }
+
+  componentWillReceiveProps = () =>{
+    if(this.props.clear_tags_friends === true){
+      const selected = this.state.selected;
+      selected.tag_friends = [];
+      this.setState({ selected: selected });
+    }
   }
 
   debounce_timer = null;
@@ -40,7 +48,7 @@ class Language extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.languages + `?search=${searchText}`;
+      let url = endpoints.friends_list + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -62,7 +70,7 @@ class Language extends React.Component {
   }
 
 
-  handleLanguageChange = (e) => {
+  handleTagFriendChange = (e) => {
     this.setState({
       value: e.target.value
     });
@@ -78,7 +86,7 @@ class Language extends React.Component {
     }
   }
 
-  getLanguage = () => {
+  getTagFriendList = () => {
     var getToken = localStorage.getItem('access');
     axios.get(endpoints.my_languages, {
       headers: {
@@ -87,7 +95,7 @@ class Language extends React.Component {
     }).then(res => {
       const selected = this.state.selected;
       for (let i = 0; i < res.data.length; i++) {
-        selected.language.push({name:res.data[i].name, id:res.data[i].id, created:false})
+        selected.tag_friends.push({name:res.data[i].name, id:res.data[i].id, created:false})
       }
       this.setState({ selected: selected });
       console.log(this.state);
@@ -96,13 +104,13 @@ class Language extends React.Component {
     });
   }
 
-  renderDeleteItem = (value, option) => {
+  renderTagFriendsItem = (value, option) => {
     let selected = this.state.selected;
-    selected.language = value.filter(entry => entry !== option);
+    selected.tag_friends = value.filter(entry => entry !== option);
     this.setState({ selected: selected });
   }
 
-  handleLanguageDelete = (option, index) => {
+  handleTagFriendsDelete = (option, index) => {
     axios.delete(endpoints.my_languages + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -114,10 +122,11 @@ class Language extends React.Component {
     })
   };
 
-  handleLanguageData = (event, value) => {
+  handleTagFriendsData = (event, value) => {
     const selected = this.state.selected;
-    selected.language = value;
+    selected.tag_friends = value;
     this.setState({selected:selected});
+    this.props.friend_list_data(this.state.selected.tag_friends);
   }
 
   toggleEdit = ()=>{
@@ -126,38 +135,38 @@ class Language extends React.Component {
   });
   }
 
-  submit = async()=>{
-    const selected = this.state.selected;
-    for (var i = 0; i < selected.language.length; i++) {
-      if(selected.language[i].created == true){
-        const data = {
-          name: selected.language[i].name,
-          read:"yes",
-          speak:"yes",
-          write:"yes",
-        }
-        const res =
-        await axios
-          .post(endpoints.my_languages, JSON.stringify(data), {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + localStorage.access,
-            },
-          });
-      }      
-    } 
-    this.setState({'isEdit':false, selected:selected})   
-  }
+  // submit = async()=>{
+  //   const selected = this.state.selected;
+  //   for (var i = 0; i < selected.tag_friends.length; i++) {
+  //     if(selected.tag_friends[i].created === true){
+  //       const data = {
+  //         name: selected.tag_friends[i].name,
+  //         read:"yes",
+  //         speak:"yes",
+  //         write:"yes",
+  //       }
+  //       const res =
+  //       await axios
+  //         .post(endpoints.my_languages, JSON.stringify(data), {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: 'Bearer ' + localStorage.access,
+  //           },
+  //         });
+  //     }      
+  //   } 
+  //   this.setState({'isEdit':false, selected:selected})   
+  // }
   
 
   render() {
     const elements_in = this.state.autocompleteData
-    const language_items = []
+    const tag_friends_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      if(this.state.selected.language.some(item => value.language === item.name) == false){
-        language_items.push(
-          { name: value.language, id:-1, created: true},
+      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) == false){
+        tag_friends_items.push(
+          { name: value.follower.first_name + " " + value.follower.last_name, id:value.follower.pk},
         )
       }
     }
@@ -168,15 +177,15 @@ class Language extends React.Component {
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={11} md={11} lg={11}>
+            <Grid item xs={12} md={12} lg={12}>
               <Autocomplete
-                value={this.state.selected.language}
+                value={this.state.selected.tag_friends}
                 multiple
-                id="language"
+                id="tag_friends"
                 filterSelectedOptions={true}
-                options={language_items}
+                options={tag_friends_items}
                 getOptionLabel={option => option.name}
-                onChange={this.handleLanguageData}
+                onChange={this.handleTagFriendsData}
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
@@ -185,26 +194,17 @@ class Language extends React.Component {
                       label={option.name}
                       {...getTagProps({ option })}
                       onDelete={()=>{
-                        if(option.created == true){
-                          this.renderDeleteItem(value, option)
-                        }
-                        // else{
-                          // delete from api when option.created==false
-                          //call api for delete interest from my interest table
-                        //   if(option.created==false){
-                        //   this.handleLanguageDelete(option, index);
-                        // }
-                        // }
+                          this.renderTagFriendsItem(value, option)
                       }}
                     />
                   ))
                 }
                 renderInput={params => (
                   <TextField
-                    onChange={this.handleLanguageChange}
+                    onChange={this.handleTagFriendChange}
                     {...params}
                     variant="outlined"
-                    placeholder="Interest"
+                    placeholder="Tag Friends"
                     margin="normal"
                     fullWidth
                     InputProps={{
@@ -239,4 +239,4 @@ class Language extends React.Component {
   }
 }
 
-export default Language;
+export default TagFriends;
