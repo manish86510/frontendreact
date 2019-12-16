@@ -26,7 +26,7 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
-    cardHeader:{
+    cardHeader: {
         fontSize: 16,
         fontWeight: 'bold'
     }
@@ -34,16 +34,17 @@ const styles = theme => ({
 
 class RecomendedCircle extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             recomendedCircle: null,
-            text: 'Test'
+            text: 'Test',
+            connectButtonStatus: []
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         var url = endpoints.recomended_followers;
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -55,12 +56,12 @@ class RecomendedCircle extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                this.setState({recomendedCircle: res.data});
+                this.setState({ recomendedCircle: res.data });
             }
         });
     }
 
-    connect = (user_id) =>{
+    connect = (user_id) => {
         var url = endpoints.follow;
         var getToken = localStorage.getItem('access');
         var data = {
@@ -76,43 +77,59 @@ class RecomendedCircle extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                document.getElementById(user_id).innerHTML = "connected";
-                // this.setState({recomendedCircle: res.data});
+                document.getElementById(user_id).innerHTML = "Request Sent";
+                document.getElementById(user_id).disabled=true;
+                document.getElementById(user_id).
+                setAttribute(
+                    "class",
+                    "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                );
             }
         });
     }
 
     render() {
+        console.log(this.state.connectButtonStatus);
         const { classes } = this.props;
+        const defaultStatus= false;
         return (
             <Card>
                 <CardHeader
-                title={
-                    <Typography className={classes.cardHeader}>Expand Your Circle</Typography>
-                }
-                action={
-                    <IconButton aria-label="refresh">
-                        <RefreshIcon />
-                    </IconButton>
-                }>
+                    title={
+                        <Typography className={classes.cardHeader}>Expand Your Circle</Typography>
+                    }
+                    action={
+                        <IconButton aria-label="refresh">
+                            <RefreshIcon />
+                        </IconButton>
+                    }>
                 </CardHeader>
 
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.recomendedCircle!=null && this.state.recomendedCircle!=undefined)?(
-                                this.state.recomendedCircle.results.map((user, index)=>(
+                            (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
+                                this.state.recomendedCircle.results.map((user, index) => (
                                     <ListItem alignItems="flex-start">
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={user.avatar} />
                                         </ListItemAvatar>
-                                        <ListItemText primary={"@"+user.username} secondary={user.followers_count+" followers"}></ListItemText>
+                                        <ListItemText primary={"@" + user.username} secondary={user.followers_count + " followers"}></ListItemText>
                                         <ListItemSecondaryAction>
-                                            <Button variant="contained" color="primary" onClick={this.connect.bind(this, user.pk)} id={user.pk}>Connect</Button>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.connect.bind(this, user.pk)}
+                                                id={user.pk}
+                                                // disabled
+                                            >
+                                                connect
+                                                
+                                            </Button>
                                         </ListItemSecondaryAction>
                                     </ListItem>
-                                ))        
-                            ):undefined
+                                ))
+                            ) : undefined
                         }
                         {/* <ListItem alignItems="flex-start">
                             <ListItemAvatar>
