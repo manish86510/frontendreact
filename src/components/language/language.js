@@ -5,12 +5,11 @@ import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField, IconButton} from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const $ = require('jquery');
+// const $ = require('jquery');
 
 class Language extends React.Component {
 
@@ -130,14 +129,13 @@ class Language extends React.Component {
   submit = async()=>{
     const selected = this.state.selected;
     for (var i = 0; i < selected.language.length; i++) {
-      if(selected.language[i].created == true){
+      if(selected.language[i].created === true){
         const data = {
           name: selected.language[i].name,
           read:"yes",
           speak:"yes",
           write:"yes",
         }
-        const res =
         await axios
           .post(endpoints.my_languages, JSON.stringify(data), {
             headers: {
@@ -156,7 +154,7 @@ class Language extends React.Component {
     const language_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      if(this.state.selected.language.some(item => value.language === item.name) == false){
+      if(this.state.selected.language.some(item => value.language === item.name) === false){
         language_items.push(
           { name: value.language, id:-1, created: true},
         )
@@ -167,7 +165,7 @@ class Language extends React.Component {
     return (
       <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
-       {this.state.isEdit == false ?
+       {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
@@ -203,12 +201,12 @@ class Language extends React.Component {
                       label={option.name}
                       {...getTagProps({ option })}
                       onDelete={()=>{
-                        if(option.created == true){
+                        if(option.created === true){
                           this.renderDeleteItem(value, option)
                         }else{
                           // delete from api when option.created==false
                           //call api for delete interest from my interest table
-                          if(option.created==false){
+                          if(option.created===false){
                           this.handleLanguageDelete(option, index);
                         }
                         }

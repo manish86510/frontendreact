@@ -27,9 +27,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
-import InterestCard from './interest-card';
-import LanguageCard from './language-card';
-import SkillCard from './skill-card';
 
 const $ = require('jquery');
 
