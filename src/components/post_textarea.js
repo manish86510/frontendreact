@@ -24,68 +24,6 @@ const styles = theme => ({
   }
 });
 
-
-const languages = [
-  {
-    name: 'Manish',
-  },
-  {
-    name: 'siteadmin@example.com',
-  },
-  {
-    name: 'ishu',
-  },
-  {
-    name: 'rahul',
-  },
-  {
-    name: 'nitish',
-  },
-  {
-    name: 'sonu_ka',
-  },
-  {
-    name: 'renu',
-  },
-  {
-    name: 'renus',
-  },
-  {
-    name: 'demoUser',
-  },
-  {
-    name: 'postak',
-  },
-  {
-    name: 'Nitin8656',
-  },
-  {
-    name: 'prabhakar',
-  },
-  {
-    name: 'Manish8659',
-  },
-  {
-    name: 'renusingh199',
-  }
-];
-
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return languages.filter(language => regex.test(language.name));
-}
-
 class PostTextArea extends React.Component {
   fileObj = [];
   fileArray = [];
@@ -178,7 +116,6 @@ class PostTextArea extends React.Component {
   }
 
   clearForm = ()=>{
-    debugger;
     var postData = {
       about_post: "",
       tags: "test",
@@ -209,7 +146,6 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      debugger;
       this.clearForm();
       this.retrivePost(res.data.id);
     }).catch(e => {
@@ -226,18 +162,6 @@ class PostTextArea extends React.Component {
     let tag = !this.state.tag_friends;
     this.setState({tag_friends: tag});
   }
-
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
 
   friendListData = (data) =>{
     const postData = this.state.postData;
