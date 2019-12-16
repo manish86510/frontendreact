@@ -43,11 +43,8 @@ class RecomendedCircle extends React.Component {
         this.state = {
             recomendedCircle: null,
             text: 'Test',
-<<<<<<< HEAD
-            layoutType: props.layoutType
-=======
+            layoutType: props.layoutType,
             connectButtonStatus: []
->>>>>>> 22c028530112a85de6bde5d0d3fc544017cddfe9
         };
     }
 
@@ -84,9 +81,6 @@ class RecomendedCircle extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-<<<<<<< HEAD
-                document.getElementById(user_id).innerHTML = "connected";
-=======
                 document.getElementById(user_id).innerHTML = "Request Sent";
                 document.getElementById(user_id).disabled=true;
                 document.getElementById(user_id).
@@ -94,7 +88,6 @@ class RecomendedCircle extends React.Component {
                     "class",
                     "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                 );
->>>>>>> 22c028530112a85de6bde5d0d3fc544017cddfe9
             }
         });
     }
