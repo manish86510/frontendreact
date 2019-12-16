@@ -18,7 +18,7 @@ class Home extends React.Component {
                     <br/><br/>
                     <FriendsList />
                     <br/><br/>
-                    <RecomendedCircle/>
+                    <RecomendedCircle layoutType={'list'}/>
                 </Grid>
             </Grid>
         );
