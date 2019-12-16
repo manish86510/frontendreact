@@ -77,9 +77,13 @@ class RecomendedCircle extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                document.getElementById(user_id).innerHTML = "connected";
+                document.getElementById(user_id).innerHTML = "Request Sent";
                 document.getElementById(user_id).disabled=true;
-                document.getElementById(user_id).setAttribute("class","MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled");
+                document.getElementById(user_id).
+                setAttribute(
+                    "class",
+                    "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                );
             }
         });
     }

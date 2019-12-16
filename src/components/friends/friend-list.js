@@ -25,7 +25,7 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
-    cardHeader:{
+    cardHeader: {
         fontSize: 16,
         fontWeight: 'bold'
     }
@@ -33,16 +33,16 @@ const styles = theme => ({
 
 class FriendsList extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             text: 'Test',
-            friendList:null,
+            friendList: null,
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         var url = endpoints.friends_list;
         var getToken = localStorage.getItem('access');
         axios.get(
@@ -54,16 +54,15 @@ class FriendsList extends React.Component {
             }
         ).then(res => {
             if (res.status == 200) {
-                console.log(res.data.results);
-                this.setState({friendList: res.data.results});
+                this.setState({ friendList: res.data.results });
             }
         });
     }
 
-    handleFriendListClick=(friendInfo)=>{
-        console.log(friendInfo);
+    handleFriendListClick = (friendInfo) => {
         this.props.history.push({
-            pathname:"/profile/"+friendInfo.pk
+            pathname: "/profile/" + friendInfo.pk + "/",
+            state: { friendInfo }
         });
     }
 
@@ -72,22 +71,22 @@ class FriendsList extends React.Component {
         return (
             <Card>
                 <CardHeader
-                title={
-                    <Typography className={classes.cardHeader}>Friends List</Typography>
-                }
-                action={
-                    <IconButton aria-label="refresh">
-                        <RefreshIcon />
-                    </IconButton>
-                }>
+                    title={
+                        <Typography className={classes.cardHeader}>Friends List</Typography>
+                    }
+                    action={
+                        <IconButton aria-label="refresh">
+                            <RefreshIcon />
+                        </IconButton>
+                    }>
                 </CardHeader>
 
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.friendList!=null && this.state.friendList!=undefined)?(
-                                this.state.friendList.map((user, index)=>(
-                                    <ListItem 
+                            (this.state.friendList != null && this.state.friendList.length!=undefined && this.state.friendList.length!=0) ? (
+                                this.state.friendList.map((user, index) => (
+                                    <ListItem
                                         button
                                         alignItems="flex-start"
                                         onClick={this.handleFriendListClick.bind(this, user.follower)}
@@ -95,10 +94,13 @@ class FriendsList extends React.Component {
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={user.follower.avatar} />
                                         </ListItemAvatar>
-                                        <ListItemText primary={"@"+user.follower.username} secondary={user.follower.followers_count+" followers"}></ListItemText>
+                                        <ListItemText primary={"@" + user.follower.username} secondary={user.follower.followers_count + " followers"}></ListItemText>
                                     </ListItem>
-                                ))        
-                            ):undefined
+                                ))
+                            ) :
+                            <ListItem>
+                                <ListItemText primary={"Data Not Found"}></ListItemText>
+                            </ListItem>
                         }
                     </List>
                 </CardContent>
