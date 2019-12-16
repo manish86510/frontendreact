@@ -1,24 +1,15 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Typography from '@material-ui/core/Typography';
-
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Avatar from '@material-ui/core/Avatar';
-import { withStyles } from '@material-ui/styles';
+import ListIcon from '@material-ui/icons/List';
+import AppsIcon from '@material-ui/icons/Apps';
+import {Card, CardHeader, CardContent, Button, IconButton, Typography,
+    List, ListItem, Divider, ListItemText, ListItemSecondaryAction, Avatar, ListItemAvatar,
+    Grid, CardMedia
+} from '@material-ui/core/';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
-
+import { withStyles } from '@material-ui/styles';
+import { PropTypes } from 'prop-types';
 
 const styles = theme => ({
     root: {
@@ -29,7 +20,19 @@ const styles = theme => ({
     cardHeader:{
         fontSize: 16,
         fontWeight: 'bold'
-    }
+    },
+    suggest_circle_paper:{
+        padding:'15px',
+      },
+      suggest_name:{
+        margin: '20px 0 0 0',
+        fontSize: '18px'
+      },
+      avtar_followers:{
+        height: '50px',
+        width: '50px',
+        borderRadius: '20px'
+      },
 });
 
 class RecomendedCircle extends React.Component {
@@ -39,7 +42,8 @@ class RecomendedCircle extends React.Component {
 
         this.state = {
             recomendedCircle: null,
-            text: 'Test'
+            text: 'Test',
+            layoutType: props.layoutType
         };
     }
 
@@ -77,9 +81,15 @@ class RecomendedCircle extends React.Component {
         ).then(res => {
             if (res.status == 200) {
                 document.getElementById(user_id).innerHTML = "connected";
-                // this.setState({recomendedCircle: res.data});
             }
         });
+    }
+
+    listView = () =>{
+        this.setState({layoutType: 'list'});
+    }
+    gridView = () =>{
+        this.setState({layoutType: 'grid'});
     }
 
     render() {
@@ -88,16 +98,25 @@ class RecomendedCircle extends React.Component {
             <Card>
                 <CardHeader
                 title={
-                    <Typography className={classes.cardHeader}>Expand Your Circle</Typography>
+                    <Typography className={classes.cardHeader}>{this.props.customTitle ? this.props.customTitle : "Expand Your Circle" }</Typography>
                 }
                 action={
+                    <div>
+                    <IconButton aria-label="list" onClick={this.listView}>
+                        <ListIcon />
+                    </IconButton>
+                    <IconButton aria-label="grid" onClick={this.gridView}>
+                        <AppsIcon />
+                    </IconButton>
                     <IconButton aria-label="refresh">
                         <RefreshIcon />
                     </IconButton>
+                    </div>
                 }>
                 </CardHeader>
 
                 <CardContent>
+                {this.state.layoutType==='list'?
                     <List className={classes.root} dense>
                         {
                             (this.state.recomendedCircle!=null && this.state.recomendedCircle!=undefined)?(
@@ -114,30 +133,45 @@ class RecomendedCircle extends React.Component {
                                 ))        
                             ):undefined
                         }
-                        {/* <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText primary="@user" secondary="2k followers"></ListItemText>
-                            <ListItemSecondaryAction>
-                                <Button variant="contained"  color="primary">Connect</Button>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <Divider />
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
-                            <ListItemText primary="@user" secondary="2k followers"></ListItemText>
-                            <ListItemSecondaryAction>
-                                <Button variant="contained"  color="primary">Connect</Button>
-                            </ListItemSecondaryAction>
-                        </ListItem> */}
-                    </List>
+                    </List>:
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <Grid container>
+                            {
+                            (this.state.recomendedCircle!=null && this.state.recomendedCircle!=undefined)?(
+                                this.state.recomendedCircle.results.map((user, index)=>(
+                                <Grid item xs={3} style={{margin:'10px 22px'}}> 
+                                    <Card className={classes.suggest_circle_paper}>
+                                        <Grid item xs={12}>
+                                            <ListItemAvatar className={classes.avtar_followers}>
+                                                <Avatar alt="Remy Sharp" src={user.avatar} />
+                                            </ListItemAvatar>
+                                        </Grid>
+                                        <Grid item xs={12} style={{margin:'20px 0px'}}>
+                                            <ListItemText primary={"@"+user.username} secondary={user.followers_count+" followers"}></ListItemText>
+                                        </Grid>
+                                        <Grid item xs={12} style={{marginBottom:'20px'}}>
+                                            <Button variant="contained" color="primary" onClick={this.connect.bind(this, user.pk)} id={user.pk}>Connect</Button>
+                                        </Grid>
+                                    </Card>
+                                </Grid>))        
+                                ):undefined
+                            }
+                            </Grid>
+                        </Grid>
+                    </Grid> 
+                    }
                 </CardContent>
             </Card>
         );
     }
 }
+RecomendedCircle.defaultProps = {
+    layoutType: 'list'
+};
+RecomendedCircle.propTypes = {
+    layoutType: PropTypes.string,
+    customTitle: PropTypes.string,
+};
 
 export default withStyles(styles)(RecomendedCircle);

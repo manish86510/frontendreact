@@ -3,15 +3,11 @@ import { TextareaAutosize, Avatar } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
 import { Button, Grid, CircularProgress } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
-import constants from '../api/constant';
 import endpoints from '../api/endpoints';
 import ImageIcon from '@material-ui/icons/Image';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { PropTypes } from 'prop-types';
-import Chip from '@material-ui/core/Chip';
 import TagFriends from './tag-friends/tag_friends';
 
 const styles = theme => ({

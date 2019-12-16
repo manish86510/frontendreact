@@ -8,6 +8,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // const $ = require('jquery');
 
@@ -168,17 +172,16 @@ class Skill extends React.Component {
             ))}              
             </Grid>
             <Grid item xs={2} md={2} lg={1}>
-              {/* <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
-                <AddIcon/>
-              </IconButton> */}
-              <Icon onClick={this.toggleEdit} className="fa fa-plus-circle" style={{ fontSize: 25, float:'right' }} />
+              <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
+                <AddCircleOutlineIcon fontSize="large"/>
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>
        :
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
+            <Grid item xs={10} md={10} lg={10}>
               <Autocomplete
                 value={this.state.selected.skill}
                 multiple
@@ -228,15 +231,19 @@ class Skill extends React.Component {
                 )}
               />
             </Grid>
-            <Grid item xs={2} md={2} lg={1}>
-              {/* <IconButton color="primary" onClick={this.submit}>
-                <AddIcon/>
-              </IconButton>
-              <IconButton color="primary" onClick={this.toggleEdit}>
-                <Close/>
-              </IconButton> */}
-              <Icon onClick={this.submit} className="fa fa-check" style={{ fontSize: 25, marginLeft:10 }} />
-              <Icon onClick={this.toggleEdit} className="fa fa-close" style={{ fontSize: 25, float:'right' }} />
+            <Grid item xs={2} md={2} lg={2}>
+              <div>
+                <div style={{float:'left', marginLeft:"45px"}}>
+                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                    <CheckCircleOutlineIcon fontSize="large"/>
+                  </IconButton>
+                </div>
+                <div style={{float:'right'}}>
+                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                    <HighlightOffIcon fontSize="large"/>
+                  </IconButton>  
+                </div>
+              </div>
             </Grid>
           </Grid>
          </Grid>

@@ -40,7 +40,7 @@ class NotificationTopics extends React.Component {
         <FriendsList />
         <br/>
         <br/>
-        <RecomendedCircle/>
+        <RecomendedCircle layoutType={'list'}/>
       </div>
     );
   }
