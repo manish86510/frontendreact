@@ -136,6 +136,7 @@ class RecomendedCircle extends React.Component {
                                                     underline="none"
                                                     onClick={this.handleRecommendedCircleClick.bind(this, user)}
                                                     className={classes.link}
+                                                    color="textPrimary"
                                                 >
                                                     {"@" + user.username}
                                                 </Link>

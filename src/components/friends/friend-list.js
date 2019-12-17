@@ -105,8 +105,8 @@ class FriendsList extends React.Component {
                                                     component="a"
                                                     underline="none"
                                                     onClick={this.handleFriendListClick.bind(this, user.follower)}
-                                                    color="textPrimary"
                                                     className={classes.link}
+                                                    color="textPrimary"
                                                 >
                                                     {"@" + user.follower.username}
                                                 </Link>
