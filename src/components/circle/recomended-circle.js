@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom';
 
 
 import List from '@material-ui/core/List';
@@ -18,6 +19,9 @@ import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import { LinearProgress, Link } from '@material-ui/core';
+import { blue, yellow } from '@material-ui/core/colors';
+// import Link from '@material-ui/core/Link';
 
 
 const styles = theme => ({
@@ -29,6 +33,11 @@ const styles = theme => ({
     cardHeader: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    link: {
+        "&:hover": {
+            color: "#0088db"
+        },
     }
 });
 
@@ -78,20 +87,25 @@ class RecomendedCircle extends React.Component {
         ).then(res => {
             if (res.status == 200) {
                 document.getElementById(user_id).innerHTML = "Request Sent";
-                document.getElementById(user_id).disabled=true;
+                document.getElementById(user_id).disabled = true;
                 document.getElementById(user_id).
-                setAttribute(
-                    "class",
-                    "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                );
+                    setAttribute(
+                        "class",
+                        "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                    );
             }
         });
     }
-
+    handleRecommendedCircleClick = (userInfo) => {
+        this.props.history.push({
+            pathname: "/profile/" + userInfo.pk + "/",
+            state: { userInfo }
+        });
+    }
     render() {
         console.log(this.state.connectButtonStatus);
         const { classes } = this.props;
-        const defaultStatus= false;
+        const defaultStatus = false;
         return (
             <Card>
                 <CardHeader
@@ -114,17 +128,31 @@ class RecomendedCircle extends React.Component {
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={user.avatar} />
                                         </ListItemAvatar>
-                                        <ListItemText primary={"@" + user.username} secondary={user.followers_count + " followers"}></ListItemText>
+                                        <ListItemText
+                                            primary={
+                                                <Link
+                                                    variant="body2"
+                                                    component="a"
+                                                    underline="none"
+                                                    onClick={this.handleRecommendedCircleClick.bind(this, user)}
+                                                    className={classes.link}
+                                                >
+                                                    {"@" + user.username}
+                                                </Link>
+                                            }
+                                            secondary={
+                                                user.followers_count + " followers"
+                                            }>
+                                        </ListItemText>
                                         <ListItemSecondaryAction>
                                             <Button
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={this.connect.bind(this, user.pk)}
                                                 id={user.pk}
-                                                // disabled
                                             >
                                                 connect
-                                                
+
                                             </Button>
                                         </ListItemSecondaryAction>
                                     </ListItem>
@@ -157,4 +185,4 @@ class RecomendedCircle extends React.Component {
     }
 }
 
-export default withStyles(styles)(RecomendedCircle);
+export default withRouter(withStyles(styles)(RecomendedCircle));
