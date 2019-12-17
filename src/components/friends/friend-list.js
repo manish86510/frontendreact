@@ -17,6 +17,7 @@ import { withStyles } from '@material-ui/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import { withRouter } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 
 const styles = theme => ({
@@ -28,6 +29,11 @@ const styles = theme => ({
     cardHeader: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    link: {
+        "&:hover": {
+            color: "#0088db"
+        },
     }
 });
 
@@ -59,10 +65,10 @@ class FriendsList extends React.Component {
         });
     }
 
-    handleFriendListClick = (friendInfo) => {
+    handleFriendListClick = (userInfo) => {
         this.props.history.push({
-            pathname: "/profile/" + friendInfo.pk + "/",
-            state: { friendInfo }
+            pathname: "/profile/" + userInfo.pk + "/",
+            state: { userInfo }
         });
     }
 
@@ -84,23 +90,36 @@ class FriendsList extends React.Component {
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.friendList != null && this.state.friendList.length!=undefined && this.state.friendList.length!=0) ? (
+                            (this.state.friendList != null && this.state.friendList.length != undefined && this.state.friendList.length != 0) ? (
                                 this.state.friendList.map((user, index) => (
                                     <ListItem
-                                        button
                                         alignItems="flex-start"
-                                        onClick={this.handleFriendListClick.bind(this, user.follower)}
                                     >
                                         <ListItemAvatar>
                                             <Avatar alt="Remy Sharp" src={user.follower.avatar} />
                                         </ListItemAvatar>
-                                        <ListItemText primary={"@" + user.follower.username} secondary={user.follower.followers_count + " followers"}></ListItemText>
+                                        <ListItemText
+                                            primary={
+                                                <Link
+                                                    variant="body2"
+                                                    component="a"
+                                                    underline="none"
+                                                    onClick={this.handleFriendListClick.bind(this, user.follower)}
+                                                    className={classes.link}
+                                                    color="textPrimary"
+                                                >
+                                                    {"@" + user.follower.username}
+                                                </Link>
+                                            }
+                                            secondary={user.follower.followers_count + " followers"}
+                                        >
+                                        </ListItemText>
                                     </ListItem>
                                 ))
                             ) :
-                            <ListItem>
-                                <ListItemText primary={"Data Not Found"}></ListItemText>
-                            </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={"Data Not Found"}></ListItemText>
+                                </ListItem>
                         }
                     </List>
                 </CardContent>
