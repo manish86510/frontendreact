@@ -3,15 +3,11 @@ import { TextareaAutosize, Avatar } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
 import { Button, Grid, CircularProgress } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
-import constants from '../api/constant';
 import endpoints from '../api/endpoints';
 import ImageIcon from '@material-ui/icons/Image';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { PropTypes } from 'prop-types';
-import Chip from '@material-ui/core/Chip';
 import TagFriends from './tag-friends/tag_friends';
 
 const styles = theme => ({
@@ -23,68 +19,6 @@ const styles = theme => ({
     float: "right",
   }
 });
-
-
-const languages = [
-  {
-    name: 'Manish',
-  },
-  {
-    name: 'siteadmin@example.com',
-  },
-  {
-    name: 'ishu',
-  },
-  {
-    name: 'rahul',
-  },
-  {
-    name: 'nitish',
-  },
-  {
-    name: 'sonu_ka',
-  },
-  {
-    name: 'renu',
-  },
-  {
-    name: 'renus',
-  },
-  {
-    name: 'demoUser',
-  },
-  {
-    name: 'postak',
-  },
-  {
-    name: 'Nitin8656',
-  },
-  {
-    name: 'prabhakar',
-  },
-  {
-    name: 'Manish8659',
-  },
-  {
-    name: 'renusingh199',
-  }
-];
-
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return languages.filter(language => regex.test(language.name));
-}
 
 class PostTextArea extends React.Component {
   fileObj = [];
@@ -178,7 +112,6 @@ class PostTextArea extends React.Component {
   }
 
   clearForm = ()=>{
-    debugger;
     var postData = {
       about_post: "",
       tags: "test",
@@ -209,7 +142,6 @@ class PostTextArea extends React.Component {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-      debugger;
       this.clearForm();
       this.retrivePost(res.data.id);
     }).catch(e => {
@@ -226,18 +158,6 @@ class PostTextArea extends React.Component {
     let tag = !this.state.tag_friends;
     this.setState({tag_friends: tag});
   }
-
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
 
   friendListData = (data) =>{
     const postData = this.state.postData;

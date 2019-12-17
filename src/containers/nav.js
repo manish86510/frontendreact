@@ -22,10 +22,9 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PropTypes } from 'prop-types';
 import '../styles/side-nav.css'
-import { Button, Avatar, Grow, Divider } from '@material-ui/core';
+import { Button, Avatar, Grow } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
-import constants from './../api/constant';
 import Icon from '@material-ui/core/Icon';
 
 
@@ -124,6 +123,7 @@ class SideNav extends React.Component {
             eventsLink:false,
             collabrationLink:false,
             notificationLink:false,
+            myAccount:false,
             userProfile: JSON.parse(localStorage.getItem("userInfo")),
             home_title: "",
             menuArray: [
@@ -266,8 +266,14 @@ class SideNav extends React.Component {
     }
     nav_profile = () => {
         this.state.home_title = "Profile";
-        this.props.history.push({ pathname: "/profile" })
+        this.props.history.push({ pathname: "/profile/"+ "pf_" + this.state.userProfile.username })
     }
+
+    nav_my_account = () => {
+        this.state.home_title = "My Account";
+        this.props.history.push({ pathname: "/my_account" })
+    }
+
     nav_events = () => {
         this.state.home_title = "Events";
         this.setState({
@@ -380,7 +386,7 @@ class SideNav extends React.Component {
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
                                                     <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
-                                                    <MenuItem >My account</MenuItem>
+                                                    <MenuItem onClick={this.nav_my_account}>My account</MenuItem>
                                                     <MenuItem onClick={this.nav_logout}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
