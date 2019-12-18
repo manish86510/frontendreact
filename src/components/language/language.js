@@ -165,18 +165,22 @@ class Language extends React.Component {
       }
     }
 
-
     return (
       <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
        {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
-            {this.state.selected.language.map((language, index) => (
-              <Chip key={'key_my_language_'+language.id} id={language.id} label={language.name} style={{margin:5}} />
-            ))}              
-            </Grid>
+          {this.state.selected.language.length ===0 || this.state.selected.language.length === undefined ?
+            (<Grid item xs={10} md={10} lg={11}>
+              <h3>You Do not select any language yet. Please add ....</h3>
+            </Grid>):
+            (<Grid item xs={10} md={10} lg={11}>
+              {this.state.selected.language.map((language, index) => (
+                <Chip key={'key_my_language_'+language.id} id={language.id} label={language.name} style={{margin:5}} />
+              ))}              
+            </Grid>)          
+          }            
             <Grid item xs={2} md={2} lg={1}>
               <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
                 <AddCircleOutlineIcon fontSize="large"/>
@@ -240,7 +244,7 @@ class Language extends React.Component {
             <Grid item xs={2} md={2} lg={2}>
               <div>
                 <div style={{float:'left', marginLeft:"45px"}}>
-                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                  <IconButton aria-label="add" color="primary" onClick={this.submit}>
                     <CheckCircleOutlineIcon fontSize="large"/>
                   </IconButton>
                 </div>

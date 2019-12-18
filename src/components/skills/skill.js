@@ -166,11 +166,16 @@ class Skill extends React.Component {
        {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
-            {this.state.selected.skill.map((skill, index) => (
-              <Chip key={'key_my_skill_'+skill.id} id={skill.id} label={skill.skill} style={{margin:5}} />
-            ))}              
-            </Grid>
+          {this.state.selected.skill.length ===0 || this.state.selected.skill.length === undefined ?
+            (<Grid item xs={10} md={10} lg={11}>
+              <h3>You Do not select any skill yet. Please add ....</h3>
+            </Grid>):
+            (<Grid item xs={10} md={10} lg={11}>
+              {this.state.selected.skill.map((skill, index) => (
+                <Chip key={'key_my_skill_'+skill.id} id={skill.id} label={skill.skill} style={{margin:5}} />
+              ))}              
+            </Grid>)
+          }
             <Grid item xs={2} md={2} lg={1}>
               <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
                 <AddCircleOutlineIcon fontSize="large"/>
@@ -234,7 +239,7 @@ class Skill extends React.Component {
             <Grid item xs={2} md={2} lg={2}>
               <div>
                 <div style={{float:'left', marginLeft:"45px"}}>
-                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                  <IconButton aria-label="add" color="primary" onClick={this.submit}>
                     <CheckCircleOutlineIcon fontSize="large"/>
                   </IconButton>
                 </div>
