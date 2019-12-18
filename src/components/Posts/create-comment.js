@@ -46,6 +46,9 @@ class CreateComment extends React.Component {
         this.setState({comment_model: comment_model});
     }
 
+    cancelReply = () =>{
+        this.props.cancelReply();
+    }
     render() {
         return (
             <div className={"text-area-container"}>
@@ -58,6 +61,9 @@ class CreateComment extends React.Component {
                     onChange={this.handleComment}
                 />
                 <div style={{textAlign: 'right', position: 'relative'}}>
+                    {this.props.parent===-1?undefined:(
+                        <Button color="primary" onClick={this.cancelReply}>Cancel</Button>
+                    )}
                     <Button color="primary" disabled={this.state.comment_model.comment.length<=0} 
                     onClick={this.postComments}>Post</Button>
                 </div>
@@ -73,4 +79,3 @@ CreateComment.propTypes = {
 };
 
 export default CreateComment;
-

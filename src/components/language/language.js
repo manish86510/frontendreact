@@ -3,7 +3,9 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+import { PropTypes } from 'prop-types';
+import { withStyles } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
@@ -14,6 +16,18 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // const $ = require('jquery');
+
+const styles = theme => ({
+  root:{
+    padding: '10px 10px'
+  },
+  heading: {
+    fontSize: '20px',
+    color: '#0f543ec7',
+    fontWeight: '700'
+  }
+  
+})
 
 class Language extends React.Component {
 
@@ -90,11 +104,14 @@ class Language extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      for (let i = 0; i < res.data.length; i++) {
-        selected.language.push({name:res.data[i].name, id:res.data[i].id, created:false})
-      }
-      this.setState({ selected: selected });
-      console.log(this.state);
+      if(res.data.length===0 || res.data.length==undefined){
+        this.setState({ isEdit: true });
+      }else{
+        for (let i = 0; i < res.data.length; i++) {
+          selected.language.push({name:res.data[i].name, id:res.data[i].id, created:false})
+        }
+        this.setState({ selected: selected });
+      } 
     }).catch(error => {
       console.log(error);
     });
@@ -154,6 +171,7 @@ class Language extends React.Component {
   
 
   render() {
+    const {classes} = this.props;
     const elements_in = this.state.autocompleteData
     const language_items = []
 
@@ -166,21 +184,17 @@ class Language extends React.Component {
     }
 
     return (
-      <div style={{padding: '10px 10px'}}>
+      <div className={classes.root}>
+      <Typography className={classes.heading}>{this.props.title ? this.props.title : " " }</Typography>
       <Grid container spacing={3}>
        {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
-          {this.state.selected.language.length ===0 || this.state.selected.language.length === undefined ?
-            (<Grid item xs={10} md={10} lg={11}>
-              <h3>You Do not select any language yet. Please add ....</h3>
-            </Grid>):
-            (<Grid item xs={10} md={10} lg={11}>
+          <Grid item xs={10} md={10} lg={11}>
               {this.state.selected.language.map((language, index) => (
                 <Chip key={'key_my_language_'+language.id} id={language.id} label={language.name} style={{margin:5}} />
               ))}              
-            </Grid>)          
-          }            
+            </Grid>    
             <Grid item xs={2} md={2} lg={1}>
               <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
                 <AddCircleOutlineIcon fontSize="large"/>
@@ -200,6 +214,7 @@ class Language extends React.Component {
                 options={language_items}
                 getOptionLabel={option => option.name}
                 onChange={this.handleLanguageData}
+                noOptionsText="Please find your interested language"
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
@@ -226,7 +241,7 @@ class Language extends React.Component {
                     onChange={this.handleLanguageChange}
                     {...params}
                     variant="outlined"
-                    placeholder="Interest"
+                    placeholder="Search Your Languages"
                     margin="normal"
                     fullWidth
                     InputProps={{
@@ -265,4 +280,8 @@ class Language extends React.Component {
   }
 }
 
-export default Language;
+Language.propTypes = {
+  title: PropTypes.string,
+};
+
+export default withStyles(styles)(Language);
