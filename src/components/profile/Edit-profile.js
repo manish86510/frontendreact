@@ -1,23 +1,21 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
 import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
 import Switch from '@material-ui/core/Switch';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
-import { green } from '@material-ui/core/colors';
-import {
-  createMuiTheme,
-} from '@material-ui/core/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
-import InterestData from '../interest/interest';
-import SkillData from '../skills/skill';
-import LanguageData from '../language/language';
+import InterestCard from '../interest/interest';
+import SkillCard from '../skills/skill';
+import SocialLinkCard from '../Social/social-links';
+import LanguageCard from '../language/language';
+import CommunicationCard from './communication-card';
+import WorkEducationCard from './work-education-card';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
@@ -235,10 +233,35 @@ class EditProfile extends React.Component {
         {
           this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
         }
+        
+        <Card style={{ marginTop: "10px" }}>
+          <CommunicationCard title="Communication Details" />
+        </Card>
+
+        <Card style={{ marginTop: "10px" }}>
+          <InterestCard title="Interests" />
+        </Card>
+
+        <Card style={{ marginTop: "10px" }}>
+          <SkillCard title="Skills" />
+        </Card>
+
+        <Card style={{ marginTop: "10px" }}>
+          <LanguageCard title="Languages" />
+        </Card>
+
+        <Card style={{ marginTop: "10px" }}>
+          <SocialLinkCard title="Social Links" />
+        </Card>
+
+        <Card style={{ marginTop: "10px" }}>
+          <WorkEducationCard title="Education" />
+        </Card>
+
         <Card style={{ marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <div className={classes.interest_container}>
                   <label className={classes.interest_heading}>
                     Interests
@@ -267,7 +290,7 @@ class EditProfile extends React.Component {
                 <div>
                   <LanguageData />
                 </div>
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>

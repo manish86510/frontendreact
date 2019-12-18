@@ -29,7 +29,7 @@ const styles = theme => ({
   }  
 })
 
-class Interest extends React.Component {
+class SocialLinks extends React.Component {
 
   constructor(props) {
     super(props);
@@ -122,7 +122,7 @@ class Interest extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleInterestDelete = (option) => {
+  handleInterestDelete = (option, index) => {
     axios.delete(endpoints.my_interest + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ class Interest extends React.Component {
     const elements_in = this.state.autocompleteData;
     const interest_items = [];
 
-    for (const [value] of elements_in.entries()) {
+    for (const [index, value] of elements_in.entries()) {
       if(this.state.selected.interest.some(item => value.interest === item.interest_code) === false){
         interest_items.push(
           { interest_code: value.interest, id:-1, created: true},
@@ -273,8 +273,8 @@ class Interest extends React.Component {
   }
 }
 
-Interest.propTypes = {
+SocialLinks.propTypes = {
   title: PropTypes.string,
 };
 
-export default withStyles(styles)(Interest);
+export default withStyles(styles)(SocialLinks);

@@ -7,9 +7,6 @@ import { PropTypes } from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import ListItem from '@material-ui/core/ListItem';
@@ -19,8 +16,8 @@ import Button from '@material-ui/core/Button';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
-import FeedDetail from './feed-details';
 import YoutubePlayer from './youtube-player';
+import CardAction from './card_action';
 
 const styles = theme => ({
     card:{
@@ -49,28 +46,6 @@ class FeedCard extends React.Component {
             open_post_details: false
         };
     }
-    
-    handleLike = (post_data) => {
-        var my_data={
-          post:post_data,
-        }
-        var url = endpoints.user_like;
-        var getToken = localStorage.getItem('access');
-        axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
-            }
-          }
-        ).then(res => {
-            this.props.onLike(this.props.post);
-        })
-    }
-
-    postDetail = ()=>{
-        this.setState({open_post_details: !this.state.open_post_details});
-    }
 
     onDrawerClose = ()=>{
         this.setState({open_post_details: !this.state.open_post_details});
@@ -94,7 +69,6 @@ class FeedCard extends React.Component {
                         )
                     ):(
                         <CardMedia
-                            // component="img"
                             className={classes.cardMedia}
                             height="220"
                             image="https://picsum.photos/seed/picsum/690/388"
@@ -123,43 +97,14 @@ class FeedCard extends React.Component {
                         
                     </Typography>
                 </CardContent>
-                <CardActions style={{padding: '8px 25px'}}>
-                    {
-                        post.is_like==true?(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
-                                <ThumbUpAltOutlinedIcon/>
-                            </IconButton>
-                        ):(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)}>
-                                <ThumbUpAltOutlinedIcon />
-                            </IconButton>
-                        )
-                    }
-                    <span style={{ fontSize: 12 }}>{post.like_count}</span>
-                    <IconButton size='small' onClick={this.postDetail}>
-                        <ChatBubbleOutlineOutlinedIcon />
-                    </IconButton>
-                    <span style={{ fontSize: 12 }}>{post.comment_count}</span>
-                    <IconButton size='small'>
-                        <ShareOutlinedIcon />
-                    </IconButton>
-                    <span style={{ fontSize: 12 }}>{post.share_count}</span>
-                </CardActions>
-                {/* <CardActions>
-                    <FeedComments pid={post.id} />
-                </CardActions> */}
-                {
-                    this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
-                }
+                <CardAction post={post}/>
             </Card>
         );
     }
-
 }
 
 FeedCard.propTypes = {
-    post: PropTypes.object.isRequired,
-    onLike: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(FeedCard);

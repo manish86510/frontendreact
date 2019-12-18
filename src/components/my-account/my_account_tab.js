@@ -44,7 +44,7 @@ class NotificationTab extends React.Component {
         </Tabs>
         {value == 0 &&  <Mutual /> }
         {value == 1 &&  <Followers /> }
-        {value == 2 &&  <Following /> }
+        {value == 2 &&  <Followers /> }
       </div>
     );
   }

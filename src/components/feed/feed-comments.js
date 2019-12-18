@@ -98,6 +98,7 @@ class FeedComments extends React.Component {
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
                                         </ListItemSecondaryAction>
+                                        
                                     ): undefined
                                 }
                             </ListItem>
