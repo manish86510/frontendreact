@@ -1,26 +1,21 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { PropTypes } from 'prop-types';
-import {List, IconButton, ListItemSecondaryAction} from '@material-ui/core';
+import {List, IconButton} from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
-import { faSitemap } from '@fortawesome/free-solid-svg-icons';
 import YoutubePlayer from './youtube-player';
 import CardAction from './card_action';
 
@@ -94,7 +89,6 @@ class FeedDetail extends React.Component{
                             <YoutubePlayer video_url={post.post_media[0].media_url}/> 
                         ):(
                             <CardMedia
-                                // component="img"
                                 className={classes.cardMedia}
                                 height="220"
                                 image={post.post_media[0].file}
@@ -102,7 +96,6 @@ class FeedDetail extends React.Component{
                         )
                     ):(
                         <CardMedia
-                            // component="img"
                             className={classes.cardMedia}
                             height="220"
                             image="https://picsum.photos/seed/picsum/690/388"
@@ -112,33 +105,6 @@ class FeedDetail extends React.Component{
                 <Typography variant="body2" color="textSecondary" component="div" dangerouslySetInnerHTML={markup} style={{padding: '5px 12px'}}/>
 
                 <CardAction post={post}/>
-
-                {/* <CardActions style={{padding: '8px 25px'}}>
-                        {
-                            post.is_like==true?(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
-                                <ThumbUpAltOutlinedIcon/>
-                            </IconButton>
-                            ):(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)}>
-                                <ThumbUpAltOutlinedIcon />
-                            </IconButton>
-                            )
-                        }
-                        <span style={{ fontSize: 12 }}>{post.like_count}</span>
-                        <IconButton size='small'>
-                            <ChatBubbleOutlineOutlinedIcon />
-                        </IconButton>
-                        <span style={{ fontSize: 12 }}>{post.comment_count}</span>
-                        <IconButton size='small'>
-                            <ShareOutlinedIcon />
-                        </IconButton>
-                        <span style={{ fontSize: 12 }}>{post.share_count}</span>
-                        
-                        <IconButton size='small' style={{position:'absolute', right: 20}}>
-                            <ShareOutlinedIcon />
-                        </IconButton>
-                </CardActions> */}
                 <CardActions>
                     <FeedComments post={post}/>
                 </CardActions>

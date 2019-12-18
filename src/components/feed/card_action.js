@@ -12,15 +12,9 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Button from '@material-ui/core/Button';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
-import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import FeedDetail from './feed-details';
-import YoutubePlayer from './youtube-player';
 
 const styles = theme => ({
     card:{
@@ -46,8 +40,24 @@ class CardAction extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            postList: props.post,
             open_post_details: false
         };
+    }
+
+    retrivePost = (post_id)=>{
+        var token = localStorage.getItem('access');
+        axios.get(endpoints.POST+post_id, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          }
+        }).then(res => {
+            if (res.status == 200) {
+                this.setState({
+                    postList: res.data,
+                });
+            }
+        });
     }
     
     handleLike = (post_data) => {
@@ -64,7 +74,7 @@ class CardAction extends React.Component {
             }
           }
         ).then(res => {
-            // this.props.onLike(this.props.post);
+            this.retrivePost(post_data);
         })
     }
 
@@ -77,39 +87,38 @@ class CardAction extends React.Component {
     }
 
     render() {
-        const { classes, post } = this.props;
-        var markup = {__html: post.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
+        const { classes } = this.props;
+        var markup = {__html: this.state.postList.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
         return (
             <div>
             <CardActions style={{padding: '8px 25px'}}>
                     {
-                        post.is_like==true?(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
+                        this.state.postList.is_like==true?(
+                            <IconButton size='small' onClick={this.handleLike.bind(this, this.state.postList.id)} color="primary">
                                 <ThumbUpAltOutlinedIcon/>
                             </IconButton>
                         ):(
-                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)}>
+                            <IconButton size='small' onClick={this.handleLike.bind(this, this.state.postList.id)}>
                                 <ThumbUpAltOutlinedIcon />
                             </IconButton>
                         )
                     }
-                    <span style={{ fontSize: 12 }}>{post.like_count}</span>
+                    <span style={{ fontSize: 12 }}>{this.state.postList.like_count}</span>
                     <IconButton size='small' onClick={this.postDetail}>
                         <ChatBubbleOutlineOutlinedIcon />
                     </IconButton>
-                    <span style={{ fontSize: 12 }}>{post.comment_count}</span>
+                    <span style={{ fontSize: 12 }}>{this.state.postList.comment_count}</span>
                     <IconButton size='small'>
                         <ShareOutlinedIcon />
                     </IconButton>
-                    <span style={{ fontSize: 12 }}>{post.share_count}</span>
+                    <span style={{ fontSize: 12 }}>{this.state.postList.share_count}</span>
             </CardActions>
             {
-                this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
+                this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={this.state.postList} open_drawer={true}/>):undefined
             }
             </div>
         );
     }
-
 }
 
 CardAction.propTypes = {
