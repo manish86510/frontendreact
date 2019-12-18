@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import CreateComment from '../Posts/create-comment';
+import ChildComments from './child_comments';
 
 const styles = theme => ({
     card: {
@@ -26,7 +27,8 @@ class FeedComments extends React.Component {
         super(props);
         this.state = {
             comments: null,
-            comment_on_post: 45
+            comment_on_post: 45,
+            parentComment: true
         };
     }
     
@@ -61,7 +63,14 @@ class FeedComments extends React.Component {
 
     replyComment = (comment_id)=>{
         this.setState({comment_on_post: comment_id});
+        this.setState({parentComment:false});
     }
+
+    cancelReply = () =>{
+        this.setState({parentComment:true});
+        this.setState({comment_on_post:45});
+    }
+
 
     render() {
         const {post} = this.props;
@@ -78,28 +87,28 @@ class FeedComments extends React.Component {
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} post={post}/>:undefined
+                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post}/>:undefined
                                         }
+                                        <ChildComments post={post} childComments={comment.children}/>
                                     </React.Fragment>
                                 }>
-
                                 </ListItemText>
-                                {/* {
+                                {
                                     (this.state.comment_on_post!=comment.id && this.state.comment_on_post>-1)?(
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
                                         </ListItemSecondaryAction>
                                     ): undefined
-                                } */}
+                                }
                             </ListItem>
                         )
                     )) : undefined}
                 </List>
-                <CreateComment parent={-1} post={post} onCommented={this.onCommented}/>
-                {/* {
-                    this.state.comment_on_post<0?<CreateComment parent={-1} post={post}/>:undefined
-                } */}
-
+                {
+                    this.state.parentComment?(
+                        <CreateComment parent={-1} post={post} onCommented={this.onCommented}/>
+                    ):(undefined)
+                }
             </div>
         );
     }
