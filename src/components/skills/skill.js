@@ -3,7 +3,9 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+import { PropTypes } from 'prop-types';
+import { withStyles } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
@@ -14,6 +16,18 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // const $ = require('jquery');
+
+const styles = theme => ({
+  root:{
+    padding: '10px 10px'
+  },
+  heading: {
+    fontSize: '20px',
+    color: '#0f543ec7',
+    fontWeight: '700'
+  }
+  
+})
 
 class Skill extends React.Component {
 
@@ -90,11 +104,14 @@ class Skill extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      for (let i = 0; i < res.data.length; i++) {
-        selected.skill.push({skill:res.data[i].skill, id:res.data[i].id, created:false})
+      if(res.data.length===0 || res.data.length==undefined){
+        this.setState({ isEdit: true });
+      }else{
+        for (let i = 0; i < res.data.length; i++) {
+          selected.skill.push({skill:res.data[i].skill, id:res.data[i].id, created:false})
+        }
+        this.setState({ selected:  selected});
       }
-      // interest.interest = res.data
-      this.setState({ selected:  selected});
     }).catch(error => {
       console.log(error);
     });
@@ -148,6 +165,7 @@ class Skill extends React.Component {
   
 
   render() {
+    const {classes} = this.props;
     const elements_in = this.state.autocompleteData
     const skill_items = []
 
@@ -161,15 +179,16 @@ class Skill extends React.Component {
 
 
     return (
-      <div style={{padding: '10px 10px'}}>
+      <div className={classes.root}>
+      <Typography className={classes.heading}>{this.props.title ? this.props.title : " " }</Typography>
       <Grid container spacing={3}>
        {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
           <Grid container direction="row" justify="flex-start" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
-            {this.state.selected.skill.map((skill, index) => (
-              <Chip key={'key_my_skill_'+skill.id} id={skill.id} label={skill.skill} style={{margin:5}} />
-            ))}              
+              {this.state.selected.skill.map((skill, index) => (
+                <Chip key={'key_my_skill_'+skill.id} id={skill.id} label={skill.skill} style={{margin:5}} />
+              ))}              
             </Grid>
             <Grid item xs={2} md={2} lg={1}>
               <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
@@ -190,6 +209,7 @@ class Skill extends React.Component {
                 options={skill_items}
                 getOptionLabel={option => option.skill}
                 onChange={this.handleSkillData}
+                noOptionsText="Please find your interested skill"
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
@@ -216,7 +236,7 @@ class Skill extends React.Component {
                     onChange={this.handleSkillChange}
                     {...params}
                     variant="outlined"
-                    placeholder="Interest"
+                    placeholder="Search Your Skills"
                     margin="normal"
                     fullWidth
                     InputProps={{
@@ -234,7 +254,7 @@ class Skill extends React.Component {
             <Grid item xs={2} md={2} lg={2}>
               <div>
                 <div style={{float:'left', marginLeft:"45px"}}>
-                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                  <IconButton aria-label="add" color="primary" onClick={this.submit}>
                     <CheckCircleOutlineIcon fontSize="large"/>
                   </IconButton>
                 </div>
@@ -255,4 +275,8 @@ class Skill extends React.Component {
   }
 }
 
-export default Skill;
+Skill.propTypes = {
+  title: PropTypes.string,
+};
+
+export default withStyles(styles)(Skill);
