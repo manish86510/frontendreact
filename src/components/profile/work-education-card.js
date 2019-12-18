@@ -21,18 +21,21 @@ const styles = theme => ({
     padding: '10px 10px'
   },
   heading: {
-      fontSize: '20px',
-      color: '#0f543ec7',
-      fontWeight: '700'
+    fontSize: '20px',
+    color: '#0f543ec7',
+    fontWeight: '700'
   },
   textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: '100%',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '100%',
   },
   button: {
-      margin: "0px 4px 0px 8px",
+    margin: "0px 4px 0px 8px",
   },
+  spacing_internal:{
+    padding:"10px 0px"
+  }
 
 })
 
@@ -87,7 +90,7 @@ class WorkEducationCard extends React.Component {
         </ListItem>
         <Divider />
         {this.state.isWork ?
-        <div style={{padding:"10px 0px"}}>
+        <div className={classes.spacing_internal}>
             <form>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
@@ -164,11 +167,11 @@ class WorkEducationCard extends React.Component {
         </div>}        
         <Divider />
         <ListItem>
-          <ListItemText primary="Work" />
+          <ListItemText primary="University" />
         </ListItem>
         <Divider />
         {this.state.isUniversity ?
-        <div style={{padding:"10px 0px"}}>
+        <div className={classes.spacing_internal}>
             <form>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
@@ -241,15 +244,15 @@ class WorkEducationCard extends React.Component {
           <IconButton aria-label="add" color="primary" onClick={this.toggleUniversityEdit}>
             <AddBoxOutlinedIcon fontSize="large" />
           </IconButton>
-          <span style={{ paddingLeft: "10px" }}>Add a workplace</span>
+          <span style={{ paddingLeft: "10px" }}>Add a university</span>
         </div>}        
         <Divider />
         <ListItem>
-          <ListItemText primary="Work" />
+          <ListItemText primary="School" />
         </ListItem>
         <Divider />
         {this.state.isSchool ?
-        <div style={{padding:"10px 0px"}}>
+        <div className={classes.spacing_internal}>
             <form>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
@@ -322,7 +325,7 @@ class WorkEducationCard extends React.Component {
           <IconButton aria-label="add" color="primary" onClick={this.toggleSchoolEdit}>
             <AddBoxOutlinedIcon fontSize="large" />
           </IconButton>
-          <span style={{ paddingLeft: "10px" }}>Add a workplace</span>
+          <span style={{ paddingLeft: "10px" }}>Add a school</span>
         </div>}        
         <Divider />
       </div>
