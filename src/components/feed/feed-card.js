@@ -21,6 +21,7 @@ import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import FeedDetail from './feed-details';
 import YoutubePlayer from './youtube-player';
+import CardAction from './card_action';
 
 const styles = theme => ({
     card:{
@@ -50,27 +51,27 @@ class FeedCard extends React.Component {
         };
     }
     
-    handleLike = (post_data) => {
-        var my_data={
-          post:post_data,
-        }
-        var url = endpoints.user_like;
-        var getToken = localStorage.getItem('access');
-        axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
-            }
-          }
-        ).then(res => {
-            this.props.onLike(this.props.post);
-        })
-    }
+    // handleLike = (post_data) => {
+    //     var my_data={
+    //       post:post_data,
+    //     }
+    //     var url = endpoints.user_like;
+    //     var getToken = localStorage.getItem('access');
+    //     axios.post(
+    //       url, my_data,
+    //       {
+    //         headers: {
+    //           Authorization: 'Bearer ' + getToken,
+    //         }
+    //       }
+    //     ).then(res => {
+    //         this.props.onLike(this.props.post);
+    //     })
+    // }
 
-    postDetail = ()=>{
-        this.setState({open_post_details: !this.state.open_post_details});
-    }
+    // postDetail = ()=>{
+    //     this.setState({open_post_details: !this.state.open_post_details});
+    // }
 
     onDrawerClose = ()=>{
         this.setState({open_post_details: !this.state.open_post_details});
@@ -123,7 +124,8 @@ class FeedCard extends React.Component {
                         
                     </Typography>
                 </CardContent>
-                <CardActions style={{padding: '8px 25px'}}>
+                <CardAction post={post}/>
+                {/* <CardActions style={{padding: '8px 25px'}}>
                     {
                         post.is_like==true?(
                             <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
@@ -144,13 +146,10 @@ class FeedCard extends React.Component {
                         <ShareOutlinedIcon />
                     </IconButton>
                     <span style={{ fontSize: 12 }}>{post.share_count}</span>
-                </CardActions>
+                </CardActions> */}
                 {/* <CardActions>
                     <FeedComments pid={post.id} />
                 </CardActions> */}
-                {
-                    this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
-                }
             </Card>
         );
     }

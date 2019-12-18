@@ -22,6 +22,7 @@ import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
 import { faSitemap } from '@fortawesome/free-solid-svg-icons';
 import YoutubePlayer from './youtube-player';
+import CardAction from './card_action';
 
 const styles = theme => ({
     card:{
@@ -47,6 +48,24 @@ class FeedDetail extends React.Component{
         };
     }
 
+    handleLike = (post_data) => {
+        var my_data={
+          post:post_data,
+        }
+        var url = endpoints.user_like;
+        var getToken = localStorage.getItem('access');
+        axios.post(
+          url, my_data,
+          {
+            headers: {
+              Authorization: 'Bearer ' + getToken,
+            }
+          }
+        ).then(res => {
+            
+        })
+    }
+
     closeDrawer = ()=>{
         this.setState({open_drawer: false});
         this.props.onDrawerClose();
@@ -66,7 +85,7 @@ class FeedDetail extends React.Component{
                         <ListItemAvatar>
                             <Avatar alt="Remy Sharp" src={post.user.avatar} />
                         </ListItemAvatar>
-                        <ListItemText primary="Site Admin" secondary={"@"+post.user.username+ " "+post.user.followers_count+" followers"}></ListItemText>
+                        <ListItemText primary={post.user.username} secondary={"@"+post.user.username+ " "+post.user.followers_count+" followers"}></ListItemText>
                     </ListItem>
                 </List>
                 {
@@ -92,16 +111,18 @@ class FeedDetail extends React.Component{
                 }
                 <Typography variant="body2" color="textSecondary" component="div" dangerouslySetInnerHTML={markup} style={{padding: '5px 12px'}}/>
 
-                <CardActions style={{padding: '8px 25px'}}>
+                <CardAction post={post}/>
+
+                {/* <CardActions style={{padding: '8px 25px'}}>
                         {
-                            post.like_count>0?(
-                                <IconButton size='small'>
+                            post.is_like==true?(
+                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)} color="primary">
                                 <ThumbUpAltOutlinedIcon/>
-                                </IconButton>
+                            </IconButton>
                             ):(
-                                <IconButton size='small'>
-                                <ThumbUpAltOutlinedIcon/>
-                                </IconButton>
+                            <IconButton size='small' onClick={this.handleLike.bind(this, post.id)}>
+                                <ThumbUpAltOutlinedIcon />
+                            </IconButton>
                             )
                         }
                         <span style={{ fontSize: 12 }}>{post.like_count}</span>
@@ -117,7 +138,7 @@ class FeedDetail extends React.Component{
                         <IconButton size='small' style={{position:'absolute', right: 20}}>
                             <ShareOutlinedIcon />
                         </IconButton>
-                </CardActions>
+                </CardActions> */}
                 <CardActions>
                     <FeedComments post={post}/>
                 </CardActions>
@@ -129,7 +150,7 @@ class FeedDetail extends React.Component{
 FeedDetail.propTypes = {
     post: PropTypes.object.isRequired,
     open_drawer: PropTypes.bool.isRequired,
-    onDrawerClose: PropTypes.func.isRequired
+    onDrawerClose: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(FeedDetail);
