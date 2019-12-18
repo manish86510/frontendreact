@@ -43,24 +43,6 @@ class FeedDetail extends React.Component{
         };
     }
 
-    handleLike = (post_data) => {
-        var my_data={
-          post:post_data,
-        }
-        var url = endpoints.user_like;
-        var getToken = localStorage.getItem('access');
-        axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
-            }
-          }
-        ).then(res => {
-            
-        })
-    }
-
     closeDrawer = ()=>{
         this.setState({open_drawer: false});
         this.props.onDrawerClose();

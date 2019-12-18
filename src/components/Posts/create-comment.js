@@ -15,6 +15,7 @@ class CreateComment extends React.Component {
             comment_model:{
                 post: props.post.id,
                 comment: '',
+                isError: '',
                 parent: props.parent,
             }
         };
