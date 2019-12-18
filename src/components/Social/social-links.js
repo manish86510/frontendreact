@@ -29,7 +29,7 @@ const styles = theme => ({
   }  
 })
 
-class Interest extends React.Component {
+class SocialLinks extends React.Component {
 
   constructor(props) {
     super(props);
@@ -273,8 +273,8 @@ class Interest extends React.Component {
   }
 }
 
-Interest.propTypes = {
+SocialLinks.propTypes = {
   title: PropTypes.string,
 };
 
-export default withStyles(styles)(Interest);
+export default withStyles(styles)(SocialLinks);
