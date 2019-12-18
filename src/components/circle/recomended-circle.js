@@ -2,7 +2,8 @@ import React from 'react';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import ListIcon from '@material-ui/icons/List';
 import AppsIcon from '@material-ui/icons/Apps';
-import {Card, CardHeader, CardContent, Button, IconButton, Typography,
+import {
+    Card, CardHeader, CardContent, Button, IconButton, Typography,
     List, ListItem, Divider, ListItemText, ListItemSecondaryAction, Avatar, ListItemAvatar,
     Grid, CardMedia
 } from '@material-ui/core/';
@@ -28,18 +29,18 @@ const styles = theme => ({
             color: "#0088db"
         },
     },
-    suggest_circle_paper:{
-        padding:'15px',
-      },
-      suggest_name:{
+    suggest_circle_paper: {
+        padding: '15px',
+    },
+    suggest_name: {
         margin: '20px 0 0 0',
         fontSize: '18px'
-      },
-      avtar_followers:{
+    },
+    avtar_followers: {
         height: '50px',
         width: '50px',
         borderRadius: '20px'
-      },
+    },
 });
 
 class RecomendedCircle extends React.Component {
@@ -51,7 +52,6 @@ class RecomendedCircle extends React.Component {
             recomendedCircle: null,
             text: 'Test',
             layoutType: props.layoutType,
-            connectButtonStatus: []
         };
     }
 
@@ -87,6 +87,7 @@ class RecomendedCircle extends React.Component {
                 }
             }
         ).then(res => {
+            debugger;
             if (res.status == 200) {
                 document.getElementById(user_id).innerHTML = "Request Sent";
                 document.getElementById(user_id).disabled = true;
@@ -105,107 +106,120 @@ class RecomendedCircle extends React.Component {
         });
     }
 
-    listView = () =>{
-        this.setState({layoutType: 'list'});
+    listView = () => {
+        this.setState({ layoutType: 'list' });
     }
-    gridView = () =>{
-        this.setState({layoutType: 'grid'});
+    gridView = () => {
+        this.setState({ layoutType: 'grid' });
     }
 
     render() {
-        console.log(this.state.connectButtonStatus);
         const { classes } = this.props;
-        const defaultStatus = false;
         return (
             <Card>
                 <CardHeader
-                title={
-                    <Typography className={classes.cardHeader}>{this.props.customTitle ? this.props.customTitle : "Expand Your Circle" }</Typography>
-                }
-                action={
-                    <div>
-                    <IconButton aria-label="list" onClick={this.listView}>
-                        <ListIcon />
-                    </IconButton>
-                    <IconButton aria-label="grid" onClick={this.gridView}>
-                        <AppsIcon />
-                    </IconButton>
-                    <IconButton aria-label="refresh">
-                        <RefreshIcon />
-                    </IconButton>
-                    </div>
-                }>
+                    title={
+                        <Typography className={classes.cardHeader}>{this.props.customTitle ? this.props.customTitle : "Expand Your Circle"}</Typography>
+                    }
+                    action={
+                        <div>
+                            <IconButton aria-label="list" onClick={this.listView}>
+                                <ListIcon />
+                            </IconButton>
+                            <IconButton aria-label="grid" onClick={this.gridView}>
+                                <AppsIcon />
+                            </IconButton>
+                            <IconButton aria-label="refresh">
+                                <RefreshIcon />
+                            </IconButton>
+                        </div>
+                    }>
                 </CardHeader>
 
                 <CardContent>
-                {this.state.layoutType==='list'?
-                    <List className={classes.root} dense>
-                        {
-                            (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
-                                this.state.recomendedCircle.results.map((user, index) => (
-                                    <ListItem alignItems="flex-start">
-                                        <ListItemAvatar>
-                                            <Avatar alt="Remy Sharp" src={user.avatar} />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={
-                                                <Link
-                                                    variant="body2"
-                                                    component="a"
-                                                    underline="none"
-                                                    onClick={this.handleRecommendedCircleClick.bind(this, user)}
-                                                    className={classes.link}
-                                                    color="textPrimary"
-                                                >
-                                                    {"@" + user.username}
-                                                </Link>
-                                            }
-                                            secondary={
-                                                user.followers_count + " followers"
-                                            }>
-                                        </ListItemText>
-                                        <ListItemSecondaryAction>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={this.connect.bind(this, user.pk)}
-                                                id={user.pk}
-                                            >
-                                                connect
-
-                                            </Button>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                ))
-                            ) : undefined
-                        }
-                    </List>:
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Grid container>
+                    {this.state.layoutType === 'list' ?
+                        <List className={classes.root} dense>
                             {
-                            (this.state.recomendedCircle!=null && this.state.recomendedCircle!=undefined)?(
-                                this.state.recomendedCircle.results.map((user, index)=>(
-                                <Grid item xs={3} style={{margin:'10px 22px'}}> 
-                                    <Card className={classes.suggest_circle_paper}>
-                                        <Grid item xs={12}>
-                                            <ListItemAvatar className={classes.avtar_followers}>
+                                (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
+                                    this.state.recomendedCircle.results.map((user, index) => (
+                                        <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
                                                 <Avatar alt="Remy Sharp" src={user.avatar} />
                                             </ListItemAvatar>
-                                        </Grid>
-                                        <Grid item xs={12} style={{margin:'20px 0px'}}>
-                                            <ListItemText primary={"@"+user.username} secondary={user.followers_count+" followers"}></ListItemText>
-                                        </Grid>
-                                        <Grid item xs={12} style={{marginBottom:'20px'}}>
-                                            <Button variant="contained" color="primary" onClick={this.connect.bind(this, user.pk)} id={user.pk}>Connect</Button>
-                                        </Grid>
-                                    </Card>
-                                </Grid>))        
-                                ):undefined
+                                            <ListItemText
+                                                primary={
+                                                    <Link
+                                                        variant="body2"
+                                                        component="a"
+                                                        underline="none"
+                                                        onClick={this.handleRecommendedCircleClick.bind(this, user)}
+                                                        className={classes.link}
+                                                        color="textPrimary"
+                                                    >
+                                                        {"@" + user.username}
+                                                    </Link>
+                                                }
+                                                secondary={
+                                                    user.followers_count + " followers"
+                                                }>
+                                            </ListItemText>
+                                            <ListItemSecondaryAction>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.connect.bind(this, user.pk)}
+                                                    id={user.pk}
+                                                >
+                                                    connect
+    
+                                            </Button>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    ))
+                                ) : undefined
                             }
+                        </List> :
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Grid container>
+                                    {
+                                        (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
+                                            this.state.recomendedCircle.results.map((user, index) => (
+                                                <Grid item xs={3} style={{ margin: '10px 22px' }}>
+                                                    <Card className={classes.suggest_circle_paper}>
+                                                        <Grid item xs={12}>
+                                                            <ListItemAvatar className={classes.avtar_followers}>
+                                                                <Avatar alt="Remy Sharp" src={user.avatar} />
+                                                            </ListItemAvatar>
+                                                        </Grid>
+                                                        <Grid item xs={12} style={{ margin: '20px 0px' }}>
+                                                            <ListItemText
+                                                                primary={
+                                                                    <Link
+                                                                        variant="body2"
+                                                                        component="a"
+                                                                        underline="none"
+                                                                        onClick={this.handleRecommendedCircleClick.bind(this, user)}
+                                                                        className={classes.link}
+                                                                        color="textPrimary"
+                                                                    >
+                                                                        {"@" + user.username}
+                                                                    </Link>
+                                                                }
+                                                                secondary={user.followers_count + " followers"}>
+
+                                                            </ListItemText>
+                                                        </Grid>
+                                                        <Grid item xs={12} style={{ marginBottom: '20px' }}>
+                                                            <Button variant="contained" color="primary" onClick={this.connect.bind(this, user.pk)} id={user.pk}>Connect</Button>
+                                                        </Grid>
+                                                    </Card>
+                                                </Grid>))
+                                        ) : undefined
+                                    }
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid> 
                     }
                 </CardContent>
             </Card>

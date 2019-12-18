@@ -42,6 +42,7 @@ class MyMessages extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            status:false,
             userMessage: [
                 {
                     id: 1,
@@ -64,6 +65,7 @@ class MyMessages extends React.Component {
             ]
         }
     }
+    
     render() {
         const { classes } = this.props;
         return (
@@ -92,7 +94,7 @@ class MyMessages extends React.Component {
                                     readOnly: true,
                                 }}
                             />
-                            <Button variant="contained"  onClick={this.handle} xl={2} className={classes.icon} aria-label="search" style={{ backgroundColor: "red", borderRadius: "0px 30px 30px 0px" }}>
+                            <Button variant="contained"  onClick={this.handleIgnoreClick} xl={2} className={classes.icon} aria-label="search" style={{ backgroundColor: "red", borderRadius: "0px 30px 30px 0px" }}>
                                 <text>Ignore all</text>
                             </Button>
                         </Paper>
@@ -116,7 +118,7 @@ class MyMessages extends React.Component {
                                             <Grid item xs={1}>
                                                 {
                                                     data.seen_status === false ?
-                                                        <Fab color="primary" size="small" aria-label="add">1</Fab> : ""
+                                                        <Fab color="secondary" size="small" aria-label="add">1</Fab> : ""
                                                 }
 
                                             </Grid>
