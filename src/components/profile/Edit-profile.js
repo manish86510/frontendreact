@@ -27,9 +27,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
-import InterestCard from './interest-card';
-import LanguageCard from './language-card';
-import SkillCard from './skill-card';
 
 const $ = require('jquery');
 
@@ -59,15 +56,15 @@ const styles = theme => ({
   },
   cardContainer: {
     padding: 10,
-},
-interest_heading: {
+  },
+  interest_heading: {
     fontSize: '20px',
     color: '#0f543ec7',
     fontWeight: '700'
-},
-interest_container: {
-    padding: '10px',
-},
+  },
+  interest_container: {
+    padding: '5px 10px',
+  },
 });
 
 
@@ -240,45 +237,43 @@ class EditProfile extends React.Component {
   }
   render() {
     const { classes } = this.props;
+    const friendInfo = this.props.info;
     return (
       <div>
         {
           this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
         }
-        <Card>
-          {/* <InterestData /> */}
-          {/* <SkillCard /> */}
-          {/* <LanguageCard /> */}
+        <Card style={{ marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-              <div className={classes.interest_container}>
-                    <label className={classes.interest_heading}>
-                        Interests
+                <div className={classes.interest_container}>
+                  <label className={classes.interest_heading}>
+                    Interests
                     </label>
                 </div>
                 <div>
-                  <InterestData />      
+                  <InterestData />
                 </div>
               </Grid>
               <Grid item xs={12}>
                 <div className={classes.interest_container}>
-                    <label className={classes.interest_heading}>
-                        Skills
+                  <label className={classes.interest_heading}>
+                    Skills
                     </label>
                 </div>
                 <div>
-                  <SkillData />      
+                  <SkillData />
                 </div>
               </Grid>
               <Grid item xs={12}>
                 <div className={classes.interest_container}>
-                    <label className={classes.interest_heading}>
-                        Languages
+                  <label className={classes.interest_heading}>
+                    Languages
                     </label>
                 </div>
                 <div>
-                  <LanguageData />      
+                  <LanguageData />
                 </div>
               </Grid>
               <Grid item xs={6}>
@@ -471,13 +466,13 @@ class EditProfile extends React.Component {
                 </div>
                 <div className={classes.cardContainer}>
                   <form className={classes.container} noValidate autoComplete="off">
-                  <TextField
-                    id="email"
-                    label="Email"
-                    className={clsx(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
+                    <TextField
+                      id="email"
+                      label="Email"
+                      className={clsx(classes.textField, classes.dense)}
+                      margin="dense"
+                      variant="outlined"
+                    />
                   </form>
                 </div>
 
@@ -499,8 +494,8 @@ class EditProfile extends React.Component {
                   </label>
                 </div>
                 <div className={classes.cardContainer}>
-                  10555 coins  
-                  <Button variant="contained" color="primary" style={{float:'right'}}>
+                  10555 coins
+                  <Button variant="contained" color="primary" style={{ float: 'right' }}>
                     Go To Wallet
                   </Button>
                 </div>

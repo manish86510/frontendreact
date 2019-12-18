@@ -5,24 +5,26 @@ import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField, IconButton} from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-const $ = require('jquery');
+
+// const $ = require('jquery');
 
 class Interest extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      profile_interest: [],
       selected: {
         interest: [],
-        newInterest:[],
       },
-      value: "",
+      value: null,
       autocompleteData: [],
       loading: false,
       isEdit: false,
@@ -43,7 +45,7 @@ class Interest extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.interest + `?querystring=${searchText}`;
+      let url = endpoints.interest + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {
@@ -66,7 +68,6 @@ class Interest extends React.Component {
 
 
   handleInterestChange = (e) => {
-    // this.setState({loading: true });
     this.setState({
       value: e.target.value
     });
@@ -75,9 +76,11 @@ class Interest extends React.Component {
      * Handle the remote request with the current text !
      */
 
-    // if (e.target.value.length > 2) {
+    if (e.target.value.length > 2) {
       this.retrieveDataAsynchronously(e.target.value);
-    // }
+    }else{
+      this.setState({ autocompleteData: [], loading: false });
+    }
   }
 
   getInterest = () => {
@@ -87,34 +90,39 @@ class Interest extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      const interest = this.state.selected;
-      // for (let i = 0; i < res.data.length; i++) {
-      //   interest.push({title:res.data[i].interest_code, id:res.data[i].id})
-      // }
-      interest.interest = res.data
-      this.setState({ interest: interest })
+      const selected = this.state.selected;
+      for (let i = 0; i < res.data.length; i++) {
+        selected.interest.push({interest_code:res.data[i].interest_code, id:res.data[i].id, created:false})
+      }
+      // interest.interest = res.data
+      this.setState({ selected: selected });
+      console.log(this.state);
     }).catch(error => {
       console.log(error);
     });
   }
 
-  handleInterestDelete = (event) => {
-    axios.delete(endpoints.my_interest + event.currentTarget.parentElement.id, {
+  renderDeleteItem = (value, option) => {
+    let selected = this.state.selected;
+    selected.interest = value.filter(entry => entry !== option);
+    this.setState({ selected: selected });
+  }
+
+  handleInterestDelete = (option, index) => {
+    axios.delete(endpoints.my_interest + option.id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.access,
       }
     }).then(res => {
-      // toast.success("Deleted")
-      this.getInterest();
+      this.renderDeleteItem(this.state.selected.interest, option);      
     })
-
   };
 
-  handleInterestData = (event) => {
-    const newInterest = this.state.selected.newInterest;
-    newInterest.push({title:event.currentTarget.innerText})
-    this.setState({newInterest:newInterest});
+  handleInterestData = (event, value) => {
+    const selected = this.state.selected;
+    selected.interest = value;
+    this.setState({selected:selected});
   }
 
   toggleEdit = ()=>{
@@ -124,23 +132,20 @@ class Interest extends React.Component {
   }
 
   submit = async()=>{
-    const newInterest = this.state.selected.newInterest;
-    for (var i = 0; i < newInterest.length; i++) {
-      const res =
+    const selected = this.state.selected;
+    for (var i = 0; i < selected.interest.length; i++) {
+      if(selected.interest[i].created === true){
         await axios
-          .post(endpoints.my_interest, JSON.stringify({ "interest_code": newInterest[i].title }), {
+          .post(endpoints.my_interest, JSON.stringify({ "interest_code": selected.interest[i].interest_code }), {
             headers: {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + localStorage.access,
             },
           });
+      }      
     } 
-    this.getInterest();
-    const emptyNewInterest = this.state.selected;
-    emptyNewInterest.newInterest = [];
-    this.setState({'isEdit':false, newInterest:emptyNewInterest})   
+    this.setState({'isEdit':false, selected:selected})   
   }
-
   
 
   render() {
@@ -148,52 +153,62 @@ class Interest extends React.Component {
     const interest_items = []
 
     for (const [index, value] of elements_in.entries()) {
-      interest_items.push(
-        { interest_code: value.interest, id:value.id},
-      )
+      if(this.state.selected.interest.some(item => value.interest === item.interest_code) === false){
+        interest_items.push(
+          { interest_code: value.interest, id:-1, created: true},
+        )
+      }
     }
 
 
     return (
-      <div style={{padding: '10px 20px'}}>
+      <div style={{padding: '10px 10px'}}>
       <Grid container spacing={3}>
-       {this.state.isEdit == false ?
+       {this.state.isEdit === false ?
         <Grid item xs={12} md={12} lg={12}>
-          <Grid container direction="row" justify="left" alignItems="center">
+          <Grid container direction="row" justify="flex-start" alignItems="center">
             <Grid item xs={10} md={10} lg={11}>
             {this.state.selected.interest.map((interest, index) => (
-              <Chip id={interest.id} label={interest.interest_code} style={{margin:5}} />
+              <Chip key={'key_my_interest_'+interest.id} id={interest.id} label={interest.interest_code} style={{margin:5}} />
             ))}              
             </Grid>
             <Grid item xs={2} md={2} lg={1}>
-              {/* <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
-                <AddIcon/>
-              </IconButton> */}
-              <Icon onClick={this.toggleEdit} className="fa fa-plus-circle" style={{ fontSize: 25, float:'right' }} />
+              <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
+                <AddCircleOutlineIcon fontSize="large"/>
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>
        :
         <Grid item xs={12} md={12} lg={12}>
-          <Grid container direction="row" justify="left" alignItems="center">
-            <Grid item xs={10} md={10} lg={11}>
+          <Grid container direction="row" justify="flex-start" alignItems="center">
+            <Grid item xs={10} md={10} lg={10}>
               <Autocomplete
-                defaultValue={this.state.selected.interest}
+                value={this.state.selected.interest}
                 multiple
                 id="interest"
+                filterSelectedOptions={true}
                 options={interest_items}
                 getOptionLabel={option => option.interest_code}
                 onChange={this.handleInterestData}
-                isClearable={this.state.selected.interest.some(v => !v.isFixed)}
-                // closeIcon={null}
-                disableClearable={true}
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
-                      id={option.id}
+                      id={option.id+"_"+option.interest_code}
+                      key={'key_interest_'+option.id+"_"+option.interest_code}
                       label={option.interest_code}
                       {...getTagProps({ option })}
-                      onDelete={this.handleInterestDelete}
+                      onDelete={()=>{
+                        if(option.created === true){
+                          this.renderDeleteItem(value, option)
+                        }else{
+                          // delete from api when option.created==false
+                          //call api for delete interest from my interest table
+                          if(option.created===false){
+                          this.handleInterestDelete(option, index);
+                        }
+                        }
+                      }}
                     />
                   ))
                 }
@@ -210,7 +225,6 @@ class Interest extends React.Component {
                       endAdornment: (
                         <React.Fragment>
                           {this.state.loading ? <CircularProgress color="inherit" size={25} /> : null}
-                          {/* {params.InputProps.endAdornment} */}
                         </React.Fragment>
                       ),
                     }}
@@ -218,15 +232,19 @@ class Interest extends React.Component {
                 )}
               />
             </Grid>
-            <Grid item xs={2} md={2} lg={1}>
-              {/* <IconButton color="primary" onClick={this.submit}>
-                <AddIcon/>
-              </IconButton>
-              <IconButton color="primary" onClick={this.toggleEdit}>
-                <Close/>
-              </IconButton> */}
-              <Icon onClick={this.submit} className="fa fa-check" style={{ fontSize: 25, marginLeft:10 }} />
-              <Icon onClick={this.toggleEdit} className="fa fa-close" style={{ fontSize: 25, float:'right' }} />
+            <Grid item xs={2} md={2} lg={2}>
+              <div>
+                <div style={{float:'left', marginLeft:"45px"}}>
+                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                    <CheckCircleOutlineIcon fontSize="large"/>
+                  </IconButton>
+                </div>
+                <div style={{float:'right'}}>
+                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                    <HighlightOffIcon fontSize="large"/>
+                  </IconButton>  
+                </div>
+              </div>
             </Grid>
           </Grid>
          </Grid>

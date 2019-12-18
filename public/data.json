@@ -1,0 +1,134 @@
+[{
+    "id": 1,
+    "name": "Hindi",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 2,
+    "name": "Spanish",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 3,
+    "name": "English",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 4,
+    "name": "Bengali",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 5,
+    "name": "Portuguese",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 6,
+    "name": "Russian",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 7,
+    "name": "Japanese",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 8,
+    "name": "Wu Chinese",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 9,
+    "name": "Turkish",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 10,
+    "name": "Korean",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 11,
+    "name": "French",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 12,
+    "name": "Vietnamese",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 13,
+    "name": "Tamil",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 14,
+    "name": "German",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 15,
+    "name": "Italian",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 16,
+    "name": "Egyptian Arabic",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 17,
+    "name": "Gujarati",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 18,
+    "name": "Iranian Persian",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  },
+  {
+    "id": 19,
+    "name": "Bhojpuri",
+    "speak": "yes",
+    "read": "yes",
+    "write":"yes"
+  }
+]

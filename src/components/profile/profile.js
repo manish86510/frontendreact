@@ -14,8 +14,8 @@ class Profile extends React.Component{
                     </Grid>
                     <Grid item xs={12} sm={12} md={4} lg={4}>
                     <HotTopics />
-                    </Grid>
                 </Grid>
+            </Grid>
         );
     }
 }

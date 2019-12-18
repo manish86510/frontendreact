@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/styles';
 import RecomendedCircle from '../circle/recomended-circle';
 import HotTopic from '../hot-topics/hot-topic';
+import FriendsList from '../friends/friend-list'
 
 
 const styles = theme => ({
@@ -36,7 +37,10 @@ class NotificationTopics extends React.Component {
         <HotTopic/>
         <br/>
         <br/>
-        <RecomendedCircle/>
+        <FriendsList />
+        <br/>
+        <br/>
+        <RecomendedCircle layoutType={'list'}/>
       </div>
     );
   }

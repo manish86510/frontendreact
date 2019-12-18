@@ -18,6 +18,7 @@ import Home from './containers/home';
 import SideNav from './containers/nav';
 import Message from './components/message';
 import Notifications from './containers/Notifications';
+import MyAccount from './containers/my_account';
 // import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
@@ -60,7 +61,8 @@ function App() {
         <Route path = "/message" component = { Message }/> 
         <Route path = "/bookmark" component = { Bookmark }/> 
         <Route path = "/notifications" component = { Notifications }/> 
-        <Route path = "/profile" component = { Profile }/> 
+        <Route path = "/profile/:username" component = { Profile }/> 
+        <Route path = "/my_account" component = { MyAccount }/> 
         <Route path = "/Edit-profile" component = { EditProfile }/> 
         <Route path = "/collaborate" component = { CollaboarateMain }/> 
         <Route path = "/events" component = { Events }/> 

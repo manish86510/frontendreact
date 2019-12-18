@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 import '../../styles/main.css';
 import FeedCard from './feed-card';
@@ -46,10 +46,13 @@ class Feed extends React.Component {
             comment: '',
             parent: '',
             comment_id: 0,
+            loading: false
         };
         this.handleScroll = this.handleScroll.bind(this);
     }
-    loadFeed = ()=>{
+
+    loadFeed = () =>{
+        this.setState({loading: true});
         var url = endpoints.create_post;
         if(this.state.postList!=null){
             url = this.state.postList.next;
@@ -62,6 +65,7 @@ class Feed extends React.Component {
                     Authorization: 'Bearer ' + getToken,
                 }
             }
+
         ).then(res => {
             if (res.status == 200) {
                 var data = this.state.postList;
@@ -72,27 +76,23 @@ class Feed extends React.Component {
                     data.count = data.count + res.data.count;
                     data.next = res.data.next;
                     data.previous = res.data.previous;
-                    
                     this.setState({
                         postList: data,
                     });
+                    window.addEventListener('scroll', this.handleScroll);
                 }
                 else{
                     this.setState({
                         postList: res.data,
                     });   
                 }
+                this.setState({loading: false});
             }
         });
     }
     componentDidMount() {
         this.loadFeed();
         window.addEventListener('scroll', this.handleScroll);
-        // let self = this;
-        // window.setTimeout(function(){
-        //     debugger;
-        //     window.addEventListener('scroll', self.handleScroll);
-        // }, 2000);
     }
 
     componentWillUnmount() {
@@ -111,6 +111,7 @@ class Feed extends React.Component {
         var x = (scrollPosition*100)/totalHeight;
         if(x>80){
             this.loadFeed();
+            window.removeEventListener('scroll', this.handleScroll);
         }
     };
 
@@ -167,6 +168,9 @@ class Feed extends React.Component {
                         </div>
                     </Grid>
                 </Grid>
+                {
+                  this.state.loading?(<center><CircularProgress size={40}/></center>):undefined
+                }
             </div>
         );
     }
