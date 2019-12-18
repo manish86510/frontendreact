@@ -3,9 +3,9 @@ import Popup from "reactjs-popup";
 import TextArea from '../textarea';
 import '../../styles/main.css';
 import Grid from '@material-ui/core/Grid';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+// import GridList from '@material-ui/core/GridList';
+// import GridListTile from '@material-ui/core/GridListTile';
+// import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ProjectTextArea from '../project_textarea';
 
 class AddProject extends React.Component {

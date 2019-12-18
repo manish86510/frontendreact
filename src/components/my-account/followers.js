@@ -1,8 +1,8 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import { Avatar, ListItem } from '@material-ui/core';
+import { ListItem } from '@material-ui/core';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -64,7 +64,7 @@ class You extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    var value = this.state.value;
+    // var value = this.state.value;
     return (
       <div className={classes.root}>
         <Grid container spacing={3} className={classes.padding_followers}>

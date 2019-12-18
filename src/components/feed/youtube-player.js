@@ -26,10 +26,14 @@ class YoutubePlayer extends React.Component{
     render(){
         return(
             <div className={"video-responsive"}>
-                <iframe width="811" height="456" 
+                <iframe 
+                width="811" 
+                height="456" 
                 src={this.state.video_url} 
-                frameborder="0" allow="autoplay; encrypted-media; gyroscope;" 
-                allowfullscreen></iframe>
+                frameborder="0" 
+                allow="autoplay; encrypted-media; gyroscope;" 
+                allowfullscreen
+                ></iframe>
             </div>
         );
     }

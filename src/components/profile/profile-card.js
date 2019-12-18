@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, useTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
@@ -78,7 +78,7 @@ class ProfileCard extends React.Component {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => {
-      if(res.status==200){
+      if(res.status===200){
         window.localStorage.setItem('userInfo', JSON.stringify(res.data));
         this.setState({user: res.data});
       }
@@ -103,7 +103,7 @@ class ProfileCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const url = 'energeapi.do.viewyoursite.net' + this.state.user.avatar;
+    // const url = 'energeapi.do.viewyoursite.net' + this.state.user.avatar;
     return (
       <Card className={classes.cardContainer}>
         <div style={{ position: 'relative' }}>
@@ -120,7 +120,7 @@ class ProfileCard extends React.Component {
             }
 
             <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleProfilePicChange} style={{ display: "none" }} />
-            <a href="#" onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
+            <a onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
           </div>
           <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
             <label>

@@ -1,21 +1,16 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
 import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Typography from '@material-ui/core/Typography'
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons';
 import Switch from '@material-ui/core/Switch';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 import {
-  ThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -53,9 +48,6 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing(2),
-  },
-  cardContainer: {
-    padding: 10,
   },
   interest_heading: {
     fontSize: '20px',
@@ -102,11 +94,11 @@ const AntSwitch = withStyles(theme => ({
   checked: {},
 }))(Switch);
 
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-  },
-});
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: green,
+//   },
+// });
 
 
 class EditProfile extends React.Component {
@@ -237,7 +229,7 @@ class EditProfile extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const friendInfo = this.props.info;
+    // const friendInfo = this.props.info;
     return (
       <div>
         {

@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
 import { Link, withRouter } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { IconButton, CircularProgress } from "@material-ui/core";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -255,7 +255,7 @@ class Register extends React.Component {
                 </center>
                 <div>
                     <img src={image}
-                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }} />
+                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }} alt="" />
                 </div >
             </div >
         );

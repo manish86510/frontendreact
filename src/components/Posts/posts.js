@@ -26,7 +26,6 @@ const styles = theme => ({
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
-    color: ''
   },
   content: {
     position: "relative",

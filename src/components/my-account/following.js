@@ -18,12 +18,12 @@ class You extends React.Component {
       value: 0
     }
   }
-  handleChange = (event, newValue) => {
+  handleChange = (newValue) => {
     this.setState({ value: newValue });
   };
   render() {
     const { classes } = this.props;
-    var value = this.state.value;
+    // var value = this.state.value;
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>

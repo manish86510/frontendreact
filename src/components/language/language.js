@@ -3,7 +3,7 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
@@ -106,7 +106,7 @@ class Language extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleLanguageDelete = (option, index) => {
+  handleLanguageDelete = (option) => {
     axios.delete(endpoints.my_languages + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ class Language extends React.Component {
     const elements_in = this.state.autocompleteData
     const language_items = []
 
-    for (const [index, value] of elements_in.entries()) {
+    for (const [value] of elements_in.entries()) {
       if(this.state.selected.language.some(item => value.language === item.name) === false){
         language_items.push(
           { name: value.language, id:-1, created: true},

@@ -1,5 +1,5 @@
 import React from 'react';
-import SideNav from '../../../containers/nav'
+// import SideNav from '../../../containers/nav'
 import SrCoins from '../coins/srcoins'
 import Grid from '@material-ui/core/Grid';
 import HotTopics from '../../../components/hot-topics/hot-topic';

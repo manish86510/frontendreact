@@ -3,7 +3,7 @@ import EventTopics from './../components/events/events_topic';
 import Grid from '@material-ui/core/Grid';
 import EventsTabs from './../components/events/event_tab'
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 
 
 

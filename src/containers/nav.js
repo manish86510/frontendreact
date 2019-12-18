@@ -22,7 +22,7 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PropTypes } from 'prop-types';
 import '../styles/side-nav.css'
-import { Button, Avatar, Grow } from '@material-ui/core';
+import { Avatar, Grow } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
 import Icon from '@material-ui/core/Icon';
@@ -185,12 +185,12 @@ class SideNav extends React.Component {
 
     userMenuRef = null;
 
-    nav = () => {
-        this.state.home_title = "Home";
-        this.props.history.push({
-            pathname: '/home',
-        });
-    }
+    // nav = () => {
+    //     this.state.home_title = "Home";
+    //     this.props.history.push({
+    //         pathname: '/home',
+    //     });
+    // }
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -369,7 +369,7 @@ class SideNav extends React.Component {
                             </div>
                             <IconButton className={classes.profile} variant="contained" onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 {
-                                    (this.state.userProfile.avatar != null && this.state.userProfile.avatar != '') ? (
+                                    (this.state.userProfile.avatar !== null && this.state.userProfile.avatar !== '') ? (
                                         <Avatar
                                             src={"https://energeapi.do.viewyoursite.net" + this.state.userProfile.avatar}>
                                         </Avatar>

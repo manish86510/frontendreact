@@ -5,7 +5,7 @@ import '../../styles/main.css';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import { Button, Typography } from '@material-ui/core';
-import { ListItem, Avatar, TextField, List } from '@material-ui/core';
+import { ListItem, Avatar, List } from '@material-ui/core';
 
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';

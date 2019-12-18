@@ -1,26 +1,26 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { PropTypes } from 'prop-types';
-import {List, IconButton, ListItemSecondaryAction} from '@material-ui/core';
+import {List, IconButton} from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+// import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import endpoints from "../../api/endpoints";
-import axios from 'axios';
+// import endpoints from "../../api/endpoints";
+// import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
-import { faSitemap } from '@fortawesome/free-solid-svg-icons';
+// import { faSitemap } from '@fortawesome/free-solid-svg-icons';
 import YoutubePlayer from './youtube-player';
 
 const styles = theme => ({

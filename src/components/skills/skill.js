@@ -3,7 +3,7 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField} from '@material-ui/core';
 import 'isomorphic-fetch';
@@ -106,7 +106,7 @@ class Skill extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleSkillDelete = (option, index) => {
+  handleSkillDelete = (option) => {
     axios.delete(endpoints.my_skills + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ class Skill extends React.Component {
     const elements_in = this.state.autocompleteData
     const skill_items = []
 
-    for (const [index, value] of elements_in.entries()) {
+    for (const [value] of elements_in.entries()) {
       if(this.state.selected.skill.some(item => value.skill === item.skill) === false){
         skill_items.push(
           { skill: value.skill, id:-1, created: true},

@@ -4,8 +4,8 @@ import ListIcon from '@material-ui/icons/List';
 import AppsIcon from '@material-ui/icons/Apps';
 import {
     Card, CardHeader, CardContent, Button, IconButton, Typography,
-    List, ListItem, Divider, ListItemText, ListItemSecondaryAction, Avatar, ListItemAvatar,
-    Grid, CardMedia
+    List, ListItem, ListItemText, ListItemSecondaryAction, Avatar, ListItemAvatar,
+    Grid,
 } from '@material-ui/core/';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';

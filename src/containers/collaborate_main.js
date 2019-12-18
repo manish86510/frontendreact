@@ -3,7 +3,7 @@ import NotificationTopics from './../components/notifications/notification-topic
 import Grid from '@material-ui/core/Grid';
 import Collaborate from './../components/collaborate'
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 
 
 const styles = theme => ({
