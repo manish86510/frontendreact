@@ -1,13 +1,4 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/styles';
-import IconButton from '@material-ui/core/IconButton';
-import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
-import Switch from '@material-ui/core/Switch';
-import clsx from 'clsx';
-import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import InterestCard from '../interest/interest';
@@ -16,7 +7,7 @@ import SocialLinkCard from '../Social/social-links';
 import LanguageCard from '../language/language';
 import CommunicationCard from './communication-card';
 import WorkEducationCard from './work-education-card';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/styles';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
@@ -210,23 +201,8 @@ class EditProfile extends React.Component {
     }
   };
 
-  handleNameEdit = (event) => {
-    // const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
-
-    // axios({
-    //   method: 'put',
-    //   url: endpoints.profile_user,
-    //   data: code,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + localStorage.access,
-    //   },
-    // }).then(res => {
-    //   "submit"
-    // })
-  }
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     // const friendInfo = this.props.info;
     return (
       <div>
@@ -251,17 +227,17 @@ class EditProfile extends React.Component {
         </Card>
 
         <Card style={{ marginTop: "10px" }}>
-          <SocialLinkCard title="Social Links" />
+          <SocialLinkCard title="Website/Social Links" />
         </Card>
 
         <Card style={{ marginTop: "10px" }}>
           <WorkEducationCard title="Education" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        {/* <Card style={{ marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <div className={classes.interest_container}>
                   <label className={classes.interest_heading}>
                     Interests
@@ -290,7 +266,7 @@ class EditProfile extends React.Component {
                 <div>
                   <LanguageData />
                 </div>
-              </Grid> */}
+              </Grid>
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>
@@ -517,7 +493,7 @@ class EditProfile extends React.Component {
               </Grid>
             </Grid>
           </div>
-        </Card>
+        </Card> */}
 
       </div>
 
