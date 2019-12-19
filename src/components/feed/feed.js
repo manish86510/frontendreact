@@ -39,13 +39,6 @@ class Feed extends React.Component {
         super(props);
         this.state = {
             postList: null,
-            value: 0,
-            like_status: false,
-            isError: '',
-            show: false,
-            comment: '',
-            parent: '',
-            comment_id: 0,
             loading: false
         };
         this.handleScroll = this.handleScroll.bind(this);
@@ -115,36 +108,12 @@ class Feed extends React.Component {
         }
     };
 
-    retrivePost = (post_id)=>{
-        var token = localStorage.getItem('access');
-        axios.get(endpoints.POST+post_id, {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          }
-        }).then(res => {
-            if (res.status == 200) {
-                var data = this.state.postList;
-                for(var i=0;i<data.results.length;i++){
-                    if(data.results[i].id==post_id){
-                        data.results[i] = res.data;
-                        break;
-                    }
-                }
-                this.setState({postList: data});
-            }
-        });
-      }
-    onLike = (post)=>{
-        this.retrivePost(post.id);
-    }
-
     render() {
         const { classes } = this.props;
         return (
             <div id="feed_content" ref={this.handleScroll}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        {/* <AddPost/> */}
                         <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
                 </Grid>
@@ -160,7 +129,7 @@ class Feed extends React.Component {
                                 {
                                     (this.state.postList != null && this.state.postList != undefined) ? (
                                         this.state.postList.results.map(post => (
-                                            <FeedCard post={post} onLike={this.onLike} />
+                                            <FeedCard post={post} />
                                         ))
                                     ) : undefined
                                 }
