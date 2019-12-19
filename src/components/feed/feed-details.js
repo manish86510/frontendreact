@@ -7,13 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-// import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import endpoints from "../../api/endpoints";
-import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
 import YoutubePlayer from './youtube-player';
@@ -43,24 +39,6 @@ class FeedDetail extends React.Component{
         };
     }
 
-    handleLike = (post_data) => {
-        var my_data={
-          post:post_data,
-        }
-        var url = endpoints.user_like;
-        var getToken = localStorage.getItem('access');
-        axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
-            }
-          }
-        ).then(res => {
-            
-        })
-    }
-
     closeDrawer = ()=>{
         this.setState({open_drawer: false});
         this.props.onDrawerClose();
@@ -85,7 +63,7 @@ class FeedDetail extends React.Component{
                 </List>
                 {
                     post.post_media.length>0?(
-                        (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
+                        (post.post_media[0].media_type==='youtube' && post.post_media[0].media_url!=null)?(
                             <YoutubePlayer video_url={post.post_media[0].media_url}/> 
                         ):(
                             <CardMedia

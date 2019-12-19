@@ -40,9 +40,9 @@ class BookmarkTabs extends React.Component {
           <Tab label="Projects" />
           <Tab label="Events" />
         </Tabs>
-        {value == 0 &&  <Feed /> }
-        {value == 1 &&  <Projects /> }
-        {value == 2 &&  <Posts /> }
+        {value === 0 &&  <Feed /> }
+        {value === 1 &&  <Projects /> }
+        {value === 2 &&  <Posts /> }
       </div>
     );
   }

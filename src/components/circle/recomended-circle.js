@@ -66,7 +66,7 @@ class RecomendedCircle extends React.Component {
                 }
             }
         ).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 this.setState({ recomendedCircle: res.data });
             }
         });
@@ -87,8 +87,7 @@ class RecomendedCircle extends React.Component {
                 }
             }
         ).then(res => {
-            debugger;
-            if (res.status == 200) {
+            if (res.status === 200) {
                 document.getElementById(user_id).innerHTML = "Request Sent";
                 document.getElementById(user_id).disabled = true;
                 document.getElementById(user_id).
@@ -140,7 +139,7 @@ class RecomendedCircle extends React.Component {
                     {this.state.layoutType === 'list' ?
                         <List className={classes.root} dense>
                             {
-                                (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
+                                (this.state.recomendedCircle !== null && this.state.recomendedCircle !== undefined) ? (
                                     this.state.recomendedCircle.results.map((user, index) => (
                                         <ListItem alignItems="flex-start">
                                             <ListItemAvatar>
@@ -183,7 +182,7 @@ class RecomendedCircle extends React.Component {
                             <Grid item xs={12}>
                                 <Grid container>
                                     {
-                                        (this.state.recomendedCircle != null && this.state.recomendedCircle != undefined) ? (
+                                        (this.state.recomendedCircle !== null && this.state.recomendedCircle !== undefined) ? (
                                             this.state.recomendedCircle.results.map((user, index) => (
                                                 <Grid item xs={3} style={{ margin: '10px 22px' }}>
                                                     <Card className={classes.suggest_circle_paper}>

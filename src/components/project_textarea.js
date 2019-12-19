@@ -104,7 +104,7 @@ class ProjectTextArea extends React.Component {
         target_audience: "test",
         inputFile: ""
       },
-      media_id:"",
+      media_id: "",
       mediaData: {
         post: '',
         file: [],
@@ -140,26 +140,33 @@ class ProjectTextArea extends React.Component {
     // var result = MyResult(endpoints.create_post, postData, "post");
     // if(result){
     //   console.log(result.data);
-      //window.location.reload();
+    //window.location.reload();
     // }
     // this.state.mediaData.file = this.fileArray;
     // this.state.mediaData.post = result.data.id;
     // var meresult = MyResult(endpoints.create_post, this.state.mediaData);
     var token = localStorage.getItem('access');
-    axios.post(endpoints.create_post, postData ,{
-      headers:{
+    axios.post(endpoints.create_post, postData, {
+      headers: {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
       window.location.reload();
       //get_auth_token();
       var token = localStorage.getItem('access');
-      this.state.mediaData.file = this.fileArray;
-      this.state.mediaData.post = res.data.id;
+      var mediaData = {
+        file: this.fileArray,
+        post: res.data.id
+      };
+      // this.state.mediaData.file = this.fileArray;
+      // this.state.mediaData.post = res.data.id;
+      this.setState({
+        mediaData: mediaData
+      });
       //MyResult(endpoints.create_media, this.state.mediaData, "post");
       var mediaInfo = this.state.mediaData;
-      axios.post(endpoints.create_media, mediaInfo ,{
-        headers:{
+      axios.post(endpoints.create_media, mediaInfo, {
+        headers: {
           Authorization: 'Bearer ' + token,
         }
       }).then(res => {
@@ -221,16 +228,16 @@ class ProjectTextArea extends React.Component {
             ))}
           </div>
           <div id="tag">
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps} className="searchuser" />
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps} className="searchuser" />
           </div>
-          <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button>
-          
+          <Button variant="contained" className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom: 5 }}>Photo/Videos</Button>
+
           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
           <Box component="div" m={1} className={classes.con}>
             <Fab

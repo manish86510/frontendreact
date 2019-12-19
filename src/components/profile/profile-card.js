@@ -78,9 +78,9 @@ class ProfileCard extends React.Component {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => {
-      if(res.status===200){
+      if (res.status === 200) {
         window.localStorage.setItem('userInfo', JSON.stringify(res.data));
-        this.setState({user: res.data});
+        this.setState({ user: res.data });
       }
     }).catch(e => {
 
@@ -103,24 +103,39 @@ class ProfileCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log("test :", this.state.user.avatar)
     // const url = 'energeapi.do.viewyoursite.net' + this.state.user.avatar;
     return (
       <Card className={classes.cardContainer}>
         <div style={{ position: 'relative' }}>
           <div className={classes.gridItem}>
             {
-              (this.state.user.avatar!=null && this.state.user.avatar!='')?(
-                <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {this.inputOpenFileRef.current.click();}}
-                image={"https://energeapi.do.viewyoursite.net"+this.state.user.avatar} />
-              ):(
-              <CardMedia className={classes.media} className={classes.profile_image} onClick={() => {this.inputOpenFileRef.current.click();}}
-              image={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"} />
-              )
+              (this.state.user.avatar !== undefined && this.state.user.avatar) ? (
+                <CardMedia
+                  className={[classes.media, classes.profile_image]}
+                  onClick={() => { this.inputOpenFileRef.current.click(); }}
+                  image={"https://energeapi.do.viewyoursite.net" + this.state.user.avatar} />
+              ) : (
+                  <CardMedia
+                    className={[classes.media, classes.profile_image]}
+                    onClick={() => { this.inputOpenFileRef.current.click(); }}
+                    image={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"} />
+                )
 
             }
 
-            <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleProfilePicChange} style={{ display: "none" }} />
-            <a onClick={this.showOpenFileDlg} disabled={this.state.loading}>Change Profile Photo</a>
+            <input
+              ref={this.inputOpenFileRef}
+              type="file" multiple
+              onChange={this.handleProfilePicChange}
+              style={{ display: "none" }}
+            />
+            <a
+              href="/#"
+              onClick={this.showOpenFileDlg}
+              disabled={this.state.loading}>
+              Change Profile Photo
+            </a>
           </div>
           <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
             <label>

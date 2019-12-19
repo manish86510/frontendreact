@@ -158,7 +158,7 @@ class WalletInfo extends React.Component{
             <Typography/>
             <Grid>
             Your Balance
-            <Button variant="contained"  style={{borderRadius: '25px', float:'right', width:'130px' , backgroundColor:'#6fc1a5'}} variant="contained"  color='primary'>
+            <Button variant="contained"  style={{borderRadius: '25px', float:'right', width:'130px' , backgroundColor:'#6fc1a5'}} color='primary'>
             Buy more
             </Button>
             </Grid>
@@ -215,7 +215,7 @@ class WalletInfo extends React.Component{
           <br></br>
           Remember this action is irrerversible
           </Grid>
-          <Button variant="contained"  style={{borderRadius: '25px', width:'130px' , backgroundColor:'#6fc1a5'}} variant="contained"  color='primary'>
+          <Button variant="contained"  style={{borderRadius: '25px', width:'130px' , backgroundColor:'#6fc1a5'}} color='primary'>
             Send
            </Button>
        

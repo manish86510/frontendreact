@@ -19,7 +19,7 @@ class AddProject extends React.Component {
       </Grid>} modal>
     {close => (
       <div className="modal" style={{display:'contents'}}>
-        <a className="close" onClick={close}>
+        <a href="/#" className="close" onClick={close}>
           &times;
         </a>
         <ProjectTextArea/>

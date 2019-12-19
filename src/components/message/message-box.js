@@ -195,8 +195,8 @@ class MessagesBox extends React.Component {
                         <Paper className={classes.chatBox}>
                             {/* <List component="nav" aria-label="main mailbox folders"> */}
                             {this.state.userMessage.map((data, index) => (
-
-                                data.id == 1 ?
+                                
+                                data.id === 1 ?
                                     <Box component="div" m={3} button style={{ padding: 0, width: "100%" }}>
                                         <Grid container spacing={1} alignItems="center">
                                             <Grid item xs={1}>

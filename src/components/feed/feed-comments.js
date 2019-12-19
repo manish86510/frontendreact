@@ -43,7 +43,7 @@ class FeedComments extends React.Component {
                 }
             }
         ).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 this.setState({ comments: res.data });
             }
             console.log("this.state", this.state);
@@ -77,9 +77,10 @@ class FeedComments extends React.Component {
         return (
             <div style={{width: '100%'}}>
                 <List>
-                    {(this.state.comments != null && this.state.comments != undefined) ? (this.state.comments.results.map(comment =>
-                        (
-                            <ListItem alignItems="flex-start">
+                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map(comment =>
+                        {
+                            debugger;
+                            return(<ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
@@ -87,22 +88,22 @@ class FeedComments extends React.Component {
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post}/>:undefined
+                                            this.state.comment_on_post===comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post}/>:undefined
                                         }
                                         <ChildComments post={post} childComments={comment.children}/>
                                     </React.Fragment>
                                 }>
                                 </ListItemText>
                                 {
-                                    (this.state.comment_on_post!=comment.id && this.state.comment_on_post>-1)?(
+                                    (this.state.comment_on_post!==comment.id && this.state.comment_on_post>-1)?(
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
                                         </ListItemSecondaryAction>
                                         
                                     ): undefined
                                 }
-                            </ListItem>
-                        )
+                            </ListItem>)
+                        }
                     )) : undefined}
                 </List>
                 {

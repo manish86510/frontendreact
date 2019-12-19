@@ -90,14 +90,14 @@ class ChildComments extends React.Component {
                                 <React.Fragment>
                                 <Typography>{child_comment.comment}</Typography>
                                 {
-                                    this.state.comment_on_post==child_comment.id?<CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post}/>:undefined
+                                    this.state.comment_on_post===child_comment.id?<CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post}/>:undefined
                                 }
                                 <ChildComments post={this.state.post} childComments={child_comment.children}/>
                             </React.Fragment>
                             }>
                             </ListItemText>
                             {
-                                (this.state.comment_on_post!=child_comment.id && this.state.comment_on_post>-1)?(
+                                (this.state.comment_on_post!==child_comment.id && this.state.comment_on_post>-1)?(
                                     <ListItemSecondaryAction>
                                         <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
                                     </ListItemSecondaryAction>

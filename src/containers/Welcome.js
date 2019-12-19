@@ -13,8 +13,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         // this.props.match.params.id
-
-       
+        this.state={};
     }
     render() {
         return ( <div className = "Login" >
@@ -29,7 +28,9 @@ class Login extends React.Component {
             <img src = { image }
             style = {
                 { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }
-            }/>  
+            }
+            alt=""
+            />  
             </div>
             </div>
         );

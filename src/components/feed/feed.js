@@ -60,7 +60,7 @@ class Feed extends React.Component {
             }
 
         ).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 var data = this.state.postList;
                 if(data!=null){
                     for(var i=0;i<res.data.results.length;i++){
@@ -127,7 +127,7 @@ class Feed extends React.Component {
                         <div>
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {
-                                    (this.state.postList != null && this.state.postList != undefined) ? (
+                                    (this.state.postList !== null && this.state.postList !== undefined) ? (
                                         this.state.postList.results.map(post => (
                                             <FeedCard post={post} />
                                         ))

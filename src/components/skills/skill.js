@@ -104,7 +104,7 @@ class Skill extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      if(res.data.length===0 || res.data.length==undefined){
+      if(res.data.length===0 || res.data.length===undefined){
         this.setState({ isEdit: true });
       }else{
         for (let i = 0; i < res.data.length; i++) {

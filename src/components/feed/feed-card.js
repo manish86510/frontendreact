@@ -15,6 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import YoutubePlayer from './youtube-player';
 import CardAction from './card_action';
+import FeedDetail from './feed-details';
 
 const styles = theme => ({
     card:{
@@ -43,6 +44,9 @@ class FeedCard extends React.Component {
             open_post_details: false
         };
     }
+    postDetail = ()=>{
+        this.setState({open_post_details: !this.state.open_post_details});
+    }
 
     onDrawerClose = ()=>{
         this.setState({open_post_details: !this.state.open_post_details});
@@ -55,7 +59,7 @@ class FeedCard extends React.Component {
             <Card className={classes.card}>
                 {
                     post.post_media.length>0?(
-                        (post.post_media[0].media_type=='youtube' && post.post_media[0].media_url!=null)?(
+                        (post.post_media[0].media_type==='youtube' && post.post_media[0].media_url!==null)?(
                             <YoutubePlayer video_url={post.post_media[0].media_url}/> 
                         ):(
                             <CardMedia
@@ -91,7 +95,9 @@ class FeedCard extends React.Component {
                                 <Button color="primary" onClick={this.postDetail} >Show More</Button>
                             ):undefined
                         }
-                        
+                        {
+                            this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={post} open_drawer={true}/>):undefined
+                        }
                     </Typography>
                 </CardContent>
                 <CardAction post={post}/>

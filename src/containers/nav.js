@@ -211,8 +211,9 @@ class SideNav extends React.Component {
     };
 
     mynav = () => {
-        this.state.home_title = "Home";
+        // this.state.home_title = "Home";
         this.setState({
+            home_title:"Home",
             homeLink: true,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -224,8 +225,9 @@ class SideNav extends React.Component {
         this.props.history.push({ pathname: "/home" })
     }
     nav_bookmark = () => {
-        this.state.home_title = "Bookmark";
+        // this.state.home_title = "Bookmark";
         this.setState({
+            home_title:"Bookmark",
             homeLink: false,
             bookmarkLink: true,
             bookmarkLink1: false,
@@ -237,13 +239,17 @@ class SideNav extends React.Component {
         this.props.history.push({ pathname: "/bookmark" })
     }
     handleMessageNav = () => {
-        this.setState({pendding_message:0});
-        this.state.home_title = "Message";
+        this.setState({
+            home_title:"Message",
+            pendding_message:0
+        });
+        // this.state.home_title = "Message";
         this.props.history.push({ pathname: "/message" })
     }
     nav_notification = () => {
-        this.state.home_title = "Notifications";
+        // this.state.home_title = "Notifications";
         this.setState({
+            home_title:"Notifications",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -255,8 +261,9 @@ class SideNav extends React.Component {
         this.props.history.push({ pathname: "/notifications" })
     }
     nav_collaborate = () => {
-        this.state.home_title = "Collaborate";
+        // this.state.home_title = "Collaborate";
         this.setState({
+            home_title:"Collaborate",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -268,18 +275,25 @@ class SideNav extends React.Component {
         this.props.history.push({ pathname: "/collaborate" })
     }
     nav_profile = () => {
-        this.state.home_title = "Profile";
-        this.props.history.push({ pathname: "/profile/" + "pf_" + this.state.userProfile.username })
+        // this.state.home_title = "Profile";
+        this.setState({
+            home_title:"Profile"
+        });
+        this.props.history.push({ pathname: "/profile/pf_" + this.state.userProfile.username })
     }
 
     nav_my_account = () => {
-        this.state.home_title = "My Account";
+        // this.state.home_title = "My Account";
+        this.setState({
+            home_title:"My Account"
+        });
         this.props.history.push({ pathname: "/my_account" })
     }
 
     nav_events = () => {
-        this.state.home_title = "Events";
+        // this.state.home_title = "Events";
         this.setState({
+            home_title:"Events",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -291,7 +305,10 @@ class SideNav extends React.Component {
         this.props.history.push({ pathname: "/events" })
     }
     nav_wallet = () => {
-        this.state.home_title = "Wallet";
+        // this.state.home_title = "Wallet";
+        this.setState({
+            home_title:"Wallet",
+        });
         this.props.history.push({ pathname: "/wallet" })
     }
     nav_logout = () => {
@@ -311,7 +328,7 @@ class SideNav extends React.Component {
         });
         this.setState({ menuArray: menu_list });
         this.props.history.push({ pathname: menu.link });
-    };
+    }
 
     render() {
         const { classes, children } = this.props;

@@ -76,7 +76,7 @@ class Register extends React.Component {
         var firstName = this.state.fullname.substr(0, index);
         var lastName = this.state.fullname.substr(index + 1);
         let formData = new FormData();
-        if(index==-1){
+        if(index===-1){
             formData.append('first_name', lastName);
             formData.append('last_name', firstName);
         }else{

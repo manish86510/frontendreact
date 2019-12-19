@@ -164,7 +164,7 @@ class TagFriends extends React.Component {
     const tag_friends_items = []
 
     for (const [value] of elements_in.entries()) {
-      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) == false){
+      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) === false){
         tag_friends_items.push(
           { name: value.follower.first_name + " " + value.follower.last_name, id:value.follower.pk},
         )

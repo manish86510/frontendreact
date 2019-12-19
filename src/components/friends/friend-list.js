@@ -56,7 +56,8 @@ class FriendsList extends React.Component {
                 }
             }
         ).then(res => {
-            if (res.status == 200) {
+            debugger;
+            if (res.status === 200) {
                 this.setState({ friendList: res.data.results });
             }
         });
@@ -87,7 +88,7 @@ class FriendsList extends React.Component {
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.friendList != null && this.state.friendList.length != undefined && this.state.friendList.length != 0) ? (
+                            (this.state.friendList !== null && this.state.friendList.length !== undefined && this.state.friendList.length !== 0) ? (
                                 this.state.friendList.map((user, index) => (
                                     <ListItem
                                         alignItems="flex-start"

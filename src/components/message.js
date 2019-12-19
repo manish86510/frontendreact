@@ -46,8 +46,8 @@ class Message extends React.Component {
                                 <Tab label="My Messages" />
                                 <Tab label="Requests" />
                             </Tabs>
-                            {value == 0 &&  <MyMessages /> }
-                            {value == 1 &&  <MyMessages /> }
+                            {value === 0 &&  <MyMessages /> }
+                            {value === 1 &&  <MyMessages /> }
                         </div>
                     </Grid>
                     <Grid item xs={5}>

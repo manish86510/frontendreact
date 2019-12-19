@@ -31,9 +31,9 @@ class TextArea extends React.Component {
 
     HandleTextArea = (e) => {
         console.log(e.target.value);
-        this.state.postData.about_post = e.target.value;
+        var postData={about_post:e.target.value};
         this.setState({
-            postData: this.state.postData,
+            postData: postData,
         });
     }
 

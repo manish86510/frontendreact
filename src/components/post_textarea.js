@@ -35,8 +35,8 @@ class PostTextArea extends React.Component {
         is_public: true,
         post_type: "Post",
         target_audience: "test",
-        media_id:[],
-        tags_friends : [],
+        media_id: [],
+        tags_friends: [],
       },
       mediaData: {
         post: '',
@@ -45,8 +45,8 @@ class PostTextArea extends React.Component {
       },
       value: '',
       suggestions: [],
-      selected : null,
-      clear_tags_friends:false,
+      selected: null,
+      clear_tags_friends: false,
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -67,7 +67,7 @@ class PostTextArea extends React.Component {
       }).then(res => {
         let post_data = this.state.postData;
         post_data.media_id.push(res.data.media_id[0]);
-        this.setState({postData: post_data});
+        this.setState({ postData: post_data });
       }).catch(e => {
         console.log(e);
       });
@@ -76,19 +76,23 @@ class PostTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
-    this.state.postData.about_post = e.target.value;
+    var postData = { about_post: e.target.value };
     this.setState({
-      postData: this.state.postData,
+      postData: postData,
     });
+    // this.state.postData.about_post = e.target.value;
+    // this.setState({
+    //   postData: this.state.postData,
+    // });
   }
 
-  getUrls = ()=>{
+  getUrls = () => {
     var text = this.state.postData.about_post;
     var links = [];
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    
-    text.replace(urlRegex, function(url) {
-      if(url.indexOf("youtube")>-1){
+
+    text.replace(urlRegex, function (url) {
+      if (url.indexOf("youtube") > -1) {
         links.push({
           'url': url,
           'mediaType': 'youtube'
@@ -98,44 +102,44 @@ class PostTextArea extends React.Component {
     return links;
   }
 
-  retrivePost = (post_id)=>{
+  retrivePost = (post_id) => {
     var token = localStorage.getItem('access');
-    axios.get(endpoints.POST+post_id, {
+    axios.get(endpoints.POST + post_id, {
       headers: {
         Authorization: 'Bearer ' + token,
       }
     }).then(res => {
-        this.props.onPostCreated(res.data);
+      this.props.onPostCreated(res.data);
     }).catch(e => {
       console.log(e);
     });
   }
 
-  clearForm = ()=>{
+  clearForm = () => {
     var postData = {
       about_post: "",
       tags: "test",
       is_public: true,
       post_type: "Post",
       target_audience: "test",
-      media_id:[],
-      tags_friends:[],
+      media_id: [],
+      tags_friends: [],
     };
-    var mediaData={
+    var mediaData = {
       post: '',
       file: [],
       file_type: "Image"
     };
-    this.setState({postData: postData, clear_tags_friends:true, tag_friends:false, mediaData: mediaData, loading: false});
+    this.setState({ postData: postData, clear_tags_friends: true, tag_friends: false, mediaData: mediaData, loading: false });
   }
 
   handlePostCreate = (event) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     event.preventDefault();
     var links = this.getUrls();
     var postData = this.state.postData;
     postData.media = links
-    
+
     var token = localStorage.getItem('access');
     axios.post(endpoints.create_post, postData, {
       headers: {
@@ -145,7 +149,7 @@ class PostTextArea extends React.Component {
       this.clearForm();
       this.retrivePost(res.data.id);
     }).catch(e => {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       console.log(e);
     });
   }
@@ -154,19 +158,19 @@ class PostTextArea extends React.Component {
     this.inputOpenFileRef.current.click();
   }
 
-  tagFriendClick = ()=>{
+  tagFriendClick = () => {
     let tag = !this.state.tag_friends;
-    this.setState({tag_friends: tag});
+    this.setState({ tag_friends: tag });
   }
 
-  friendListData = (data) =>{
+  friendListData = (data) => {
     const postData = this.state.postData;
     for (let i = 0; i < data.length; i++) {
-      if(this.state.postData.tags_friends.indexOf(data[i].id) === -1){
+      if (this.state.postData.tags_friends.indexOf(data[i].id) === -1) {
         postData.tags_friends.push(data[i].id)
       }
     }
-    this.setState({postData:postData});
+    this.setState({ postData: postData });
 
   }
 
@@ -177,7 +181,7 @@ class PostTextArea extends React.Component {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
-              <Avatar src={"https://energeapi.do.viewyoursite.net"+this.state.userProfile.avatar} />
+              <Avatar src={"https://energeapi.do.viewyoursite.net" + this.state.userProfile.avatar} />
             </div>
             <TextareaAutosize
               aria-label="empty textarea"
@@ -187,32 +191,32 @@ class PostTextArea extends React.Component {
               onChange={this.HandleTextArea}
             />
             <div className={"post-image-thumbnail"}>
-            {(this.fileArray || []).map(url => (
-              <div className={"image-thumbnail"}>
-                <img src={url} alt="" width="200" />
-            </div>
-            ))}
+              {(this.fileArray || []).map(url => (
+                <div className={"image-thumbnail"}>
+                  <img src={url} alt="" width="200" />
+                </div>
+              ))}
             </div>
             <div>
-              {this.state.tag_friends?(<TagFriends friend_list_data={this.friendListData} clear_tags_friends={this.state.clear_tags_friends} />):undefined}
+              {this.state.tag_friends ? (<TagFriends friend_list_data={this.friendListData} clear_tags_friends={this.state.clear_tags_friends} />) : undefined}
             </div>
-            <div style={{textAlign: 'right', position: 'relative'}}>
+            <div style={{ textAlign: 'right', position: 'relative' }}>
               <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ display: "none" }} />
               <Button variant="contained" color="primary" onClick={this.showOpenFileDlg} disabled={this.state.loading}>
-                <ImageIcon/>
+                <ImageIcon />
                 &nbsp;
                 Photos/Videos
               </Button>
               &nbsp;&nbsp;
               <Button variant="contained" color="primary" onClick={this.tagFriendClick} disabled={this.state.loading}>
-                <LocalOfferIcon/>
+                <LocalOfferIcon />
                 &nbsp;
                 Tag Friends
               </Button>
               &nbsp;&nbsp;
               <Button variant="contained" color="primary" onClick={this.handlePostCreate} disabled={this.state.loading}>
                 {
-                  this.state.loading?(<CircularProgress size={15}/>):undefined
+                  this.state.loading ? (<CircularProgress size={15} />) : undefined
                 }
                 &nbsp;Post
               </Button>
@@ -221,7 +225,7 @@ class PostTextArea extends React.Component {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {/* <Button variant="contained"  className="mybtn" onClick={this.showOpenFileDlg} style={{ marginBottom:5 }}>Photo/Videos</Button> */}
-           <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
+          <input ref={this.inputOpenFileRef} type="file" multiple onChange={this.handleChange} style={{ visibility: "hidden", width: 20 }} />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {/* <Button variant="contained"  style={{float: 'right'}} color="primary" onClick={this.handlePostCreate}>Post</Button> */}

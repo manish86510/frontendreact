@@ -46,7 +46,7 @@ class CardAction extends React.Component {
             Authorization: 'Bearer ' + token,
           }
         }).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 this.setState({
                     postList: res.data,
                 });
@@ -87,7 +87,7 @@ class CardAction extends React.Component {
             <div>
             <CardActions style={{padding: '8px 25px'}}>
                     {
-                        this.state.postList.is_like==true?(
+                        this.state.postList.is_like===true?(
                             <IconButton size='small' onClick={this.handleLike.bind(this, this.state.postList.id)} color="primary">
                                 <ThumbUpAltOutlinedIcon/>
                             </IconButton>
