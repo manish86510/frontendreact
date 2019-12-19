@@ -22,7 +22,9 @@ const endpoints = {
   languages: base_uri.base_uri +'/user/language/',
   user_list: base_uri.base_uri +'/follower-user-list/',
 
-  follow: base_uri.base_uri +'/user/follower/',
+  follow: base_uri.base_uri +'/user/follow/',
+  follower: base_uri.base_uri +'/user/follower/',
+  following: base_uri.base_uri +'/user/following/',
   post_comments: base_uri.base_uri +'/api/v1/post/comment/',
   user_like: base_uri.base_uri +'/api/v1/post/like/',
 
@@ -35,8 +37,8 @@ const endpoints = {
   create_media: base_uri.base_uri +'/api/v1/post/media/',
   get_post: base_uri.base_uri +'/api/v1/post/',
   HOT_topic: base_uri.base_uri +'/api/v1/post/hot-topic/',
-  recomended_followers: base_uri.base_uri +'/user/recommended/',
-  friends_list: base_uri.base_uri +'/user/friends-list/',
+  recomended_followers: base_uri.base_uri +'/user/recommended/'
+
 };
 
 
