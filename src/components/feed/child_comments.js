@@ -32,39 +32,6 @@ class ChildComments extends React.Component {
             post: props.post
         };
     }
-    
-    // loadComments = ()=>{
-    //     var getToken = localStorage.getItem('access');
-    //     var url = endpoints.post_comments + "?post_id=" + this.props.post.id;
-    //     axios.get(
-    //         url,
-    //         {
-    //             headers: {
-    //                 Authorization: 'Bearer ' + getToken,
-    //             }
-    //         }
-    //     ).then(res => {
-    //         if (res.status == 200) {
-    //             this.setState({ comments: res.data });
-    //         }
-    //         console.log("this.state", this.state);
-    //     })
-    // }
-
-        // const {childComments} = this.props.childComments;
-
-        // const {childComments} = this.props.childComments;
-
-        // const {childComments} = this.props.childComments;
-
-        // const {childComments} = this.props.childComments;
-    // onCommented = (newComment)=>{
-    //     this.loadComments();
-    //     // debugger;
-    //     // let comments = this.state.comments;
-    //     // comments.results.splice(0, 0, newComment);
-    //     // this.setState({ comments: comments });
-    // }
 
     replyComment = (comment_id)=>{
         this.setState({comment_on_post: comment_id});
