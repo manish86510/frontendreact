@@ -90,11 +90,10 @@ class RecomendedCircle extends React.Component {
             if (res.status === 200) {
                 document.getElementById(user_id).innerHTML = "Request Sent";
                 document.getElementById(user_id).disabled = true;
-                document.getElementById(user_id).
-                    setAttribute(
-                        "class",
-                        "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    );
+                document.getElementById(user_id).setAttribute(
+                    "class",
+                    "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                );
             }
         });
     }
@@ -170,7 +169,7 @@ class RecomendedCircle extends React.Component {
                                                     id={user.pk}
                                                 >
                                                     connect
-    
+
                                             </Button>
                                             </ListItemSecondaryAction>
                                         </ListItem>
