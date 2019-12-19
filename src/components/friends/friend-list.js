@@ -49,7 +49,7 @@ class FriendsList extends React.Component {
     }
 
     componentDidMount() {
-        var url = endpoints.friends_list;
+        var url = endpoints.following;
         var getToken = localStorage.getItem('access');
         axios.get(
             url,

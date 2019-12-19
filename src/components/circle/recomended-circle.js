@@ -76,7 +76,7 @@ class RecomendedCircle extends React.Component {
         var url = endpoints.follow;
         var getToken = localStorage.getItem('access');
         var data = {
-            'follower': user_id
+            'following': user_id
         };
         axios.post(
             url,

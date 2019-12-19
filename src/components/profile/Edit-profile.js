@@ -1,5 +1,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/styles';
+import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons';
+import Switch from '@material-ui/core/Switch';
+import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 import {
@@ -216,7 +223,7 @@ class EditProfile extends React.Component {
                 <div className={classes.cardContainer}>
                   <label>
                     Level
-                <IconButton size='small' color="inherit" aria-label="Close">
+                    <IconButton size='small' color="inherit" aria-label="Close">
                       <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
                     </IconButton>
                   </label>
