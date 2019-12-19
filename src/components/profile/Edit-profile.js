@@ -1,12 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/styles';
-import IconButton from '@material-ui/core/IconButton';
-import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
-import Switch from '@material-ui/core/Switch';
-import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import { green } from '@material-ui/core/colors';
 import {
@@ -21,6 +14,7 @@ import LanguageCard from '../language/language';
 import CommunicationCard from './communication-card';
 import WorkEducationCard from './work-education-card';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/styles';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
@@ -28,76 +22,11 @@ import Card from '@material-ui/core/Card';
 const $ = require('jquery');
 
 const styles = theme => ({
-  cardContainer: {
-    padding: 10,
-  },
-  gridItem: {
-    display: 'inline-block',
-    height: 150,
-    margin: 5,
-    overflow: 'hidden'
-  },
-  profile_image: {
-    height: '120px',
-    width: '130px',
-    borderRadius: '25px'
-  },
-  cover: {
-    width: 151,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-  },
-  cardContainer: {
-    padding: 10,
-  },
-  interest_heading: {
-    fontSize: '20px',
-    color: '#0f543ec7',
-    fontWeight: '700'
-  },
-  interest_container: {
-    padding: '5px 10px',
-  },
+  margin_top:{
+    marginTop: "10px",
+  }
 });
 
-
-const AntSwitch = withStyles(theme => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: 'flex',
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    '&$checked': {
-      transform: 'translateX(12px)',
-      color: theme.palette.common.white,
-      '& + $track': {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: 'none',
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
 
 const theme = createMuiTheme({
   palette: {
@@ -217,21 +146,6 @@ class EditProfile extends React.Component {
     }
   };
 
-  handleNameEdit = (event) => {
-    // const code = JSON.parse('{ "name" : "'+lan[i]+'" }')
-
-    // axios({
-    //   method: 'put',
-    //   url: endpoints.profile_user,
-    //   data: code,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + localStorage.access,
-    //   },
-    // }).then(res => {
-    //   "submit"
-    // })
-  }
   render() {
     const { classes } = this.props;
     const friendInfo = this.props.info;
@@ -258,17 +172,17 @@ class EditProfile extends React.Component {
         </Card>
 
         <Card style={{ marginTop: "10px" }}>
-          <SocialLinkCard title="Social Links" />
+          <SocialLinkCard title="Website/Social Links" />
         </Card>
 
         <Card style={{ marginTop: "10px" }}>
           <WorkEducationCard title="Education" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        {/* <Card style={{ marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <div className={classes.interest_container}>
                   <label className={classes.interest_heading}>
                     Interests
@@ -297,7 +211,7 @@ class EditProfile extends React.Component {
                 <div>
                   <LanguageData />
                 </div>
-              </Grid> */}
+              </Grid>
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>
@@ -524,7 +438,7 @@ class EditProfile extends React.Component {
               </Grid>
             </Grid>
           </div>
-        </Card>
+        </Card> */}
 
       </div>
 

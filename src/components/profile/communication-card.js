@@ -5,19 +5,12 @@ import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-// import Typography from '@material-ui/core/Typography';
 import {
-    FormControl, Typography, IconButton, ListItem, ListItemText , Divider,
-    InputLabel, Input, FormHelperText, Button
+    Typography, IconButton, Divider, Button
  } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import 'isomorphic-fetch';
-// import IconButton from '@material-ui/core/IconButton';
-// import Divider from '@material-ui/core/Divider';
 import AddIcon from '@material-ui/icons/Add';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText';
 
 // const $ = require('jquery');
 
