@@ -2,7 +2,7 @@ import React from "react";
 import '../styles/Login.css'
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import { withRouter } from 'react-router-dom'; 
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 

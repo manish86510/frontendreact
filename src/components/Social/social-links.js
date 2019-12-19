@@ -122,7 +122,7 @@ class SocialLinks extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleInterestDelete = (option, index) => {
+  handleInterestDelete = (option) => {
     axios.delete(endpoints.my_interest + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ class SocialLinks extends React.Component {
     const elements_in = this.state.autocompleteData;
     const interest_items = [];
 
-    for (const [index, value] of elements_in.entries()) {
+    for (const [value] of elements_in.entries()) {
       if(this.state.selected.interest.some(item => value.interest === item.interest_code) === false){
         interest_items.push(
           { interest_code: value.interest, id:-1, created: true},

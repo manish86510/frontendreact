@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 // import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
@@ -18,15 +18,12 @@ import Home from './containers/home';
 import SideNav from './containers/nav';
 import Message from './components/message';
 import Notifications from './containers/Notifications';
-// import MyAccount from './containers/my_account';
-// import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
 import Verify_mail from './containers/verify_mail'
-// main: '#4eb894',
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -40,7 +37,6 @@ const theme = createMuiTheme({
 console.log('theme', theme);
 
 function App() {
-    // const [setAuthTokens] = useState();
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);

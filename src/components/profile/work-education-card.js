@@ -1,12 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import IconButton from '@material-ui/core/IconButton'
 import { TextField, Button } from '@material-ui/core';
 import 'isomorphic-fetch';
 import Divider from '@material-ui/core/Divider';

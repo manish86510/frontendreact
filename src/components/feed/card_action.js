@@ -1,10 +1,6 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import { PropTypes } from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
@@ -12,8 +8,6 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import FeedDetail from './feed-details';
 
 const styles = theme => ({
@@ -87,8 +81,8 @@ class CardAction extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        var markup = {__html: this.state.postList.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
+        // const { classes } = this.props;
+        // var markup = {__html: this.state.postList.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
         return (
             <div>
             <CardActions style={{padding: '8px 25px'}}>
