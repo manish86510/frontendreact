@@ -20,8 +20,6 @@ import SocialLinkCard from '../Social/social-links';
 import LanguageCard from '../language/language';
 import CommunicationCard from './communication-card';
 import WorkEducationCard from './work-education-card';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { withStyles } from '@material-ui/styles';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
