@@ -271,7 +271,7 @@ class EditProfile extends React.Component {
                 <div className={classes.cardContainer}>
                   <label>
                     Level
-                <IconButton size='small' color="inherit" aria-label="Close">
+                    <IconButton size='small' color="inherit" aria-label="Close">
                       <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
                     </IconButton>
                   </label>

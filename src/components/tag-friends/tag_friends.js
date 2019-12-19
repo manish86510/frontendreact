@@ -48,7 +48,7 @@ class TagFriends extends React.Component {
     this.setState({ autocompleteData: [], loading: true });
     this.debounce_timer = setTimeout(() => {
 
-      let url = endpoints.friends_list + `?search=${searchText}`;
+      let url = endpoints.following + `?search=${searchText}`;
 
       axios.get(url, {
         headers: {

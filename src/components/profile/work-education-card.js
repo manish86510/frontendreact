@@ -156,7 +156,7 @@ class WorkEducationCard extends React.Component {
                 </Grid>
             </form>
         </div>:
-          <div>
+        <div>
           <IconButton aria-label="add" color="primary" onClick={this.toggleWorkEdit}>
             <AddBoxOutlinedIcon fontSize="large" />
           </IconButton>
