@@ -87,7 +87,7 @@ class FeedComments extends React.Component {
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post}/>:undefined
+                                            this.state.comment_on_post==comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} onCommented={this.onCommented} post={post}/>:undefined
                                         }
                                         <ChildComments post={post} childComments={comment.children}/>
                                     </React.Fragment>
