@@ -65,7 +65,6 @@ class Interest extends React.Component {
           Authorization: 'Bearer ' + localStorage.access,
         }
       }).then(res => {
-
         const autocompleteData = this.state.autocompleteData
         for (let i = 0; i < res.data.results.length; i++) {
           autocompleteData.push(res.data.results[i])
@@ -149,6 +148,7 @@ class Interest extends React.Component {
     const selected = this.state.selected;
     for (var i = 0; i < selected.interest.length; i++) {
       if(selected.interest[i].created === true){
+        debugger;
         await axios
           .post(endpoints.my_interest, JSON.stringify({ "interest_code": selected.interest[i].interest_code }), {
             headers: {
