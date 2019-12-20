@@ -35,8 +35,8 @@ const endpoints = {
   create_media: base_uri +'/api/v1/post/media/',
   get_post: base_uri +'/api/v1/post/',
   HOT_topic: base_uri +'/api/v1/post/hot-topic/',
-  recomended_followers: base_uri +'/user/recommended/'
-
+  recomended_followers: base_uri +'/user/recommended/',
+  WORKPLACE: base_uri +'/user/workplace/'
 };
 
 

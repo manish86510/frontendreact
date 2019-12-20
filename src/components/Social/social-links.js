@@ -1,27 +1,33 @@
 import React from 'react';
+import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import {
-  TextField, Button, List, ListItem, ListItemSecondaryAction,
+import { TextField, Button, List, ListItem, ListItemSecondaryAction,
   ListItemText
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 import 'isomorphic-fetch';
 import IconButton from '@material-ui/core/IconButton';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-// import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 
 // const $ = require('jquery');
 
 const styles = theme => ({
-  root: {
+  root:{
     padding: '10px 10px'
   },
   heading: {
@@ -44,10 +50,9 @@ class SocialLinks extends React.Component {
       isEdit: false,
       isAdd: false,
       socialLinkData: null,
-      name: null,
-      url: null,
-      social_id: null,
-      anchorEl: null
+      name:null,
+      url:null,
+      social_id:null
     }
   }
 
@@ -62,9 +67,9 @@ class SocialLinks extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isAdd: false });
-      this.setState({ isEdit: false });
-      this.setState({ socialLinkData: res.data });
+        this.setState({ isAdd: false });
+        this.setState({ isEdit: false });
+        this.setState({ socialLinkData: res.data });
     }).catch(error => {
       console.log(error);
     });
@@ -81,75 +86,70 @@ class SocialLinks extends React.Component {
 
   toggleEditAction = (social_id) => {
     var getToken = localStorage.getItem('access');
-    var url = endpoints.profile_social_links + social_id;
+    var url = endpoints.profile_social_links+social_id;
     axios.get(url, {
       headers: {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({
-        anchorEl: null
-      });
-      this.setState({ isAdd: true });
-      this.setState({ isEdit: true });
-      this.setState({ name: res.data.name });
-      this.setState({ url: res.data.url });
-      this.setState({ social_id: res.data.id });
-      
+        this.setState({ isAdd: true });
+        this.setState({ isEdit: true });
+        this.setState({ name: res.data.name });
+        this.setState({ url: res.data.url });
+        this.setState({ social_id: res.data.id });
     }).catch(error => {
       console.log(error);
     });
-   
   }
 
-  saveSocialLinks = () => {
+  saveSocialLinks = () =>{
     var getToken = localStorage.getItem('access');
-    if (this.state.isEdit === true) {
-      var data = { 'name': this.state.name, 'url': this.state.url };
-      var url = endpoints.profile_social_links + this.state.social_id + '/';
+    if(this.state.isEdit==true){
+      var data = {'name': this.state.name, 'url': this.state.url};
+      var url = endpoints.profile_social_links+this.state.social_id+'/';
       axios.put(url, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + getToken,
-        }
-      }).then(res => {
-        this.setState({ isAdd: false });
-        this.setState({ isEdit: false });
-        this.getSocialLinks();
-      }).catch(error => {
-        console.log(error);
-      });
-    } else {
-      var data1 = { 'name': this.state.name, 'url': this.state.url }
-      axios.post(endpoints.profile_social_links, data1, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + getToken,
-        }
-      }).then(res => {
-        this.setState({ isAdd: false });
-        this.setState({ isEdit: false });
-        this.getSocialLinks();
-      }).catch(error => {
-        console.log(error);
-      });
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + getToken,
+      }
+    }).then(res => {
+      this.setState({ isAdd: false });
+      this.setState({ isEdit: false });
+      this.getSocialLinks();
+    }).catch(error => {
+      console.log(error);
+    });
+    }else{
+    var data = {'name': this.state.name, 'url': this.state.url}
+    axios.post(endpoints.profile_social_links, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + getToken,
+      }
+    }).then(res => {
+      this.setState({ isAdd: false });
+      this.setState({ isEdit: false });
+      this.getSocialLinks();
+    }).catch(error => {
+      console.log(error);
+    });
     }
   }
 
   handleName = e => {
     this.setState({
-      name: e.target.value,
+        name: e.target.value,
     });
   }
-
+  
   handleUrl = e => {
     this.setState({
-      url: e.target.value,
+        url: e.target.value,
     });
   }
 
-  deleteLinks = (social_id) => {
-    var url = endpoints.profile_social_links + social_id;
+  deleteLinks=(social_id)=>{
+    var url = endpoints.profile_social_links+social_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
       headers: {
@@ -157,40 +157,30 @@ class SocialLinks extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isEdit: false, anchorEl:null });
+      this.setState({ isEdit: false });
       this.getSocialLinks();
     }).catch(error => {
       console.log(error);
     });
   }
-  handleSecondaryActionClick = (e) => {
-    console.log(e.currentTarget);
-    this.setState({
-      anchorEl: e.currentTarget
-    });
-  }
-  // handleClose = () => {
-  //   this.setState({
-  //     anchorEl: null
-  //   });
-  // }
+
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (
       <div className={classes.root}>
-        <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
-        <List className={classes.list}>
-          {
-            this.state.socialLinkData != null ? (
-              this.state.socialLinkData.results.map(socialData => (
-                <ListItem key={socialData.id} role={undefined} dense>
-                  <ListItemText primary={socialData.name} secondary={socialData.url} />
-                  <ListItemSecondaryAction>
-                    {/* <PopupState variant="popover" popupId="demo-popup-menu">
+      <Typography className={classes.heading}>{this.props.title ? this.props.title : " " }</Typography>
+      <List className={classes.list}>
+        {
+          this.state.socialLinkData!=null?(
+            this.state.socialLinkData.results.map(socialData =>(
+              <ListItem key={socialData.id} role={undefined} dense>
+                <ListItemText primary={socialData.name} secondary={socialData.url}/>
+                <ListItemSecondaryAction>
+                <PopupState variant="popover" popupId="demo-popup-menu">
                   {popupState => (
                     <React.Fragment>
                       <IconButton edge="end" variant="contained" color="primary" {...bindTrigger(popupState)}>
-                        
+                        <MoreVertIcon/>
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
                         <MenuItem onClick={popupState.close} onClick={this.toggleEditAction.bind(this, socialData.id)}>Edit</MenuItem>
@@ -198,44 +188,31 @@ class SocialLinks extends React.Component {
                       </Menu>
                     </React.Fragment>
                   )}
-                </PopupState> */}
-                    <IconButton edge="end" aria-haspopup="true" onClick={this.handleSecondaryActionClick}>
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={this.state.anchorEl}
-                      keepMounted
-                      open={Boolean(this.state.anchorEl)}
-                      onClose={this.handleClose}
-                    >
-                      <MenuItem onClick={this.toggleEditAction.bind(this, socialData.id)}>Edit</MenuItem>
-                      <MenuItem onClick={this.deleteLinks.bind(this, socialData.id)}>Delete</MenuItem>
-                    </Menu>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))
-            ) : undefined
-          }
-        </List>
-
-        <Grid container spacing={3}>
-          <div style={{ padding: "10px 0px" }}>
-            {this.state.isAdd ? (
-              <div>
-                <IconButton aria-label="add" color="primary" onClick={this.toggleCancelEdit}>
-                  <AddBoxOutlinedIcon fontSize="large" />
-                </IconButton>
-                <span style={{ paddingLeft: "10px" }}>Add Social Links</span>
-                <form>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <Grid container direction="row" justify="center" alignItems="center">
+                </PopupState>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))
+          ): undefined
+        }
+      </List>
+        
+      <Grid container spacing={3}>
+        <div style={{padding:"10px 0px"}}>
+        {this.state.isAdd ?(
+           <div>
+           <IconButton aria-label="add" color="primary" onClick={this.toggleCancelEdit}>
+             <AddBoxOutlinedIcon fontSize="large" />
+           </IconButton>
+           <span style={{ paddingLeft: "10px" }}>Add Social Links</span>
+           <form>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Grid container direction="row" justify="center" alignItems="center">
                         <Grid item xs={1} md={1} lg={1}>
-                          Name
+                            Name
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
-                          <TextField
+                        <TextField
                             label="name"
                             id="name"
                             variant="outlined"
@@ -244,17 +221,17 @@ class SocialLinks extends React.Component {
                             value={this.state.name}
                             onChange={this.handleName}
                             className={classes.textField}
-                          />
+                        />
                         </Grid>
-                      </Grid>
                     </Grid>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <Grid container direction="row" justify="center" alignItems="center">
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Grid container direction="row" justify="center" alignItems="center">
                         <Grid item xs={1} md={1} lg={1}>
-                          Links
+                            Links
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
-                          <TextField
+                        <TextField
                             label="Links"
                             id="links"
                             variant="outlined"
@@ -263,44 +240,44 @@ class SocialLinks extends React.Component {
                             value={this.state.url}
                             onChange={this.handleUrl}
                             className={classes.textField}
-                          />
+                        />
                         </Grid>
-                      </Grid>
                     </Grid>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <Grid container direction="row" justify="center" alignItems="center">
+                </Grid>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Grid container direction="row" justify="center" alignItems="center">
                         <Grid item xs={1} md={1} lg={1}>
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
                           {
-                            this.state.isEdit === true ? (
+                            this.state.isEdit==true?(
                               <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
-                                Edit
+                              Edit
                               </Button>
-                            ) : (
-                                <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
-                                  Add
+                            ):(
+                              <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
+                              Add
                               </Button>
-                              )
+                            )
                           }
-
-                          <Button className={classes.button} color="primary" variant="contained" onClick={this.toggleCancelEdit}>Cancel</Button>
+                            
+                            <Button className={classes.button} color="primary" variant="contained" onClick={this.toggleCancelEdit}>Cancel</Button>
                         </Grid>
-                      </Grid>
                     </Grid>
-                  </Grid>
-                </form>
-              </div>
-            ) : (
-                <div>
-                  <IconButton aria-label="add" color="primary" onClick={this.toggleCancelEdit}>
-                    <AddBoxOutlinedIcon fontSize="large" />
-                  </IconButton>
-                  <span style={{ paddingLeft: "10px" }}>Add Social Links</span>
-                </div>
-              )}
+                </Grid>
+            </Grid>
+          </form>
+         </div>
+        ):(
+          <div>
+          <IconButton aria-label="add" color="primary" onClick={this.toggleCancelEdit}>
+            <AddBoxOutlinedIcon fontSize="large" />
+          </IconButton>
+          <span style={{ paddingLeft: "10px" }}>Add Social Links</span>
           </div>
-        </Grid>
+        )}
+        </div>
+       </Grid>
       </div>
     )
   }

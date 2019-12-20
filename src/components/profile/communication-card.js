@@ -38,14 +38,22 @@ class CommunicationCard extends React.Component {
         this.state = {
             loading: false,
             isPhone: false,
-            isEmail:false,
+            isEmail: false,
+            isEdit: false,
+            isSave: false,
+            mobile: ''
         }
-
     }
 
     togglePhoneEdit = () => {
         this.setState({
             isPhone: !this.state.isPhone
+        });
+    }
+
+    handleMobile = (e) => {
+        this.setState({
+            mobile: e.target.value,
         });
     }
 
@@ -60,7 +68,37 @@ class CommunicationCard extends React.Component {
     }
 
     saveMobile = () => {
-        //start code for save mobile number
+    //     var getToken = localStorage.getItem('access');
+    //     if(this.state.isEdit==true){
+    //         var data = {'mobile': this.state.name};
+    //         var url = endpoints.+this.state.social_id+'/';
+    //         axios.put(url, data, {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: 'Bearer ' + getToken,
+    //         }
+    //         }).then(res => {
+    //         this.setState({ isAdd: false });
+    //         this.setState({ isEdit: false });
+    //         this.getSocialLinks();
+    //         }).catch(error => {
+    //         console.log(error);
+    //         });
+    //     }else{
+    //     var data = {'name': this.state.name, 'url': this.state.url}
+    //     axios.post(endpoints.profile_social_links, data, {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Authorization: 'Bearer ' + getToken,
+    //     }
+    //     }).then(res => {
+    //     this.setState({ isAdd: false });
+    //     this.setState({ isEdit: false });
+    //     this.getSocialLinks();
+    //     }).catch(error => {
+    //     console.log(error);
+    //     });
+    //   }
     }
 
     render() {
@@ -88,6 +126,8 @@ class CommunicationCard extends React.Component {
                                         size="small"
                                         type="text"
                                         className={classes.textField}
+                                        value={this.state.mobile}
+                                        onChange={this.handleMobile}
                                     />
                                     </Grid>
                                 </Grid>
