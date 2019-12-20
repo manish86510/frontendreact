@@ -16,6 +16,22 @@ import endpoints from "../api/endpoints";
 
 const image = require("../img/login_image.png");
 const styles = theme => ({
+    forget_pass: {
+        color: "#999999"
+    },
+    login_btn: {
+        padding: 45
+    },
+    footer: {
+        marginTop: 186
+    },
+    user_input: {
+        marginLeft: 6,
+        marginBottom: 10
+    },
+    pass_input: {
+        marginLeft: 6
+    },
     username: {
         borderRadius: 100,
         border: '1px solid #00b894',
@@ -33,8 +49,8 @@ const styles = theme => ({
         height: 40
     },
     iconButton: {
-        fontSize: 15       
-      },
+        fontSize: 15
+    },
 });
 class Login extends React.Component {
     constructor(props) {
@@ -46,25 +62,26 @@ class Login extends React.Component {
             password: '',
         }
     }
-    getProfile = ()=>{
+    getProfile = () => {
         var url = endpoints.PROFILE;
         var token = localStorage.getItem('access');
         axios.get(url, {
             headers: {
-              Authorization: 'Bearer ' + token,
-            }}).then(result => {
+                Authorization: 'Bearer ' + token,
+            }
+        }).then(result => {
             if (result.status === 200) {
                 localStorage.setItem('userInfo', JSON.stringify(result.data));
-                if(result.data.avatar != null){
+                if (result.data.avatar != null) {
                     this.props.history.push({
                         pathname: "/home"
                     });
-                }else{
+                } else {
                     this.props.history.push({
                         pathname: "/profile"
                     });
                 }
-                
+
             }
         });
     }
@@ -72,7 +89,7 @@ class Login extends React.Component {
         e.preventDefault();
         let self = this;
         var url = endpoints.TOKEN;
-        axios.post(url , {
+        axios.post(url, {
             username: self.state.username,
             password: self.state.password
         }).then(result => {
@@ -133,10 +150,10 @@ class Login extends React.Component {
                         /> */}
                     <FormGroup
                         bsSize="small"
-                        className="padb10">
+                        className={classes.user_input}>
                         <Paper component="form" className={classes.username}>
                             <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
-                                <FontAwesomeIcon icon={faUser}/>
+                                <FontAwesomeIcon icon={faUser} />
                             </IconButton>
                             <InputBase
                                 className={classes.input}
@@ -150,7 +167,7 @@ class Login extends React.Component {
                     {/* <br></br> */}
                     <FormGroup controlId="password"
                         bsSize="small"
-                        className="padb10" >
+                        className={classes.pass_input} >
                         <Paper component="form" className={classes.password}>
                             <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
                                 <FontAwesomeIcon icon={faLock} />
@@ -164,23 +181,28 @@ class Login extends React.Component {
                             />
                         </Paper>
                     </FormGroup>
-                    <br></br><p className="padb10"> <Link to="/forgetpass"> Forgot your password ? Reset! </Link></p>
+                    <br></br><p> <Link to="/forgetpass"> Forgot your password ? Reset! </Link></p>
                     <br></br>
-                    <Button variant="contained"  block bsSize="large"
+                    <Button style={{ padding: "7px 45px" }} variant="contained" block bsSize="large"
                         type="submit"
                         color="primary"
                         onClick={this.postLogin}
                         className="padb10" >
                         Log in
-            </Button><br></br>
+                    </Button><br></br>
                 </form>
-                <p><Link to="/register" > Don 't have an account? Sign up!</Link></p>
+                <p><Link to="/register" className="sign_up"> Don 't have an account? Sign up!</Link></p>
             </center>
             <div>
-                <img alt="footer" src={image}
+
+
+                <img 
+                    className={classes.footer} 
+                    alt="footer" src={image}
                     style={
                         { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
-                    } />
+                    } 
+                />
             </div>
         </div>
         );
