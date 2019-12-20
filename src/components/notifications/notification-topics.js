@@ -26,21 +26,22 @@ const styles = theme => ({
 class NotificationTopics extends React.Component {
   constructor(props) {
     super(props);
+    this.state={};
   }
 
-  
+
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <HotTopic/>
-        <br/>
-        <br/>
+        <HotTopic />
+        <br />
+        <br />
         <FriendsList />
-        <br/>
-        <br/>
-        <RecomendedCircle layoutType={'list'}/>
+        <br />
+        <br />
+        <RecomendedCircle layoutType={'list'} />
       </div>
     );
   }

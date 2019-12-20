@@ -26,7 +26,7 @@ class Event extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    var value = this.state.value;
+    // var value = this.state.value;
     // console.log(value);
     return (
       <div className={classes.root}>

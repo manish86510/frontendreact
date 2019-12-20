@@ -66,7 +66,7 @@ class Projects extends React.Component {
                 }
             }
         ).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 console.log(res.data)
                 this.setState({
                     postList: res.data,

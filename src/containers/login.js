@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 // import Img from "react-image";
 import { Link, withRouter } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

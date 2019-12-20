@@ -23,7 +23,7 @@ class EventsTabs extends React.Component {
     this.setState({ value: newValue });
   };
   render() {
-    const { classes, children } = this.props;
+    const { classes } = this.props;
     var value = this.state.value;
     // console.log(value);
     return (
@@ -39,9 +39,9 @@ class EventsTabs extends React.Component {
           <Tab label="Today" />
           <Tab label="Tomorrow" />
         </Tabs>
-        {value == 0 && <Event />}
-        {value == 1 && <Event />}
-        {value == 2 && <Event />}
+        {value === 0 && <Event />}
+        {value === 1 && <Event />}
+        {value === 2 && <Event />}
       </div>
     );
   }

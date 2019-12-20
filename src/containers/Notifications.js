@@ -3,7 +3,7 @@ import NotificationTopics from './../components/notifications/notification-topic
 import Grid from '@material-ui/core/Grid';
 import NotificationTabs from './../components/notifications/notification-tab'
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 
 
 const styles = theme => ({

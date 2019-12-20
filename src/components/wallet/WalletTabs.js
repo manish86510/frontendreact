@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Button} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -75,19 +75,19 @@ class WalletInfo extends React.Component{
 
       <List>
       <ListItem>
-                <Button variant="contained"  style={{borderRadius: '25px', width:'160px'}} variant="outlined" >
+                <Button style={{borderRadius: '25px', width:'160px'}} variant="outlined" >
                 Send Coins
                 </Button>
                 </ListItem>
                 <ListItem>
 
-                <Button variant="contained"  style={{borderRadius: '25px', width:'160px'}} variant="outlined"  >
+                <Button style={{borderRadius: '25px', width:'160px'}} variant="outlined"  >
                     Request Coins
                 </Button>
                 </ListItem>
                 <ListItem>
 
-                <Button variant="contained"  style={{borderRadius: '25px', width:'160px', backgroundColor:'#6fc1a5'}} variant="contained" color="primary" >
+                <Button variant="contained"  style={{borderRadius: '25px', width:'160px', backgroundColor:'#6fc1a5'}} color="primary" >
                     Buy More
                 </Button>
                 </ListItem>

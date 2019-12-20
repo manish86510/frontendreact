@@ -2,16 +2,13 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/styles';
 import axios from 'axios';
@@ -59,7 +56,8 @@ class FriendsList extends React.Component {
                 }
             }
         ).then(res => {
-            if (res.status == 200) {
+            debugger;
+            if (res.status === 200) {
                 this.setState({ friendList: res.data.results });
             }
         });
@@ -90,7 +88,7 @@ class FriendsList extends React.Component {
                 <CardContent>
                     <List className={classes.root} dense>
                         {
-                            (this.state.friendList != null && this.state.friendList.length != undefined && this.state.friendList.length != 0) ? (
+                            (this.state.friendList !== null && this.state.friendList.length !== undefined && this.state.friendList.length !== 0) ? (
                                 this.state.friendList.map((user, index) => (
                                     <ListItem
                                         alignItems="flex-start"

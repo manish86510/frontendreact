@@ -1,17 +1,4 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/styles';
-import IconButton from '@material-ui/core/IconButton';
-import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons';
-import Switch from '@material-ui/core/Switch';
-import clsx from 'clsx';
-import TextField from '@material-ui/core/TextField';
-import { green } from '@material-ui/core/colors';
-import {
-  createMuiTheme,
-} from '@material-ui/core/styles';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import InterestCard from '../interest/interest';
@@ -20,29 +7,96 @@ import SocialLinkCard from '../Social/social-links';
 import LanguageCard from '../language/language';
 import CommunicationCard from './communication-card';
 import WorkEducationCard from './work-education-card';
+import { withStyles } from '@material-ui/styles';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InterestData from './../interest/interest';
-import SkillData from './../skills/skill';
-import LanguageData from './../language/language';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Switch from '@material-ui/core/Switch';
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
+import { Button, TextField} from '@material-ui/core';
+import clsx from 'clsx';
 
 
 const $ = require('jquery');
 
 const styles = theme => ({
-  margin_top:{
-    marginTop: "10px",
-  }
-});
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
+  cardContainer: {
+    padding: 10,
+  },
+  gridItem: {
+    display: 'inline-block',
+    height: 150,
+    margin: 5,
+    overflow: 'hidden'
+  },
+  profile_image: {
+    height: '120px',
+    width: '130px',
+    borderRadius: '25px'
+  },
+  cover: {
+    width: 151,
+  },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+  },
+  interest_heading: {
+    fontSize: '20px',
+    color: '#0f543ec7',
+    fontWeight: '700'
+  },
+  interest_container: {
+    padding: '5px 10px',
   },
 });
+
+
+// const AntSwitch = withStyles(theme => ({
+//   root: {
+//     width: 28,
+//     height: 16,
+//     padding: 0,
+//     display: 'flex',
+//   },
+//   switchBase: {
+//     padding: 2,
+//     color: theme.palette.grey[500],
+//     '&$checked': {
+//       transform: 'translateX(12px)',
+//       color: theme.palette.common.white,
+//       '& + $track': {
+//         opacity: 1,
+//         backgroundColor: theme.palette.primary.main,
+//         borderColor: theme.palette.primary.main,
+//       },
+//     },
+//   },
+//   thumb: {
+//     width: 12,
+//     height: 12,
+//     boxShadow: 'none',
+//   },
+//   track: {
+//     border: `1px solid ${theme.palette.grey[500]}`,
+//     borderRadius: 16 / 2,
+//     opacity: 1,
+//     backgroundColor: theme.palette.common.white,
+//   },
+//   checked: {},
+// }))(Switch);
+
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: green,
+//   },
+// });
 
 
 class EditProfile extends React.Component {
@@ -136,7 +190,7 @@ class EditProfile extends React.Component {
       }
       window.location.reload();
 
-    } else if (this.state.selected.language != + '') {
+    } else if (this.state.selected.language !== '') {
       for (let i = 0; i < lan.length; i++) {
         const code = JSON.parse('{ "name" : "' + lan[i] + '" }')
         axios({
@@ -158,7 +212,7 @@ class EditProfile extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const friendInfo = this.props.info;
+    // const friendInfo = this.props.info;
     return (
       <div>
         {

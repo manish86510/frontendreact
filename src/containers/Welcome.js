@@ -2,7 +2,7 @@ import React from "react";
 import '../styles/Login.css'
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import { withRouter } from 'react-router-dom'; 
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -13,8 +13,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         // this.props.match.params.id
-
-       
+        this.state={};
     }
     render() {
         return ( <div className = "Login" >
@@ -29,7 +28,9 @@ class Login extends React.Component {
             <img src = { image }
             style = {
                 { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }
-            }/>  
+            }
+            alt=""
+            />  
             </div>
             </div>
         );

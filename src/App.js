@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import MainContainer from './containers/main-container';
+// import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
-import ReactDOM from 'react-dom'
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
+// import ReactDOM from 'react-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
@@ -18,15 +18,12 @@ import Home from './containers/home';
 import SideNav from './containers/nav';
 import Message from './components/message';
 import Notifications from './containers/Notifications';
-import MyAccount from './containers/my_account';
-// import Bookmark from './components/bookmark';
 import CollaboarateMain from './containers/collaborate_main';
 import Events from './containers/Events';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
 import Verify_mail from './containers/verify_mail'
-// main: '#4eb894',
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -40,42 +37,42 @@ const theme = createMuiTheme({
 console.log('theme', theme);
 
 function App() {
-    const [setAuthTokens] = useState();
-    const setTokens = (data) => {
-        localStorage.setItem("tokens", JSON.stringify(data));
-        setAuthTokens(data);
-    }
+    // const setTokens = (data) => {
+    //     localStorage.setItem("tokens", JSON.stringify(data));
+    //     setAuthTokens(data);
+    // }
 
-    return ( <div>
-        <MuiThemeProvider theme = { theme }>
-        <Router>
-        <Switch>
-        <Route exact path = "/" component = { Login }/>
-        <Route exact path = "/login" component = { Login }/> 
-        <Route path = "/register" component = { Register }/> 
-        <Route path = "/forgetpass" component = { ForgotPassword }/>
-        <Route path = "/verify" component = { Verify_mail }/>
-        <Route path = "/verify_mail/:id" component = { Welcome }/>
-        <SideNav>
-        <Route path = "/home" component = { Home }/> 
-        <Route path = "/message" component = { Message }/> 
-        <Route path = "/bookmark" component = { Bookmark }/> 
-        <Route path = "/notifications" component = { Notifications }/> 
-        <Route path = "/profile/:username" component = { Profile }/> 
-        <Route path = "/my_account" component = { MyAccount }/> 
-        <Route path = "/Edit-profile" component = { EditProfile }/> 
-        <Route path = "/collaborate" component = { CollaboarateMain }/> 
-        <Route path = "/events" component = { Events }/> 
-        <Route path = "/wallet" component = { Wallet }/> 
-        <Route path = "/walletcoins" component = { WalletCoins }/> 
-        <Route path = "/morecoins" component = { MoreCoins }/>
-        <Route path = "/logout" component = {() => {localStorage.clear();
-        window.location.href = '/';}}/> 
-        </SideNav>
-        </Switch>
-        </Router> 
-        </MuiThemeProvider> 
-        </div>
+    return (<div>
+        <MuiThemeProvider theme={theme}>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/forgetpass" component={ForgotPassword} />
+                    <Route path="/verify" component={Verify_mail} />
+                    <Route path="/verify_mail/:id" component={Welcome} />
+                    <SideNav>
+                        <Route path="/home" component={Home} />
+                        <Route path="/message" component={Message} />
+                        <Route path="/bookmark" component={Bookmark} />
+                        <Route path="/notifications" component={Notifications} />
+                        <Route path="/profile" component={Profile} />
+                        <Route path="/Edit-profile" component={EditProfile} />
+                        <Route path="/collaborate" component={CollaboarateMain} />
+                        <Route path="/events" component={Events} />
+                        <Route path="/wallet" component={Wallet} />
+                        <Route path="/walletcoins" component={WalletCoins} />
+                        <Route path="/morecoins" component={MoreCoins} />
+                        <Route path="/logout" component={() => {
+                            localStorage.clear();
+                            window.location.href = '/';
+                        }} />
+                    </SideNav>
+                </Switch>
+            </Router>
+        </MuiThemeProvider>
+    </div>
     );
 }
 

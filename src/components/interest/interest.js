@@ -65,7 +65,6 @@ class Interest extends React.Component {
           Authorization: 'Bearer ' + localStorage.access,
         }
       }).then(res => {
-
         const autocompleteData = this.state.autocompleteData
         for (let i = 0; i < res.data.results.length; i++) {
           autocompleteData.push(res.data.results[i])
@@ -103,7 +102,7 @@ class Interest extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      if(res.data.length===0 || res.data.length==undefined){
+      if(res.data.length===0 || res.data.length===undefined){
         this.setState({ isEdit: true });
       }else{
         for (let i = 0; i < res.data.length; i++) {
@@ -122,7 +121,7 @@ class Interest extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleInterestDelete = (option, index) => {
+  handleInterestDelete = (option) => {
     axios.delete(endpoints.my_interest + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -149,6 +148,7 @@ class Interest extends React.Component {
     const selected = this.state.selected;
     for (var i = 0; i < selected.interest.length; i++) {
       if(selected.interest[i].created === true){
+        debugger;
         await axios
           .post(endpoints.my_interest, JSON.stringify({ "interest_code": selected.interest[i].interest_code }), {
             headers: {
