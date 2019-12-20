@@ -97,7 +97,7 @@ class SocialLinks extends React.Component {
 
   saveSocialLinks = () =>{
     var getToken = localStorage.getItem('access');
-    if(this.state.isEdit==true){
+    if(this.state.isEdit===true){
       var data = {'name': this.state.name, 'url': this.state.url};
       var url = endpoints.profile_social_links+this.state.social_id+'/';
       axios.put(url, data, {
@@ -113,8 +113,8 @@ class SocialLinks extends React.Component {
       console.log(error);
     });
     }else{
-    var data = {'name': this.state.name, 'url': this.state.url}
-    axios.post(endpoints.profile_social_links, data, {
+    var data1 = {'name': this.state.name, 'url': this.state.url}
+    axios.post(endpoints.profile_social_links, data1, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + getToken,
@@ -243,7 +243,7 @@ class SocialLinks extends React.Component {
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
                           {
-                            this.state.isEdit==true?(
+                            this.state.isEdit===true?(
                               <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
                               Edit
                               </Button>
