@@ -12,9 +12,13 @@ import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InterestData from './../interest/interest';
-import SkillData from './../skills/skill';
-import LanguageData from './../language/language';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Switch from '@material-ui/core/Switch';
+import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
+import { Button, TextField} from '@material-ui/core';
+import clsx from 'clsx';
 
 
 const $ = require('jquery');
@@ -207,7 +211,7 @@ class EditProfile extends React.Component {
   };
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     // const friendInfo = this.props.info;
     return (
       <div>
