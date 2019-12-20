@@ -11,6 +11,11 @@ import { withStyles } from '@material-ui/styles';
 import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InterestData from './../interest/interest';
+import SkillData from './../skills/skill';
+import LanguageData from './../language/language';
+
 
 const $ = require('jquery');
 
@@ -234,10 +239,10 @@ class EditProfile extends React.Component {
           <WorkEducationCard title="Education" />
         </Card>
 
-        {/* <Card style={{ marginTop: "10px" }}>
+        <Card style={{ padding: "10px", marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <div className={classes.interest_container}>
                   <label className={classes.interest_heading}>
                     Interests
@@ -266,7 +271,7 @@ class EditProfile extends React.Component {
                 <div>
                   <LanguageData />
                 </div>
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>
@@ -493,7 +498,7 @@ class EditProfile extends React.Component {
               </Grid>
             </Grid>
           </div>
-        </Card> */}
+        </Card>
 
       </div>
 
