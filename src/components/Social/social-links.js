@@ -1,5 +1,4 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
@@ -10,15 +9,9 @@ import { TextField, Button, List, ListItem, ListItemSecondaryAction,
   ListItemText
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
-import CloseIcon from '@material-ui/icons/Close';
 import 'isomorphic-fetch';
 import IconButton from '@material-ui/core/IconButton';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
-import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
@@ -104,7 +97,7 @@ class SocialLinks extends React.Component {
 
   saveSocialLinks = () =>{
     var getToken = localStorage.getItem('access');
-    if(this.state.isEdit==true){
+    if(this.state.isEdit===true){
       var data = {'name': this.state.name, 'url': this.state.url};
       var url = endpoints.profile_social_links+this.state.social_id+'/';
       axios.put(url, data, {
@@ -120,8 +113,8 @@ class SocialLinks extends React.Component {
       console.log(error);
     });
     }else{
-    var data = {'name': this.state.name, 'url': this.state.url}
-    axios.post(endpoints.profile_social_links, data, {
+    var requsetdata = {'name': this.state.name, 'url': this.state.url}
+    axios.post(endpoints.profile_social_links, requsetdata, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + getToken,
@@ -183,8 +176,8 @@ class SocialLinks extends React.Component {
                         <MoreVertIcon/>
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close} onClick={this.toggleEditAction.bind(this, socialData.id)}>Edit</MenuItem>
-                        <MenuItem onClick={popupState.close} onClick={this.deleteLinks.bind(this, socialData.id)}>Delete</MenuItem>
+                        <MenuItem onClick={this.toggleEditAction.bind(this, socialData.id)}>Edit</MenuItem>
+                        <MenuItem onClick={this.deleteLinks.bind(this, socialData.id)}>Delete</MenuItem>
                       </Menu>
                     </React.Fragment>
                   )}
@@ -250,7 +243,7 @@ class SocialLinks extends React.Component {
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
                           {
-                            this.state.isEdit==true?(
+                            this.state.isEdit===true?(
                               <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
                               Edit
                               </Button>

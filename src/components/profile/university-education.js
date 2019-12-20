@@ -1,8 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import 'isomorphic-fetch';
 import Divider from '@material-ui/core/Divider';
@@ -50,7 +48,7 @@ class UnivercityEducationCard extends React.Component {
       isSchool:false,
       school_college_name:'',
       attended_for: false,
-      educationData:'',
+      educationData:[],
       description:null,
       session_from:null,
       session_to:null,
@@ -69,7 +67,7 @@ class UnivercityEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-        this.setState({ educationData: res.data });
+        this.setState({ educationData: res.data.results });
     }).catch(error => {
       console.log(error);
     });
@@ -192,8 +190,8 @@ class UnivercityEducationCard extends React.Component {
         </ListItem>
         <List className={classes.list}>
         {
-          this.state.educationData?(
-            this.state.educationData.results.map(educationInfo =>(
+          this.state.educationData.length>0 && this.state.educationData!==null?(
+            this.state.educationData.map(educationInfo =>(
               <ListItem key={educationInfo.id} role={undefined} dense>
                 <ListItemText primary={educationInfo.school_college_name} secondary={educationInfo.attended_for}/>
                 <ListItemSecondaryAction>
