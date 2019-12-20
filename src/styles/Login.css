@@ -87,7 +87,25 @@
   }
 
   a:link{
-    color: #43474a;
+    color: #999;
     text-decoration: none;
   }
+  a:link:hover{
+    color: #4eb894;
+    text-decoration: none;
+    
+  }
+  .sign_up  {
+    color:#999;
+  }
+  .sign_up:hover  {
+    color: #4eb894;
+    
+  }
 }
+
+@media only screen and (max-width: 425px) and (min-width: 320px) {
+  .Login-username-4 {width:95%!important;}
+  .Login-password-5 {width:95%!important;}
+}
+

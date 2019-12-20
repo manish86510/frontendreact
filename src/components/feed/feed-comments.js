@@ -31,8 +31,8 @@ class FeedComments extends React.Component {
             parentComment: true
         };
     }
-    
-    loadComments = ()=>{
+
+    loadComments = () => {
         var getToken = localStorage.getItem('access');
         var url = endpoints.post_comments + "?post_id=" + this.props.post.id;
         axios.get(
@@ -53,7 +53,7 @@ class FeedComments extends React.Component {
         this.loadComments();
     }
 
-    onCommented = (newComment)=>{
+    onCommented = (newComment) => {
         this.loadComments();
         // debugger;
         // let comments = this.state.comments;
@@ -61,55 +61,52 @@ class FeedComments extends React.Component {
         // this.setState({ comments: comments });
     }
 
-    replyComment = (comment_id)=>{
-        this.setState({comment_on_post: comment_id});
-        this.setState({parentComment:false});
+    replyComment = (comment_id) => {
+        this.setState({ comment_on_post: comment_id });
+        this.setState({ parentComment: false });
     }
 
-    cancelReply = () =>{
-        this.setState({parentComment:true});
-        this.setState({comment_on_post:45});
+    cancelReply = () => {
+        this.setState({ parentComment: true });
+        this.setState({ comment_on_post: 45 });
     }
 
 
     render() {
-        const {post} = this.props;
+        const { post } = this.props;
         return (
-            <div style={{width: '100%'}}>
+            <div style={{ width: '100%' }}>
                 <List>
-                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map(comment =>
-                        {
-                            debugger;
-                            return(<ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={"@"+comment.user.username} secondary={
-                                    <React.Fragment>
-                                        <Typography>{comment.comment}</Typography>
-                                        {
-                                            this.state.comment_on_post===comment.id?<CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post}/>:undefined
-                                        }
-                                        <ChildComments post={post} childComments={comment.children}/>
-                                    </React.Fragment>
-                                }>
-                                </ListItemText>
-                                {
-                                    (this.state.comment_on_post!==comment.id && this.state.comment_on_post>-1)?(
-                                        <ListItemSecondaryAction>
-                                            <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
-                                        </ListItemSecondaryAction>
-                                        
-                                    ): undefined
-                                }
-                            </ListItem>)
-                        }
-                    )) : undefined}
+                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map(comment => (
+                        <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                                <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={"@" + comment.user.username} secondary={
+                                <React.Fragment>
+                                    <Typography>{comment.comment}</Typography>
+                                    {
+                                        this.state.comment_on_post === comment.id ? <CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post} /> : undefined
+                                    }
+                                    <ChildComments post={post} childComments={comment.children} />
+                                </React.Fragment>
+                            }>
+                       
+                            </ListItemText>
+                            {
+                                (this.state.comment_on_post !== comment.id && this.state.comment_on_post > -1) ? (
+                                    <ListItemSecondaryAction>
+                                        <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
+                                    </ListItemSecondaryAction>
+                                ) : undefined
+                            }
+                        </ListItem>
+                    ))) : undefined}
                 </List>
                 {
-                    this.state.parentComment?(
-                        <CreateComment parent={-1} post={post} onCommented={this.onCommented}/>
-                    ):(undefined)
+                    this.state.parentComment ? (
+                        <CreateComment parent={-1} post={post} onCommented={this.onCommented} />
+                    ) : (undefined)
                 }
             </div>
         );

@@ -55,7 +55,7 @@ class WorkEducationCard extends React.Component {
       isSchool:false,
       company:'',
       isEdit: false,
-      companyData:null,
+      companyData:[],
       city:null,
       position:null,
       workplace_id:null
@@ -73,7 +73,7 @@ class WorkEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-        this.setState({ companyData: res.data });
+        this.setState({ companyData: res.data.results });
     }).catch(error => {
       console.log(error);
     });
@@ -187,6 +187,7 @@ class WorkEducationCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log("test :",this.state.companyData);
     return (
       <div className={classes.root}>
         <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
@@ -195,8 +196,8 @@ class WorkEducationCard extends React.Component {
         </ListItem>
         <List className={classes.list}>
         {
-          this.state.companyData?(
-            this.state.companyData.results.map(companyInfo =>(
+          this.state.companyData.length>0 && this.state.companyData!==null  ?(
+            this.state.companyData.map(companyInfo =>(
               <ListItem key={companyInfo.id} role={undefined} dense>
                 <ListItemText primary={companyInfo.name} secondary={companyInfo.position}/>
                 <ListItemSecondaryAction>
