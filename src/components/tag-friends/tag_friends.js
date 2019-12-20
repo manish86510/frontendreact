@@ -3,14 +3,14 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField, IconButton} from '@material-ui/core';
-import { toast } from 'react-toastify';
+import { TextField } from '@material-ui/core';
+// import { toast } from 'react-toastify';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const $ = require('jquery');
+// const $ = require('jquery');
 
 class TagFriends extends React.Component {
 
@@ -110,7 +110,7 @@ class TagFriends extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleTagFriendsDelete = (option, index) => {
+  handleTagFriendsDelete = (option) => {
     axios.delete(endpoints.my_languages + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -163,8 +163,8 @@ class TagFriends extends React.Component {
     const elements_in = this.state.autocompleteData
     const tag_friends_items = []
 
-    for (const [index, value] of elements_in.entries()) {
-      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) == false){
+    for (const [value] of elements_in.entries()) {
+      if(this.state.selected.tag_friends.some(item => value.follower.pk === item.id) === false){
         tag_friends_items.push(
           { name: value.follower.first_name + " " + value.follower.last_name, id:value.follower.pk},
         )

@@ -23,7 +23,7 @@ class You extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    var value = this.state.value;
+    // var value = this.state.value;
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>

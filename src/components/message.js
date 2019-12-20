@@ -1,5 +1,5 @@
 import React from 'react';
-import PostHotTopics from './hot-topics/hot-topic';
+// import PostHotTopics from './hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -46,8 +46,8 @@ class Message extends React.Component {
                                 <Tab label="My Messages" />
                                 <Tab label="Requests" />
                             </Tabs>
-                            {value == 0 &&  <MyMessages /> }
-                            {value == 1 &&  <MyMessages /> }
+                            {value === 0 &&  <MyMessages /> }
+                            {value === 1 &&  <MyMessages /> }
                         </div>
                     </Grid>
                     <Grid item xs={5}>

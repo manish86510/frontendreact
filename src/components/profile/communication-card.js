@@ -1,7 +1,4 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import axios from 'axios';
-import endpoints from '../../api/endpoints';
 import Grid from '@material-ui/core/Grid';
 import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';

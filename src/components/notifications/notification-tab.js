@@ -40,8 +40,8 @@ class NotificationTab extends React.Component {
           <Tab label="Your Circle" />
           <Tab label="You" />
         </Tabs>
-        {value == 0 &&  <Circle /> }
-        {value == 1 &&  <You /> }
+        {value === 0 &&  <Circle /> }
+        {value === 1 &&  <You /> }
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -195,8 +195,8 @@ class MessagesBox extends React.Component {
                         <Paper className={classes.chatBox}>
                             {/* <List component="nav" aria-label="main mailbox folders"> */}
                             {this.state.userMessage.map((data, index) => (
-
-                                data.id == 1 ?
+                                
+                                data.id === 1 ?
                                     <Box component="div" m={3} button style={{ padding: 0, width: "100%" }}>
                                         <Grid container spacing={1} alignItems="center">
                                             <Grid item xs={1}>

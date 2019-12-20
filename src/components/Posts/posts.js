@@ -26,7 +26,6 @@ const styles = theme => ({
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
-    color: ''
   },
   content: {
     position: "relative",
@@ -60,7 +59,7 @@ class Posts extends React.Component {
         }
       }
     ).then(res => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         console.log(res.data)
         this.setState({
           postList: res.data,
@@ -95,7 +94,7 @@ class Posts extends React.Component {
 
   render() {
     const { classes } = this.props;
-    var value = this.state.value;
+    // var value = this.state.value;
     // console.log(value);
 
     return (

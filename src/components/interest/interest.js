@@ -102,7 +102,7 @@ class Interest extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      if(res.data.length===0 || res.data.length==undefined){
+      if(res.data.length===0 || res.data.length===undefined){
         this.setState({ isEdit: true });
       }else{
         for (let i = 0; i < res.data.length; i++) {
@@ -121,7 +121,7 @@ class Interest extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleInterestDelete = (option, index) => {
+  handleInterestDelete = (option) => {
     axios.delete(endpoints.my_interest + option.id, {
       headers: {
         'Content-Type': 'application/json',

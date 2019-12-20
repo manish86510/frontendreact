@@ -104,7 +104,7 @@ class Skill extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      if(res.data.length===0 || res.data.length==undefined){
+      if(res.data.length===0 || res.data.length===undefined){
         this.setState({ isEdit: true });
       }else{
         for (let i = 0; i < res.data.length; i++) {
@@ -123,7 +123,7 @@ class Skill extends React.Component {
     this.setState({ selected: selected });
   }
 
-  handleSkillDelete = (option, index) => {
+  handleSkillDelete = (option) => {
     axios.delete(endpoints.my_skills + option.id, {
       headers: {
         'Content-Type': 'application/json',
@@ -169,7 +169,7 @@ class Skill extends React.Component {
     const elements_in = this.state.autocompleteData
     const skill_items = []
 
-    for (const [index, value] of elements_in.entries()) {
+    for (const [value] of elements_in.entries()) {
       if(this.state.selected.skill.some(item => value.skill === item.skill) === false){
         skill_items.push(
           { skill: value.skill, id:-1, created: true},

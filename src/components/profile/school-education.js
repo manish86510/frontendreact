@@ -16,10 +16,6 @@ import { TextField, Button, List, ListItem, ListItemSecondaryAction,
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
-import UnivercityEducationCard from './university-education';
-import SchoolEducationCard from './school-education';
-
-// const $ = require('jquery');
 
 const styles = theme => ({
   root: {
@@ -44,8 +40,7 @@ const styles = theme => ({
 
 })
 
-class WorkEducationCard extends React.Component {
-
+class SchoolEducationCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,27 +48,28 @@ class WorkEducationCard extends React.Component {
       isWork: false,
       isUniversity:false,
       isSchool:false,
-      company:'',
-      isEdit: false,
-      companyData:null,
-      city:null,
-      position:null,
-      workplace_id:null
+      school_college_name:'',
+      attended_for: false,
+      educationData:'',
+      description:null,
+      session_from:null,
+      session_to:null,
+      profile_education_id:null
     }
   }
 
   componentDidMount() {
-    this.getWorkplace();
+    this.getprofile_education();
   }
 
-  getWorkplace = () =>{
+  getprofile_education = () =>{
     var getToken = localStorage.getItem('access');
-    axios.get(endpoints.WORKPLACE, {
+    axios.get(endpoints.profile_education, {
       headers: {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-        this.setState({ companyData: res.data });
+        this.setState({ educationData: res.data });
     }).catch(error => {
       console.log(error);
     });
@@ -85,40 +81,42 @@ class WorkEducationCard extends React.Component {
     });
   }
 
-  toggleWorkEdit = (workplace_id) => {
+  toggleWorkEdit = (profile_education_id) => {
     var getToken = localStorage.getItem('access');
-    var url = endpoints.WORKPLACE+workplace_id;
+    var url = endpoints.profile_education+profile_education_id;
     axios.get(url, {
       headers: {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ company: res.data.name });
-      this.setState({ city: res.data.city });
-      this.setState({ position: res.data.position });
+      this.setState({ school_college_name: res.data.school_college_name });
+      this.setState({ description: res.data.description });
+      this.setState({ session_for: res.data.session_for });
+      this.setState({ session_to: res.data.session_to });
+      this.setState({ session_to: res.data.session_to });
       this.setState({ isEdit: true });
       this.setState({ isWork: true });
-      this.setState({ workplace_id: res.data.id });
-      this.getWorkplace();
+      this.setState({ attended_for: res.data.attended_for });
+      this.getprofile_education();
     }).catch(error => {
       console.log(error);
     });
   }
 
-  toggleWorkAdd = () => {
+  toggleAddEducation = () => {
     this.setState({ isWork: !this.state.isWork });
   }
 
-  toggleUniversityEdit = () => {
-    this.setState({
-      isUniversity: !this.state.isUniversity
-    });
-  }
 
-  saveWorkplace = () => {
+  saveprofile_education = () => {
     var getToken = localStorage.getItem('access');
-    var data = {'name': this.state.company, 'position': this.state.position, 'city': this.state.city};
-      var url = endpoints.WORKPLACE;
+    var data = {'school_college_name': this.state.school_college_name, 
+    'description': this.state.description, 
+    'session_for': this.state.session_for,
+    'session_to': this.state.session_to,
+    'attended_for': this.state.attended_for
+    };
+      var url = endpoints.profile_education;
       axios.post(url, data, {
       headers: {
         'Content-Type': 'application/json',
@@ -126,7 +124,7 @@ class WorkEducationCard extends React.Component {
       }
     }).then(res => {
       this.setState({ isWork: false });
-      this.getWorkplace();
+      this.getprofile_education();
     }).catch(error => {
       console.log(error);
     });
@@ -150,8 +148,8 @@ class WorkEducationCard extends React.Component {
     });
   }
 
-  editWorkplace=(workplace_id)=>{
-    var url = endpoints.WORKPLACE+workplace_id+'/';
+  editprofile_education=(profile_education_id)=>{
+    var url = endpoints.profile_education+profile_education_id+'/';
     var getToken = localStorage.getItem('access');
     var data = {'name': this.state.company, 'position': this.state.position, 'city': this.state.city, 'description':null, 'working_from':'2019-01-01 06:00:00', 'working_till':'2019-01-01 06:00:00'};
     axios.put(url,data, {
@@ -162,15 +160,15 @@ class WorkEducationCard extends React.Component {
     }).then(res => {
       this.setState({ isEdit: false });
       this.setState({ isWork: false });
-      this.getWorkplace();
+      this.getprofile_education();
     }).catch(error => {
       console.log(error);
     });
   }
 
 
-  deleteWorkplace=(workplace_id)=>{
-    var url = endpoints.WORKPLACE+workplace_id;
+  deleteprofile_education=(profile_education_id)=>{
+    var url = endpoints.profile_education+profile_education_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
       headers: {
@@ -179,7 +177,7 @@ class WorkEducationCard extends React.Component {
       }
     }).then(res => {
       this.setState({ isEdit: false });
-      this.getWorkplace();
+      this.getprofile_education();
     }).catch(error => {
       console.log(error);
     });
@@ -189,16 +187,15 @@ class WorkEducationCard extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
         <ListItem>
-          <ListItemText primary="Work Place" />
+          <ListItemText primary="School Details" />
         </ListItem>
         <List className={classes.list}>
         {
-          this.state.companyData?(
-            this.state.companyData.results.map(companyInfo =>(
-              <ListItem key={companyInfo.id} role={undefined} dense>
-                <ListItemText primary={companyInfo.name} secondary={companyInfo.position}/>
+          this.state.educationData?(
+            this.state.educationData.results.map(educationInfo =>(
+              <ListItem key={educationInfo.id} role={undefined} dense>
+                <ListItemText primary={educationInfo.school_college_name} secondary={educationInfo.attended_for}/>
                 <ListItemSecondaryAction>
                 <PopupState variant="popover" popupId="demo-popup-menu">
                   {popupState => (
@@ -207,8 +204,8 @@ class WorkEducationCard extends React.Component {
                         <MoreVertIcon/>
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
-                        <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
+                        <MenuItem onClick={this.toggleWorkEdit.bind(this, educationInfo.id)}>Edit</MenuItem>
+                        <MenuItem onClick={this.deleteprofile_education.bind(this, educationInfo.id)}>Delete</MenuItem>
                       </Menu>
                     </React.Fragment>
                   )}
@@ -217,10 +214,10 @@ class WorkEducationCard extends React.Component {
               </ListItem>
             ))
           ): (<div>
-              <IconButton aria-label="add" color="primary" onClick={this.toggleWorkAdd}>
+              <IconButton aria-label="add" color="primary" onClick={this.toggleAddEducation}>
                 <AddBoxOutlinedIcon fontSize="large" />
               </IconButton>
-              <span style={{ paddingLeft: "10px" }}>Add a workplace</span>
+              <span style={{ paddingLeft: "10px" }}>Add a College</span>
               </div>)
         }
       </List>
@@ -232,73 +229,111 @@ class WorkEducationCard extends React.Component {
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Grid item xs={1} md={1} lg={1}>
-                                Company
+                            <Grid item xs={4} md={4} lg={4}>
+                            school_college_name
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
                             <TextField
-                                label="Company"
-                                id="company"
+                                label="school_college_name"
+                                id="school_college_name"
                                 variant="outlined"
                                 size="small"
                                 type="text"
                                 className={classes.textField}
-                                value={this.state.company}
-                                onChange={this.handleCompany}
+                                value={this.state.school_college_name}
+                                onChange={this.handleCollege}
                             />
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Grid item xs={1} md={1} lg={1}>
-                                City/Town
+                            <Grid item xs={4} md={4} lg={4}>
+                            Description
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
                             <TextField
-                                label="City/Town"
-                                id="city_town"
+                                label="description"
+                                id="description"
                                 variant="outlined"
                                 size="small"
                                 type="text"
                                 className={classes.textField}
-                                value={this.state.city}
-                                onChange={this.handleCity}
+                                value={this.state.description}
+                                onChange={this.handleDescription}
                             />
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Grid item xs={1} md={1} lg={1}>
-                                Position
+                            <Grid item xs={4} md={4} lg={4}>
+                            Session From
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
                             <TextField
-                                label="Position"
-                                id="position"
+                                label="Session_from"
+                                id="session_from"
                                 variant="outlined"
                                 size="small"
                                 type="text"
                                 className={classes.textField}
-                                value={this.state.position}
-                                onChange={this.handlePosition}
+                                value={this.state.session_from}
+                                onChange={this.handleSessionFrom}
                             />
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Grid item xs={1} md={1} lg={1}>
+                            <Grid item xs={4} md={4} lg={4}>
+                            Session To
+                            </Grid>
+                            <Grid item xs={6} md={6} lg={6}>
+                            <TextField
+                                label="Session_to"
+                                id="session_to"
+                                variant="outlined"
+                                size="small"
+                                type="text"
+                                className={classes.textField}
+                                value={this.state.session_to}
+                                onChange={this.handleSessionTo}
+                            />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Grid container direction="row" justify="center" alignItems="center">
+                            <Grid item xs={4} md={4} lg={4}>
+                            Attended For
+                            </Grid>
+                            <Grid item xs={6} md={6} lg={6}>
+                            <TextField
+                                label="attended_for"
+                                id="attended_for"
+                                variant="outlined"
+                                size="small"
+                                type="text"
+                                className={classes.textField}
+                                value={this.state.attended_for}
+                                onChange={this.handleAttended_For}
+                            />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Grid container direction="row" justify="center" alignItems="center">
+                            <Grid item xs={4} md={4} lg={4}>
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
                               {
                                 this.state.isEdit===true?(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
+                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.editprofile_education.bind(this, this.state.profile_education_id)} >
                                     Edit
                                   </Button>
                                 ):(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.saveWorkplace} >
+                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.saveprofile_education} >
                                     Add 
                                   </Button>
                                 )
@@ -311,15 +346,9 @@ class WorkEducationCard extends React.Component {
             </form>
         </div>:undefined
         }        
-        <UnivercityEducationCard />
-        <SchoolEducationCard />
       </div>
     )
   }
 }
 
-WorkEducationCard.propTypes = {
-  title: PropTypes.string,
-};
-
-export default withStyles(styles)(WorkEducationCard);
+export default withStyles(styles)(SchoolEducationCard);

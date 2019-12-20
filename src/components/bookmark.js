@@ -1,5 +1,5 @@
 import React from 'react';
-import PostHotTopics from './hot-topics/hot-topic';
+// import PostHotTopics from './hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 import BookmarkTabs from './bookmark-tab'
 import { withStyles } from '@material-ui/styles';
