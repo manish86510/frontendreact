@@ -14,6 +14,9 @@ import { TextField, Button, List, ListItem, ListItemSecondaryAction,
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
@@ -211,8 +214,13 @@ class UnivercityEducationCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div>
         <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <AccountBalanceIcon />
+            </Avatar>
+          </ListItemAvatar>
           <ListItemText primary="College Details" />
         </ListItem>
         <List className={classes.list}>
@@ -236,11 +244,11 @@ class UnivercityEducationCard extends React.Component {
                 </PopupState>
                 </ListItemSecondaryAction>
               </ListItem>
-          ): (<div>
-              <IconButton aria-label="add" color="primary" onClick={this.toggleAddEducation}>
+          ): (<div onClick={this.toggleAddEducation}>
+              <IconButton aria-label="add" color="primary">
                 <AddBoxOutlinedIcon fontSize="large" />
               </IconButton>
-              <span style={{ paddingLeft: "10px" }}>Add College</span>
+              <span style={{ paddingLeft: "10px",cursor:'pointer' }}>Add College</span>
               </div>)
         }
       </List>

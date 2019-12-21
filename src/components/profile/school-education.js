@@ -14,6 +14,9 @@ import { TextField, Button, List, ListItem, ListItemSecondaryAction,
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import SchoolIcon from '@material-ui/icons/School';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
@@ -211,11 +214,16 @@ class SchoolEducationCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div>
         <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <SchoolIcon/>
+            </Avatar>
+          </ListItemAvatar>
           <ListItemText primary="School Details" />
         </ListItem>
-        <List className={classes.list}>
+        <List>
         {
           this.state.educationData!==null?(
               <ListItem key={this.state.educationData.id} role={undefined} dense>
@@ -236,11 +244,11 @@ class SchoolEducationCard extends React.Component {
                 </PopupState>
                 </ListItemSecondaryAction>
               </ListItem>
-          ): (<div>
-              <IconButton aria-label="add" color="primary" onClick={this.toggleAddEducation}>
+          ): (<div onClick={this.toggleAddEducation}>
+              <IconButton aria-label="add" color="primary">
                 <AddBoxOutlinedIcon fontSize="large" />
               </IconButton>
-              <span style={{ paddingLeft: "10px" }}>Add School</span>
+              <span style={{ paddingLeft: "10px",cursor:'pointer' }}>Add School</span>
               </div>)
         }
       </List>
@@ -317,8 +325,8 @@ class SchoolEducationCard extends React.Component {
                                 label="Session_to"
                                 id="session_to"
                                 variant="outlined"
-                                size="small"
                                 type="text"
+                                size="small"
                                 className={classes.textField}
                                 value={this.state.session_to}
                                 onChange={this.handleSessionTo}

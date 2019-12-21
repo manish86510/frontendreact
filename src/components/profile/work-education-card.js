@@ -18,6 +18,10 @@ import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import UnivercityEducationCard from './university-education';
 import SchoolEducationCard from './school-education';
+import BusinessIcon from '@material-ui/icons/Business';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+
 
 // const $ = require('jquery');
 
@@ -192,6 +196,11 @@ class WorkEducationCard extends React.Component {
       <div className={classes.root}>
         <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
         <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <BusinessIcon />
+            </Avatar>
+          </ListItemAvatar>
           <ListItemText primary="Work Place" />
         </ListItem>
         <List className={classes.list}>
@@ -225,8 +234,10 @@ class WorkEducationCard extends React.Component {
               </div>)
         }
       </List>
-
         <Divider />
+        <UnivercityEducationCard />
+        <SchoolEducationCard />
+       
         {this.state.isWork ?
         <div className={classes.spacing_internal}>
             <form>
@@ -312,8 +323,6 @@ class WorkEducationCard extends React.Component {
             </form>
         </div>:undefined
         }        
-        <UnivercityEducationCard />
-        <SchoolEducationCard />
       </div>
     )
   }
