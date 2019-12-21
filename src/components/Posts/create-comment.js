@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-// import { withStyles } from '@material-ui/styles';
 import '../../styles/main.css';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';

@@ -265,7 +265,7 @@ class SocialLinks extends React.Component {
           <IconButton aria-label="add" color="primary" onClick={this.toggleCancelEdit}>
             <AddBoxOutlinedIcon fontSize="large" />
           </IconButton>
-          <span style={{ paddingLeft: "10px" }}>Add Social Links</span>
+          <span style={{ paddingLeft: "10px", cursor:'pointer' }}>Add Social Links</span>
           </div>
         )}
         </div>

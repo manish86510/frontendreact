@@ -65,6 +65,7 @@ class PostTextArea extends React.Component {
           'Content-Type': 'multipart/form-data'
         }
       }).then(res => {
+        debugger;
         let post_data = this.state.postData;
         post_data.media_id.push(res.data.media_id[0]);
         this.setState({ postData: post_data });
@@ -76,14 +77,14 @@ class PostTextArea extends React.Component {
   }
 
   HandleTextArea = (e) => {
-    var postData = { about_post: e.target.value };
-    this.setState({
-      postData: postData,
-    });
-    // this.state.postData.about_post = e.target.value;
+    // var postData = { about_post: e.target.value };
     // this.setState({
-    //   postData: this.state.postData,
+    //   postData: postData,
     // });
+    this.state.postData.about_post = e.target.value;
+    this.setState({
+      postData: this.state.postData,
+    });
   }
 
   getUrls = () => {
@@ -130,6 +131,7 @@ class PostTextArea extends React.Component {
       file: [],
       file_type: "Image"
     };
+    this.fileArray=[];
     this.setState({ postData: postData, clear_tags_friends: true, tag_friends: false, mediaData: mediaData, loading: false });
   }
 
