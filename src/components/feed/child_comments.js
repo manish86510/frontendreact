@@ -31,10 +31,13 @@ class ChildComments extends React.Component {
             comments: null,
             comment_on_post: 45,
             childComment: true,
-            childComments: props.childComments,
-            post: props.post
+            post: props.post,
+            childComments:[],
         };
     }
+    state={
+        childComments:[],
+    };
     componentDidMount(){
         console.log("props.childComments :", this.props.childComments);
         this.setState({
@@ -61,7 +64,7 @@ class ChildComments extends React.Component {
         return (
             <div style={{ width: '100%' }}>
                 {
-                    this.state.childComments.length > 0 ? (this.state.childComments.map(child_comment =>
+                    this.state.childComments && this.state.childComments !== undefined ? (this.state.childComments.map(child_comment =>
                         <div>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>

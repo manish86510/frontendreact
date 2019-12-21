@@ -8,10 +8,10 @@ import { Button, TextField } from '@material-ui/core';
 
 class CreateComment extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            comment_model:{
+            comment_model: {
                 post: props.post.id,
                 comment: '',
                 isError: '',
@@ -25,14 +25,14 @@ class CreateComment extends React.Component {
         var getToken = localStorage.getItem('access');
         axios.post(url, this.state.comment_model,
             {
-                headers: {Authorization: 'Bearer ' + getToken}
+                headers: { Authorization: 'Bearer ' + getToken }
             }).then(res => {
                 let comment_model = {
                     post: this.props.post.id,
                     comment: '',
                     parent: this.props.parent,
                 };
-                this.setState({comment_model: comment_model});
+                this.setState({ comment_model: comment_model });
                 this.props.onCommented(res.data);
             }).catch(res => {
                 this.setState({
@@ -43,29 +43,29 @@ class CreateComment extends React.Component {
     handleComment = (event) => {
         let comment_model = this.state.comment_model;
         comment_model.comment = event.target.value;
-        this.setState({comment_model: comment_model});
+        this.setState({ comment_model: comment_model });
     }
 
-    cancelReply = () =>{
+    cancelReply = () => {
         this.props.cancelReply();
     }
     render() {
         return (
             <div className={"text-area-container"}>
-                <TextField label="Type your reply here." 
+                <TextField label="Type your reply here."
                     className={"textarea"}
-                    multiline 
+                    multiline
                     margin="normal"
                     variant="outlined"
                     value={this.state.comment_model.comment}
                     onChange={this.handleComment}
                 />
-                <div style={{textAlign: 'right', position: 'relative'}}>
-                    {this.props.parent===-1?undefined:(
+                <div style={{ textAlign: 'right', position: 'relative' }}>
+                    {this.props.parent === -1 ? undefined : (
                         <Button color="primary" onClick={this.cancelReply}>Cancel</Button>
                     )}
-                    <Button color="primary" disabled={this.state.comment_model.comment.length<=0} 
-                    onClick={this.postComments}>Post</Button>
+                    <Button color="primary" disabled={this.state.comment_model.comment.length <= 0}
+                        onClick={this.postComments}>Post</Button>
                 </div>
             </div>
         );

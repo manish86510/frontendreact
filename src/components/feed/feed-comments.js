@@ -65,6 +65,7 @@ class FeedComments extends React.Component {
     }
 
     onCommented = (newComment) => {
+        debugger;
         this.loadComments();
         // debugger;
         // let comments = this.state.comments;
@@ -86,6 +87,7 @@ class FeedComments extends React.Component {
         });
     }
     handleExpandMoreClick = (id) => {
+        console.log("id :", id);
         var childCommentexpandMore = {
             id: id,
             status: true
@@ -96,6 +98,7 @@ class FeedComments extends React.Component {
     }
 
     handleExpandLessClick = (id) => {
+        console.log("id :", id);
         var childCommentexpandless = {
             id: id,
             status: false
@@ -116,7 +119,7 @@ class FeedComments extends React.Component {
                                 <ListItemAvatar>
                                     <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText style={{ paddingRight: "6%" }} primary={"@" + comment.user.username} secondary={
+                                <ListItemText style={{ paddingRight: "10%" }} primary={"@" + comment.user.username} secondary={
 
                                     <React.Fragment>
                                         <Typography>{comment.comment}</Typography>
@@ -132,17 +135,23 @@ class FeedComments extends React.Component {
                                     (this.state.comment_on_post !== comment.id && this.state.comment_on_post > -1) ? (
                                         <ListItemSecondaryAction >
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
-                                            {this.state.openChildCommetList.id === comment.id && this.state.openChildCommetList.status ?
-                                                <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
-                                                    <ExpandLess />
-                                                </IconButton> :
-                                                <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, comment.id)}>
-                                                    <ExpandMore />
-                                                </IconButton>
+                                            {
+                                                comment.children.length > 0 === true ?
+                                                    this.state.openChildCommetList.id === comment.id && this.state.openChildCommetList.status ?
+                                                        <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
+                                                            <ExpandLess />
+                                                        </IconButton> :
+                                                        <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, comment.id)}>
+                                                            <ExpandMore />
+                                                        </IconButton> : 
+                                                        <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
+                                                            <ExpandMore />
+                                                        </IconButton>
                                             }
                                         </ListItemSecondaryAction>
                                     ) : undefined
                                 }
+
                             </ListItem>
                             {/* <List className={classes.nested} disablePadding>
                                 <ListItem style={{ paddingLeft: "6%" }}>
