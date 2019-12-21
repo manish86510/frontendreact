@@ -5,7 +5,7 @@ import '../../styles/main.css';
 // import endpoints from "../../api/endpoints";
 // import axios from 'axios';
 import { Button, Typography } from '@material-ui/core';
-import { ListItem, Avatar } from '@material-ui/core';
+import { ListItem, Avatar, List } from '@material-ui/core';
 
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -18,6 +18,9 @@ const styles = theme => ({
     },
     left5: {
         marginLeft: 5
+    },
+    nested: {
+        paddingLeft: theme.spacing * 4
     }
 });
 
@@ -32,45 +35,62 @@ class ChildComments extends React.Component {
             post: props.post
         };
     }
-
+    componentDidMount(){
+        console.log("props.childComments :", this.props.childComments);
+        this.setState({
+            childComments:this.props.childComments
+        });
+    }
     replyComment = (comment_id) => {
-        this.setState({ comment_on_post: comment_id });
-        this.setState({ childComment: false });
+        this.setState({ 
+            comment_on_post: comment_id,
+            childComment: false 
+        });
     }
 
     cancelReply = () => {
-        this.setState({ childComment: true });
-        this.setState({ comment_on_post: 45 });
+        this.setState({ 
+            childComment: true,
+            comment_on_post: 45
+        });
     }
 
 
     render() {
+        const { classes } = this.props;
         return (
             <div style={{ width: '100%' }}>
                 {
                     this.state.childComments.length > 0 ? (this.state.childComments.map(child_comment =>
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={"@" + child_comment.user.username} secondary={
-                                <React.Fragment>
-                                    <Typography>{child_comment.comment}</Typography>
-                                    {
-                                        this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
-                                    }
+                        <div>
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
+                                </ListItemAvatar>
+                                <ListItemText style={{paddingRight:"6%"}} primary={"@" + child_comment.user.username} secondary={
+                                    <React.Fragment>
+                                        <Typography>{child_comment.comment}</Typography>
+                                        {
+                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
+                                        }
+
+                                    </React.Fragment>
+                                }>
+                                </ListItemText>
+                                {
+                                    (this.state.comment_on_post !== child_comment.id && this.state.comment_on_post > -1) ? (
+                                        <ListItemSecondaryAction>
+                                            <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
+                                        </ListItemSecondaryAction>
+                                    ) : undefined
+                                }
+                            </ListItem>
+                            <List disablePadding>
+                                <ListItem style={{paddingLeft:"6%"}}>
                                     <ChildComments post={this.state.post} childComments={child_comment.children} />
-                                </React.Fragment>
-                            }>
-                            </ListItemText>
-                            {
-                                (this.state.comment_on_post !== child_comment.id && this.state.comment_on_post > -1) ? (
-                                    <ListItemSecondaryAction>
-                                        <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
-                                    </ListItemSecondaryAction>
-                                ) : undefined
-                            }
-                        </ListItem>
+                                </ListItem>
+                            </List>
+                        </div>
                     )) : undefined
                 }
             </div>
