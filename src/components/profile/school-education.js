@@ -67,7 +67,11 @@ class SchoolEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-        this.setState({ educationData: res.data.results });
+      if(res.data.results[0].attended_for==='school'){
+        this.setState({ educationData: res.data.results[0] });
+      }else{
+        this.setState({ educationData: res.data.results[1] });
+      }
     }).catch(error => {
       console.log(error);
     });
@@ -213,10 +217,9 @@ class SchoolEducationCard extends React.Component {
         </ListItem>
         <List className={classes.list}>
         {
-          this.state.educationData.length>0 && this.state.educationData!==null?(
-            this.state.educationData.map(educationInfo =>(
-              <ListItem key={educationInfo.id} role={undefined} dense>
-                <ListItemText primary={educationInfo.school_college_name} secondary={educationInfo.attended_for}/>
+          this.state.educationData!==null?(
+              <ListItem key={this.state.educationData.id} role={undefined} dense>
+                <ListItemText primary={this.state.educationData.school_college_name} secondary={this.state.educationData.attended_for}/>
                 <ListItemSecondaryAction>
                 <PopupState variant="popover" popupId="demo-popup-menu">
                   {popupState => (
@@ -225,20 +228,19 @@ class SchoolEducationCard extends React.Component {
                         <MoreVertIcon/>
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={this.toggleWorkEdit.bind(this, educationInfo.id)}>Edit</MenuItem>
-                        <MenuItem onClick={this.deleteprofile_education.bind(this, educationInfo.id)}>Delete</MenuItem>
+                        <MenuItem onClick={this.toggleWorkEdit.bind(this, this.state.educationData.id)}>Edit</MenuItem>
+                        <MenuItem onClick={this.deleteprofile_education.bind(this, this.state.educationData.id)}>Delete</MenuItem>
                       </Menu>
                     </React.Fragment>
                   )}
                 </PopupState>
                 </ListItemSecondaryAction>
               </ListItem>
-            ))
           ): (<div>
               <IconButton aria-label="add" color="primary" onClick={this.toggleAddEducation}>
                 <AddBoxOutlinedIcon fontSize="large" />
               </IconButton>
-              <span style={{ paddingLeft: "10px" }}>Add a College</span>
+              <span style={{ paddingLeft: "10px" }}>Add School</span>
               </div>)
         }
       </List>
