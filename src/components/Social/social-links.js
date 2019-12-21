@@ -244,17 +244,16 @@ class SocialLinks extends React.Component {
                         <Grid item xs={6} md={6} lg={6}>
                           {
                             this.state.isEdit===true?(
-                              <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
-                              Edit
+                              <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveSocialLinks} >
+                              Save Changes
                               </Button>
                             ):(
-                              <Button className={classes.button} color="primary" variant="contained" onClick={this.saveSocialLinks} >
+                              <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveSocialLinks} >
                               Add
                               </Button>
                             )
                           }
-                            
-                            <Button className={classes.button} color="primary" variant="contained" onClick={this.toggleCancelEdit}>Cancel</Button>
+                            &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleCancelEdit}>Cancel</Button>
                         </Grid>
                     </Grid>
                 </Grid>

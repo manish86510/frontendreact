@@ -47,7 +47,7 @@ class SchoolEducationCard extends React.Component {
       isUniversity:false,
       isSchool:false,
       school_college_name:'',
-      attended_for: false,
+      attended_for: "school",
       educationData:[],
       description:null,
       session_from:null,
@@ -89,8 +89,8 @@ class SchoolEducationCard extends React.Component {
     }).then(res => {
       this.setState({ school_college_name: res.data.school_college_name });
       this.setState({ description: res.data.description });
-      this.setState({ session_for: res.data.session_for });
-      this.setState({ session_to: res.data.session_to });
+      this.setState({ profile_education_id: res.data.id });
+      this.setState({ session_from: res.data.session_from });
       this.setState({ session_to: res.data.session_to });
       this.setState({ isEdit: true });
       this.setState({ isWork: true });
@@ -110,7 +110,7 @@ class SchoolEducationCard extends React.Component {
     var getToken = localStorage.getItem('access');
     var data = {'school_college_name': this.state.school_college_name, 
     'description': this.state.description, 
-    'session_for': this.state.session_for,
+    'session_from': this.state.session_from,
     'session_to': this.state.session_to,
     'attended_for': this.state.attended_for
     };
@@ -128,15 +128,15 @@ class SchoolEducationCard extends React.Component {
     });
   }
 
-  handleCompany = e =>{
+  handleCollege = e =>{
     this.setState({
-      company: e.target.value,
+      school_college_name: e.target.value,
     });
   }
 
-  handleCity = e =>{
+  handleDescription = e =>{
     this.setState({
-      city: e.target.value,
+      description: e.target.value,
     });
   }
 
@@ -146,10 +146,33 @@ class SchoolEducationCard extends React.Component {
     });
   }
 
+  handleSessionFrom = e =>{
+    this.setState({
+      session_from: e.target.value,
+    });
+  }
+
+  handleSessionTo = e =>{
+    this.setState({
+      session_to: e.target.value,
+    });
+  }
+
+  handleAttendedFor = e =>{
+    this.setState({
+      attended_for: e.target.value,
+    });
+  }
+
   editprofile_education=(profile_education_id)=>{
     var url = endpoints.profile_education+profile_education_id+'/';
     var getToken = localStorage.getItem('access');
-    var data = {'name': this.state.company, 'position': this.state.position, 'city': this.state.city, 'description':null, 'working_from':'2019-01-01 06:00:00', 'working_till':'2019-01-01 06:00:00'};
+    var data = {'school_college_name': this.state.school_college_name, 
+    'description': this.state.description, 
+    'session_from': this.state.session_from,
+    'session_to': this.state.session_to,
+    'attended_for': this.state.attended_for
+    };
     axios.put(url,data, {
       headers: {
         'Content-Type': 'application/json',
@@ -313,6 +336,7 @@ class SchoolEducationCard extends React.Component {
                                 variant="outlined"
                                 size="small"
                                 type="text"
+                                readOnly = {true}
                                 className={classes.textField}
                                 value={this.state.attended_for}
                                 onChange={this.handleAttended_For}
@@ -327,16 +351,16 @@ class SchoolEducationCard extends React.Component {
                             <Grid item xs={6} md={6} lg={6}>
                               {
                                 this.state.isEdit===true?(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.editprofile_education.bind(this, this.state.profile_education_id)} >
-                                    Edit
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.editprofile_education.bind(this, this.state.profile_education_id)} >
+                                    Save Changes
                                   </Button>
                                 ):(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.saveprofile_education} >
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveprofile_education} >
                                     Add 
                                   </Button>
                                 )
                               }
-                                <Button className={classes.button} color="primary" variant="contained" onClick={this.toggleWorkCancel}>Cancel</Button>
+                                &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
                             </Grid>
                         </Grid>
                     </Grid>

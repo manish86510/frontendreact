@@ -117,7 +117,7 @@ class WorkEducationCard extends React.Component {
 
   saveWorkplace = () => {
     var getToken = localStorage.getItem('access');
-    var data = {'name': this.state.company, 'position': this.state.position, 'city': this.state.city};
+    var data = {'name': this.state.company, 'position': this.state.position, 'city': this.state.city, 'description':null, 'working_from':'2019-01-01 06:00:00', 'working_till':'2019-01-01 06:00:00'};
       var url = endpoints.WORKPLACE;
       axios.post(url, data, {
       headers: {
@@ -295,16 +295,16 @@ class WorkEducationCard extends React.Component {
                             <Grid item xs={6} md={6} lg={6}>
                               {
                                 this.state.isEdit===true?(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
-                                    Edit
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
+                                    Save Changes
                                   </Button>
                                 ):(
-                                  <Button className={classes.button} color="primary" variant="contained" onClick={this.saveWorkplace} >
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveWorkplace} >
                                     Add 
                                   </Button>
                                 )
                               }
-                                <Button className={classes.button} color="primary" variant="contained" onClick={this.toggleWorkCancel}>Cancel</Button>
+                                &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
                             </Grid>
                         </Grid>
                     </Grid>
