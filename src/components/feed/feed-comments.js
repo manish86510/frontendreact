@@ -168,7 +168,7 @@ class FeedComments extends React.Component {
                             >
                                 <List className={classes.nested} disablePadding>
                                     <ListItem style={{ paddingLeft: "6%" }}>
-                                        <ChildComments post={post} childComments={comment.children} />
+                                        <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} />
                                     </ListItem>
                                 </List>
                             </Collapse>

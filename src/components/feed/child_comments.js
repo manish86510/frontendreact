@@ -73,7 +73,7 @@ class ChildComments extends React.Component {
                                     <React.Fragment>
                                         <Typography>{child_comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
+                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} onCommented={this.props.onCommented} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
                                         }
 
                                     </React.Fragment>
@@ -89,7 +89,7 @@ class ChildComments extends React.Component {
                             </ListItem>
                             <List disablePadding>
                                 <ListItem style={{paddingLeft:"6%"}}>
-                                    <ChildComments post={this.state.post} childComments={child_comment.children} />
+                                    <ChildComments post={this.state.post} onCommented={this.props.onCommented} childComments={child_comment.children} />
                                 </ListItem>
                             </List>
                         </div>
@@ -102,7 +102,8 @@ class ChildComments extends React.Component {
 
 ChildComments.propTypes = {
     childComments: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    onCommented: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ChildComments);
