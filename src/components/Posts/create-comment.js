@@ -33,7 +33,9 @@ class CreateComment extends React.Component {
                     parent: this.props.parent,
                 };
                 this.setState({ comment_model: comment_model });
-                this.props.onCommented(res.data);
+                // debugger;
+                this.props.onCommented ? this.props.onCommented(res.data) :
+                    this.props.onChildCommented(res.data);
             }).catch(res => {
                 this.setState({
                     isError: "Data not found!"
@@ -76,6 +78,7 @@ CreateComment.propTypes = {
     post: PropTypes.object.isRequired,
     parent: PropTypes.number.isRequired,
     onCommented: PropTypes.func.isRequired,
+    // onChildCommented: PropTypes.func.isRequired,
 };
 
 export default CreateComment;

@@ -66,11 +66,11 @@ class FeedComments extends React.Component {
 
     onCommented = (newComment) => {
         debugger;
+        this.setState({
+            parentComment: true,
+            comment_on_post: 45
+        });
         this.loadComments();
-        // debugger;
-        // let comments = this.state.comments;
-        // comments.results.splice(0, 0, newComment);
-        // this.setState({ comments: comments });
     }
 
     replyComment = (comment_id) => {
@@ -109,12 +109,13 @@ class FeedComments extends React.Component {
     }
 
     render() {
+        console.log("this.props :", this.props);
         const { post, classes } = this.props;
         return (
             <div style={{ width: '100%' }}>
                 <List>
-                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map(comment => (
-                        <div>
+                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map((comment, index) => (
+                        <div key={index}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
@@ -122,9 +123,9 @@ class FeedComments extends React.Component {
                                 <ListItemText style={{ paddingRight: "10%" }} primary={"@" + comment.user.username} secondary={
 
                                     <React.Fragment>
-                                        <Typography>{comment.comment}</Typography>
+                                        <Typography component={'span'} variant={'body2'}>{comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post === comment.id ? <CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post} /> : undefined
+                                            this.state.comment_on_post === comment.id ? <CreateComment parent={comment.id} onCommented={this.onCommented} cancelReply={this.cancelReply} post={post} /> : undefined
                                         }
                                         {/* <ChildComments post={post} childComments={comment.children} /> */}
                                     </React.Fragment>
@@ -136,17 +137,17 @@ class FeedComments extends React.Component {
                                         <ListItemSecondaryAction >
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
                                             {
-                                                comment.children.length > 0 === true ?
+                                                (comment.children.length > 0) ?
                                                     this.state.openChildCommetList.id === comment.id && this.state.openChildCommetList.status ?
                                                         <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
                                                             <ExpandLess />
                                                         </IconButton> :
                                                         <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, comment.id)}>
                                                             <ExpandMore />
-                                                        </IconButton> : 
-                                                        <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
-                                                            <ExpandMore />
-                                                        </IconButton>
+                                                        </IconButton> :
+                                                    <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
+                                                        <ExpandMore />
+                                                    </IconButton>
                                             }
                                         </ListItemSecondaryAction>
                                     ) : undefined
@@ -167,9 +168,45 @@ class FeedComments extends React.Component {
                                 unmountOnExit
                             >
                                 <List className={classes.nested} disablePadding>
-                                    <ListItem style={{ paddingLeft: "6%" }}>
-                                        <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} />
-                                    </ListItem>
+                                    {/* <ListItem style={{ paddingLeft: "6%" }}> */}
+                                    {/* <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} /> */}
+                                    <div style={{ width: '100%' }}>
+                                        {
+                                            comment.children && comment.children !== undefined ? (comment.children.map((child_comment, index) =>
+                                                <div key={index}>
+                                                    <ListItem style={{ paddingLeft: "6%" }}>
+                                                        <ListItemAvatar>
+                                                            <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
+                                                        </ListItemAvatar>
+                                                        <ListItemText style={{ paddingRight: "6%" }} primary={"@" + child_comment.user.username} secondary={
+                                                            <React.Fragment>
+                                                                <Typography component={'span'} variant={'body2'}>{child_comment.comment}</Typography>
+                                                                {
+                                                                    this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} onCommented={this.onCommented} cancelReply={this.cancelReply} post={post} /> : undefined
+                                                                }
+
+                                                            </React.Fragment>
+                                                        }>
+                                                        </ListItemText>
+                                                        {
+                                                            (this.state.comment_on_post !== child_comment.id && this.state.comment_on_post > -1) ? (
+                                                                <ListItemSecondaryAction>
+                                                                    <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
+                                                                </ListItemSecondaryAction>
+                                                            ) : undefined
+                                                        }
+                                                    </ListItem>
+                                                    <List disablePadding>
+                                                        <ListItem style={{ paddingLeft: "6%" }}>
+                                                            <ChildComments post={post} onCommented={this.onChildCommented} childComments={child_comment.children} />
+                                                        </ListItem>
+                                                    </List>
+                                                </div>
+                                            )) : undefined
+                                        }
+                                    </div>
+
+                                    {/* </ListItem> */}
                                 </List>
                             </Collapse>
                         </div>

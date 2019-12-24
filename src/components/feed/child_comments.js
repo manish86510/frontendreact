@@ -32,48 +32,55 @@ class ChildComments extends React.Component {
             comment_on_post: 45,
             childComment: true,
             post: props.post,
-            childComments:[],
+            childComments: [],
         };
     }
-    state={
-        childComments:[],
+    state = {
+        childComments: [],
     };
-    componentDidMount(){
-        console.log("props.childComments :", this.props.childComments);
+    componentDidMount() {
         this.setState({
-            childComments:this.props.childComments
+            childComments: this.props.childComments
         });
     }
     replyComment = (comment_id) => {
-        this.setState({ 
+        this.setState({
             comment_on_post: comment_id,
-            childComment: false 
+            childComment: false
         });
     }
 
     cancelReply = () => {
-        this.setState({ 
+        this.setState({
             childComment: true,
             comment_on_post: 45
         });
     }
 
+    onChildCommented = (newChildComment) => {
+        this.setState({
+            childComment: true,
+            comment_on_post: 45
+        });
+        this.props.onCommented();
+    }
 
     render() {
+        console.log("this.props :", this.props);
         return (
             <div style={{ width: '100%' }}>
                 {
-                    this.state.childComments && this.state.childComments !== undefined ? (this.state.childComments.map(child_comment =>
-                        <div>
-                            <ListItem alignItems="flex-start">
+                    this.state.childComments && this.state.childComments !== undefined ? (this.state.childComments.map((child_comment, index) =>
+                        <div key={index}>
+                            <ListItem style={{ paddingLeft: "6%" }}>
                                 <ListItemAvatar>
                                     <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText style={{paddingRight:"6%"}} primary={"@" + child_comment.user.username} secondary={
+                                <ListItemText style={{ paddingRight: "6%" }} primary={"@" + child_comment.user.username} secondary={
                                     <React.Fragment>
-                                        <Typography>{child_comment.comment}</Typography>
+                                        <Typography component={'span'} variant={'body2'}>{child_comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} onCommented={this.props.onCommented} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
+                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} onChildCommented={this.onChildCommented} /> : undefined
                                         }
 
                                     </React.Fragment>
@@ -88,8 +95,8 @@ class ChildComments extends React.Component {
                                 }
                             </ListItem>
                             <List disablePadding>
-                                <ListItem style={{paddingLeft:"6%"}}>
-                                    <ChildComments post={this.state.post} onCommented={this.props.onCommented} childComments={child_comment.children} />
+                                <ListItem style={{ paddingLeft: "6%" }}>
+                                    <ChildComments post={this.state.post} onCommented={this.on} childComments={child_comment.children} />
                                 </ListItem>
                             </List>
                         </div>

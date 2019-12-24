@@ -45,23 +45,23 @@ class FriendsList extends React.Component {
         };
     }
 
-    componentDidMount() {
-        var url = endpoints.following;
-        var getToken = localStorage.getItem('access');
-        axios.get(
-            url,
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getToken,
-                }
-            }
-        ).then(res => {
-            debugger;
-            if (res.status === 200) {
-                this.setState({ friendList: res.data.results });
-            }
-        });
-    }
+    // componentDidMount() {
+    //     var url = endpoints.following;
+    //     var getToken = localStorage.getItem('access');
+    //     axios.get(
+    //         url,
+    //         {
+    //             headers: {
+    //                 Authorization: 'Bearer ' + getToken,
+    //             }
+    //         }
+    //     ).then(res => {
+    //         debugger;
+    //         if (res.status === 200) {
+    //             this.setState({ friendList: res.data.results });
+    //         }
+    //     });
+    // }
 
     handleFriendListClick = (userInfo) => {
         this.props.history.push({
@@ -85,7 +85,7 @@ class FriendsList extends React.Component {
                     }>
                 </CardHeader>
 
-                <CardContent>
+                {/* <CardContent>
                     <List className={classes.root} dense>
                         {
                             (this.state.friendList !== null && this.state.friendList.length !== undefined && this.state.friendList.length !== 0) ? (
@@ -120,7 +120,7 @@ class FriendsList extends React.Component {
                                 </ListItem>
                         }
                     </List>
-                </CardContent>
+                </CardContent> */}
             </Card>
         );
     }

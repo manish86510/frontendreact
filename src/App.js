@@ -36,7 +36,7 @@ const theme = createMuiTheme({
 
 console.log('theme', theme);
 
-function App() {
+export default function App() {
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -76,4 +76,4 @@ function App() {
     );
 }
 
-export default App;
+// export default App;

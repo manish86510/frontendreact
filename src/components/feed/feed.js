@@ -112,7 +112,7 @@ class Feed extends React.Component {
         const { classes } = this.props;
         return (
             <div id="feed_content" ref={this.handleScroll}>
-                <Grid container spacing={24}>
+                <Grid container spacing={10}>
                     <Grid item xs={12}>
                         <PostTextArea onPostCreated={this.onPostCreated} />
                     </Grid>
@@ -128,8 +128,8 @@ class Feed extends React.Component {
                             <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                 {
                                     (this.state.postList !== null && this.state.postList !== undefined) ? (
-                                        this.state.postList.results.map(post => (
-                                            <FeedCard post={post} />
+                                        this.state.postList.results.map((post, index) => (
+                                            <FeedCard key={index} post={post} />
                                         ))
                                     ) : undefined
                                 }
