@@ -33,7 +33,6 @@ class CreateComment extends React.Component {
                     parent: this.props.parent,
                 };
                 this.setState({ comment_model: comment_model });
-                // debugger;
                 this.props.onCommented ? this.props.onCommented(res.data) :
                     this.props.onChildCommented(res.data);
             }).catch(res => {

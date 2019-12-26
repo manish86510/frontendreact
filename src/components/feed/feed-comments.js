@@ -16,7 +16,6 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import { TextField } from '@material-ui/core';
 
 const styles = theme => ({
     card: {
@@ -66,11 +65,15 @@ class FeedComments extends React.Component {
     }
 
     onCommented = (newComment) => {
+        let id = this.state.openChildCommetList.id
         // debugger;
         this.setState({
             parentComment: true,
             comment_on_post: 45,
-
+            openChildCommetList:{
+                id:id,
+                status:false
+            }
         });
         this.loadComments();
     }
@@ -89,7 +92,6 @@ class FeedComments extends React.Component {
         });
     }
     handleExpandMoreClick = (id) => {
-        console.log("id :", id);
         var childCommentexpandMore = {
             id: id,
             status: true
@@ -100,7 +102,6 @@ class FeedComments extends React.Component {
     }
 
     handleExpandLessClick = (id) => {
-        console.log("id :", id);
         var childCommentexpandless = {
             id: id,
             status: false
@@ -111,7 +112,6 @@ class FeedComments extends React.Component {
     }
 
     render() {
-        console.log("this.props :", this.props);
         const { post, classes } = this.props;
         return (
             <div style={{ width: '100%' }}>

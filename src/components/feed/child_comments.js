@@ -73,30 +73,31 @@ class ChildComments extends React.Component {
         });
         this.props.onCommented();
     }
-    handleExpandMoreClick = (id) => {
-        console.log("id :", id);
-        var childCommentexpandMore = {
-            id: id,
-            status: true
-        }
-        this.setState({
-            openNestedChildList: childCommentexpandMore
-        });
-    }
+    // handleExpandMoreClick = (id) => {
+    //     console.log("id :", id);
+    //     var childCommentexpandMore = {
+    //         id: id,
+    //         status: true
+    //     }
+    //     this.setState({
+    //         openNestedChildList: childCommentexpandMore
+    //     });
+    // }
 
-    handleExpandLessClick = (id) => {
-        console.log("id :", id);
-        var childCommentexpandless = {
-            id: id,
-            status: false
-        }
-        this.setState({
-            openNestedChildList: childCommentexpandless
-        });
-    }
+    // handleExpandLessClick = (id) => {
+    //     console.log("id :", id);
+    //     var childCommentexpandless = {
+    //         id: id,
+    //         status: false
+    //     }
+    //     this.setState({
+    //         openNestedChildList: childCommentexpandless
+    //     });
+    // }
 
     render() {
-        console.log("this.props :", this.props);
+        debugger;
+        console.log(this.state.childComments);
         return (
             <div style={{ width: '100%' }}>
                 {
@@ -121,7 +122,7 @@ class ChildComments extends React.Component {
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
                                             
-                                            {
+                                            {/* {
                                                 (child_comment.children.length > 0) ?
                                                    this.state.openNestedChildList.id === child_comment.id 
                                                    && 
@@ -135,24 +136,24 @@ class ChildComments extends React.Component {
                                                     <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, child_comment.id)}>
                                                         <ExpandMore />
                                                     </IconButton>
-                                            }
+                                            } */}
                                         </ListItemSecondaryAction>
                                     ) : undefined
                                 }
                             </ListItem>
                             <List disablePadding>
-                                <Collapse
+                                {/* <Collapse
                                     in={
                                         this.state.openNestedChildList.id === child_comment.id ?
                                             this.state.openNestedChildList.status : false
                                     }
                                     timeout="auto"
                                     unmountOnExit
-                                >
+                                > */}
                                     <ListItem style={{ paddingLeft: "8%" }} alignItems="flex-start">
                                         <ChildComments post={this.state.post} onCommented={this.onChildCommented} childComments={child_comment.children} />
                                     </ListItem>
-                                </Collapse>
+                                {/* </Collapse> */}
 
                             </List>
                         </div>

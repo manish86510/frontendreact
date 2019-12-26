@@ -39,9 +39,14 @@ class FeedDetail extends React.Component{
     }
 
     closeDrawer = ()=>{
-        this.setState({open_drawer: false});
+        this.setState({open_drawer: !this.state.open_drawer});
         this.props.onDrawerClose();
     }
+    // toggleDrower =()=>{
+    //     this.setState({
+    //         open_drawer:!this.state.open_drawer
+    //     });
+    // }
 
     render(){
         const { classes, post } = this.props;
