@@ -23,7 +23,7 @@ import Events from './containers/Events';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
-import Verify_mail from './containers/verify_mail'
+import Verify_mail from './containers/verify_mail';
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -36,7 +36,7 @@ const theme = createMuiTheme({
 
 console.log('theme', theme);
 
-function App() {
+export default function App() {
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -76,4 +76,4 @@ function App() {
     );
 }
 
-export default App;
+// export default App;
