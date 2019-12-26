@@ -23,7 +23,7 @@ import Events from './containers/Events';
 import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
-import Verify_mail from './containers/verify_mail'
+import Verify_mail from './containers/verify_mail';
 const theme = createMuiTheme({
     palette: {
         primary: {

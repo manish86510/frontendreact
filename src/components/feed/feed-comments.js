@@ -16,6 +16,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
+import { TextField } from '@material-ui/core';
 
 const styles = theme => ({
     card: {
@@ -55,20 +56,21 @@ class FeedComments extends React.Component {
             }
         ).then(res => {
             if (res.status === 200) {
+                console.log(res.data.results);
                 this.setState({ comments: res.data });
             }
-            console.log("this.state", this.state);
         })
     }
-    componentDidMount() {
+    componentWillMount() {
         this.loadComments();
     }
 
     onCommented = (newComment) => {
-        debugger;
+        // debugger;
         this.setState({
             parentComment: true,
-            comment_on_post: 45
+            comment_on_post: 45,
+
         });
         this.loadComments();
     }
@@ -154,11 +156,6 @@ class FeedComments extends React.Component {
                                 }
 
                             </ListItem>
-                            {/* <List className={classes.nested} disablePadding>
-                                <ListItem style={{ paddingLeft: "6%" }}>
-                                    <ChildComments post={post} childComments={comment.children} />
-                                </ListItem>
-                            </List> */}
                             <Collapse
                                 in={
                                     this.state.openChildCommetList.id === comment.id ?
@@ -168,45 +165,9 @@ class FeedComments extends React.Component {
                                 unmountOnExit
                             >
                                 <List className={classes.nested} disablePadding>
-                                    {/* <ListItem style={{ paddingLeft: "6%" }}> */}
-                                    {/* <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} /> */}
-                                    <div style={{ width: '100%' }}>
-                                        {
-                                            comment.children && comment.children !== undefined ? (comment.children.map((child_comment, index) =>
-                                                <div key={index}>
-                                                    <ListItem style={{ paddingLeft: "6%" }}>
-                                                        <ListItemAvatar>
-                                                            <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
-                                                        </ListItemAvatar>
-                                                        <ListItemText style={{ paddingRight: "6%" }} primary={"@" + child_comment.user.username} secondary={
-                                                            <React.Fragment>
-                                                                <Typography component={'span'} variant={'body2'}>{child_comment.comment}</Typography>
-                                                                {
-                                                                    this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} onCommented={this.onCommented} cancelReply={this.cancelReply} post={post} /> : undefined
-                                                                }
-
-                                                            </React.Fragment>
-                                                        }>
-                                                        </ListItemText>
-                                                        {
-                                                            (this.state.comment_on_post !== child_comment.id && this.state.comment_on_post > -1) ? (
-                                                                <ListItemSecondaryAction>
-                                                                    <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
-                                                                </ListItemSecondaryAction>
-                                                            ) : undefined
-                                                        }
-                                                    </ListItem>
-                                                    <List disablePadding>
-                                                        <ListItem style={{ paddingLeft: "6%" }}>
-                                                            <ChildComments post={post} onCommented={this.onChildCommented} childComments={child_comment.children} />
-                                                        </ListItem>
-                                                    </List>
-                                                </div>
-                                            )) : undefined
-                                        }
-                                    </div>
-
-                                    {/* </ListItem> */}
+                                    <ListItem style={{ paddingLeft: "6%" }}>
+                                        <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} />
+                                    </ListItem>
                                 </List>
                             </Collapse>
                         </div>

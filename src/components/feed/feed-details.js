@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
 import YoutubePlayer from './youtube-player';
 import CardAction from './card_action';
-
 const styles = theme => ({
     card:{
         marginBottom: 30,
