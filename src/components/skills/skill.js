@@ -169,10 +169,10 @@ class Skill extends React.Component {
     const elements_in = this.state.autocompleteData
     const skill_items = []
 
-    for (const [value] of elements_in.entries()) {
-      if(this.state.selected.skill.some(item => value.skill === item.skill) === false){
+    for (const [value, skill] of elements_in.entries()) {
+      if(this.state.selected.skill.some(item => skill.skill === item.skill) === false){
         skill_items.push(
-          { skill: value.skill, id:-1, created: true},
+          { skill: skill.skill, id:-1, created: true},
         )
       }
     }
