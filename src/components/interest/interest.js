@@ -148,7 +148,6 @@ class Interest extends React.Component {
     const selected = this.state.selected;
     for (var i = 0; i < selected.interest.length; i++) {
       if(selected.interest[i].created === true){
-        debugger;
         await axios
           .post(endpoints.my_interest, JSON.stringify({ "interest_code": selected.interest[i].interest_code }), {
             headers: {
@@ -167,10 +166,10 @@ class Interest extends React.Component {
     const elements_in = this.state.autocompleteData;
     const interest_items = [];
 
-    for (const [value] of elements_in.entries()) {
-      if(this.state.selected.interest.some(item => value.interest === item.interest_code) === false){
+    for (const [value, interest] of elements_in.entries()) {
+      if(this.state.selected.interest.some(item => interest.interest === item.interest_code) === false){
         interest_items.push(
-          { interest_code: value.interest, id:-1, created: true},
+          { interest_code: interest.interest, id:-1, created: true},
         )
       }
     }

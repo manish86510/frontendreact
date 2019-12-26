@@ -175,10 +175,10 @@ class Language extends React.Component {
     const elements_in = this.state.autocompleteData
     const language_items = []
 
-    for (const [value] of elements_in.entries()) {
-      if(this.state.selected.language.some(item => value.language === item.name) === false){
+    for (const [value, language] of elements_in.entries()) {
+      if(this.state.selected.language.some(item => language.language === item.name) === false){
         language_items.push(
-          { name: value.language, id:-1, created: true},
+          { name: language.language, id:-1, created: true},
         )
       }
     }

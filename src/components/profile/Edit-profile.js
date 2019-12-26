@@ -18,6 +18,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Switch from '@material-ui/core/Switch';
 import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
 import { Button, TextField} from '@material-ui/core';
+import UnivercityEducationCard from './university-education';
+import SchoolEducationCard from './school-education';
 import clsx from 'clsx';
 
 
@@ -241,12 +243,13 @@ class EditProfile extends React.Component {
 
         <Card style={{ marginTop: "10px" }}>
           <WorkEducationCard title="Education" />
+          <UnivercityEducationCard title="Education" />
+          <SchoolEducationCard />
         </Card>
-
-        <Card style={{ padding: "10px", marginTop: "10px" }}>
+        {/* <Card style={{ padding: "10px", marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <div className={classes.interest_container}>
                   <label className={classes.interest_heading}>
                     Interests
@@ -275,7 +278,7 @@ class EditProfile extends React.Component {
                 <div>
                   <LanguageData />
                 </div>
-              </Grid> */}
+              </Grid>
               <Grid item xs={6}>
                 <div className={classes.cardContainer}>
                   <label>
@@ -502,7 +505,7 @@ class EditProfile extends React.Component {
               </Grid>
             </Grid>
           </div>
-        </Card>
+        </Card>*/}
 
       </div>
 

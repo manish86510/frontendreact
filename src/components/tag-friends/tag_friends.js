@@ -49,7 +49,6 @@ class TagFriends extends React.Component {
     this.debounce_timer = setTimeout(() => {
 
       let url = endpoints.following + `?search=${searchText}`;
-      debugger;
       axios.get(url, {
         headers: {
           'Content-Type': 'application/json',

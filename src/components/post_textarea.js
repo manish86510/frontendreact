@@ -65,7 +65,6 @@ class PostTextArea extends React.Component {
           'Content-Type': 'multipart/form-data'
         }
       }).then(res => {
-        debugger;
         let post_data = this.state.postData;
         post_data.media_id.push(res.data.media_id[0]);
         this.setState({ postData: post_data });
