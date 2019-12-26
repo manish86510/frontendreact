@@ -45,22 +45,22 @@ class FriendsList extends React.Component {
         };
     }
 
-    componentDidMount() {
-        var url = endpoints.following;
-        var getToken = localStorage.getItem('access');
-        axios.get(
-            url,
-            {
-                headers: {
-                    Authorization: 'Bearer ' + getToken,
-                }
-            }
-        ).then(res => {
-            if (res.status === 200) {
-                this.setState({ friendList: res.data.results });
-            }
-        });
-    }
+    // componentDidMount() {
+    //     var url = endpoints.following;
+    //     var getToken = localStorage.getItem('access');
+    //     axios.get(
+    //         url,
+    //         {
+    //             headers: {
+    //                 Authorization: 'Bearer ' + getToken,
+    //             }
+    //         }
+    //     ).then(res => {
+    //         if (res.status === 200) {
+    //             this.setState({ friendList: res.data.results });
+    //         }
+    //     });
+    // }
 
     handleFriendListClick = (userInfo) => {
         this.props.history.push({

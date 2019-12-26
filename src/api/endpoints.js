@@ -36,7 +36,8 @@ const endpoints = {
   get_post: base_uri +'/api/v1/post/',
   HOT_topic: base_uri +'/api/v1/post/hot-topic/',
   recomended_followers: base_uri +'/user/recommended/',
-  WORKPLACE: base_uri +'/user/workplace/'
+  WORKPLACE: base_uri +'/user/workplace/',
+  all_city: base_uri + '/user/city/',
 };
 
 

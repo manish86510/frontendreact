@@ -242,8 +242,8 @@ class EditProfile extends React.Component {
         </Card>
 
         <Card style={{ marginTop: "10px" }}>
-          <WorkEducationCard title="Education" />
-          <UnivercityEducationCard title="Education" />
+          <WorkEducationCard title="Work/Education" />
+          <UnivercityEducationCard/>
           <SchoolEducationCard />
         </Card>
         {/* <Card style={{ padding: "10px", marginTop: "10px" }}>
