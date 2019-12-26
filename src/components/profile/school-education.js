@@ -73,7 +73,7 @@ class SchoolEducationCard extends React.Component {
       if(res.data.results[0].attended_for==='school'){
         this.setState({ educationData: res.data.results[0] });
       }else{
-        this.setState({ educationData: res.data.results[1] });
+        this.setState({ educationData: res.data.results[0] });
       }
     }).catch(error => {
       console.log(error);
@@ -213,6 +213,8 @@ class SchoolEducationCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log("length", this.state.educationData.length);
+    console.log(this.state.educationData);
     return (
       <div>
         <ListItem>
@@ -225,7 +227,7 @@ class SchoolEducationCard extends React.Component {
         </ListItem>
         <List>
         {
-          this.state.educationData!==null?(
+          this.state.educationData.length>0 && this.state.educationData!==null?(
               <ListItem key={this.state.educationData.id} role={undefined} dense>
                 <ListItemText primary={this.state.educationData.school_college_name} secondary={this.state.educationData.attended_for}/>
                 <ListItemSecondaryAction>

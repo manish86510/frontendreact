@@ -17,6 +17,8 @@ import endpoints from '../../api/endpoints';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
 
 const styles = theme => ({
   root: {
@@ -71,9 +73,9 @@ class UnivercityEducationCard extends React.Component {
       }
     }).then(res => {
       if(res.data.results[0].attended_for==='college'){
-        this.setState({ educationData: res.data.results[0] });
+        this.setState({ educationData: res.data.results });
       }else{
-        this.setState({ educationData: res.data.results[1] });
+        this.setState({ educationData: res.data.results });
       }
     }).catch(error => {
       console.log(error);
@@ -128,7 +130,7 @@ class UnivercityEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isWork: false });
+      this.setState({ isWork: true });
       this.getprofile_education();
     }).catch(error => {
       console.log(error);
@@ -211,6 +213,14 @@ class UnivercityEducationCard extends React.Component {
     });
   }
 
+  handleSessionToDate = (date) => {
+    this.setState({ session_to: date });
+  }
+
+  handleSessionFromDate = (date) => {
+    this.setState({ session_from: date });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -225,9 +235,10 @@ class UnivercityEducationCard extends React.Component {
         </ListItem>
         <List className={classes.list}>
         {
-          this.state.educationData!==null?(
-              <ListItem key={this.state.educationData.id} role={undefined} dense>
-                <ListItemText primary={this.state.educationData.school_college_name} secondary={this.state.educationData.attended_for}/>
+          this.state.educationData.length>0 && this.state.educationData!==null?(
+            this.state.educationData.map(eductionInfo =>(
+              <ListItem key={eductionInfo.id} role={undefined} dense>
+                <ListItemText primary={eductionInfo.school_college_name} secondary={eductionInfo.attended_for}/>
                 <ListItemSecondaryAction>
                 <PopupState variant="popover" popupId="demo-popup-menu">
                   {popupState => (
@@ -236,15 +247,15 @@ class UnivercityEducationCard extends React.Component {
                         <MoreVertIcon/>
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={this.toggleWorkEdit.bind(this, this.state.educationData.id)}>Edit</MenuItem>
-                        <MenuItem onClick={this.deleteprofile_education.bind(this, this.state.educationData.id)}>Delete</MenuItem>
+                        <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
+                        <MenuItem onClick={this.deleteprofile_education.bind(this, eductionInfo.id)}>Delete</MenuItem>
                       </Menu>
                     </React.Fragment>
                   )}
                 </PopupState>
                 </ListItemSecondaryAction>
-              </ListItem>
-          ): (<div onClick={this.toggleAddEducation}>
+              </ListItem>)
+          )): (<div onClick={this.toggleAddEducation}>
               <IconButton aria-label="add" color="primary">
                 <AddBoxOutlinedIcon fontSize="large" />
               </IconButton>
@@ -302,7 +313,23 @@ class UnivercityEducationCard extends React.Component {
                             Session From
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
-                            <TextField
+                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                <DatePicker
+                                  keyboard
+                                  label="Session From"
+                                  variant="outlined"
+                                  format="DD/MM/YYYY"
+                                  placeholder="DD/MM/YYYY"
+                                  mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                                  value={this.state.session_from}
+                                  onChange={this.handleSessionFromDate}
+                                  animateYearScrolling={false}
+                                  autoOk
+                                  className={classes.textField}
+                                  name="session_from"
+                                />
+                            </MuiPickersUtilsProvider>
+                            {/* <TextField
                                 label="Session_from"
                                 id="session_from"
                                 variant="outlined"
@@ -311,7 +338,7 @@ class UnivercityEducationCard extends React.Component {
                                 className={classes.textField}
                                 value={this.state.session_from}
                                 onChange={this.handleSessionFrom}
-                            />
+                            /> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -321,7 +348,23 @@ class UnivercityEducationCard extends React.Component {
                             Session To
                             </Grid>
                             <Grid item xs={6} md={6} lg={6}>
-                            <TextField
+                              <MuiPickersUtilsProvider utils={MomentUtils}>
+                                <DatePicker
+                                  keyboard
+                                  label="Session To"
+                                  variant="outlined"
+                                  format="DD/MM/YYYY"
+                                  placeholder="DD/MM/YYYY"
+                                  mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                                  value={this.state.session_to}
+                                  onChange={this.handleSessionToDate}
+                                  animateYearScrolling={false}
+                                  autoOk
+                                  className={classes.textField}
+                                  name="session_from"
+                                />
+                            </MuiPickersUtilsProvider>
+                            {/* <TextField
                                 label="Session_to"
                                 id="session_to"
                                 variant="outlined"
@@ -330,7 +373,7 @@ class UnivercityEducationCard extends React.Component {
                                 className={classes.textField}
                                 value={this.state.session_to}
                                 onChange={this.handleSessionTo}
-                            />
+                            /> */}
                             </Grid>
                         </Grid>
                     </Grid>
