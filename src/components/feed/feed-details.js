@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/styles';
 import FeedComments from './feed-comments';
 import YoutubePlayer from './youtube-player';
 import CardAction from './card_action';
-
 const styles = theme => ({
     card:{
         marginBottom: 30,
@@ -40,9 +39,14 @@ class FeedDetail extends React.Component{
     }
 
     closeDrawer = ()=>{
-        this.setState({open_drawer: false});
+        this.setState({open_drawer: !this.state.open_drawer});
         this.props.onDrawerClose();
     }
+    // toggleDrower =()=>{
+    //     this.setState({
+    //         open_drawer:!this.state.open_drawer
+    //     });
+    // }
 
     render(){
         const { classes, post } = this.props;
