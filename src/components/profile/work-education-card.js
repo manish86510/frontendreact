@@ -16,8 +16,8 @@ import { TextField, Button, List, ListItem, ListItemSecondaryAction,
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
-import UnivercityEducationCard from './university-education';
-import SchoolEducationCard from './school-education';
+// import UnivercityEducationCard from './university-education';
+// import SchoolEducationCard from './school-education';
 import BusinessIcon from '@material-ui/icons/Business';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -235,8 +235,8 @@ class WorkEducationCard extends React.Component {
         }
       </List>
         <Divider />
-        <UnivercityEducationCard />
-        <SchoolEducationCard />
+        {/* <UnivercityEducationCard /> */}
+        {/* <SchoolEducationCard /> */}
        
         {this.state.isWork ?
         <div className={classes.spacing_internal}>

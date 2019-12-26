@@ -48,9 +48,7 @@ class UnivercityEducationCard extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      isWork: false,
       isUniversity:false,
-      isSchool:false,
       school_college_name:'',
       attended_for: "college",
       educationData:[],
@@ -62,21 +60,23 @@ class UnivercityEducationCard extends React.Component {
   }
 
   componentDidMount() {
-    this.getprofile_education();
+    this.getProfileEducation();
   }
 
-  getprofile_education = () =>{
+  getProfileEducation = () =>{
     var getToken = localStorage.getItem('access');
     axios.get(endpoints.profile_education, {
       headers: {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      if(res.data.results[0].attended_for==='college'){
-        this.setState({ educationData: res.data.results });
-      }else{
-        this.setState({ educationData: res.data.results });
+      const educationDataList = [];
+      for (let i = 0; i < res.data.results.length; i++) {
+        if(res.data.results[i].attended_for === "college"){
+          educationDataList.push(res.data.results[i])
+        }
       }
+      this.setState({ educationData: educationDataList});  
     }).catch(error => {
       console.log(error);
     });
@@ -84,7 +84,7 @@ class UnivercityEducationCard extends React.Component {
 
   toggleWorkCancel = () => {
     this.setState({
-      isWork: !this.state.isWork
+      isUniversity: !this.state.isUniversity
     });
   }
 
@@ -102,7 +102,7 @@ class UnivercityEducationCard extends React.Component {
       this.setState({ session_from: res.data.session_from });
       this.setState({ session_to: res.data.session_to });
       this.setState({ isEdit: true });
-      this.setState({ isWork: true });
+      this.setState({ isUniversity: true });
       this.setState({ attended_for: res.data.attended_for });
       this.getprofile_education();
     }).catch(error => {
@@ -111,11 +111,11 @@ class UnivercityEducationCard extends React.Component {
   }
 
   toggleAddEducation = () => {
-    this.setState({ isWork: !this.state.isWork });
+    this.setState({ isUniversity: !this.state.isUniversity });
   }
 
 
-  saveprofile_education = () => {
+  saveProfileEducation = () => {
     var getToken = localStorage.getItem('access');
     var data = {'school_college_name': this.state.school_college_name, 
     'description': this.state.description, 
@@ -130,8 +130,8 @@ class UnivercityEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isWork: true });
-      this.getprofile_education();
+      this.setState({ isUniversity: false });
+      this.getProfileEducation();
     }).catch(error => {
       console.log(error);
     });
@@ -173,7 +173,7 @@ class UnivercityEducationCard extends React.Component {
     });
   }
 
-  editprofile_education=(profile_education_id)=>{
+  editProfileEducation=(profile_education_id)=>{
     var url = endpoints.profile_education+profile_education_id+'/';
     var getToken = localStorage.getItem('access');
     var data = {'school_college_name': this.state.school_college_name, 
@@ -189,15 +189,15 @@ class UnivercityEducationCard extends React.Component {
       }
     }).then(res => {
       this.setState({ isEdit: false });
-      this.setState({ isWork: false });
-      this.getprofile_education();
+      this.setState({ isUniversity: false });
+      this.getProfileEducation();
     }).catch(error => {
       console.log(error);
     });
   }
 
 
-  deleteprofile_education=(profile_education_id)=>{
+  deleteProfileEducation=(profile_education_id)=>{
     var url = endpoints.profile_education+profile_education_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
@@ -207,7 +207,7 @@ class UnivercityEducationCard extends React.Component {
       }
     }).then(res => {
       this.setState({ isEdit: false });
-      this.getprofile_education();
+      this.getProfileEducation();
     }).catch(error => {
       console.log(error);
     });
@@ -248,7 +248,7 @@ class UnivercityEducationCard extends React.Component {
                       </IconButton>
                       <Menu {...bindMenu(popupState)}>
                         <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
-                        <MenuItem onClick={this.deleteprofile_education.bind(this, eductionInfo.id)}>Delete</MenuItem>
+                        <MenuItem onClick={this.deleteProfileEducation.bind(this, eductionInfo.id)}>Delete</MenuItem>
                       </Menu>
                     </React.Fragment>
                   )}
@@ -265,7 +265,7 @@ class UnivercityEducationCard extends React.Component {
       </List>
 
         <Divider />
-        {this.state.isWork ?
+        {this.state.isUniversity ?
         <div className={classes.spacing_internal}>
             <form>
                 <Grid container spacing={3}>
@@ -329,16 +329,6 @@ class UnivercityEducationCard extends React.Component {
                                   name="session_from"
                                 />
                             </MuiPickersUtilsProvider>
-                            {/* <TextField
-                                label="Session_from"
-                                id="session_from"
-                                variant="outlined"
-                                size="small"
-                                type="text"
-                                className={classes.textField}
-                                value={this.state.session_from}
-                                onChange={this.handleSessionFrom}
-                            /> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -364,16 +354,6 @@ class UnivercityEducationCard extends React.Component {
                                   name="session_from"
                                 />
                             </MuiPickersUtilsProvider>
-                            {/* <TextField
-                                label="Session_to"
-                                id="session_to"
-                                variant="outlined"
-                                size="small"
-                                type="text"
-                                className={classes.textField}
-                                value={this.state.session_to}
-                                onChange={this.handleSessionTo}
-                            /> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -403,11 +383,11 @@ class UnivercityEducationCard extends React.Component {
                             <Grid item xs={6} md={6} lg={6}>
                               {
                                 this.state.isEdit===true?(
-                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.editprofile_education.bind(this, this.state.profile_education_id)} >
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.editProfileEducation.bind(this, this.state.profile_education_id)} >
                                     Save Changes
                                   </Button>
                                 ):(
-                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveprofile_education} >
+                                  <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveProfileEducation} >
                                     Add 
                                   </Button>
                                 )

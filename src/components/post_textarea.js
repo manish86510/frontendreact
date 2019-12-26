@@ -68,6 +68,7 @@ class PostTextArea extends React.Component {
         let post_data = this.state.postData;
         post_data.media_id.push(res.data.media_id[0]);
         this.setState({ postData: post_data });
+        
       }).catch(e => {
         console.log(e);
       });
