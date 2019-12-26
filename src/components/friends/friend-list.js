@@ -84,7 +84,7 @@ class FriendsList extends React.Component {
                     }>
                 </CardHeader>
 
-                <CardContent>
+                {/* <CardContent>
                     <List className={classes.root} dense>
                         {
                             (this.state.friendList !== null && this.state.friendList.length !== undefined && this.state.friendList.length !== 0) ? (
@@ -119,7 +119,7 @@ class FriendsList extends React.Component {
                                 </ListItem>
                         }
                     </List>
-                </CardContent>
+                </CardContent> */}
             </Card>
         );
     }

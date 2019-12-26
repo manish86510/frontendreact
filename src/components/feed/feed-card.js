@@ -58,7 +58,7 @@ class FeedCard extends React.Component {
         return (
             <Card className={classes.card}>
                 {
-                    post.post_media.length>0?(
+                    (post.post_media.length>0)?(
                         (post.post_media[0].media_type==='youtube' && post.post_media[0].media_url!==null)?(
                             <YoutubePlayer video_url={post.post_media[0].media_url}/> 
                         ):(
