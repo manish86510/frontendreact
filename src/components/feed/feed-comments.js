@@ -55,21 +55,27 @@ class FeedComments extends React.Component {
             }
         ).then(res => {
             if (res.status === 200) {
+                console.log(res.data.results);
                 this.setState({ comments: res.data });
             }
-            console.log("this.state", this.state);
         })
     }
-    componentDidMount() {
+    componentWillMount() {
         this.loadComments();
     }
 
     onCommented = (newComment) => {
-        this.loadComments();
+        let id = this.state.openChildCommetList.id
         // debugger;
-        // let comments = this.state.comments;
-        // comments.results.splice(0, 0, newComment);
-        // this.setState({ comments: comments });
+        this.setState({
+            parentComment: true,
+            comment_on_post: 45,
+            openChildCommetList:{
+                id:id,
+                status:false
+            }
+        });
+        this.loadComments();
     }
 
     replyComment = (comment_id) => {
@@ -110,18 +116,18 @@ class FeedComments extends React.Component {
         return (
             <div style={{ width: '100%' }}>
                 <List>
-                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map(comment => (
-                        <div>
+                    {(this.state.comments !== null && this.state.comments !== undefined) ? (this.state.comments.results.map((comment, index) => (
+                        <div key={index}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt={comment.user.username} src={comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText style={{ paddingRight: "6%" }} primary={"@" + comment.user.username} secondary={
+                                <ListItemText style={{ paddingRight: "10%" }} primary={"@" + comment.user.username} secondary={
 
                                     <React.Fragment>
-                                        <Typography>{comment.comment}</Typography>
+                                        <Typography component={'span'} variant={'body2'}>{comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post === comment.id ? <CreateComment parent={comment.id} cancelReply={this.cancelReply} post={post} /> : undefined
+                                            this.state.comment_on_post === comment.id ? <CreateComment parent={comment.id} onCommented={this.onCommented} cancelReply={this.cancelReply} post={post} /> : undefined
                                         }
                                         {/* <ChildComments post={post} childComments={comment.children} /> */}
                                     </React.Fragment>
@@ -132,23 +138,24 @@ class FeedComments extends React.Component {
                                     (this.state.comment_on_post !== comment.id && this.state.comment_on_post > -1) ? (
                                         <ListItemSecondaryAction >
                                             <Button color="primary" onClick={this.replyComment.bind(this, comment.id)}> Reply</Button>
-                                            {this.state.openChildCommetList.id === comment.id && this.state.openChildCommetList.status ?
-                                                <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
-                                                    <ExpandLess />
-                                                </IconButton> :
-                                                <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, comment.id)}>
-                                                    <ExpandMore />
-                                                </IconButton>
+                                            {
+                                                (comment.children.length > 0) ?
+                                                    this.state.openChildCommetList.id === comment.id && this.state.openChildCommetList.status ?
+                                                        <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
+                                                            <ExpandLess />
+                                                        </IconButton> :
+                                                        <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, comment.id)}>
+                                                            <ExpandMore />
+                                                        </IconButton> :
+                                                    <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, comment.id)}>
+                                                        <ExpandMore />
+                                                    </IconButton>
                                             }
                                         </ListItemSecondaryAction>
                                     ) : undefined
                                 }
+
                             </ListItem>
-                            {/* <List className={classes.nested} disablePadding>
-                                <ListItem style={{ paddingLeft: "6%" }}>
-                                    <ChildComments post={post} childComments={comment.children} />
-                                </ListItem>
-                            </List> */}
                             <Collapse
                                 in={
                                     this.state.openChildCommetList.id === comment.id ?
@@ -159,7 +166,7 @@ class FeedComments extends React.Component {
                             >
                                 <List className={classes.nested} disablePadding>
                                     <ListItem style={{ paddingLeft: "6%" }}>
-                                        <ChildComments post={post} childComments={comment.children} />
+                                        <ChildComments post={post} onCommented={this.onCommented} childComments={comment.children} />
                                     </ListItem>
                                 </List>
                             </Collapse>

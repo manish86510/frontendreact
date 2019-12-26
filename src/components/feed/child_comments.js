@@ -11,6 +11,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import CreateComment from '../Posts/create-comment';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const styles = theme => ({
     card: {
@@ -31,46 +36,79 @@ class ChildComments extends React.Component {
             comments: null,
             comment_on_post: 45,
             childComment: true,
-            childComments: props.childComments,
-            post: props.post
+            post: props.post,
+            childComments: this.props.childComments,
+            openNestedChildList: {
+                id: 0,
+                status: false
+            }
         };
     }
-    componentDidMount(){
-        console.log("props.childComments :", this.props.childComments);
+    state = {
+        childComments: [],
+    };
+    componentDidMount() {
         this.setState({
-            childComments:this.props.childComments
+            childComments: this.props.childComments
         });
     }
     replyComment = (comment_id) => {
-        this.setState({ 
+        this.setState({
             comment_on_post: comment_id,
-            childComment: false 
+            childComment: false
         });
     }
 
     cancelReply = () => {
-        this.setState({ 
+        this.setState({
             childComment: true,
             comment_on_post: 45
         });
     }
 
+    onChildCommented = (newChildComment) => {
+        this.setState({
+            childComment: true,
+            comment_on_post: 45
+        });
+        this.props.onCommented();
+    }
+    handleExpandMoreClick = (id) => {
+        var childCommentexpandMore = {
+            id: id,
+            status: true
+        }
+        this.setState({
+            openNestedChildList: childCommentexpandMore
+        });
+    }
+
+    handleExpandLessClick = (id) => {
+        var childCommentexpandless = {
+            id: id,
+            status: false
+        }
+        this.setState({
+            openNestedChildList: childCommentexpandless
+        });
+    }
 
     render() {
+        console.log(this.state.childComments);
         return (
             <div style={{ width: '100%' }}>
                 {
-                    this.state.childComments.length > 0 ? (this.state.childComments.map(child_comment =>
-                        <div>
+                    this.state.childComments && this.state.childComments !== undefined ? (this.state.childComments.map((child_comment, index) =>
+                        <div key={index}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt={child_comment.user.username} src={"https://energeapi.do.viewyoursite.net/" + child_comment.user.avatar}></Avatar>
                                 </ListItemAvatar>
-                                <ListItemText style={{paddingRight:"6%"}} primary={"@" + child_comment.user.username} secondary={
+                                <ListItemText style={{ paddingRight: "6%" }} primary={"@" + child_comment.user.username} secondary={
                                     <React.Fragment>
-                                        <Typography>{child_comment.comment}</Typography>
+                                        <Typography component={'span'} variant={'body2'}>{child_comment.comment}</Typography>
                                         {
-                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} /> : undefined
+                                            this.state.comment_on_post === child_comment.id ? <CreateComment parent={child_comment.id} cancelReply={this.cancelReply} post={this.state.post} onChildCommented={this.onChildCommented} /> : undefined
                                         }
 
                                     </React.Fragment>
@@ -80,14 +118,40 @@ class ChildComments extends React.Component {
                                     (this.state.comment_on_post !== child_comment.id && this.state.comment_on_post > -1) ? (
                                         <ListItemSecondaryAction>
                                             <Button color="primary" onClick={this.replyComment.bind(this, child_comment.id)}> Reply</Button>
+                                            
+                                            {
+                                                (child_comment.children.length > 0) ?
+                                                   this.state.openNestedChildList.id === child_comment.id 
+                                                   && 
+                                                   this.state.openNestedChildList.status ?
+                                                        <IconButton size="small" onClick={this.handleExpandLessClick.bind(this, child_comment.id)}>
+                                                            <ExpandLess />
+                                                        </IconButton> :
+                                                        <IconButton size="small" onClick={this.handleExpandMoreClick.bind(this, child_comment.id)}>
+                                                            <ExpandMore />
+                                                        </IconButton> :
+                                                    <IconButton disabled size="small" onClick={this.handleExpandLessClick.bind(this, child_comment.id)}>
+                                                        <ExpandMore />
+                                                    </IconButton>
+                                            }
                                         </ListItemSecondaryAction>
                                     ) : undefined
                                 }
                             </ListItem>
                             <List disablePadding>
-                                <ListItem style={{paddingLeft:"6%"}}>
-                                    <ChildComments post={this.state.post} childComments={child_comment.children} />
-                                </ListItem>
+                                <Collapse
+                                    in={
+                                        this.state.openNestedChildList.id === child_comment.id ?
+                                            this.state.openNestedChildList.status : false
+                                    }
+                                    timeout="auto"
+                                    unmountOnExit
+                                >
+                                    <ListItem style={{ paddingLeft: "8%" }} alignItems="flex-start">
+                                    <ChildComments post={this.state.post} onCommented={this.onChildCommented} childComments={child_comment.children} />
+                                    </ListItem>
+                                </Collapse>
+
                             </List>
                         </div>
                     )) : undefined
@@ -99,7 +163,8 @@ class ChildComments extends React.Component {
 
 ChildComments.propTypes = {
     childComments: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    onCommented: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ChildComments);
