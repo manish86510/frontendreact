@@ -148,7 +148,7 @@ class ChildComments extends React.Component {
                                     unmountOnExit
                                 >
                                     <ListItem style={{ paddingLeft: "8%" }} alignItems="flex-start">
-                                    <ChildComments post={this.state.post} onCommented={this.onChildCommented} childComments={child_comment.children} />
+                                    {/* <ChildComments post={this.state.post} onCommented={this.onChildCommented} childComments={child_comment.children} /> */}
                                     </ListItem>
                                 </Collapse>
 

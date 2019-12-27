@@ -14,7 +14,6 @@ import IconButton from '@material-ui/core/IconButton';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 
 // const $ = require('jquery');
@@ -45,7 +44,8 @@ class SocialLinks extends React.Component {
       socialLinkData: null,
       name:null,
       url:null,
-      social_id:null
+      social_id:null,
+      anchorEl: null,
     }
   }
 
@@ -106,8 +106,7 @@ class SocialLinks extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isAdd: false });
-      this.setState({ isEdit: false });
+      this.setState({ isAdd: false, isEdit: false });
       this.getSocialLinks();
     }).catch(error => {
       console.log(error);
@@ -120,8 +119,7 @@ class SocialLinks extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isAdd: false });
-      this.setState({ isEdit: false });
+      this.setState({ isAdd: false, isEdit: false });
       this.getSocialLinks();
     }).catch(error => {
       console.log(error);
@@ -142,6 +140,7 @@ class SocialLinks extends React.Component {
   }
 
   deleteLinks=(social_id)=>{
+    this.setState({ isAdd: false });
     var url = endpoints.profile_social_links+social_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
@@ -157,8 +156,17 @@ class SocialLinks extends React.Component {
     });
   }
 
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     const {classes} = this.props;
+    const { anchorEl } = this.state;
     return (
       <div className={classes.root}>
       <Typography className={classes.heading}>{this.props.title ? this.props.title : " " }</Typography>
@@ -169,7 +177,24 @@ class SocialLinks extends React.Component {
               <ListItem key={socialData.id} role={undefined} dense>
                 <ListItemText primary={socialData.name} secondary={socialData.url}/>
                 <ListItemSecondaryAction>
-                <PopupState variant="popover" popupId="demo-popup-menu">
+                <Button
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                >
+                  <MoreVertIcon/>
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.toggleEditAction.bind(this, socialData.id)}>Edit</MenuItem>
+                  <MenuItem onClick={this.deleteLinks.bind(this, socialData.id)}>Delete</MenuItem>
+                </Menu>
+
+                {/* <PopupState variant="popover" popupId="demo-popup-menu">
                   {popupState => (
                     <React.Fragment>
                       <IconButton edge="end" variant="contained" color="primary" {...bindTrigger(popupState)}>
@@ -181,7 +206,7 @@ class SocialLinks extends React.Component {
                       </Menu>
                     </React.Fragment>
                   )}
-                </PopupState>
+                </PopupState> */}
                 </ListItemSecondaryAction>
               </ListItem>
             ))
