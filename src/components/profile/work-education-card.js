@@ -200,7 +200,6 @@ class WorkEducationCard extends React.Component {
   }
 
   handleCityChange = event => {
-    debugger;
     this.setState({ city: event.target.value })
   };
 
@@ -211,7 +210,6 @@ class WorkEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      debugger;
       this.setState({ all_city: res.data.results });
     }).catch(error => {
       console.log(error);
