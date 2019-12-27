@@ -38,8 +38,8 @@ const styles = theme => ({
     fontWeight: '700'
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(8),
     width: '100%',
   },
   button: {
@@ -281,9 +281,6 @@ class WorkEducationCard extends React.Component {
           }
         </List>
         <Divider />
-        {/* <UnivercityEducationCard /> */}
-        {/* <SchoolEducationCard /> */}
-
         {this.state.isWork ?
           <div className={classes.spacing_internal}>
             <form>
@@ -322,24 +319,13 @@ class WorkEducationCard extends React.Component {
                           id="city"
                           value={this.state.city}
                           onChange={this.handleCityChange}
-                          // labelWidth={labelWidth}
                         >
                           <MenuItem value=""><em>None</em></MenuItem>
-                          {this.state.all_city != undefined ?
+                          {this.state.all_city !== undefined ?
                             this.state.all_city.map((item, index) => <MenuItem id={index} key={index} value={item.city_code}>{item.city_name}</MenuItem>) : (<MenuItem value="">None</MenuItem>)
                           }
                         </Select>
                       </FormControl>
-                      {/* <TextField
-                                label="City/Town"
-                                id="city_town"
-                                variant="outlined"
-                                size="small"
-                                type="text"
-                                className={classes.textField}
-                                value={this.state.city}
-                                onChange={this.handleCity}
-                            /> */}
                     </Grid>
                   </Grid>
                 </Grid>

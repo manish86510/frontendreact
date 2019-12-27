@@ -21,8 +21,8 @@ const styles = theme => ({
         fontWeight: '700'
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(8),
+        marginRight: theme.spacing(8),
         width: '100%',
     },
     button: {

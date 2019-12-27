@@ -3,13 +3,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { PropTypes } from 'prop-types';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
   cardContainer: {
@@ -40,38 +39,33 @@ class ProfileCard extends React.Component {
     this.state = {
       checkedA: true,
       user: {},
-      selected: {
-        interest: [],
-        skill: [],
-        language: [],
-      },
       file: null,
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount = () => {
-    this.getUserData();
-  }
+  // componentDidMount = () => {
+  //   this.getUserData();
+  // }
 
-  getUserData = () => {
-    axios.get(endpoints.profile_user, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-    }).then(res => {
-      this.setState({ user: res.data });
-    });
+  // getUserData = () => {
+  //   axios.get(endpoints.profile_user, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Bearer ' + localStorage.access,
+  //     }
+  //   }).then(res => {
+  //     this.setState({ user: res.data });
+  //   });
 
-  }
+  // }
 
   handleProfilePicChange = event => {
     let formData = new FormData();
     formData.append('avatar', event.target.files[0]);
     var token = localStorage.getItem('access');
-    axios.put(endpoints.PROFILE_UPDATE, formData, {
+    axios.put(endpoints.profile_update, formData, {
       headers: {
         Authorization: 'Bearer ' + token,
         'Content-Type': 'multipart/form-data'
@@ -101,23 +95,21 @@ class ProfileCard extends React.Component {
   };
 
   toggleEdit = ()=>{
-    this.props.editUserName();
+    this.props.editUserNameFunc();
   }
 
   render() {
-    const { classes } = this.props;
-    console.log("test :", this.state.user.avatar)
-    // const url = 'energeapi.do.viewyoursite.net' + this.state.user.avatar;
+    const { classes, profile } = this.props;
     return (
       <Card className={classes.cardContainer}>
         <div style={{ position: 'relative' }}>
           <div className={classes.gridItem}>
             {
-              (this.state.user.avatar !== undefined && this.state.user.avatar) ? (
+              (profile.avatar !== undefined && profile.avatar) ? (
                 <CardMedia
                   className={[classes.media, classes.profile_image]}
                   onClick={() => { this.inputOpenFileRef.current.click(); }}
-                  image={"https://energeapi.do.viewyoursite.net" + this.state.user.avatar} />
+                  image={"https://energeapi.do.viewyoursite.net" + profile.avatar} />
               ) : (
                   <CardMedia
                     className={[classes.media, classes.profile_image]}
@@ -143,32 +135,25 @@ class ProfileCard extends React.Component {
           <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
             <label>
               Name
-                  <IconButton size='small' color="inherit" aria-label="Close">
-                <FontAwesomeIcon icon={faEdit} onClick={this.toggleEdit} />
+              <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                <EditIcon fontSize="small" />
               </IconButton>
             </label>
-            <div>{this.state.user.first_name}&nbsp;{this.state.user.last_name}</div>
+            <div>{profile.first_name}&nbsp;{profile.last_name}</div>
             <br />
             <label>
               Username
-                  {/* <IconButton size='small' color="inherit" aria-label="Close">
-                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-              </IconButton> */}
             </label>
-            <div>{this.state.user.username}</div>
+            <div>{profile.username}</div>
           </div>
 
           <div className={"bioContainer"}>
             <label>
               Bio
-                <IconButton size='small' color="inherit" aria-label="Close">
-                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
-              </IconButton>
             </label>
             <div>
-              {this.state.user.about}
+              {profile.about}
             </div>
-
             <FormControlLabel
               style={{ position: 'absolute', top: 0, right: 0 }}
               control={
@@ -191,7 +176,7 @@ class ProfileCard extends React.Component {
 
 ProfileCard.propTypes = {
   profile: PropTypes.object.isRequired,
-  editUserName: PropTypes.func,
+  editUserNameFunc: PropTypes.func,
 };
 
 export default withStyles(styles)(ProfileCard);

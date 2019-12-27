@@ -3,8 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import { Avatar, ListItem } from '@material-ui/core';
-import endpoints from '../../api/endpoints';
-import axios from 'axios';
 
 const styles = theme => ({
   root: {
