@@ -110,6 +110,7 @@ class SchoolEducationCard extends React.Component {
     }).catch(error => {
       console.log(error);
     });
+    
   }
 
   toggleAddEducation = () => {
