@@ -53,7 +53,7 @@ class FeedDetail extends React.Component{
         var markup = {__html: this.props.post.about_post.replace(/(?:\r\n|\r|\n)/g, '<br />')};
 
         return (
-            <Drawer anchor="right" open={this.state.open_drawer} className={"post-detail"} transitionDuration={{enter: 2000, exit: 1000}}>
+            <Drawer onClose={this.closeDrawer} anchor="right" open={this.state.open_drawer} className={"post-detail"} transitionDuration={{enter: 2000, exit: 1000}}>
                 <IconButton size='small' onClick={this.closeDrawer} style={{position:'absolute', top: 5, right: 10}}>
                     <CloseOutlinedIcon/>
                 </IconButton>

@@ -56,7 +56,6 @@ class FriendsList extends React.Component {
     //             }
     //         }
     //     ).then(res => {
-    //         debugger;
     //         if (res.status === 200) {
     //             this.setState({ friendList: res.data.results });
     //         }
