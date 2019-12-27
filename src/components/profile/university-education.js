@@ -96,14 +96,16 @@ class UnivercityEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ school_college_name: res.data.school_college_name });
-      this.setState({ description: res.data.description });
-      this.setState({ profile_education_id: res.data.id });
-      this.setState({ session_from: res.data.session_from });
-      this.setState({ session_to: res.data.session_to });
-      this.setState({ isEdit: true });
-      this.setState({ isUniversity: true });
-      this.setState({ attended_for: res.data.attended_for });
+      this.setState({ 
+        school_college_name: res.data.school_college_name,
+        description: res.data.description,
+        profile_education_id: res.data.id,
+        session_from: res.data.session_from,
+        session_to: res.data.session_to,
+        isEdit: true,
+        isUniversity: true,
+        attended_for: res.data.attended_for
+      });
       this.getprofile_education();
     }).catch(error => {
       console.log(error);
@@ -111,7 +113,15 @@ class UnivercityEducationCard extends React.Component {
   }
 
   toggleAddEducation = () => {
-    this.setState({ isUniversity: !this.state.isUniversity });
+    this.setState({ 
+      isUniversity: !this.state.isUniversity,
+      school_college_name: null,
+      description: null,
+      profile_education_id: null,
+      session_from: null,
+      session_to: null,
+      attended_for: "college"
+    });
   }
 
 

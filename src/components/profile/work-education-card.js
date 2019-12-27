@@ -64,7 +64,7 @@ class WorkEducationCard extends React.Component {
       isWork: false,
       isUniversity: false,
       isSchool: false,
-      company: '',
+      company: null,
       isEdit: false,
       companyData: [],
       city: null,
@@ -107,12 +107,14 @@ class WorkEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ company: res.data.name });
-      this.setState({ city: res.data.city });
-      this.setState({ position: res.data.position });
-      this.setState({ isEdit: true });
-      this.setState({ isWork: true });
-      this.setState({ workplace_id: res.data.id });
+      this.setState({
+          company: res.data.name,
+          city: res.data.city,
+          position: res.data.position,
+          isEdit: true,
+          isWork: true,
+          workplace_id: res.data.id,
+         });
       this.getWorkplace();
     }).catch(error => {
       console.log(error);
@@ -120,7 +122,13 @@ class WorkEducationCard extends React.Component {
   }
 
   toggleWorkAdd = () => {
-    this.setState({ isWork: !this.state.isWork });
+    this.setState({
+      isWork: !this.state.isWork,
+      company: null,
+      city: null,
+      position: null,
+      workplace_id: null,
+     });
   }
 
   toggleUniversityEdit = () => {
