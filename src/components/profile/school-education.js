@@ -7,7 +7,6 @@ import Divider from '@material-ui/core/Divider';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { TextField, Button, List, ListItem, ListItemSecondaryAction,
   ListItemText
 } from '@material-ui/core';
@@ -55,7 +54,8 @@ class SchoolEducationCard extends React.Component {
       description:null,
       session_from:null,
       session_to:null,
-      profile_education_id:null
+      profile_education_id:null,
+      anchorEl: null,
     }
   }
 
@@ -188,8 +188,7 @@ class SchoolEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isEdit: false });
-      this.setState({ isSchool: false });
+      this.setState({ isEdit: false, isSchool: false });
       this.getprofile_education();
     }).catch(error => {
       console.log(error);
@@ -198,6 +197,7 @@ class SchoolEducationCard extends React.Component {
 
 
   deleteProfileEducation=(profile_education_id)=>{
+    this.setState({isSchool: false});
     var url = endpoints.profile_education+profile_education_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
@@ -221,10 +221,17 @@ class SchoolEducationCard extends React.Component {
     this.setState({ session_from: date });
   }
 
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     const { classes } = this.props;
-    console.log("length", this.state.educationData.length);
-    console.log(this.state.educationData);
+    const { anchorEl } = this.state;
     return (
       <div>
         <ListItem>
@@ -242,19 +249,22 @@ class SchoolEducationCard extends React.Component {
               <ListItem key={eductionInfo.id} role={undefined} dense>
                 <ListItemText primary={eductionInfo.school_college_name} secondary={eductionInfo.attended_for}/>
                 <ListItemSecondaryAction>
-                <PopupState variant="popover" popupId="demo-popup-menu">
-                  {popupState => (
-                    <React.Fragment>
-                      <IconButton edge="end" variant="contained" color="primary" {...bindTrigger(popupState)}>
-                        <MoreVertIcon/>
-                      </IconButton>
-                      <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
-                        <MenuItem onClick={this.deleteProfileEducation.bind(this, eductionInfo.id)}>Delete</MenuItem>
-                      </Menu>
-                    </React.Fragment>
-                  )}
-                </PopupState>
+                <Button
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                >
+                  <MoreVertIcon/>
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
+                  <MenuItem onClick={this.deleteProfileEducation.bind(this, eductionInfo.id)}>Delete</MenuItem>
+                </Menu>
                 </ListItemSecondaryAction>
               </ListItem>)
           )): (<div onClick={this.toggleAddEducation}>

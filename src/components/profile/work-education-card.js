@@ -11,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import {
   TextField, Button, List, ListItem, ListItemSecondaryAction,
   ListItemText, Select, FormControl
@@ -72,6 +71,7 @@ class WorkEducationCard extends React.Component {
       position: null,
       workplace_id: null,
       all_city: [],
+      anchorEl: null,
     }
   }
 
@@ -174,8 +174,7 @@ class WorkEducationCard extends React.Component {
         Authorization: 'Bearer ' + getToken,
       }
     }).then(res => {
-      this.setState({ isEdit: false });
-      this.setState({ isWork: false });
+      this.setState({ isEdit: false, isWork: false });
       this.getWorkplace();
     }).catch(error => {
       console.log(error);
@@ -184,6 +183,7 @@ class WorkEducationCard extends React.Component {
 
 
   deleteWorkplace = (workplace_id) => {
+    this.setState({ isWork: false });
     var url = endpoints.WORKPLACE + workplace_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
@@ -216,9 +216,17 @@ class WorkEducationCard extends React.Component {
     });
   }
 
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     const { classes } = this.props;
-    console.log("test :", this.state.companyData);
+    const { anchorEl } = this.state;
     return (
       <div className={classes.root}>
         <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
@@ -237,19 +245,22 @@ class WorkEducationCard extends React.Component {
                 <ListItem key={companyInfo.id} role={undefined} dense>
                   <ListItemText primary={companyInfo.name} secondary={companyInfo.position} />
                   <ListItemSecondaryAction>
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                      {popupState => (
-                        <React.Fragment>
-                          <IconButton edge="end" variant="contained" color="primary" {...bindTrigger(popupState)}>
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu {...bindMenu(popupState)}>
-                            <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
-                            <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
-                          </Menu>
-                        </React.Fragment>
-                      )}
-                    </PopupState>
+                  <Button
+                    aria-owns={anchorEl ? 'simple-menu' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleClick}
+                  >
+                    <MoreVertIcon/>
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={this.handleClose}
+                  >
+                    <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
+                    <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
+                  </Menu>
                   </ListItemSecondaryAction>
                 </ListItem>
               ))

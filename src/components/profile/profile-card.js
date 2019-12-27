@@ -46,7 +46,6 @@ class ProfileCard extends React.Component {
         language: [],
       },
       file: null,
-
     }
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -101,6 +100,10 @@ class ProfileCard extends React.Component {
     });
   };
 
+  toggleEdit = ()=>{
+    this.props.editUserName();
+  }
+
   render() {
     const { classes } = this.props;
     console.log("test :", this.state.user.avatar)
@@ -141,7 +144,7 @@ class ProfileCard extends React.Component {
             <label>
               Name
                   <IconButton size='small' color="inherit" aria-label="Close">
-                <FontAwesomeIcon icon={faEdit} onClick={this.handlePhotoEdit} />
+                <FontAwesomeIcon icon={faEdit} onClick={this.toggleEdit} />
               </IconButton>
             </label>
             <div>{this.state.user.first_name}&nbsp;{this.state.user.last_name}</div>
@@ -188,6 +191,7 @@ class ProfileCard extends React.Component {
 
 ProfileCard.propTypes = {
   profile: PropTypes.object.isRequired,
+  editUserName: PropTypes.func,
 };
 
 export default withStyles(styles)(ProfileCard);

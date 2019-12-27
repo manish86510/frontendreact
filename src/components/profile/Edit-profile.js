@@ -20,6 +20,7 @@ import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
 import { Button, TextField} from '@material-ui/core';
 import UnivercityEducationCard from './university-education';
 import SchoolEducationCard from './school-education';
+import UserDetails from './user-details';
 import clsx from 'clsx';
 
 
@@ -59,48 +60,6 @@ const styles = theme => ({
   },
 });
 
-
-// const AntSwitch = withStyles(theme => ({
-//   root: {
-//     width: 28,
-//     height: 16,
-//     padding: 0,
-//     display: 'flex',
-//   },
-//   switchBase: {
-//     padding: 2,
-//     color: theme.palette.grey[500],
-//     '&$checked': {
-//       transform: 'translateX(12px)',
-//       color: theme.palette.common.white,
-//       '& + $track': {
-//         opacity: 1,
-//         backgroundColor: theme.palette.primary.main,
-//         borderColor: theme.palette.primary.main,
-//       },
-//     },
-//   },
-//   thumb: {
-//     width: 12,
-//     height: 12,
-//     boxShadow: 'none',
-//   },
-//   track: {
-//     border: `1px solid ${theme.palette.grey[500]}`,
-//     borderRadius: 16 / 2,
-//     opacity: 1,
-//     backgroundColor: theme.palette.common.white,
-//   },
-//   checked: {},
-// }))(Switch);
-
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: green,
-//   },
-// });
-
-
 class EditProfile extends React.Component {
 
   constructor(props) {
@@ -111,7 +70,8 @@ class EditProfile extends React.Component {
         interest: [],
         skill: [],
         language: [],
-      }
+      },
+      isEditUsername:false,
     }
   }
 
@@ -119,14 +79,10 @@ class EditProfile extends React.Component {
     $('.autocompleteInterest').hide();
     $('.autocompleteSkill').hide();
     $('.autocompleteLanguage').hide();
-
     this.getUserData();
-
-
   }
+
   getUserData = () => {
-
-
     axios.get(endpoints.profile_social_links, {
       headers: {
         'Content-Type': 'application/json',
@@ -136,7 +92,6 @@ class EditProfile extends React.Component {
       const user = this.state.user
       user.linked_in = res.data.name
       this.setState({ user });
-
     });
     axios.get(endpoints.profile_education, {
       headers: {
@@ -212,15 +167,24 @@ class EditProfile extends React.Component {
     }
   };
 
+  editUserName = () => {
+    this.setState({
+      isEditUsername: !this.state.isEditUsername
+  });
+  }
+
   render() {
     const { classes } = this.props;
     // const friendInfo = this.props.info;
     return (
       <div>
         {
-          this.state.user != null ? (<ProfileCard profile={this.state.user} />) : undefined
+          this.state.user != null ? (<ProfileCard profile={this.state.user} editUserName={this.editUserName} />) : undefined
         }
-        
+        {this.state.isEditUsername ? 
+        <Card style={{ marginTop: "10px" }}>
+          <UserDetails title="Details About You" profile={this.state.user} editUsername={this.state.isEditUsername} />
+        </Card> : '' }
         <Card style={{ marginTop: "10px" }}>
           <CommunicationCard title="Communication Details" />
         </Card>
