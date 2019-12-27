@@ -49,6 +49,10 @@ class Posts extends React.Component {
   }
 
   componentDidMount() {
+    this.getAllPost();
+  }
+
+  getAllPost = () => {
     var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
     var getToken = localStorage.getItem('access');
     axios.get(
@@ -66,7 +70,6 @@ class Posts extends React.Component {
         });
       }
     })
-    // this.getPostList();
   }
 
   handleLike = (tile) => {
