@@ -51,6 +51,9 @@ const styles = theme => ({
     iconButton: {
         fontSize: 15
     },
+    login_img: {
+        marginTop:"9em"
+    },
 });
 class Login extends React.Component {
     constructor(props) {
@@ -63,7 +66,7 @@ class Login extends React.Component {
         }
     }
     getProfile = () => {
-        var url = endpoints.PROFILE;
+        var url = endpoints.profile_user;
         var token = localStorage.getItem('access');
         axios.get(url, {
             headers: {
@@ -193,7 +196,7 @@ class Login extends React.Component {
                 </form>
                 <p><Link to="/register" className="sign_up"> Don 't have an account? Sign up!</Link></p>
             </center>
-            <div>
+            <div className={classes.login_img}>
 
 
                 <img 

@@ -53,6 +53,9 @@ const styles = theme => ({
     iconButton: {
         fontSize: 15
     },
+    register_img: {
+        marginTop:"15em"
+    },
 });
 class Register extends React.Component {
     constructor(props) {
@@ -253,7 +256,7 @@ class Register extends React.Component {
                     </form><br></br>
                     <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
-                <div>
+                <div className={classes.register_img}>
                     <img src={image}
                         style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }} alt="" />
                 </div >
