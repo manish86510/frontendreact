@@ -65,7 +65,6 @@ class UserDetails extends React.Component {
     }
 
     handleChange = event => {
-        debugger;
         const user = this.state.user;
         user[event.target.name] = event.target.value;
         this.setState({user:user});
@@ -73,7 +72,7 @@ class UserDetails extends React.Component {
     }
 
     render() {
-        const { classes, profile } = this.props;
+        const { classes } = this.props;
         const {user} = this.state;
         console.log("profile", this.props.profile);
         return (

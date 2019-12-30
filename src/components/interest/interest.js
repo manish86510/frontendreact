@@ -169,7 +169,7 @@ class Interest extends React.Component {
     for (const [value, interest] of elements_in.entries()) {
       if(this.state.selected.interest.some(item => interest.interest === item.interest_code) === false){
         interest_items.push(
-          { interest_code: interest.interest, id:-1, created: true},
+          { interest_code: interest.interest, id:-1, created: true, value:value},
         )
       }
     }

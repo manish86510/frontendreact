@@ -55,12 +55,10 @@ class TagFriends extends React.Component {
           Authorization: 'Bearer ' + localStorage.access,
         }
       }).then(res => {
-
         const autocompleteData = this.state.autocompleteData
         for (let i = 0; i < res.data.results.length; i++) {
           autocompleteData.push(res.data.results[i])
         }
-
         this.setState({ autocompleteData: autocompleteData, loading: false });
       }).catch((err)=>{
         this.setState({ autocompleteData: [], loading: false });

@@ -67,50 +67,84 @@ class Register extends React.Component {
             username: '',
             email: '',
             password: '',
-            loading: false
+            loading: false,
+            error: {
+                username_err: '',
+                fullname_err: '',
+                email_err: '',
+                password_err: '',
+              },
         }
     }
+
+    validate = () => {
+        debugger;
+        let flag = false;
+        const error = this.state.error;
+        if (this.state.fullname === "") {
+          error.fullname_err = "This field is required";
+          flag = true;
+        }
+        if (this.state.username === "") {
+            error.username_err = "This field is required";
+            flag = true;
+        }
+        if (this.state.email === "") {
+            error.email_err = "This field is required";
+            flag = true;
+        }
+        if (this.state.password === "") {
+            error.password_err = "This field is required";
+            flag = true;
+        }    
+        this.setState({ error: error });    
+        return flag;
+      }
 
     postRegister = (e) => {
         this.setState({loading: true});
         e.preventDefault();
         let self = this;
-        var index = this.state.fullname.indexOf(" ");
-        var firstName = this.state.fullname.substr(0, index);
-        var lastName = this.state.fullname.substr(index + 1);
-        let formData = new FormData();
-        if(index===-1){
-            formData.append('first_name', lastName);
-            formData.append('last_name', firstName);
-        }else{
-            formData.append('first_name', firstName);
-            formData.append('last_name', lastName);
-        }
-        formData.append('username', self.state.username);
-        formData.append('email', self.state.email);
-        formData.append('password', self.state.password);
-        axios.post(EndPoint.profile_user, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        debugger;
+        if (!this.validate()) {
+            var index = this.state.fullname.indexOf(" ");
+            var firstName = this.state.fullname.substr(0, index);
+            var lastName = this.state.fullname.substr(index + 1);
+            let formData = new FormData();
+            if(index===-1){
+                formData.append('first_name', lastName);
+                formData.append('last_name', firstName);
+            }else{
+                formData.append('first_name', firstName);
+                formData.append('last_name', lastName);
             }
-        }).then(result => {
-            this.setState({loading: false});
-            if (result.status === 200) {
-                console.log(result.data);
-                this.props.history.push({
-                    pathname: "/verify"
-                });
-            } else {
+            formData.append('username', self.state.username);
+            formData.append('email', self.state.email);
+            formData.append('password', self.state.password);
+            axios.post(EndPoint.profile_user, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(result => {
+                this.setState({loading: false});
+                if (result.status === 200) {
+                    console.log(result.data);
+                    this.props.history.push({
+                        pathname: "/verify"
+                    });
+                } else {
+                    this.setState({
+                        isError: "User already exists!",
+                    });
+                }
+            }).catch(e => {
+                debugger;
                 this.setState({
-                    isError: "User already exists!",
+                    isError: "Something went wrong!",
+                    loading: false
                 });
-            }
-        }).catch(e => {
-            this.setState({
-                isError: "Something went wrong!",
-                loading: false
             });
-        });
+        }
     }
 
     handleUserName = e => {
@@ -222,6 +256,7 @@ class Register extends React.Component {
                                     onChange={this.handlePassword}
                                     type="password"
                                     inputProps={{ 'aria-label': 'password' }}
+                                    helperText={this.state.error.password_err}
                                 />
                             </Paper>
                         </FormGroup>

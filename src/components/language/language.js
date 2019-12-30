@@ -178,7 +178,7 @@ class Language extends React.Component {
     for (const [value, language] of elements_in.entries()) {
       if(this.state.selected.language.some(item => language.language === item.name) === false){
         language_items.push(
-          { name: language.language, id:-1, created: true},
+          { name: language.language, id:-1, created: true, value:value},
         )
       }
     }

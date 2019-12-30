@@ -310,7 +310,7 @@ class WorkEducationCard extends React.Component {
                       City/Town
                             </Grid>
                     <Grid item xs={6} md={6} lg={6}>
-                      <FormControl className={classes.formControl}>
+                      <FormControl className={classes.textField}>
                         <InputLabel id="demo-simple-select-outlined-label">
                           City
                         </InputLabel>
@@ -348,11 +348,11 @@ class WorkEducationCard extends React.Component {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} className={classes.textField}>
                   <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item xs={1} md={1} lg={1}>
                     </Grid>
-                    <Grid item xs={6} md={6} lg={6}>
+                    <Grid item xs={6} md={6} lg={6} style={{marginLeft:'56px'}}>
                       {
                         this.state.isEdit === true ? (
                           <Button className={classes.button} color="primary" variant="outlined" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
