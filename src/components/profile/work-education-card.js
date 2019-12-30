@@ -42,6 +42,11 @@ const styles = theme => ({
     marginRight: theme.spacing(8),
     width: '100%',
   },
+  btnGroup:{
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(8),
+    width: '100%',
+  },
   button: {
     margin: "0px 4px 0px 8px",
   },
@@ -49,7 +54,8 @@ const styles = theme => ({
     padding: "10px 0px"
   },
   formControl: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(8),
     width: '100%',
   },
 
@@ -108,13 +114,13 @@ class WorkEducationCard extends React.Component {
       }
     }).then(res => {
       this.setState({
-          company: res.data.name,
-          city: res.data.city,
-          position: res.data.position,
-          isEdit: true,
-          isWork: true,
-          workplace_id: res.data.id,
-         });
+        company: res.data.name,
+        city: res.data.city,
+        position: res.data.position,
+        isEdit: true,
+        isWork: true,
+        workplace_id: res.data.id,
+      });
       this.getWorkplace();
     }).catch(error => {
       console.log(error);
@@ -128,7 +134,7 @@ class WorkEducationCard extends React.Component {
       city: null,
       position: null,
       workplace_id: null,
-     });
+    });
   }
 
   toggleUniversityEdit = () => {
@@ -253,22 +259,22 @@ class WorkEducationCard extends React.Component {
                 <ListItem key={companyInfo.id} role={undefined} dense>
                   <ListItemText primary={companyInfo.name} secondary={companyInfo.position} />
                   <ListItemSecondaryAction>
-                  <Button
-                    aria-owns={anchorEl ? 'simple-menu' : null}
-                    aria-haspopup="true"
-                    onClick={this.handleClick}
-                  >
-                    <MoreVertIcon/>
-                  </Button>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleClose}
-                  >
-                    <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
-                    <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
-                  </Menu>
+                    <Button
+                      aria-owns={anchorEl ? 'simple-menu' : null}
+                      aria-haspopup="true"
+                      onClick={this.handleClick}
+                    >
+                      <MoreVertIcon />
+                    </Button>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      onClose={this.handleClose}
+                    >
+                      <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
+                      <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
+                    </Menu>
                   </ListItemSecondaryAction>
                 </ListItem>
               ))
@@ -310,7 +316,7 @@ class WorkEducationCard extends React.Component {
                       City/Town
                             </Grid>
                     <Grid item xs={6} md={6} lg={6}>
-                      <FormControl className={classes.formControl}>
+                      <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">
                           City
                         </InputLabel>
@@ -353,18 +359,20 @@ class WorkEducationCard extends React.Component {
                     <Grid item xs={1} md={1} lg={1}>
                     </Grid>
                     <Grid item xs={6} md={6} lg={6}>
-                      {
-                        this.state.isEdit === true ? (
-                          <Button className={classes.button} color="primary" variant="outlined" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
-                            Save Changes
+                      <div className={classes.btnGroup}>
+                        {
+                          this.state.isEdit === true ? (
+                            <Button className={classes.button} color="primary" variant="outlined" onClick={this.editWorkplace.bind(this, this.state.workplace_id)} >
+                              Save Changes
                                   </Button>
-                        ) : (
-                            <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveWorkplace} >
-                              Add
+                          ) : (
+                              <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveWorkplace} >
+                                Add
                                   </Button>
-                          )
-                      }
-                      &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
+                            )
+                        }
+                        &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
+                      </div>
                     </Grid>
                   </Grid>
                 </Grid>
