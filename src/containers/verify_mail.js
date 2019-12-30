@@ -17,7 +17,7 @@ class Login extends React.Component {
             <div>
             <img src = { image }
             style = {
-                { width: "100%", height: "fit-content", bottom: 0, position: "absolute" }
+                { width: "100%", height:"150px", bottom:0, position: "absolute" }
             }
             alt=""/>  
             </div>
