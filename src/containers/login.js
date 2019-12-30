@@ -23,7 +23,7 @@ const styles = theme => ({
         padding: 45
     },
     footer: {
-        marginTop: 186
+        marginTop: 63
     },
     user_input: {
         marginLeft: 6,
@@ -50,9 +50,6 @@ const styles = theme => ({
     },
     iconButton: {
         fontSize: 15
-    },
-    login_img: {
-        marginTop:"9em"
     },
 });
 class Login extends React.Component {

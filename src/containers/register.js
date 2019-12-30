@@ -53,9 +53,7 @@ const styles = theme => ({
     iconButton: {
         fontSize: 15
     },
-    register_img: {
-        marginTop:"15em"
-    },
+    
 });
 class Register extends React.Component {
     constructor(props) {
