@@ -12,8 +12,7 @@ const endpoints = {
   profile_languages: base_uri +'/user/language/',
   profile_social_links: base_uri + '/user/social-link/',
   profile_education: base_uri + '/user/education/',
-  PROFILE: base_uri + '/user/me/',
-  PROFILE_UPDATE: base_uri + '/user/profile-update',
+  profile_update: base_uri + '/user/profile-update',
 
   interest: base_uri + '/user/interest/',
   skills: base_uri + '/user/skill/',

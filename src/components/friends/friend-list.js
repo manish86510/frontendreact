@@ -1,20 +1,20 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+// import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/styles';
-import axios from 'axios';
-import endpoints from '../../api/endpoints';
+// import axios from 'axios';
+// import endpoints from '../../api/endpoints';
 import { withRouter } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 
 
 const styles = theme => ({

@@ -5,59 +5,18 @@ import InterestCard from '../interest/interest';
 import SkillCard from '../skills/skill';
 import SocialLinkCard from '../Social/social-links';
 import LanguageCard from '../language/language';
-import CommunicationCard from './communication-card';
 import WorkEducationCard from './work-education-card';
 import { withStyles } from '@material-ui/styles';
-import { toast } from 'react-toastify';
 import ProfileCard from './profile-card';
 import Card from '@material-ui/core/Card';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Switch from '@material-ui/core/Switch';
-import { faEdit, faMedal } from '@fortawesome/free-solid-svg-icons'
-import { Button, TextField} from '@material-ui/core';
 import UnivercityEducationCard from './university-education';
 import SchoolEducationCard from './school-education';
 import UserDetails from './user-details';
-import clsx from 'clsx';
-
-
-const $ = require('jquery');
 
 const styles = theme => ({
-  cardContainer: {
-    padding: 10,
-  },
-  gridItem: {
-    display: 'inline-block',
-    height: 150,
-    margin: 5,
-    overflow: 'hidden'
-  },
-  profile_image: {
-    height: '120px',
-    width: '130px',
-    borderRadius: '25px'
-  },
-  cover: {
-    width: 151,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-  },
-  interest_heading: {
-    fontSize: '20px',
-    color: '#0f543ec7',
-    fontWeight: '700'
-  },
-  interest_container: {
-    padding: '5px 10px',
-  },
+  marginTop:{
+    marginTop: "10px",
+  }
 });
 
 class EditProfile extends React.Component {
@@ -66,106 +25,116 @@ class EditProfile extends React.Component {
     super(props);
     this.state = {
       user: {},
-      selected: {
-        interest: [],
-        skill: [],
-        language: [],
-      },
       isEditUsername:false,
     }
   }
 
   componentDidMount = () => {
-    $('.autocompleteInterest').hide();
-    $('.autocompleteSkill').hide();
-    $('.autocompleteLanguage').hide();
     this.getUserData();
   }
 
   getUserData = () => {
-    axios.get(endpoints.profile_social_links, {
+    axios.get(endpoints.profile_user, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.access,
       }
     }).then(res => {
-      const user = this.state.user
-      user.linked_in = res.data.name
-      this.setState({ user });
-    });
-    axios.get(endpoints.profile_education, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.access,
-      }
-    }).then(res => {
-      const user = this.state.user
-      user.education = res.data.attended_for
-      this.setState({ user });
-
-    });
+      this.setState({ user: res.data });
+    });    
   }
 
-  handleSubmit = (event) => {
-    const inter = this.state.selected.interest
-    const sk = this.state.selected.skill
-    const lan = this.state.selected.language
+  // componentDidMount = () => {
+  //   $('.autocompleteInterest').hide();
+  //   $('.autocompleteSkill').hide();
+  //   $('.autocompleteLanguage').hide();
+  //   this.getUserData();
+  // }
 
-    if (this.state.selected.interest !== '') {
-      for (let i = 0; i < inter.length; i++) {
-        const code = JSON.parse('{ "interest_code" : "' + inter[i] + '" }')
-        axios({
-          method: 'post',
-          url: endpoints.profile_interest,
-          data: code,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          },
-        }).then(res => {
-          toast.success("submitted")
-        })
-      }
-      window.location.reload();
-    } else if (this.state.selected.skill !== '') {
+  // getUserData = () => {
+  //   axios.get(endpoints.profile_social_links, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Bearer ' + localStorage.access,
+  //     }
+  //   }).then(res => {
+  //     const user = this.state.user
+  //     user.linked_in = res.data.name
+  //     this.setState({ user });
+  //   });
+  //   axios.get(endpoints.profile_education, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Bearer ' + localStorage.access,
+  //     }
+  //   }).then(res => {
+  //     const user = this.state.user
+  //     user.education = res.data.attended_for
+  //     this.setState({ user });
 
-      for (let i = 0; i < sk.length; i++) {
-        const code = JSON.parse('{ "skill" : "' + sk[i] + '" }')
-        axios({
-          method: 'post',
-          url: endpoints.profile_skills,
-          data: code,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          },
-        }).then(res => {
-          toast.success("submitted")
+  //   });
+  // }
 
-        })
+  // handleSubmit = (event) => {
+  //   const inter = this.state.selected.interest
+  //   const sk = this.state.selected.skill
+  //   const lan = this.state.selected.language
 
-      }
-      window.location.reload();
+  //   if (this.state.selected.interest !== '') {
+  //     for (let i = 0; i < inter.length; i++) {
+  //       const code = JSON.parse('{ "interest_code" : "' + inter[i] + '" }')
+  //       axios({
+  //         method: 'post',
+  //         url: endpoints.profile_interest,
+  //         data: code,
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: 'Bearer ' + localStorage.access,
+  //         },
+  //       }).then(res => {
+  //         toast.success("submitted")
+  //       })
+  //     }
+  //     window.location.reload();
+  //   } else if (this.state.selected.skill !== '') {
 
-    } else if (this.state.selected.language !== '') {
-      for (let i = 0; i < lan.length; i++) {
-        const code = JSON.parse('{ "name" : "' + lan[i] + '" }')
-        axios({
-          method: 'post',
-          url: endpoints.profile_languages,
-          data: code,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.access,
-          },
-        }).then(res => {
-          toast.success("submitted")
+  //     for (let i = 0; i < sk.length; i++) {
+  //       const code = JSON.parse('{ "skill" : "' + sk[i] + '" }')
+  //       axios({
+  //         method: 'post',
+  //         url: endpoints.profile_skills,
+  //         data: code,
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: 'Bearer ' + localStorage.access,
+  //         },
+  //       }).then(res => {
+  //         toast.success("submitted")
 
-        })
-      }
-      window.location.reload();
-    }
-  };
+  //       })
+
+  //     }
+  //     window.location.reload();
+
+  //   } else if (this.state.selected.language !== '') {
+  //     for (let i = 0; i < lan.length; i++) {
+  //       const code = JSON.parse('{ "name" : "' + lan[i] + '" }')
+  //       axios({
+  //         method: 'post',
+  //         url: endpoints.profile_languages,
+  //         data: code,
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: 'Bearer ' + localStorage.access,
+  //         },
+  //       }).then(res => {
+  //         toast.success("submitted")
+
+  //       })
+  //     }
+  //     window.location.reload();
+  //   }
+  // };
 
   editUserName = () => {
     this.setState({
@@ -179,33 +148,38 @@ class EditProfile extends React.Component {
     return (
       <div>
         {
-          this.state.user != null ? (<ProfileCard profile={this.state.user} editUserName={this.editUserName} />) : undefined
+          this.state.user != null ? (<ProfileCard profile={this.state.user} editUserNameFunc={this.editUserName} />) : undefined
         }
         {this.state.isEditUsername ? 
-        <Card style={{ marginTop: "10px" }}>
-          <UserDetails title="Details About You" profile={this.state.user} editUsername={this.state.isEditUsername} />
+        <Card className={classes.marginTop}>
+          <UserDetails
+            title="Details About You"
+            isUsername={this.state.isEditUsername}
+            profile={this.state.user}
+            editUserNameFunc={this.editUserName}
+          />
         </Card> : '' }
-        <Card style={{ marginTop: "10px" }}>
+        {/* <Card style={{ marginTop: "10px" }}>
           <CommunicationCard title="Communication Details" />
-        </Card>
+        </Card> */}
 
-        <Card style={{ marginTop: "10px" }}>
+        <Card className={classes.marginTop}>
           <InterestCard title="Interests" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        <Card className={classes.marginTop}>
           <SkillCard title="Skills" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        <Card className={classes.marginTop}>
           <LanguageCard title="Languages" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        <Card className={classes.marginTop}>
           <SocialLinkCard title="Website/Social Links" />
         </Card>
 
-        <Card style={{ marginTop: "10px" }}>
+        <Card className={classes.marginTop}>
           <WorkEducationCard title="Work/Education" />
           <UnivercityEducationCard/>
           <SchoolEducationCard />
