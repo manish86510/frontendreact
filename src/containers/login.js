@@ -52,7 +52,7 @@ const styles = theme => ({
         fontSize: 15
     },
     login_img: {
-        marginTop:"9em"
+        marginTop:"9em",
     },
 });
 class Login extends React.Component {
