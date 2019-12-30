@@ -6,24 +6,36 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
 const image = require("../img/login_image.png");
-const styles = theme => ({});
 
-class Login extends React.Component {
+const styles = theme => ({
+    footer: {
+        marginTop: 63
+    },
+    login_img:{
+        position:'fixed',
+    }
+});
+
+class VerifyMail extends React.Component {
     render() {
-        return ( <div className = "Login" >
-
-            <h5 align = "center"
-            id = "title" > Email sent successfully, please check your mail to verify. </h5>
+        const { classes } = this.props;
+        return ( 
             <div>
-            <img src = { image }
-            style = {
-                { width: "100%", height:"150px", bottom:0, position: "absolute" }
-            }
-            alt=""/>  
+            <div className="Login" >
+                <h5 align = "center" id = "title" > Email sent successfully, please check your mail to verify. </h5>
             </div>
+            <div className={classes.login_img}>
+                <img 
+                    className={classes.footer} 
+                    alt="footer" src={image}
+                    style={
+                        { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
+                    } 
+                />
             </div>
+        </div>
         );
     }
 }
 
-export default withRouter(withStyles(styles)(Login));
+export default withRouter(withStyles(styles)(VerifyMail));

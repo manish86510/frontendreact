@@ -354,7 +354,7 @@ class WorkEducationCard extends React.Component {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} className={classes.textField}>
                   <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item xs={1} md={1} lg={1}>
                     </Grid>

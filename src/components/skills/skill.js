@@ -172,7 +172,7 @@ class Skill extends React.Component {
     for (const [value, skill] of elements_in.entries()) {
       if(this.state.selected.skill.some(item => skill.skill === item.skill) === false){
         skill_items.push(
-          { skill: skill.skill, id:-1, created: true},
+          { skill: skill.skill, id:-1, created: true, value:value},
         )
       }
     }
