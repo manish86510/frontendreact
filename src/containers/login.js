@@ -199,9 +199,9 @@ class Login extends React.Component {
                 <img 
                     className={classes.footer} 
                     alt="footer" src={image}
-                    style={
-                        { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
-                    } 
+                    // style={
+                    //     { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
+                    // } 
                 />
             </div>
         </div>

@@ -53,7 +53,9 @@ const styles = theme => ({
     iconButton: {
         fontSize: 15
     },
-    
+    footer: {
+        marginTop: 63
+    },    
 });
 class Register extends React.Component {
     constructor(props) {
@@ -178,7 +180,8 @@ class Register extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className="Register" >
+            <div>
+            <div className="Login" >
                 <h4 align="center" > Sign Up
             for </h4>
                 <h4 align="center"
@@ -290,9 +293,13 @@ class Register extends React.Component {
                     <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
                 </center>
                 <div className={classes.register_img}>
-                    <img src={image}
-                        style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }} alt="" />
-                </div >
+                    <img
+                     className={classes.footer} 
+                    alt="footer" src={image}
+                        // style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }}
+                         alt="" />
+                </div>
+                </div>
             </div >
         );
     }
