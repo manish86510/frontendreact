@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import 'isomorphic-fetch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,7 +18,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 // const $ = require('jquery');
 
 const styles = theme => ({
-  root:{
+  root: {
     padding: '10px 10px'
   },
   heading: {
@@ -26,7 +26,7 @@ const styles = theme => ({
     color: '#0f543ec7',
     fontWeight: '700'
   }
-  
+
 })
 
 class Language extends React.Component {
@@ -73,7 +73,7 @@ class Language extends React.Component {
         }
 
         this.setState({ autocompleteData: autocompleteData, loading: false });
-      }).catch((err)=>{
+      }).catch((err) => {
         this.setState({ autocompleteData: [], loading: false });
       });
     }, 500);
@@ -91,7 +91,7 @@ class Language extends React.Component {
 
     if (e.target.value.length > 2) {
       this.retrieveDataAsynchronously(e.target.value);
-    }else{
+    } else {
       this.setState({ autocompleteData: [], loading: false });
     }
   }
@@ -104,14 +104,14 @@ class Language extends React.Component {
       }
     }).then(res => {
       const selected = this.state.selected;
-      if(res.data.length===0 || res.data.length===undefined){
+      if (res.data.length === 0 || res.data.length === undefined) {
         this.setState({ isEdit: true });
-      }else{
+      } else {
         for (let i = 0; i < res.data.length; i++) {
-          selected.language.push({name:res.data[i].name, id:res.data[i].id, created:false})
+          selected.language.push({ name: res.data[i].name, id: res.data[i].id, created: false })
         }
         this.setState({ selected: selected });
-      } 
+      }
     }).catch(error => {
       console.log(error);
     });
@@ -131,31 +131,35 @@ class Language extends React.Component {
       }
     }).then(res => {
       // toast.success("Deleted")
-      this.renderDeleteItem(this.state.selected.language, option);      
+      this.renderDeleteItem(this.state.selected.language, option);
     })
   };
 
   handleLanguageData = (event, value) => {
     const selected = this.state.selected;
     selected.language = value;
-    this.setState({selected:selected});
+    this.setState({ selected: selected });
   }
 
-  toggleEdit = ()=>{
+  toggleEdit = () => {
     this.setState({
+      selected: {
+        language:[]
+      },
       isEdit: !this.state.isEdit
-  });
+    });
+    this.getLanguage();
   }
 
-  submit = async()=>{
+  submit = async () => {
     const selected = this.state.selected;
     for (var i = 0; i < selected.language.length; i++) {
-      if(selected.language[i].created === true){
+      if (selected.language[i].created === true) {
         const data = {
           name: selected.language[i].name,
-          read:"yes",
-          speak:"yes",
-          write:"yes",
+          read: "yes",
+          speak: "yes",
+          write: "yes",
         }
         await axios
           .post(endpoints.my_languages, JSON.stringify(data), {
@@ -164,99 +168,113 @@ class Language extends React.Component {
               Authorization: 'Bearer ' + localStorage.access,
             },
           });
-      }      
-    } 
-    this.setState({'isEdit':false, selected:selected})   
+      }
+    }
+    this.setState({ 'isEdit': false, selected: selected })
   }
-  
+
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     const elements_in = this.state.autocompleteData
     const language_items = []
 
     for (const [value, language] of elements_in.entries()) {
-      if(this.state.selected.language.some(item => language.language === item.name) === false){
+      if (this.state.selected.language.some(item => language.language === item.name) === false) {
         language_items.push(
-          { name: language.language, id:-1, created: true, value:value},
+          { name: language.language, id: -1, created: true, value: value },
         )
       }
     }
 
     return (
       <div className={classes.root}>
-      <Typography className={classes.heading}>{this.props.title ? this.props.title : " " }</Typography>
-      <Grid container spacing={3}>
-       {this.state.isEdit === false ?
-        <Grid item xs={12} md={12} lg={12}>
-          <Grid container direction="row" justify="flex-start" alignItems="center">
-          <Grid item xs={10} md={10} lg={11}>
-              {this.state.selected.language.map((language, index) => (
-                <Chip key={'key_my_language_'+language.id} id={language.id} label={language.name} style={{margin:5}} />
-              ))}              
-            </Grid>    
-            <Grid item xs={2} md={2} lg={1}>
-              <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{float:'right' }}>
-                <AddCircleOutlineIcon fontSize="large"/>
-              </IconButton>
+        <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
+        <Grid container spacing={3}>
+          {this.state.isEdit === false ?
+            <Grid item xs={12} md={12} lg={12}>
+              <Grid container direction="row" justify="flex-start" alignItems="center">
+                <Grid item xs={10} md={10} lg={11}>
+                  {this.state.selected.language.map((language, index) => (
+                    <Chip key={'key_my_language_' + language.id} id={language.id} label={language.name} style={{ margin: 5 }} />
+                  ))}
+                </Grid>
+                <Grid item xs={2} md={2} lg={1}>
+                  <IconButton aria-label="add" color="primary" onClick={this.toggleEdit} style={{ float: 'right' }}>
+                    <AddCircleOutlineIcon fontSize="large" />
+                  </IconButton>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-       :
-        <Grid item xs={12} md={12} lg={12}>
-          <Grid container direction="row" justify="flex-start" alignItems="center">
-            <Grid item xs={10} md={10} lg={10}>
-              <Autocomplete
-                value={this.state.selected.language}
-                multiple
-                id="language"
-                filterSelectedOptions={true}
-                options={language_items}
-                getOptionLabel={option => option.name}
-                onChange={this.handleLanguageData}
-                noOptionsText="Please find your interested language"
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip
-                      id={option.id+"_"+option.name}
-                      key={'key_language_'+option.id+"_"+option.name}
-                      label={option.name}
-                      {...getTagProps({ option })}
-                      onDelete={()=>{
-                        if(option.created === true){
-                          this.renderDeleteItem(value, option)
-                        }else{
-                          // delete from api when option.created==false
-                          //call api for delete interest from my interest table
-                          if(option.created===false){
-                          this.handleLanguageDelete(option, index);
-                        }
-                        }
-                      }}
-                    />
-                  ))
-                }
-                renderInput={params => (
-                  <TextField
-                    onChange={this.handleLanguageChange}
-                    {...params}
-                    variant="outlined"
-                    placeholder="Search Your Languages"
-                    margin="normal"
-                    fullWidth
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <React.Fragment>
-                          {this.state.loading ? <CircularProgress color="inherit" size={25} /> : null}
-                        </React.Fragment>
-                      ),
-                    }}
+            :
+            <Grid item xs={12} md={12} lg={12}>
+              <Grid container direction="row" justify="flex-start" alignItems="center">
+                <Grid item xs={10} md={10} lg={10}>
+                  <Autocomplete
+                    value={this.state.selected.language}
+                    multiple
+                    id="language"
+                    filterSelectedOptions={true}
+                    options={language_items}
+                    getOptionLabel={option => option.name}
+                    onChange={this.handleLanguageData}
+                    noOptionsText="Please find your interested language"
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          id={option.id + "_" + option.name}
+                          key={'key_language_' + option.id + "_" + option.name}
+                          label={option.name}
+                          {...getTagProps({ option })}
+                          onDelete={() => {
+                            if (option.created === true) {
+                              this.renderDeleteItem(value, option)
+                            } else {
+                              // delete from api when option.created==false
+                              //call api for delete interest from my interest table
+                              if (option.created === false) {
+                                this.handleLanguageDelete(option, index);
+                              }
+                            }
+                          }}
+                        />
+                      ))
+                    }
+                    renderInput={params => (
+                      <TextField
+                        onChange={this.handleLanguageChange}
+                        {...params}
+                        variant="outlined"
+                        placeholder="Search Your Languages"
+                        margin="normal"
+                        fullWidth
+                        InputProps={{
+                          ...params.InputProps,
+                          endAdornment: (
+                            <React.Fragment>
+                              {this.state.loading ? <CircularProgress color="inherit" size={25} /> : null}
+                            </React.Fragment>
+                          ),
+                        }}
+                      />
+                    )}
                   />
-                )}
-              />
-            </Grid>
-            <Grid item xs={2} md={2} lg={2}>
+                </Grid>
+                <Grid item xs={2} md={2} lg={2}>
+                  <Grid container spacing={1} direction="row" justify="space-around">
+                    <Grid item xs={6}>
+                      <IconButton aria-label="add" color="primary" onClick={this.submit}>
+                        <CheckCircleOutlineIcon fontSize="large" />
+                      </IconButton>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+                        <HighlightOffIcon fontSize="large" />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                {/* <Grid item xs={2} md={2} lg={2}>
               <div>
                 <div style={{float:'left', marginLeft:"45px"}}>
                   <IconButton aria-label="add" color="primary" onClick={this.submit}>
@@ -269,12 +287,12 @@ class Language extends React.Component {
                   </IconButton>  
                 </div>
               </div>
+            </Grid> */}
+              </Grid>
             </Grid>
-          </Grid>
-         </Grid>
-       }
-       </Grid>
-       </div>
+          }
+        </Grid>
+      </div>
 
     )
   }
