@@ -106,6 +106,7 @@ class WorkEducationCard extends React.Component {
   }
 
   toggleWorkEdit = (workplace_id) => {
+    this.setState({ anchorEl: null });
     var getToken = localStorage.getItem('access');
     var url = endpoints.WORKPLACE + workplace_id;
     axios.get(url, {
@@ -197,7 +198,7 @@ class WorkEducationCard extends React.Component {
 
 
   deleteWorkplace = (workplace_id) => {
-    this.setState({ isWork: false });
+    this.setState({ isWork: false, anchorEl: null });
     var url = endpoints.WORKPLACE + workplace_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {

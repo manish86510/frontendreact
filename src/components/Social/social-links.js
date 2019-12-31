@@ -78,6 +78,7 @@ class SocialLinks extends React.Component {
   }
 
   toggleEditAction = (social_id) => {
+    this.setState({ anchorEl: null });
     var getToken = localStorage.getItem('access');
     var url = endpoints.profile_social_links+social_id;
     axios.get(url, {
@@ -140,7 +141,7 @@ class SocialLinks extends React.Component {
   }
 
   deleteLinks=(social_id)=>{
-    this.setState({ isAdd: false });
+    this.setState({ isAdd: false, anchorEl: null });
     var url = endpoints.profile_social_links+social_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
