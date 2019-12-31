@@ -83,13 +83,14 @@ class UnivercityEducationCard extends React.Component {
     });
   }
 
-  toggleWorkCancel = () => {
+  toggleCollegeCancel = () => {
     this.setState({
       isUniversity: !this.state.isUniversity
     });
   }
 
-  toggleWorkEdit = (profile_education_id) => {
+  toggleCollegeEdit = (profile_education_id) => {
+    this.setState({ anchorEl: null, anchorEl: null });
     var getToken = localStorage.getItem('access');
     var url = endpoints.profile_education + profile_education_id;
     axios.get(url, {
@@ -286,7 +287,7 @@ class UnivercityEducationCard extends React.Component {
                       open={Boolean(anchorEl)}
                       onClose={this.handleClose}
                     >
-                      <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
+                      <MenuItem onClick={this.toggleCollegeEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
                       <MenuItem onClick={this.deleteProfileEducation.bind(this, eductionInfo.id)}>Delete</MenuItem>
                     </Menu>
                   </ListItemSecondaryAction>
@@ -452,7 +453,7 @@ class UnivercityEducationCard extends React.Component {
                                   </Button>
                           )
                       }
-                      &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
+                      &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleCollegeCancel}>Cancel</Button>
                     </Grid>
                   </Grid>
                 </Grid>

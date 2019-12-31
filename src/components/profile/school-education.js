@@ -83,13 +83,14 @@ class SchoolEducationCard extends React.Component {
     });
   }
 
-  toggleWorkCancel = () => {
+  toggleSchoolCancel = () => {
     this.setState({
       isSchool: !this.state.isSchool
     });
   }
 
-  toggleWorkEdit = (profile_education_id) => {
+  toggleSchoolEdit = (profile_education_id) => {
+    this.setState({ anchorEl: null });
     var getToken = localStorage.getItem('access');
     var url = endpoints.profile_education + profile_education_id;
     axios.get(url, {
@@ -135,7 +136,7 @@ class SchoolEducationCard extends React.Component {
   }
 
 
-  saveprofile_education = () => {
+  saveProfileEducation = () => {
     var getToken = localStorage.getItem('access');
     var data = {
       'school_college_name': this.state.school_college_name,
@@ -194,7 +195,7 @@ class SchoolEducationCard extends React.Component {
     });
   }
 
-  editprofile_education = (profile_education_id) => {
+  editProfileEducation = (profile_education_id) => {
     var url = endpoints.profile_education + profile_education_id + '/';
     var getToken = localStorage.getItem('access');
     var data = {
@@ -219,7 +220,7 @@ class SchoolEducationCard extends React.Component {
 
 
   deleteProfileEducation = (profile_education_id) => {
-    this.setState({ isSchool: false });
+    this.setState({ isSchool: false, anchorEl: null });
     var url = endpoints.profile_education + profile_education_id;
     var getToken = localStorage.getItem('access');
     axios.delete(url, {
@@ -286,7 +287,7 @@ class SchoolEducationCard extends React.Component {
                       open={Boolean(anchorEl)}
                       onClose={this.handleClose}
                     >
-                      <MenuItem onClick={this.toggleWorkEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
+                      <MenuItem onClick={this.toggleSchoolEdit.bind(this, eductionInfo.id)}>Edit</MenuItem>
                       <MenuItem onClick={this.deleteProfileEducation.bind(this, eductionInfo.id)}>Delete</MenuItem>
                     </Menu>
                   </ListItemSecondaryAction>
@@ -444,16 +445,16 @@ class SchoolEducationCard extends React.Component {
                     <Grid item xs={6} md={6} lg={6}>
                       {
                         this.state.isEdit === true ? (
-                          <Button className={classes.button} color="primary" variant="outlined" onClick={this.editprofile_education.bind(this, this.state.profile_education_id)} >
+                          <Button className={classes.button} color="primary" variant="outlined" onClick={this.editProfileEducation.bind(this, this.state.profile_education_id)} >
                             Save Changes
                                   </Button>
                         ) : (
-                            <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveprofile_education} >
+                            <Button className={classes.button} color="primary" variant="outlined" onClick={this.saveProfileEducation} >
                               Add
                                   </Button>
                           )
                       }
-                      &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleWorkCancel}>Cancel</Button>
+                      &nbsp;<Button className={classes.button} color="primary" variant="outlined" onClick={this.toggleSchoolCancel}>Cancel</Button>
                     </Grid>
                   </Grid>
                 </Grid>
