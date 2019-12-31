@@ -256,8 +256,6 @@ class UnivercityEducationCard extends React.Component {
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
-    console.log("session_from :", this.state.session_from);
-    console.log("session_to :", this.state.session_to);
     return (
       <div>
         <ListItem>

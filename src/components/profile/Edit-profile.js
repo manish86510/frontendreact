@@ -14,7 +14,7 @@ import SchoolEducationCard from './school-education';
 import UserDetails from './user-details';
 
 const styles = theme => ({
-  marginTop:{
+  marginTop: {
     marginTop: "10px",
   }
 });
@@ -25,7 +25,7 @@ class EditProfile extends React.Component {
     super(props);
     this.state = {
       user: {},
-      isEditUsername:false,
+      isEditUsername: false,
     }
   }
 
@@ -41,7 +41,7 @@ class EditProfile extends React.Component {
       }
     }).then(res => {
       this.setState({ user: res.data });
-    });    
+    });
   }
 
   // componentDidMount = () => {
@@ -139,7 +139,7 @@ class EditProfile extends React.Component {
   editUserName = () => {
     this.setState({
       isEditUsername: !this.state.isEditUsername
-  });
+    });
   }
 
   render() {
@@ -150,15 +150,15 @@ class EditProfile extends React.Component {
         {
           this.state.user != null ? (<ProfileCard profile={this.state.user} editUserNameFunc={this.editUserName} />) : undefined
         }
-        {this.state.isEditUsername ? 
-        <Card className={classes.marginTop}>
-          <UserDetails
-            title="Details About You"
-            isUsername={this.state.isEditUsername}
-            profile={this.state.user}
-            editUserNameFunc={this.editUserName}
-          />
-        </Card> : '' }
+        {this.state.isEditUsername ?
+          <Card className={classes.marginTop}>
+            <UserDetails
+              title="Details About You"
+              isUsername={this.state.isEditUsername}
+              profile={this.state.user}
+              editUserNameFunc={this.editUserName}
+            />
+          </Card> : ''}
         {/* <Card style={{ marginTop: "10px" }}>
           <CommunicationCard title="Communication Details" />
         </Card> */}
@@ -181,7 +181,7 @@ class EditProfile extends React.Component {
 
         <Card className={classes.marginTop}>
           <WorkEducationCard title="Work/Education" />
-          <UnivercityEducationCard/>
+          <UnivercityEducationCard />
           <SchoolEducationCard />
         </Card>
         {/* <Card style={{ padding: "10px", marginTop: "10px" }}>

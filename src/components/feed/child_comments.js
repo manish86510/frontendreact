@@ -94,7 +94,6 @@ class ChildComments extends React.Component {
     }
 
     render() {
-        console.log(this.state.childComments);
         return (
             <div style={{ width: '100%' }}>
                 {
