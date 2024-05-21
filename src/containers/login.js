@@ -126,8 +126,9 @@ class Login extends React.Component {
         const { classes } = this.props;
         return (<div className="Login" >
             <h4 align="center" > Login in to </h4>
+            <img src="/images/BP.png" />
             <h4 align="center"
-                id="title" > Energe </h4><br></br>
+                id="title" > Bharatprenuers </h4><br></br>
             <center>
                 <p>{this.state.isError}</p>
                 <form onSubmit={this.handleSubmit}
@@ -196,12 +197,12 @@ class Login extends React.Component {
             <div className={classes.login_img}>
 
 
-                <img 
-                    className={classes.footer} 
+                <img
+                    className={classes.footer}
                     alt="footer" src={image}
-                    // style={
-                    //     { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
-                    // } 
+                // style={
+                //     { width: "100%", height: "fit-content", bottom: 0, position: "inherit" }
+                // } 
                 />
             </div>
         </div>

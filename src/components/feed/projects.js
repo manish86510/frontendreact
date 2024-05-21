@@ -10,6 +10,7 @@ import { Box } from '@material-ui/core';
 import GridListTile from '@material-ui/core/GridListTile';
 import axios from 'axios';
 import AddProject from '../popup/add_project';
+import endpoints from '../../api/endpoints';
 
 
 
@@ -56,7 +57,8 @@ class Projects extends React.Component {
 
         // }
 
-        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+        // var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+        var url = endpoints.POST;
         var getToken = localStorage.getItem('access');
         axios.get(
             url,
@@ -77,23 +79,25 @@ class Projects extends React.Component {
     }
 
     handleLike = (tile) => {
-        var my_data={
-          post:tile,
+        var my_data = {
+            post: tile,
         }
-        var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+        // var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+        var url = endpoints.user_like;
+
         var getToken = localStorage.getItem('access');
         axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
+            url, my_data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken,
+                }
             }
-          }
         ).then(res => {
-          console.log(res.data);
-          window.location.reload();
+            console.log(res.data);
+            window.location.reload();
         })
-      }
+    }
 
     render() {
         const { classes } = this.props;
@@ -102,7 +106,7 @@ class Projects extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <AddProject/>
+                        <AddProject />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -118,10 +122,10 @@ class Projects extends React.Component {
                                     <div>
                                         {/* {tile.post_type=="Project" ? '<h1>Project</h1>' : '<h1>Post</h1>'} */}
                                         <GridListTile key={tile.user} style={{ width: "100%", height: 300, borderRadius: 30 }}>
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%' }} />
-                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width:'25%', opacity: 0.4 }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width: '25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width: '25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width: '25%' }} />
+                                            <img src={"https://upload.wikimedia.org/wikipedia/commons/0/01/Bill_Gates_July_2014.jpg"} alt={tile.title} style={{ border: 2, borderRadius: 2, width: '25%', opacity: 0.4 }} />
                                         </GridListTile>
                                         <Paper className={classes.content}>
                                             <ListItem>

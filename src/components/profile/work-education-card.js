@@ -240,11 +240,11 @@ class WorkEducationCard extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { classes } = this?.props;
+    const { anchorEl } = this?.state;
     return (
       <div className={classes.root}>
-        <Typography className={classes.heading}>{this.props.title ? this.props.title : " "}</Typography>
+        <Typography className={classes.heading}>{this.props?.title ? this.props?.title : " "}</Typography>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -255,10 +255,10 @@ class WorkEducationCard extends React.Component {
         </ListItem>
         <List className={classes.list}>
           {
-            this.state.companyData.length > 0 && this.state.companyData !== null ? (
+            this.state.companyData?.length > 0 && this.state.companyData !== null ? (
               this.state.companyData.map(companyInfo => (
                 <ListItem key={companyInfo.id} role={undefined} dense>
-                  <ListItemText primary={companyInfo.name} secondary={companyInfo.position} />
+                  <ListItemText primary={companyInfo?.name} secondary={companyInfo?.position} />
                   <ListItemSecondaryAction>
                     <Button
                       aria-owns={anchorEl ? 'simple-menu' : null}
@@ -273,8 +273,8 @@ class WorkEducationCard extends React.Component {
                       open={Boolean(anchorEl)}
                       onClose={this.handleClose}
                     >
-                      <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo.id)}>Edit</MenuItem>
-                      <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo.id)}>Delete</MenuItem>
+                      <MenuItem onClick={this.toggleWorkEdit.bind(this, companyInfo?.id)}>Edit</MenuItem>
+                      <MenuItem onClick={this.deleteWorkplace.bind(this, companyInfo?.id)}>Delete</MenuItem>
                     </Menu>
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -288,8 +288,8 @@ class WorkEducationCard extends React.Component {
           }
         </List>
         <Divider />
-        {this.state.isWork ?
-          <div className={classes.spacing_internal}>
+        {this.state?.isWork ?
+          <div className={classes?.spacing_internal}>
             <form>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12} lg={12}>
@@ -304,8 +304,8 @@ class WorkEducationCard extends React.Component {
                         variant="outlined"
                         size="small"
                         type="text"
-                        className={classes.textField}
-                        value={this.state.company}
+                        className={classes?.textField}
+                        value={this.state?.company}
                         onChange={this.handleCompany}
                       />
                     </Grid>
@@ -317,7 +317,7 @@ class WorkEducationCard extends React.Component {
                       City/Town
                             </Grid>
                     <Grid item xs={6} md={6} lg={6}>
-                      <FormControl variant="outlined" className={classes.formControl}>
+                      <FormControl variant="outlined" className={classes?.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">
                           City
                         </InputLabel>

@@ -9,7 +9,7 @@ class Home extends React.Component {
     
     render() {
         return (
-            <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
+            <Grid container direction="row" justifyContent='space-evenly' alignItems="flex-start" spacing={0}>
                 <Grid item xs={12} sm={12} md={8} lg={7}>
                     <Feed />
                 </Grid>

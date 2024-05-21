@@ -3,6 +3,7 @@ import { TextareaAutosize, Avatar, Paper } from '@material-ui/core';
 import '../styles/main.css';
 import { withStyles } from '@material-ui/styles';
 import axios from 'axios';
+import endpoints from '../api/endpoints';
 const styles = theme => ({
     con: {
         width: "100%",
@@ -31,7 +32,7 @@ class TextArea extends React.Component {
 
     HandleTextArea = (e) => {
         console.log(e.target.value);
-        var postData={about_post:e.target.value};
+        var postData = { about_post: e.target.value };
         this.setState({
             postData: postData,
         });
@@ -41,7 +42,7 @@ class TextArea extends React.Component {
         var postData = this.state.postData;
         var getToken = localStorage.getItem('access');
         // console.log("access :",JSON.parse(localStorage.getItem('access')).access);
-        axios.post("https://energeapi.do.viewyoursite.net/api/v1/post/",
+        axios.post(`${endpoints.get_post}`,
             postData,
             {
                 headers: {
@@ -51,7 +52,7 @@ class TextArea extends React.Component {
         ).then(result => {
             if (result.status === 200) {
                 console.log(result);
-                               
+
             } else {
                 this.setState({
                     isError: true

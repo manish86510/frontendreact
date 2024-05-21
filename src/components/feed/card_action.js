@@ -9,29 +9,30 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
 import FeedDetail from './feed-details';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-    card:{
+    card: {
         marginBottom: 30,
         borderRadius: 20
     },
     cardMedia: {
         minHeight: 240,
     },
-    cardContent:{
+    cardContent: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         background: '#ffffff',
         marginTop: -20
     },
-    iconColor:{
+    iconColor: {
         color: '#2D3986'
     }
 });
 
 class CardAction extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             postList: props.post,
@@ -39,12 +40,12 @@ class CardAction extends React.Component {
         };
     }
 
-    retrivePost = (post_id)=>{
+    retrivePost = (post_id) => {
         var token = localStorage.getItem('access');
-        axios.get(endpoints.POST+post_id, {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          }
+        axios.get(endpoints.POST + post_id, {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            }
         }).then(res => {
             if (res.status === 200) {
                 this.setState({
@@ -53,31 +54,31 @@ class CardAction extends React.Component {
             }
         });
     }
-    
+
     handleLike = (post_data) => {
-        var my_data={
-          post:post_data,
+        var my_data = {
+            post: post_data,
         }
         var url = endpoints.user_like;
         var getToken = localStorage.getItem('access');
         axios.post(
-          url, my_data,
-          {
-            headers: {
-              Authorization: 'Bearer ' + getToken,
+            url, my_data,
+            {
+                headers: {
+                    Authorization: 'Bearer ' + getToken,
+                }
             }
-          }
         ).then(res => {
             this.retrivePost(post_data);
         })
     }
 
-    postDetail = ()=>{
-        this.setState({open_post_details: !this.state.open_post_details});
+    postDetail = () => {
+        this.setState({ open_post_details: !this.state.open_post_details });
     }
 
-    onDrawerClose = ()=>{
-        this.setState({open_post_details: !this.state.open_post_details});
+    onDrawerClose = () => {
+        this.setState({ open_post_details: !this.state.open_post_details });
     }
 
     render() {
@@ -85,13 +86,13 @@ class CardAction extends React.Component {
         // var markup = {__html: this.state.postList.about_post.slice(0, 250).replace(/(?:\r\n|\r|\n)/g, '<br />')+"..."};
         return (
             <div>
-            <CardActions style={{padding: '8px 25px'}}>
+                <CardActions style={{ padding: '8px 25px' }}>
                     {
-                        this.state.postList.is_like===true?(
+                        this.state.postList.is_like === true ? (
                             <IconButton size='small' onClick={this.handleLike.bind(this, this.state.postList.id)} color="primary">
-                                <ThumbUpAltOutlinedIcon/>
+                                <ThumbUpAltOutlinedIcon />
                             </IconButton>
-                        ):(
+                        ) : (
                             <IconButton size='small' onClick={this.handleLike.bind(this, this.state.postList.id)}>
                                 <ThumbUpAltOutlinedIcon />
                             </IconButton>
@@ -106,17 +107,20 @@ class CardAction extends React.Component {
                         <ShareOutlinedIcon />
                     </IconButton>
                     <span style={{ fontSize: 12 }}>{this.state.postList.share_count}</span>
-            </CardActions>
-            {
-                this.state.open_post_details?(<FeedDetail onDrawerClose={this.onDrawerClose} post={this.state.postList} open_drawer={true}/>):undefined
-            }
+                    <Button size='small' onClick={this.props.toggleFormVisibility}>Apply</Button>
+                    {/*form button*/}
+                </CardActions>
+                {
+                    this.state.open_post_details ? (<FeedDetail onDrawerClose={this.onDrawerClose} post={this.state.postList} open_drawer={true} />) : undefined
+                }
             </div>
         );
     }
 }
 
 CardAction.propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    toggleFormVisibility: PropTypes.func.isRequired, //form visiblity prop type
 };
 
 export default withStyles(styles)(CardAction);

@@ -72,7 +72,7 @@ class SchoolEducationCard extends React.Component {
       }
     }).then(res => {
       const educationDataList = [];
-      for (let i = 0; i < res.data.results.length; i++) {
+      for (let i = 0; i < res.data.results?.length; i++) {
         if (res.data.results[i].attended_for === "school") {
           educationDataList.push(res.data.results[i])
         }

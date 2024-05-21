@@ -114,7 +114,7 @@ class SideNav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            open: true,
             userMenuOpen: false,
             sideList: '',
             homeLink: true,
@@ -192,13 +192,13 @@ class SideNav extends React.Component {
     //     });
     // }
 
-    handleDrawerOpen = () => {
-        this.setState({ open: true });
-    };
+    // handleDrawerOpen = () => {
+    //     this.setState({ open: true });
+    // };
 
-    handleDrawerClose = () => {
-        this.setState({ open: false });
-    };
+    // handleDrawerClose = () => {
+    //     this.setState({ open: false });
+    // };
 
     handleUserMenuClose = () => {
         this.setState({
@@ -340,7 +340,8 @@ class SideNav extends React.Component {
                     elevation={0}
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: this.state.open,
-                    })}>
+                    })}
+                    >
                     <Toolbar>
                         <IconButton
                             color="inherit"
@@ -349,7 +350,8 @@ class SideNav extends React.Component {
                             edge="start"
                             className={clsx(classes.menuButton, {
                                 [classes.hide]: this.state.open,
-                            })}>
+                            })}
+                            >
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap className={classes.title}>

@@ -139,7 +139,7 @@ class RecomendedCircle extends React.Component {
                         <List className={classes.root} dense>
                             {
                                 (this.state.recomendedCircle !== null && this.state.recomendedCircle !== undefined) ? (
-                                    this.state.recomendedCircle.results.map((user, index) => (
+                                    this.state.recomendedCircle.map((user, index) => (
                                         <ListItem alignItems="flex-start">
                                             <ListItemAvatar>
                                                 <Avatar alt="Remy Sharp" src={user.avatar} />

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faShareAlt, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import '../../styles/main.css'
+import endpoints from '../../api/endpoints';
 
 const styles = theme => ({
   root: {
@@ -53,7 +54,8 @@ class Posts extends React.Component {
   }
 
   getAllPost = () => {
-    var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+    // var url = "https://energeapi.do.viewyoursite.net/api/v1/post/";
+    var url = endpoints.POST;
     var getToken = localStorage.getItem('access');
     axios.get(
       url,
@@ -76,7 +78,8 @@ class Posts extends React.Component {
     var my_data = {
       post: tile,
     }
-    var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+    // var url = "https://energeapi.do.viewyoursite.net/api/v1/post/like/"
+    var url = endpoints.user_like;
     var getToken = localStorage.getItem('access');
     axios.post(
       url, my_data,
