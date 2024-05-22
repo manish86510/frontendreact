@@ -58,7 +58,7 @@ const SlidingForm = ({ isVisible }) => {
                                 style={{ display: 'block', marginTop: 8 }}
                                 required
                             />
-                            <span style={{paddingTop:"8px"}}>*Allowed Img, pdf, doc</span>
+                            <span style={{ paddingTop: "8px" }}>*Allowed Img, pdf, doc</span>
 
                         </div>
                     </label>
@@ -77,7 +77,7 @@ const SlidingForm = ({ isVisible }) => {
                         />
                     </label>
                 </div>
-                <button type="submit" style={{ padding: '8px 16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: 4 }}>
+                <button type="submit" style={{ padding: '8px 16px', backgroundColor: '#F26522', color: '#fff', border: 'none', borderRadius: 4 }}>
                     Submit
                 </button>
             </form>

@@ -121,14 +121,14 @@
             // const { isFormVisible } = this.state;  //form visiblity
             console.log("Postlist", this.state.postList)
             return (
-                <div id="feed_content" ref={this.handleScroll}>
-                    <Grid container spacing={10}>
+                <div id="feed_content" ref={this.handleScroll} >
+                    <Grid container spacing={0}>
                         <Grid item xs={12}>
                             <PostTextArea onPostCreated={this.onPostCreated} />
                         </Grid>
                     </Grid>
                     {/* <SlidingForm isVisible={isFormVisible} />  redrring form */}
-                    <Grid container spacing={3}>
+                    <Grid container spacing={1}>
                         <Grid item xs={12}>
                             <Box component="div" m={2}>
                                 <b>. Feed .</b>

@@ -3,6 +3,7 @@ import NotificationTopics from './../components/notifications/notification-topic
 import Grid from '@material-ui/core/Grid';
 import NotificationTabs from './../components/notifications/notification-tab'
 import { withStyles } from '@material-ui/styles';
+import RightTab from '../components/rightTab/RightTab';
 // import { PropTypes } from 'prop-types';
 
 
@@ -25,7 +26,7 @@ class Notifications extends React.Component {
                         {/* hello */}
                     </Grid>
                     <Grid item xs={4}>
-                        { <NotificationTopics /> }
+                    <RightTab />
                     </Grid>
                 </Grid>
             </div>
