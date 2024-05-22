@@ -2,7 +2,7 @@ import React from 'react';
 import ProfileTabs from './Edit-profile';
 import Grid from '@material-ui/core/Grid';
 import HotTopics from '../hot-topics/hot-topic';
-
+import CompanyProfile from './companyprofile';
 
 class Profile extends React.Component{
 
@@ -15,6 +15,7 @@ class Profile extends React.Component{
                     <Grid item xs={12} sm={12} md={4} lg={4}>
                     <HotTopics />
                 </Grid>
+                    <CompanyProfile/>
             </Grid>
         );
     }
