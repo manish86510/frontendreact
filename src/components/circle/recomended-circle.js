@@ -15,6 +15,10 @@ import { withRouter } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
 const styles = theme => ({
+    card: {
+        maxWidth: 400,
+        margin: 'auto'
+    },
     root: {
         width: '100%',
         flexGrow: 1,
@@ -114,7 +118,7 @@ class RecomendedCircle extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card>
+            <Card className={classes.card} style={{ margin: '25px 0' }}>
                 <CardHeader
                     title={
                         <Typography className={classes.cardHeader}>{this.props.customTitle ? this.props.customTitle : "Expand Your Circle"}</Typography>
@@ -170,7 +174,7 @@ class RecomendedCircle extends React.Component {
                                                 >
                                                     connect
 
-                                            </Button>
+                                                </Button>
                                             </ListItemSecondaryAction>
                                         </ListItem>
                                     ))

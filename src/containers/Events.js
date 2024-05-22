@@ -3,6 +3,7 @@ import EventTopics from './../components/events/events_topic';
 import Grid from '@material-ui/core/Grid';
 import EventsTabs from './../components/events/event_tab'
 import { withStyles } from '@material-ui/styles';
+import RightTab from '../components/rightTab/RightTab';
 // import { PropTypes } from 'prop-types';
 
 
@@ -29,7 +30,7 @@ class Events extends React.Component {
                         <EventsTabs />
                     </Grid>
                     <Grid item xs={4}>
-                        <EventTopics />
+                        <RightTab />
                     </Grid>
                 </Grid>
             </div>

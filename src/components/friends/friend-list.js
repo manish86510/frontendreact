@@ -18,6 +18,10 @@ import { withRouter } from 'react-router-dom';
 
 
 const styles = theme => ({
+    card: {
+        maxWidth: 400,
+        margin: 'auto'
+    },
     root: {
         width: '100%',
         flexGrow: 1,
@@ -72,7 +76,7 @@ class FriendsList extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card>
+            <Card className={classes.card} style={{ margin: '25px 0' }}>
                 <CardHeader
                     title={
                         <Typography className={classes.cardHeader}>Friends List</Typography>

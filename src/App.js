@@ -4,7 +4,7 @@ import './App.css';
 import * as Colors from '@material-ui/core/colors';
 // import ReactDOM from 'react-dom'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme, createTheme } from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
@@ -24,13 +24,16 @@ import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
 import Verify_mail from './containers/verify_mail';
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         primary: {
-            main: '#4eb894',
+            main: '#F26522',
             contrastText: '#ffffff'
         },
-        secondary: Colors.pink,
+        // secondary: Colors.pink,
+        secondary:{
+            main:'#2D934E'
+        }
     },
 });
 

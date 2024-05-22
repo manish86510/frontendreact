@@ -3,6 +3,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import BookmarkTabs from './bookmark-tab'
 import { withStyles } from '@material-ui/styles';
+import RightTab from './rightTab/RightTab';
 
 
 
@@ -28,7 +29,7 @@ class Bookmark extends React.Component {
                         <BookmarkTabs />
                     </Grid>
                     <Grid item xs={4}>
-                        <h1>Hot topics</h1>
+                        <RightTab />
                     </Grid>
                 </Grid>
             </div>

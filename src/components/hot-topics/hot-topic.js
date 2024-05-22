@@ -15,8 +15,9 @@ import axios from 'axios';
 
 const styles = theme => ({
     card: {
-        maxWidth: 345,
-      },
+        maxWidth: 400,
+        margin: 'auto'
+    },
       media: {
         height: 220,
       },
@@ -69,7 +70,7 @@ class HotTopic extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card>
+            <Card className={classes.card} style={{ margin: '25px 0' }}>
                 <CardHeader title={
                     <Typography className={classes.cardHeader}>Hot Topics</Typography>
                 }

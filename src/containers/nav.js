@@ -22,7 +22,7 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PropTypes } from 'prop-types';
 import '../styles/side-nav.css'
-import { Avatar, Grow } from '@material-ui/core';
+import { Avatar, Grow, ListItemText } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
 import Icon from '@material-ui/core/Icon';
@@ -74,7 +74,7 @@ const styles = theme => ({
         background: '#fafafa',
     },
     drawerOpen: {
-        width: drawerWidth,
+        width: '17rem',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -171,7 +171,7 @@ class SideNav extends React.Component {
                     "link": "/settings",
                 },
             ],
-            pendding_message:3,
+            pendding_message: 3,
         };
     }
     componentWillUnmount() {
@@ -213,7 +213,7 @@ class SideNav extends React.Component {
     mynav = () => {
         // this.state.home_title = "Home";
         this.setState({
-            home_title:"Home",
+            home_title: "Home",
             homeLink: true,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -227,7 +227,7 @@ class SideNav extends React.Component {
     nav_bookmark = () => {
         // this.state.home_title = "Bookmark";
         this.setState({
-            home_title:"Bookmark",
+            home_title: "Bookmark",
             homeLink: false,
             bookmarkLink: true,
             bookmarkLink1: false,
@@ -240,8 +240,8 @@ class SideNav extends React.Component {
     }
     handleMessageNav = () => {
         this.setState({
-            home_title:"Message",
-            pendding_message:0
+            home_title: "Message",
+            pendding_message: 0
         });
         // this.state.home_title = "Message";
         this.props.history.push({ pathname: "/message" })
@@ -249,7 +249,7 @@ class SideNav extends React.Component {
     nav_notification = () => {
         // this.state.home_title = "Notifications";
         this.setState({
-            home_title:"Notifications",
+            home_title: "Notifications",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -263,7 +263,7 @@ class SideNav extends React.Component {
     nav_collaborate = () => {
         // this.state.home_title = "Collaborate";
         this.setState({
-            home_title:"Collaborate",
+            home_title: "Collaborate",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -277,7 +277,7 @@ class SideNav extends React.Component {
     nav_profile = () => {
         // this.state.home_title = "Profile";
         this.setState({
-            home_title:"Profile"
+            home_title: "Profile"
         });
         this.props.history.push({ pathname: "/profile/pf_" + this.state.userProfile.username })
     }
@@ -285,7 +285,7 @@ class SideNav extends React.Component {
     nav_my_account = () => {
         // this.state.home_title = "My Account";
         this.setState({
-            home_title:"My Account"
+            home_title: "My Account"
         });
         this.props.history.push({ pathname: "/my_account" })
     }
@@ -293,7 +293,7 @@ class SideNav extends React.Component {
     nav_events = () => {
         // this.state.home_title = "Events";
         this.setState({
-            home_title:"Events",
+            home_title: "Events",
             homeLink: false,
             bookmarkLink: false,
             bookmarkLink1: false,
@@ -307,7 +307,7 @@ class SideNav extends React.Component {
     nav_wallet = () => {
         // this.state.home_title = "Wallet";
         this.setState({
-            home_title:"Wallet",
+            home_title: "Wallet",
         });
         this.props.history.push({ pathname: "/wallet" })
     }
@@ -341,7 +341,7 @@ class SideNav extends React.Component {
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: this.state.open,
                     })}
-                    >
+                >
                     <Toolbar>
                         <IconButton
                             color="inherit"
@@ -351,7 +351,7 @@ class SideNav extends React.Component {
                             className={clsx(classes.menuButton, {
                                 [classes.hide]: this.state.open,
                             })}
-                            >
+                        >
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap className={classes.title}>
@@ -394,10 +394,10 @@ class SideNav extends React.Component {
                                         </Avatar>
 
                                     ) : (
-                                            <Avatar
-                                                src={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"}>
-                                            </Avatar>
-                                        )
+                                        <Avatar
+                                            src={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"}>
+                                        </Avatar>
+                                    )
                                 }
                             </IconButton>
 
@@ -437,9 +437,10 @@ class SideNav extends React.Component {
                         }),
                     }}
                     open={this.state.open}>
-                    <div className={classes.toolbar}>
+                    <div className={classes.toolbar} style={{paddingRight:'35px', }}>
                         <IconButton onClick={this.handleDrawerClose}>
-                            <ChevronLeftIcon />
+                            {/* <ChevronLeftIcon /> */}
+                            <img style={{width:'140px'}} src='/images/BP.png' />
                         </IconButton>
                     </div>
 
@@ -458,6 +459,7 @@ class SideNav extends React.Component {
                                             // color={menu.selected?"primary":"default"} 
                                             className={"material-icons-outlined " + menu.icon}>{menu.icon}</Icon>
                                     </ListItemIcon>
+                                    <ListItemText primary={menu.title} />
                                 </ListItem>
                             ))
                         }

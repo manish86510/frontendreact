@@ -3,6 +3,7 @@ import NotificationTopics from './../components/notifications/notification-topic
 import Grid from '@material-ui/core/Grid';
 import Collaborate from './../components/collaborate'
 import { withStyles } from '@material-ui/styles';
+import RightTab from '../components/rightTab/RightTab';
 
 
 const styles = theme => ({
@@ -25,7 +26,7 @@ class CollaborateMain extends React.Component {
                         {/* hello */}
                     </Grid>
                     <Grid item xs={4}>
-                        { <NotificationTopics /> }
+                    <RightTab />
                     </Grid>
                 </Grid>
             </div>

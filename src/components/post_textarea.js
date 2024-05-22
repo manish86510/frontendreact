@@ -181,7 +181,7 @@ class PostTextArea extends React.Component {
   render() {
     // const { classes } = this.props;
     return (
-      <Grid container direction="row" justify="flex-start" alignItems="center" spacing={1}>
+      <Grid container direction="row"  justifyContent='flex-start' alignItems="center" spacing={0} style={{marginTop:27}}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <div className={"text-area-container"}>
             <div className={'person-image'}>
