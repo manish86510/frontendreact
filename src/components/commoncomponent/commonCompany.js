@@ -5,7 +5,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
-import "./commonCompany.css"
+import TextField from '@material-ui/core/TextField';
+import "../../styles/commonCompany.css";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -87,6 +88,7 @@ export default function CommonCompany(){
         
             
         <Typography variant="h4">Company List</Typography><hr/>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
             {tutorialSteps.map((card,index)=>{
                 return <Grid key={index} className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>

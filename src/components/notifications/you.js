@@ -9,6 +9,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  topHeading:{
+    margin:"1rem 0rem 0rem 0rem"
+  }
 });
 
 class You extends React.Component {
@@ -26,7 +29,7 @@ class You extends React.Component {
     // var value = this.state.value;
     return (
       <div className={classes.root}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className={classes.topHeading}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ListItem>

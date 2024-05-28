@@ -8,6 +8,12 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  topHeading:{
+    margin:"1rem 0rem 0rem 0rem"
+  },
+  paper:{
+    margin: "0rem 1rem 0rem 0rem",
+  }
 });
 
 class Circle extends React.Component {
@@ -49,7 +55,7 @@ class Circle extends React.Component {
     // var value = this.state.value;
     return (
       <div className={classes.root}>
-        <Grid container spacing={3}>
+        <Grid className={classes.topHeading} container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <ListItem>

@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     maincard:{
         display:"flex",
         flexWrap:"wrap",
+        justifyContent:"space-evenly",
     },
     maincard11:{
         display:"flex",
@@ -57,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 0px 10px 0px #ccc',
         width: '100%',
         position:'relative',
-        margin:"0rem 0rem 1rem 0rem"
+        margin:"0rem 0rem 1rem 0rem",
+        padding:"0.5rem"
     }
   }));
 export default function Services(){
@@ -67,51 +69,51 @@ export default function Services(){
 
     const tutorialSteps = [
         {
-          label: 'Document Service',
+          label: 'Finance',
           icons: <AssignmentIcon  className={classes.icons}/>
         },
         {
-          label: 'Tax Compliance',
+          label: 'Business Services',
           icons:<AssignmentIndIcon  className={classes.icons}/>
         },
         {
-          label: 'Bali, Indonesia',
+          label: 'Health',
           icons:<LanguageIcon  className={classes.icons}/>
         },
         {
-          label: 'NeONBRAND Digital ',
+          label: 'Construction',
           icons:<PersonOutlineIcon  className={classes.icons}/>
         },
         {
-            label: 'San Francisco – Oakland ',
+            label: 'Insurance',
             icons: <AssignmentIcon className={classes.icons}/>
           },
           {
-            label: 'Bird',
+            label: 'Law',
             icons:<AssignmentIndIcon className={classes.icons}/>
           },
           {
-            label: 'Bali, Indonesia',
+            label: 'Marketing',
             icons:<LanguageIcon className={classes.icons}/>
           },
           {
-            label: 'NeONBRAND Digital ',
+            label: 'Communication',
             icons:<PersonOutlineIcon className={classes.icons}/>
           },
           {
-            label: 'San Francisco – Oakland ',
+            label: 'Tourism',
             icons: <AssignmentIcon className={classes.icons}/>
           },
           {
-            label: 'Bird',
+            label: 'Education',
             icons:<AssignmentIndIcon className={classes.icons}/>
           },
           {
-            label: 'Bali, Indonesia',
+            label: 'Consulting',
             icons:<LanguageIcon className={classes.icons}/>
           },
           {
-            label: 'NeONBRAND Digital ',
+            label: 'Banking',
             icons:<PersonOutlineIcon className={classes.icons}/>
           },
         

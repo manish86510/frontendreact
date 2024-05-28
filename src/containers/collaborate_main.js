@@ -20,12 +20,12 @@ class CollaborateMain extends React.Component {
         // const { classes } = this.props;
         return (
             <div>
-                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
+                <Grid container direction="row" justifyContent="space-between" alignItems="flex-start"  spacing={3}>
                     <Grid item xs={8}>
                         <Collaborate />
                         {/* hello */}
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} style={{ margin:"-1.5rem 0rem 0rem 0rem"}}>
                     <RightTab />
                     </Grid>
                 </Grid>

@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     imageContainer:{
-        width:'40rem',
-        height:"20rem",
+        width:'100%',
+        height:"100%",
         overflow:"hidden",
     },
     image:{
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     heading:{
         textAlign:"center",
-        padding:"1rem"
+        padding:"1rem 0rem 1rem 0rem"
     },
 }));
 

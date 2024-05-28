@@ -7,7 +7,11 @@ import { Button, Avatar, ListItem, Paper } from '@material-ui/core';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    // padding: "-1.5rem 0rem 0rem 0rem"
   },
+  paper:{
+    padding:"0rem 0.5rem 0rem 0.5rem"
+  }
 });
 
 class Collaborate extends React.Component {

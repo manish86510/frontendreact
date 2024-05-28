@@ -29,7 +29,7 @@ import Icon from '@material-ui/core/Icon';
 import Badge from '@material-ui/core/Badge';
 
 
-const drawerWidth = 240;
+const drawerWidth = 248;
 
 const styles = theme => ({
     root: {
@@ -74,7 +74,7 @@ const styles = theme => ({
         background: '#fafafa',
     },
     drawerOpen: {
-        width: '14rem',
+        width: '15.5rem',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -163,6 +163,24 @@ class SideNav extends React.Component {
                     "icon": "local_offer",
                     "selected": false,
                     "link": "/tags",
+                },
+                {
+                    "title": "Services",
+                    "icon": "date_range",
+                    "selected": false,
+                    "link": "/services",
+                },
+                {
+                    "title": "Government Schemes",
+                    "icon": "date_range",
+                    "selected": false,
+                    "link": "/governmentSchemes",
+                },
+                {
+                    "title": "My Work",
+                    "icon": "date_range",
+                    "selected": false,
+                    "link": "/my_work",
                 },
                 {
                     "title": "Settings",

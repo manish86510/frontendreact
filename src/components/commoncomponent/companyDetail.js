@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import {Link} from "react-router-dom";
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -11,19 +13,25 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     imageContainer:{
-        width:'40rem',
-        height:"20rem",
+        width:'100%',
+        height:"100%",
         overflow:"hidden",
     },
     image:{
         width: '100%',
         height: '100%',
-        objectFit:"contain"
+        objectFit:"contain",
+        borderRadius:"0.5rem"
     },
     heading:{
         textAlign:"center",
-        padding:"1rem"
+        padding:"1rem 0rem 1rem 0rem"
     },
+    topHeader:{
+        // padding:"1rem",
+        textAlign:"center",
+        padding:"1rem"
+    }
 }));
 
 
@@ -32,16 +40,18 @@ export default function CompanyDetail(){
     return(
         <>
         <Container>
-            <Typography variant="h4">Company Detail</Typography>
+            <Container className={classes.topHeader}><Typography variant="h4">Bharatpreneurs</Typography></Container>
+            
             <Box className={classes.imageContainer} >
-                <img src="https://st.adda247.com/https://adda247jobs-wp-assets-prod.adda247.com/articles/wp-content/uploads/2022/11/24173027/Schemes-of-Indian-Government.jpg" alt="imageishere" className={classes.image}/>
+                <img src="https://bharatpreneurs.org/images/mainh.webp" alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>Here Is Heading Of Government Scheme</Typography>
-            <Typography>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</Typography>
+            <Typography variant="h4" className={classes.heading}>Here Is Heading Of Bharatpreneurs</Typography>
+            <Typography>Bharatpreneurs, a groundbreaking event in India, is dedicated to empowering Indian entrepreneurs and SMEs. We offer comprehensive support through finance and funding, cutting-edge technology and operations assistance, and strategic media and marketing support. Join us on a unified platform to foster collaboration and propel the success of SMEs at the Bharatpreneurs event.</Typography><br/>
+            
+            <Typography> At Bharatpreneurs, our diverse exhibition stalls cater to three pivotal sectors. Explore finance and funding with leading banks, finance companies, and management consultants. Delve into technology and operations with legal services, IT firms, and cutting-edge cloud and data companies. Lastly, engage with cutting-edge Media and Marketing companies, spanning media outlets, branding agencies, digital marketing, and brand management. Join us for a convergence of industries, fostering collaboration and innovation in the heart of Indian entrepreneurship.
+            </Typography>
             <br/><br/><br/>
-            <Typography>Here Is dummy URL</Typography>
+            <Typography><ArrowRightAltIcon/> <a target="_blank" href="https://bharatpreneurs.org/">Redirect to Company Website</a></Typography>
         </Container>
         </>
     )

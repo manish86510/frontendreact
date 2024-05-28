@@ -10,6 +10,7 @@ import { Avatar, ListItem, Button } from '@material-ui/core';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    margin:"1rem 0rem 0rem 0rem"
   },
 });
 
@@ -31,7 +32,7 @@ class Event extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <Paper className={classes.paper}>
               <ListItem>
                 <Avatar
@@ -45,7 +46,7 @@ class Event extends React.Component {
 
               </ListItem>
 
-              <div style={{ paddingLeft: '2%' }}>
+              <div style={{ paddingLeft: '5.5%' }}>
                 <span>Dance party, Bergahin, Berlin</span><br/>
                 <span>@ 01:00 AM</span>
                 <p>&nbsp;</p>
@@ -53,7 +54,7 @@ class Event extends React.Component {
 
             </Paper>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <Paper className={classes.paper}>
               <ListItem>
                 <Avatar
@@ -67,7 +68,7 @@ class Event extends React.Component {
 
               </ListItem>
 
-              <div style={{ paddingLeft: '2%' }}>
+              <div style={{ paddingLeft: '5.5%' }}>
                 <span>Dance party, Bergahin, Berlin</span><br/>
                 <span>@ 01:00 AM</span>
                 <p>&nbsp;</p>
@@ -89,7 +90,7 @@ class Event extends React.Component {
           <Grid item xs={10}>
             <Button variant="contained"  className="eventBtnl">Past Invitations</Button>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <Paper className={classes.paper}>
               <ListItem>
                 <Avatar
@@ -103,7 +104,7 @@ class Event extends React.Component {
 
               </ListItem>
 
-              <div style={{ paddingLeft: '2%' }}>
+              <div style={{ paddingLeft: '5.5%' }}>
                 <span>Dance party, Bergahin, Berlin</span><br/>
                 <span>@ 01:00 AM</span>
                 <p>&nbsp;</p>
@@ -111,7 +112,7 @@ class Event extends React.Component {
 
             </Paper>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <Paper className={classes.paper}>
               <ListItem>
                 <Avatar
@@ -125,7 +126,7 @@ class Event extends React.Component {
 
               </ListItem>
 
-              <div style={{ paddingLeft: '2%' }}>
+              <div style={{ paddingLeft: '5.5%' }}>
                 <span>Dance party, Bergahin, Berlin</span><br/>
                 <span>@ 01:00 AM</span>
                 <p>&nbsp;</p>

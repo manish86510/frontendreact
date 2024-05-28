@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     maincard:{
         display:"flex",
         flexWrap:"wrap",
+        justifyContent:"space-evenly",
     },
     maincard11:{
         display:"flex",
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius:"1rem",
         boxShadow: '0px 0px 10px 0px #ccc',
         width: '100%',
-        position:'relative'
+        position:'relative',
+        padding:"0.5rem"
     },
     heading:{
       padding:"0.5rem 0rem 0rem 1rem",
@@ -99,7 +101,7 @@ export default function GovernmentSchemes(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography className={classes.heading} variant="h4">Government Schemes</Typography><hr/>
+        <Typography  variant="h4">Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{tutorialSteps.map((card,index)=>{
                 return <div className={classes.maincard1}>
                     <Box >

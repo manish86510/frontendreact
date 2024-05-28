@@ -258,7 +258,7 @@ function CompanyProfile(){
             <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
             name="Reg_date" value={cform.Reg_date} onChange={handleChange}
             />
-            <TextField id="outlined-basic"  label="Sector" style={styles.textField} type="number" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="number" variant="outlined" 
             name="Sector" value={cform.Sector} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
