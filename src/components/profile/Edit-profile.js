@@ -12,6 +12,7 @@ import Card from '@material-ui/core/Card';
 import UnivercityEducationCard from './university-education';
 import SchoolEducationCard from './school-education';
 import UserDetails from './user-details';
+import CompanyProfile from './companyprofile';
 
 const styles = theme => ({
   marginTop: {
@@ -163,27 +164,27 @@ class EditProfile extends React.Component {
           <CommunicationCard title="Communication Details" />
         </Card> */}
 
-        <Card className={classes.marginTop}>
+        {/* <Card className={classes.marginTop}>
           <InterestCard title="Interests" />
-        </Card>
+        </Card> */}
 
-        <Card className={classes.marginTop}>
+        {/* <Card className={classes.marginTop}>
           <SkillCard title="Skills" />
-        </Card>
+        </Card> */}
 
-        <Card className={classes.marginTop}>
+        {/* <Card className={classes.marginTop}>
           <LanguageCard title="Languages" />
-        </Card>
+        </Card> */}
 
-        <Card className={classes.marginTop}>
+        {/* <Card className={classes.marginTop}>
           <SocialLinkCard title="Website/Social Links" />
-        </Card>
+        </Card> */}
 
-        <Card className={classes.marginTop}>
+        {/* <Card className={classes.marginTop}>
           <WorkEducationCard title="Work/Education" />
           <UnivercityEducationCard />
           <SchoolEducationCard />
-        </Card>
+        </Card> */}
         {/* <Card style={{ padding: "10px", marginTop: "10px" }}>
           <div className={classes.root}>
             <Grid container spacing={3}>
@@ -444,7 +445,7 @@ class EditProfile extends React.Component {
             </Grid>
           </div>
         </Card>*/}
-
+          {/* <CompanyProfile/> */}
       </div>
 
     );

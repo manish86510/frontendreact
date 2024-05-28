@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import BookmarkTabs from './bookmark-tab'
 import { withStyles } from '@material-ui/styles';
 import RightTab from './rightTab/RightTab';
-
+import Carousel from './carousel';
 
 
 const styles = theme => ({
@@ -24,7 +24,13 @@ class Bookmark extends React.Component {
         // const { classes } = this.props;
         return (
             <div>
-                <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
+                 <Grid >
+                        <Carousel/></Grid>
+                <Grid container direction="row"
+                //  justify="space-between" 
+                //  alignItems="flex-start"
+                  spacing={3}>
+               
                     <Grid item xs={8}>
                         <BookmarkTabs />
                     </Grid>

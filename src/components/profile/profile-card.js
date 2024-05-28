@@ -17,7 +17,7 @@ const styles = theme => ({
   gridItem: {
     display: 'inline-block',
     height: 150,
-    margin: 5,
+    // margin: 5,
     overflow: 'hidden'
   },
   profile_image: {

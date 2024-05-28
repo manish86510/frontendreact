@@ -24,6 +24,11 @@ import Bookmark from './components/bookmark';
 import { Switch } from 'react-router-dom';
 import Welcome from './containers/Welcome';
 import Verify_mail from './containers/verify_mail';
+import componentTabs from './components/commoncomponent/commonComponent-tab';
+import CompanyTab from './components/commoncomponent/commonCompany-tab';
+import CompanyDetailTab from './components/commoncomponent/companyDetail-tab';
+
+
 const theme = createTheme({
     palette: {
         primary: {
@@ -64,6 +69,9 @@ export default function App() {
                         <Route path="/Edit-profile" component={EditProfile} />
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
+                        <Route path="/component-tabs" component={componentTabs}/>
+                        <Route path="/company-tabs" component={CompanyTab}/>
+                        <Route path="/company-detail" component={CompanyDetailTab}/>
                         <Route path="/wallet" component={Wallet} />
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />

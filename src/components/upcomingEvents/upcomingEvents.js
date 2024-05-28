@@ -14,16 +14,21 @@ const styles = theme => ({
     },
     media: {
         height: 140,
+        marginLeft: theme.spacing(0.5),
+        marginRight: theme.spacing(0.5),
     },
     cardHeader: {
         fontSize: 16,
         fontWeight: 'bold'
     },
     registerButton: {
-        color: 'white',
+        // color: 'white',
         marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        marginLeft: theme.spacing(9),
+        marginRight: theme.spacing(2),
         width:'200px',
-        marginLeft: '3.5rem'
+        // marginLeft: '3.5rem'
     },
     dateBox: {
         display: 'flex',
@@ -33,8 +38,12 @@ const styles = theme => ({
         backgroundColor: '#f0f0f0',
         borderRadius: '4px',
         padding: theme.spacing(1),
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         minWidth: '50px'
+    },
+    body:{
+        marginTop: theme.spacing(1),
     }
 });
 
@@ -67,7 +76,7 @@ const UpcomingEventCard = ({ classes }) => {
                         <Typography variant="h6">{eventData.date}</Typography>
                         <Typography variant="subtitle1">{eventData.month}</Typography>
                     </div>
-                    <div>
+                    <div className={classes.body}>
                         <Typography variant="body1" component="p">{eventData.title}</Typography>
                         <Typography variant="body2" color="textSecondary">{eventData.time}</Typography>
                         <Typography variant="body2" color="textSecondary">Speaker: {eventData.speaker}</Typography>
@@ -75,7 +84,7 @@ const UpcomingEventCard = ({ classes }) => {
                         <Typography variant="body2" color="textSecondary">Registered: {eventData.registered}</Typography>
                     </div>
                 </div>
-                <Button style={{color:'primary'}} className={classes.registerButton}>
+                <Button variant='contained' className={classes.registerButton}>
                     Register
                 </Button>
             </CardContent>

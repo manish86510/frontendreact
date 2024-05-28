@@ -74,7 +74,7 @@ const styles = theme => ({
         background: '#fafafa',
     },
     drawerOpen: {
-        width: '17rem',
+        width: '14rem',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,

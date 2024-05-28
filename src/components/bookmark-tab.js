@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/styles';
 import Posts from './Posts/posts';
 import Feed from './feed/feed';
 import Projects from './feed/projects';
+import Services from './Services';
+import GovernmentSchemes from './governmentSchemes';
 
 const styles = theme => ({
   root: {
@@ -28,8 +30,9 @@ class BookmarkTabs extends React.Component {
     var value = this.state.value;
     // console.log(value);
     return (
+      <>
       <div className={classes.root}>
-        <Tabs
+        {/* <Tabs
           value={this.state.value}
           onChange={this.handleChange}
           indicatorColor="primary"
@@ -39,11 +42,14 @@ class BookmarkTabs extends React.Component {
           <Tab label="Posts" />
           <Tab label="Projects" />
           <Tab label="Events" />
-        </Tabs>
+        </Tabs> */}
+        <Services/>
+        <GovernmentSchemes/>
         {value === 0 &&  <Feed /> }
         {value === 1 &&  <Projects /> }
         {value === 2 &&  <Posts /> }
       </div>
+      </>
     );
   }
 }
