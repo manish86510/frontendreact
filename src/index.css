@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@font-face {
+  font-family: "Dakon";
+  src: local("Dakon"),
+    url(/public/font/Dakon.otf) format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Inter";
+  src: local("Inter"),
+    url(/public/font/Inter-Bold.ttf) format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Daikon-Bold";
+  src: local("Daikon-Bold"),
+    url(/public/font/Inter-Bold.ttf) format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Daikon-Regular";
+  src: local("Daikon-Regular"),
+    url(/public/font/Daikon-Regular.ttf) format("truetype");
+  font-weight: normal;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+

@@ -5,6 +5,7 @@ import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,16 @@ const useStyles = makeStyles((theme) => ({
         // padding:"1rem",
         textAlign:"center",
         padding:"1rem"
+    },
+    redirect:{
+        display:"flex"
+    },
+    redirectHeading:{
+        margin:"0rem 0rem 0rem 0.5rem"
+    },
+    apply:{
+        display:"flex",
+        justifyContent:"space-between"
     }
 }));
 
@@ -51,7 +62,11 @@ export default function CompanyDetail(){
             <Typography> At Bharatpreneurs, our diverse exhibition stalls cater to three pivotal sectors. Explore finance and funding with leading banks, finance companies, and management consultants. Delve into technology and operations with legal services, IT firms, and cutting-edge cloud and data companies. Lastly, engage with cutting-edge Media and Marketing companies, spanning media outlets, branding agencies, digital marketing, and brand management. Join us for a convergence of industries, fostering collaboration and innovation in the heart of Indian entrepreneurship.
             </Typography>
             <br/><br/><br/>
-            <Typography><ArrowRightAltIcon/> <a target="_blank" href="https://bharatpreneurs.org/">Redirect to Company Website</a></Typography>
+            <Box className={classes.apply}>
+            <Box className={classes.redirect}>
+            <ArrowRightAltIcon/> <a target="_blank" href="https://bharatpreneurs.org/"><Typography className={classes.redirectHeading}>Redirect to Company Website</Typography></a></Box>
+            <Button variant="contained" color="primary"> &nbsp;Apply &nbsp;
+      </Button></Box>
         </Container>
         </>
     )

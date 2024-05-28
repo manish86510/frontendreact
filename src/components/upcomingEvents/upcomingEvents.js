@@ -27,7 +27,7 @@ const styles = theme => ({
         marginBottom: theme.spacing(2),
         marginLeft: theme.spacing(9),
         marginRight: theme.spacing(2),
-        width:'200px',
+        width:'10rem',
         // marginLeft: '3.5rem'
     },
     dateBox: {
@@ -39,11 +39,12 @@ const styles = theme => ({
         borderRadius: '4px',
         padding: theme.spacing(1),
         marginRight: theme.spacing(1),
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(0),
         minWidth: '50px'
     },
     body:{
         marginTop: theme.spacing(1),
+        marginLeft: theme.spacing(1),
     }
 });
 

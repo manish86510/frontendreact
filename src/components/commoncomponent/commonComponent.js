@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,12 +19,21 @@ const useStyles = makeStyles((theme) => ({
     image:{
         width: '100%',
         height: '100%',
-        objectFit:"contain"
+        objectFit:"contain",
+        borderRadius:"1rem"
     },
     heading:{
         textAlign:"center",
         padding:"1rem 0rem 1rem 0rem"
     },
+    website:{
+        display:"flex",
+    },
+    websiteText:{
+        margin:"0rem 0rem 0rem 1rem",
+        textDecoration:"none",
+        color:"black"
+    }
 }));
 
 
@@ -41,9 +50,8 @@ export default function CommonComponent(){
 
             The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</Typography>
             <br/><br/><br/>
-            <Typography>Here Is dummy URL</Typography>
+            <Box className={classes.website}><ArrowForwardIcon/> <a href="https://omms.nic.in/" target="_blank"><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
         </Container>
-
         </>
     )
 }

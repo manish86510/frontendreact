@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 0px 10px 0px #ccc',
         width: '100%',
         position:'relative',
-        margin:"0rem 0rem 1rem 0rem",
+        margin:"1.3rem 0rem 1rem 0rem",
         padding:"0.5rem"
     }
   }));
@@ -123,7 +123,7 @@ export default function Services(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography variant="h4">Services</Typography><hr/>
+        <Typography variant="h5">Services</Typography><hr/>
             <Box className={classes.maincard}>{tutorialSteps.map((card,index)=>{
                 return <div className={classes.maincard1}>
                     <Box>
