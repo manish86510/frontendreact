@@ -101,7 +101,7 @@ export default function GovernmentSchemes(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography  variant="h4">Government Schemes</Typography><hr/>
+        <Typography  variant="h5">Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{tutorialSteps.map((card,index)=>{
                 return <div className={classes.maincard1}>
                     <Box >

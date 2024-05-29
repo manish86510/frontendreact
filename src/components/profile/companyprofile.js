@@ -264,7 +264,7 @@ function CompanyProfile(){
             <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
             name="Description" value={cform.Description} onChange={handleChange}
             />
-            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" multiline rows={2}
             name="Address" value={cform.Address} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 

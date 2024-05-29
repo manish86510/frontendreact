@@ -75,9 +75,9 @@ export default function App() {
                     <Route path="/companies" component={AdminCompanies} />
 
                     <SideNav>
-                        <Route path="/home" component={Home} />
+                        <Route path="/bookmark" component={Home} />
                         <Route path="/message" component={Message} />
-                        <Route path="/bookmark" component={Bookmark} />
+                        <Route path="/home" component={Bookmark} />
                         <Route path="/notifications" component={Notifications} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/Edit-profile" component={EditProfile} />

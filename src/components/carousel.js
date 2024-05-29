@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import "slick-carousel/slick/slick.css";
@@ -12,73 +13,74 @@ import '../styles/Owl.css';
 
 const tutorialSteps = [
   {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
+    label: 'Smart Cities Mission Portal by Ministry of Urban Development',
     imgPath:
       'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'abcd',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. ',
+      date:'26 October 2021'
   },
   {
-    label: 'Bird',
+    label: 'Guidelines for Integrated Development of Commercial Floriculture Scheme',
     imgPath:
       'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'efgh',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'23 March 2022'
   },
   {
-    label: 'Bali, Indonesia',
+    label: 'Social defence schemes of Ministry of Social Justice and Empowerment',
     imgPath:
       'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-      description:'ijkl',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'26 December 2022'
   },
   {
-    label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
+    label: 'Schemes and programmes for differently abled by Ministry of Social Justice and Empowerment',
     imgPath:
       'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'mnop',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'14 January 2023'
   },
   {
-    label: 'Goč, Serbia',
+    label: 'Information on Rashtriya Madhyamik Shiksha Abhiyan',
     imgPath:
       'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'qrst',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'14 February 2024'
   },
   {
-    label: 'Random Image 1',
+    label: 'Balika Samriddhi Yojana by the Ministry of Women and Child Development',
     imgPath:
       'https://www.shutterstock.com/shutterstock/photos/2274412231/display_1500/stock-vector-many-rainbow-gradient-random-bright-soft-balls-background-colorful-balls-background-for-kids-zone-2274412231.jpg',
-      description:'uvwx',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'12 March 2024'
   },
   {
-    label: 'Random Image 2',
+    label: 'Information on schemes of animal husbandry',
     imgPath:
       'https://newvision-media.s3.amazonaws.com/cms/4040184f-4412-4775-980f-d2df40139bd3.jpg',
-      description:'yzab',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'12 February 2022'
   },
   {
-    label: 'Random Image 3',
+    label: 'Download forms of schemes for care of older persons',
     imgPath:
       'https://media.contentapi.ea.com/content/dam/eacom/lost-in-random/images/2021/06/lost-in-random-feature-image-16x9.jpg.adapt.crop16x9.1023w.jpg',
-      description:'cdef',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'14 June 2020'
   },
   {
-    label: 'Random Image 4',
+    label: 'Information about Jan Shikshan Sansthan scheme',
     imgPath:
       'https://i.ytimg.com/vi/RtvdEJQWQ8Y/maxresdefault.jpg',
-      description:'ghij',
-      date:'1/1/1234'
+      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
+      date:'14 February 2021',
   },
 ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400,
+    // maxHeight:800,
     flexGrow: 1,
   },
   header: {
@@ -100,6 +102,10 @@ const useStyles = makeStyles((theme) => ({
     // margin: '0 auto',
     overflow:'hidden',
   },
+  heading:{
+    color:"black",
+    textAlign: 'center'
+  }
 }));
 
 export default function Carousel(){ 
@@ -147,14 +153,13 @@ export default function Carousel(){
       className='owl-theme' 
       loop margin={10} 
       nav={true}
-      // navText={['<', '>']}
       dots={false}
       >
       {tutorialSteps.map((m)=><div class='item'>
         <img src={m.imgPath} alt={m.label} />
-        <h4>{m.label}</h4>
-        <p>{m.description}</p>
-        <p>{m.date}</p>
+        <Link to='/component-tabs' ><h4 className={classes.heading}>{m.label}</h4></Link>
+        <p className={classes.heading}>{m.description}</p>
+        <p className={classes.heading}>{m.date}</p>
     </div>)}
 </OwlCarousel></div>
       </>
