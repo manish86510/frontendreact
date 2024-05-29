@@ -25,19 +25,19 @@ const MainPage = () => {
   const data = [
     {
       name: "News",
-      url: "/news",
+      url: "/admin/news",
     },
     {
       name: "Events",
-      url: "/news",
+      url: "/admin/event",
     },
     {
       name: "Government Schemes",
-      url: "/news",
+      url: "/admin/schemes",
     },
     {
       name: "Total Companies",
-      url: "/news",
+      url: "/admin/companies",
     },
   ];
   return (
@@ -48,7 +48,7 @@ const MainPage = () => {
             <Grid item xs={6}>
               <Link to={data.url}>
                 <Paper className={classes.paper}>
-                  <CardX data={data.name}  />
+                  <CardX data={data.name} />
                 </Paper>
               </Link>
             </Grid>

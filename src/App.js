@@ -33,6 +33,7 @@ import News from './Admin/components/news/News';
 import Schemes from './Admin/components/schemes/Schemes';
 import AdminEvents from './Admin/components/events/AdminEvents';
 import AdminCompanies from './Admin/components/companies/AdminCompanies';
+import MainPage from './Admin/components/MainPage';
 
 
 
@@ -68,11 +69,25 @@ export default function App() {
                     <Route path="/verify" component={Verify_mail} />
                     <Route path="/verify_mail/:id" component={Welcome} />
 
-                    <Route path="/admin" component={AdminLayout} />
+
+                    {/* <Route path="/admin" component={AdminLayout} />
                     <Route path="/news" component={News} />
                     <Route path="/event" component={AdminEvents} />
                     <Route path="/schemes" component={Schemes} />
-                    <Route path="/companies" component={AdminCompanies} />
+                    <Route path="/companies" component={AdminCompanies} /> */}
+
+                    <Route path="/admin">
+                        <div>
+                            <Navbar />
+                            <Switch>
+                                <Route path="/admin/dashboard" component={MainPage} />
+                                <Route path="/admin/news" component={News} />
+                                <Route path="/admin/event" component={AdminEvents} />
+                                <Route path="/admin/schemes" component={Schemes} />
+                                <Route path="/admin/companies" component={AdminCompanies} />
+                            </Switch>
+                        </div>
+                    </Route>
 
                     <SideNav>
                         <Route path="/bookmark" component={Home} />

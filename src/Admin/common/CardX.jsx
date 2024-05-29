@@ -10,6 +10,11 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     padding: 40,
+    transition: "transform 0.3s, box-shadow 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+    },
   },
   bullet: {
     display: "inline-block",
