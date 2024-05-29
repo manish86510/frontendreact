@@ -33,6 +33,7 @@ import News from './Admin/components/news/News';
 import Schemes from './Admin/components/schemes/Schemes';
 import AdminEvents from './Admin/components/events/AdminEvents';
 import AdminCompanies from './Admin/components/companies/AdminCompanies';
+import GovernmentSchemesTab from './components/governmentschemes/GovernmentSchemesTab';
 
 
 
@@ -86,6 +87,7 @@ export default function App() {
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/company-tabs" component={CompanyTab} />
                         <Route path="/company-detail" component={CompanyDetailTab} />
+                        <Route path="/governmentSchemes-tab" component={GovernmentSchemesTab} />
                         <Route path="/wallet" component={Wallet} />
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />

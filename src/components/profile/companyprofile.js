@@ -153,8 +153,6 @@ function CompanyProfile(){
         },
         head1:{
             display: 'flex',
-            
-
         },
         head2:{
             cursor:"pointer",

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         // backgroundColor:"#fafafa",
         // backgroundColor:"rgb(240, 240, 240)",
-        border:'2px solid darkgray',
+        border:'1px solid darkgray',
         borderRadius:"1rem",
         height:'3.5rem',
         width:'12rem',

@@ -5,6 +5,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import endpoints from "../api/endpoints";
+import toast, { Toaster } from 'react-hot-toast';
+// import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const styles = (theme) => ({
   forget_pass: {
@@ -128,7 +132,8 @@ class Login extends React.Component {
           });
         } else {
           this.props.history.push({
-            pathname: "/profile"
+            // pathname: "/profile"
+            pathname: "/home"
           });
         }
       }
@@ -136,21 +141,40 @@ class Login extends React.Component {
   }
 
   
-  postLogin = (e) => {
+  postLogin = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     const url = endpoints.TOKEN;
-    axios.post(url, { username, password }).then(result => {
+    try{
+    await axios.post(url, { username, password }).then(result => {
       if (result.status === 200) {
         localStorage.setItem('access', result.data.access);
         localStorage.setItem('refresh', result.data.refresh);
         this.getProfile();
-      } else {
+      }
+       else {
         this.setState({ isError: "User not found!" });
       }
-    }).catch(() => {
-      this.setState({ isError: "User not found!" });
-    });
+    })
+    // .catch(() => {
+    //   this.setState({ isError: "User not found!" });
+    // });
+  }
+  catch(error){
+    // console.log("the new error",error.response.status)
+    // if(error.response.status === 401){
+    //   if (this.state({username}) !== e.target.value){
+    //     toast.error('InCorrect UserName');
+    //   }
+    //   else{
+    //   toast.error('InCorrect Password');
+    //   }
+    // }
+    if (error.response.status === 401) {
+      toast.error('Incorrect Username Or Password');
+    }
+  }
+  
   }
 
   handleUserName = e => {
@@ -166,6 +190,29 @@ class Login extends React.Component {
 
     return (
       <ThemeProvider theme={defaultTheme}>
+        <Toaster
+        position="top-right"
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            // width: '25%', // Increase width
+            // maxWidth: '80%',
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: 'green',
+              secondary: 'black',
+            },
+          },
+        }}
+       />
         <Grid container component="main" style={{ height: '100vh' }}>
           {/* <div className={classes.overlay} /> */}
           <CssBaseline />
@@ -274,6 +321,7 @@ class Login extends React.Component {
           <Typography variant="h6" >Bharatpreneurs, a groundbreaking event in India, is dedicated to empowering Indian entrepreneurs and SMEs. We offer comprehensive support through finance and funding, cutting-edge technology and operations assistance, and strategic media and marketing support. Join us on a unified platform to foster collaboration and propel the success of SMEs at the Bharatpreneurs event.</Typography></Grid> */}
         </Grid>
       </ThemeProvider>
+
     );
   }
 }

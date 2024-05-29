@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function MyResult(api, mydata, method) {
     var token = localStorage.getItem('access');
-    if (method == "post") {
+    if (method === "post") {
         axios.post(api,
             mydata,
             {
@@ -21,7 +21,7 @@ export default function MyResult(api, mydata, method) {
         );
     }
 
-    if (method == "get") {
+    if (method === "get") {
         axios.get(api, mydata).then(result => {
             return result;
         });

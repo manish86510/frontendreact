@@ -139,7 +139,7 @@
                                 <Grid className={classes.gridList} style={{ borderRadius: 30 }}>
                                     {
                                         (this.state.postList !== null && this.state.postList !== undefined) ? (
-                                            this.state.postList.map((post, index) => (
+                                            this.state?.postList.map((post, index) => (
                                                 <FeedCard key={index} post={post} />
                                             ))
                                         ) : undefined

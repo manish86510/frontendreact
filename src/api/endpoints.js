@@ -1,7 +1,7 @@
 // import base_uri from './base_url';
 
 // const base_uri = 'https://energeapi.do.viewyoursite.net';
- const base_uri = 'http://103.251.94.87:8083'
+ export const base_uri = 'http://103.251.94.87:8083'
 const endpoints = {
   // me: base_uri + '/api/me/',
   // get_token: base_uri + '/token/',
@@ -38,6 +38,11 @@ const endpoints = {
   recomended_followers: base_uri +'/user/recommended/',
   WORKPLACE: base_uri +'/user/workplace/',
   all_city: base_uri + '/user/city/',
+
+
+  get_industry : base_uri + '/api/industry/',
+  get_company : base_uri + '/api/company/',
+  get_news : base_uri + '/api/news'
 };
 
 

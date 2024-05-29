@@ -164,17 +164,17 @@ class SideNav extends React.Component {
                     "selected": false,
                     "link": "/tags",
                 },
-                {
-                    "title": "Services",
-                    "icon": "date_range",
-                    "selected": false,
-                    "link": "/services",
-                },
+                // {
+                //     "title": "Services",
+                //     "icon": "date_range",
+                //     "selected": false,
+                //     "link": "/services",
+                // },
                 {
                     "title": "Government Schemes",
                     "icon": "date_range",
                     "selected": false,
-                    "link": "/governmentSchemes",
+                    "link": "/governmentSchemes-tab",
                 },
                 {
                     "title": "My Work",

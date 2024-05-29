@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {Link} from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,9 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import '../styles/Owl.css';
+import endpoints, {base_uri} from '../api/endpoints';
+// import from '../api/endpoints';
+import axios from 'axios';
 
 
 const tutorialSteps = [
@@ -104,36 +107,38 @@ const useStyles = makeStyles((theme) => ({
   },
   heading:{
     color:"black",
-    textAlign: 'center'
+    textAlign: 'center',
+    textDecoration:"none"
   }
 }));
 
 export default function Carousel(){ 
-    const classes = useStyles();
-    const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = tutorialSteps.length;
-  
-    const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-  
-    const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-  
-    const handleStepChange = (step) => {
-      setActiveStep(step);
-    };
 
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1
-      };
-  
+    const [data,setData] = useState([])
+
+    const classes = useStyles();
+    var getToken = localStorage.getItem('access');
+    const fetchNews = async ()=>{
+      try{
+        await axios.get(endpoints.get_news,{
+          headers:{
+            Authorization : 'Bearer ' + getToken,
+          }
+        }).then((res)=>setData(res.data.data)
+          // console.log('response in carousel',res)
+        )
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    console.log('here is data', data)
+
+    useEffect(()=>{
+      fetchNews()
+    },[data])
+   
     return (
         <>
       {/* <div 
@@ -146,6 +151,8 @@ export default function Carousel(){
         src={m.imgPath} alt={i}/>
         <Typography>{m.label}</Typography>
       </div>)}</Slider></div> */}
+
+
       <div className={classes.carouselContainer}>
       <OwlCarousel 
       autoplay 
@@ -155,13 +162,13 @@ export default function Carousel(){
       nav={true}
       dots={false}
       >
-      {tutorialSteps.map((m)=><div class='item'>
-        <img src={m.imgPath} alt={m.label} />
-        <Link to='/component-tabs' ><h4 className={classes.heading}>{m.label}</h4></Link>
-        <p className={classes.heading}>{m.description}</p>
+      {data.map((m)=><div class='item'>
+        <img src={`${base_uri}${m.banner}`} alt={m.label} />
+        <Link to='/component-tabs' className={classes.heading} ><h4 >{m.short_desc}</h4></Link>
+        <p className={classes.heading}>{m.long_desc}</p>
         <p className={classes.heading}>{m.date}</p>
     </div>)}
-</OwlCarousel></div>
+    </OwlCarousel></div>
       </>
     );
 }
