@@ -27,6 +27,13 @@ import Verify_mail from './containers/verify_mail';
 import componentTabs from './components/commoncomponent/commonComponent-tab';
 import CompanyTab from './components/commoncomponent/commonCompany-tab';
 import CompanyDetailTab from './components/commoncomponent/companyDetail-tab';
+import Navbar from './Admin/components/Navbar';
+import AdminLayout from './Admin/AdminLayout';
+import News from './Admin/components/news/News';
+import Schemes from './Admin/components/schemes/Schemes';
+import AdminEvents from './Admin/components/events/AdminEvents';
+import AdminCompanies from './Admin/components/companies/AdminCompanies';
+
 
 
 const theme = createTheme({
@@ -36,8 +43,8 @@ const theme = createTheme({
             contrastText: '#ffffff'
         },
         // secondary: Colors.pink,
-        secondary:{
-            main:'#2D934E'
+        secondary: {
+            main: '#2D934E'
         }
     },
 });
@@ -60,6 +67,13 @@ export default function App() {
                     <Route path="/forgetpass" component={ForgotPassword} />
                     <Route path="/verify" component={Verify_mail} />
                     <Route path="/verify_mail/:id" component={Welcome} />
+
+                    <Route path="/admin" component={AdminLayout} />
+                    <Route path="/news" component={News} />
+                    <Route path="/event" component={AdminEvents} />
+                    <Route path="/schemes" component={Schemes} />
+                    <Route path="/companies" component={AdminCompanies} />
+
                     <SideNav>
                         <Route path="/home" component={Home} />
                         <Route path="/message" component={Message} />
@@ -69,9 +83,9 @@ export default function App() {
                         <Route path="/Edit-profile" component={EditProfile} />
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
-                        <Route path="/component-tabs" component={componentTabs}/>
-                        <Route path="/company-tabs" component={CompanyTab}/>
-                        <Route path="/company-detail" component={CompanyDetailTab}/>
+                        <Route path="/component-tabs" component={componentTabs} />
+                        <Route path="/company-tabs" component={CompanyTab} />
+                        <Route path="/company-detail" component={CompanyDetailTab} />
                         <Route path="/wallet" component={Wallet} />
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
@@ -80,6 +94,9 @@ export default function App() {
                             window.location.href = '/';
                         }} />
                     </SideNav>
+
+
+
                 </Switch>
             </Router>
         </MuiThemeProvider>
