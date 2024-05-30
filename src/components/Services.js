@@ -9,6 +9,8 @@ import LanguageIcon from '@material-ui/icons/Language';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
+import axios from 'axios';
+import endpoints from "../api/endpoints";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,27 +27,35 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         // backgroundColor:"#fafafa",
         // backgroundColor:"rgb(240, 240, 240)",
-        border:'2px solid darkgray',
+        border:'1px solid darkgray',
         borderRadius:"1rem",
         height:'3.5rem',
         width:'12rem',
         padding:"0.5rem"
     },
     maincard1:{
-        
         margin:'0.5rem',
+        // height:'4rem',
+        // width:'12rem'
     },
     label:{
         padding:"0.2rem 0rem 0rem 0.5rem",
-        color : "black"
+        color : "black",
+        width:"100%",
+        overflow:"hidden",
+        textOverflow:"ellipsis"
+        // height:"2rem"
     },
     icons:{
+      width:"2rem",
+      height:"2rem",
         // width:"2rem",
         // height:"rem"
         fontSize: 'xx-large'
     },
     icons1:{
-        backgroundColor: 'wheat',
+      backgroundColor: 'palegoldenrod',
+        // backgroundColor: 'wheat',
         justifyContent: 'center',
         display: 'flex',
         alignItems: 'center',
@@ -63,7 +73,30 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 export default function Services(){
-    const classes = useStyles();
+  const [data,setData] = useState([])
+
+  const classes = useStyles();
+  var accessToken = localStorage.getItem('access');
+
+  const getIndustry = async ()=>{
+    try{
+       await axios.get(endpoints.get_industry,{
+        headers: {
+            Authorization: 'Bearer ' + accessToken,
+        }
+    }).then((res)=>setData(res.data)
+      // console.log(res.data,"here is response")
+    )
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    getIndustry()
+  },[])
+
 
 
 
@@ -124,12 +157,13 @@ export default function Services(){
         <Grid className={classes.topService}>
             <Container>
         <Typography variant="h5">Services</Typography><hr/>
-            <Box className={classes.maincard}>{tutorialSteps.map((card,index)=>{
+        <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div className={classes.maincard1}>
                     <Box>
                         <Link to="/company-tabs"  className={classes.maincard11}>
-                    <Box className={classes.icons1}>{card.icons}</Box>
-                    <Box className={classes.label}>{card.label}</Box></Link>
+                        <img className={classes.icons1} src="/images/it.png" alt="console"/>
+                    {/* <Box className={classes.icons1}>{card.icons}</Box> */}
+                    <Box className={classes.label}>{card.name}</Box></Link>
                     </Box>
                 </div>
             })}</Box>

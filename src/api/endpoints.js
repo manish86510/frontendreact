@@ -45,7 +45,12 @@ const endpoints = {
   ADD_EVENTS: base_uri + '/events/add/',
   ADD_SCHEMES: base_uri + '/scheme/add/',
   GET_ALL_EVENTS: base_uri + '/api/events/',
-  GET_ALL_SCHEMES: base_uri + '/api/scheme/'
+  GET_ALL_SCHEMES: base_uri + '/api/scheme/',
+
+  // New API
+  get_news: base_uri + '/api/news',
+  get_industry: base_uri + '/api/industry/',
+  get_company: base_uri + '/api/company/',
 };
 
 
