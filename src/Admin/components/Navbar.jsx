@@ -176,7 +176,7 @@ export default function Navbar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Admin Panel
           </Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -188,7 +188,7 @@ export default function Navbar() {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
+          </div> */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">

@@ -26,25 +26,24 @@ const News = () => {
     getAllNews();
   }, []);
 
-
   console.log("allnews", allNews);
   return (
     <>
-      <div style={{ textAlign: "center" }}>
+      {/* <div style={{ textAlign: "center" }}>
         <h3>News</h3>
-      </div>
-      <div style={{ textAlign: "end", paddingBottom: "2px" }}>
+      </div> */}
+      <div style={{ textAlign: "end", paddingBottom: "8px", paddingTop:'8px' , paddingRight:"8px"}}>
         <Button
           variant="contained"
           color="primary"
           onClick={() => setShowAdd(!showAdd)}
         >
-          Add News
+          {showAdd ? <>Close</> : <>Add News</>}
         </Button>
       </div>
 
       {showAdd && <AddNews />}
-      {!showAdd && <AdminTable rows={allNews}  />}
+      {!showAdd && <AdminTable rows={allNews} />}
     </>
   );
 };
