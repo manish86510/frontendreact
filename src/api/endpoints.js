@@ -41,7 +41,11 @@ const endpoints = {
 
   // Admin panel APIs
   GET_ALL_NEWS: base_uri + '/api/news',
-  ADD_NEWS: base_uri + '/news/add/'
+  ADD_NEWS: base_uri + '/news/add/',
+  ADD_EVENTS: base_uri + '/events/add/',
+  ADD_SCHEMES: base_uri + '/scheme/add/',
+  GET_ALL_EVENTS: base_uri + '/api/events/',
+  GET_ALL_SCHEMES: base_uri + '/api/scheme/'
 };
 
 
