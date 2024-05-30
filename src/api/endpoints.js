@@ -46,7 +46,8 @@ const endpoints = {
   // New API
   get_news : base_uri + '/api/news',
   get_industry: base_uri + '/api/industry/',
-  get_company : base_uri + '/api/company/'
+  get_company : base_uri + '/api/company/',
+  get_events : base_uri + '/api/events/',
 };
 
 
