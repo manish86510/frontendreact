@@ -103,7 +103,7 @@ const AddNews = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h1" gutterBottom>
-        My Form
+        Add News
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
