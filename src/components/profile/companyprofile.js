@@ -76,16 +76,16 @@ function CompanyProfile(){
     const [modalData,setModalData] = useState([]);
     // const [expand,setExpand] = useState([]);
     const [cform,setCForm] = useState({
-      Name1: '',
-      Email: '',
-      Number: '',
-      Gst_no: '',
-      Reg_no: '',
-      Reg_date: '',
-      Sector: '',
-      Description : '',
-      Address: '',
-      Portfolio: '',
+      name: '',
+      email: '',
+      number: '',
+      gst_number: '',
+      reg_number: '',
+      reg_date: '',
+      sector: '',
+      description : '',
+      address: '',
+      // Portfolio: '',
   });
     const [sform,setSform] = useState({
       Name :"",
@@ -116,6 +116,35 @@ function CompanyProfile(){
         short_dis : "",
         long_desc : ""})
         handleClose()
+      }
+
+      var getToken = localStorage.getItem('access');
+      const companySubmit =async (e)=>{
+        e.preventDefault()
+        try{
+        const response = await axios.post(endpoints.post_company,cform,{
+          headers:{
+            Authorization : 'Bearer ' + getToken
+          }
+        }).then((res)=>console.log(res,"submitted response"))
+        // console.log(response,"response of form")
+      }
+      catch(error){
+        console.log(error.response.data)
+      }
+      setCForm({
+        name: '',
+        email: '',
+        number: '',
+        gst_number: '',
+        reg_number: '',
+        reg_date: '',
+        sector: '',
+        description : '',
+        address: '',
+        // Portfolio: '',
+    })
+      // console.log("submitted form ",cform)
       }
       
       // useEffect(()=>{
@@ -192,7 +221,7 @@ function CompanyProfile(){
             // display:'flex',
             // justifyContent:'center',
             // alignItems:'center',
-            height: '70%',
+            height: '60%',
             // margin: '0',
             position: 'fixed',
             top:'40%',
@@ -238,40 +267,40 @@ function CompanyProfile(){
       </Container>
 
       <Box>
-        <form>
+        <form onSubmit={companySubmit}>
             <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }} 
-            name="Name1" value={cform.Name1} onChange={handleChange}
+            name="name" value={cform.name} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
-            name="Email" value={cform.Email} onChange={handleChange}
+            name="email" value={cform.email} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
-            name="Number" value={cform.Number} onChange={handleChange}
+            name="number" value={cform.number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
-            name="Gst_no" value={cform.Gst_no} onChange={handleChange}
+            name="gst_number" value={cform.gst_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
-            name="Reg_no" value={cform.Reg_no} onChange={handleChange}
+            name="reg_number" value={cform.reg_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
-            name="Reg_date" value={cform.Reg_date} onChange={handleChange}
+            name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="number" variant="outlined" 
-            name="Sector" value={cform.Sector} onChange={handleChange}
+            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            name="sector" value={cform.sector} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
-            name="Description" value={cform.Description} onChange={handleChange}
+            name="description" value={cform.description} onChange={handleChange}
             />
-            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" multiline rows={2}
-            name="Address" value={cform.Address} onChange={handleChange}
+            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" multiline minRows={2}
+            name="address" value={cform.address} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
+            {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
             name="Portfolio" value={cform.Portfolio} onChange={handleChange}
-            />
+            /> */}
             <Box style={styles.buttonContainer}>
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary" type="submit" >
                     Submit
             </Button></Box></form>
             </Box> 
@@ -296,12 +325,12 @@ function CompanyProfile(){
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
             name="Name" value={sform.Name} onChange={handleChange}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Short Description : </Typography><TextField size="small" id="outlined-basic"  label="Short Description" style={styles.textField1} type="text" variant="outlined" 
+            <Box><Typography style={styles.modalinputhead}>Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text" multiline minRows={3} variant="outlined" 
             name="short_dis" value={sform.short_dis} onChange={handleChange}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
+            {/* <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
             name="long_desc" value={sform.long_desc} onChange={handleChange}
-             /></Box>
+             /></Box> */}
              </Container>
             
             <Box style={styles.buttonContainer}><Button variant="contained" color="primary" type="submit" >
