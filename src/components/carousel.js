@@ -120,7 +120,7 @@ export default function Carousel(){
     var getToken = localStorage.getItem('access');
     const fetchNews = async ()=>{
       try{
-        await axios.get(endpoints.get_news,{
+        await axios.get(endpoints.GET_ALL_NEWS,{
           headers:{
             Authorization : 'Bearer ' + getToken,
           }

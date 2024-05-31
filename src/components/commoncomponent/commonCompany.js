@@ -66,7 +66,7 @@ export default function CommonCompany(){
   var getToken = localStorage.getItem('access');
   const getCompany = async ()=>{
     try{
-      await axios.get(endpoints.get_company,{
+      await axios.get(endpoints.get_allCompany,{
         headers:{
           Authorization: 'Bearer ' + getToken,
         }

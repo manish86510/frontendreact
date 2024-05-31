@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import endpoints, { base_uri } from '../../api/endpoints';
 
@@ -10,7 +10,7 @@ const EventCard = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(endpoints.get_events, {
+      const response = await axios.get(endpoints.GET_ALL_EVENTS, {
         headers: {
           Authorization: 'Bearer ' + getToken,
         },
@@ -59,13 +59,13 @@ const EventCard = () => {
     maxWidth: '640px',
     margin: '20px auto',
     padding: '20px',
-    fontFamily: 'Arial, sans-serif',
+    // fontFamily: 'Arial, sans-serif',
     backgroundColor: 'white',
   };
 
   const photoStyle = {
     width: '100%',
-    maxWidth: '300px',
+    maxWidth: '250px',
     height: 'auto',
     borderRadius: '8px',
     margin: '0 auto 20px',

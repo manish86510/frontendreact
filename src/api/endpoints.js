@@ -39,7 +39,7 @@ const endpoints = {
   WORKPLACE: base_uri + '/user/workplace/',
   all_city: base_uri + '/user/city/',
 
-  // Admin panel APIs
+  // Admin panel APIs and Client Panel
   GET_ALL_NEWS: base_uri + '/api/news',
   ADD_NEWS: base_uri + '/news/add/',
   ADD_EVENTS: base_uri + '/events/add/',
@@ -48,10 +48,10 @@ const endpoints = {
   GET_ALL_SCHEMES: base_uri + '/api/scheme/',
 
   // New API
-  get_news: base_uri + '/api/news',
+  // get_news: base_uri + '/api/news',
   get_industry: base_uri + '/api/industry/',
-  get_company : base_uri + '/api/company/',
-  get_events : base_uri + '/api/events/',
+  get_allCompany : base_uri + '/api/company/',
+  // get_events : base_uri + '/api/events/',
 };
 
 
