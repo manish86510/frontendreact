@@ -134,7 +134,7 @@ export default function Carousel(){
       }
     };
 
-    console.log('here is data', data)
+    // console.log('here is data', data)
 
     useEffect(()=>{
       fetchNews()

@@ -66,7 +66,8 @@ import endpoints,{post_company} from "../../api/endpoints";
 const useStyles = makeStyles({
     outlinedBasic: {
         height: "6rem", 
-        overflow: "auto"
+        // overflow: "auto"
+        overflowY:"scroll"
     },
   });
 
@@ -88,9 +89,9 @@ function CompanyProfile(){
       // Portfolio: '',
   });
     const [sform,setSform] = useState({
-      Name :"",
-      short_dis : "",
-      long_desc : ""
+      name :"",
+      desc : "",
+      // long_desc : ""
     })
 
     const handleOpen = () => {
@@ -107,14 +108,29 @@ function CompanyProfile(){
         setSform({...sform, [name]:value})
       }
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
         // setModalData([...modalData,sform]);
         setModalData([...modalData, { ...sform, expanded: false }]);
         setSform({
-        Name :"",
-        short_dis : "",
-        long_desc : ""})
+        name :"",
+        desc : "",
+        // long_desc : ""
+      })
+
+        try{
+          const posts = await axios.post(endpoints.post_industry,sform,{
+            headers:{
+              Authorization : 'Bearer ' + getToken
+            }
+          })
+
+          console.log(posts,"here is posted s form")
+        }
+        catch(error){
+          console.log(error,"error in sform")
+        }
+        
         handleClose()
       }
 
@@ -207,7 +223,7 @@ function CompanyProfile(){
             // height:'10%',
             // height:"3rem !important",
             margin:"0rem 0.5rem 0.5rem 1rem",
-            // overflow:"hidden",
+            // overflow:"auto",
         },
         buttonContainer: {
             display: "flex",
@@ -323,10 +339,10 @@ function CompanyProfile(){
           <Typography variant="h6" style={styles.headingmodal}>Input Company Details</Typography>
           <Container>
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
-            name="Name" value={sform.Name} onChange={handleChange}
+            name="name" value={sform.name} onChange={handleChange}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text" multiline minRows={3} variant="outlined" 
-            name="short_dis" value={sform.short_dis} onChange={handleChange}
+            <Box><Typography style={styles.modalinputhead}>Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text" multiline minRows={3} variant="outlined" className={classes.outlinedBasic}
+            name="desc" value={sform.desc} onChange={handleChange}
             /></Box>  
             {/* <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
             name="long_desc" value={sform.long_desc} onChange={handleChange}
@@ -357,9 +373,9 @@ function CompanyProfile(){
           <Typography variant="p">Services Provided : Consultancy and Software Management</Typography> */}
         {modalData.map((data,index)=>{
           return <Grid key={index} style={styles.services}>  
-          <Services name={data.Name} 
-          shortdesc={data.short_dis} 
-          longdesc={data.expanded ? data.long_desc : data.long_desc.slice(0, 100)}
+          <Services name={data.name} 
+          // shortdesc={data.desc} 
+          longdesc={data.expanded ? data.desc : data.desc.slice(0, 100)}
           ellipsis={!data.expanded}
           onClick={() => handleExpandToggle(index)}
           // longdesc={data.long_desc.slice(0,100)} 

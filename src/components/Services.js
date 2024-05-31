@@ -84,8 +84,8 @@ export default function Services(){
         headers: {
             Authorization: 'Bearer ' + accessToken,
         }
-    }).then((res)=>setData(res.data)
-      // console.log(res.data,"here is response")
+    }).then((res)=>setData(res.data.slice(-9).reverse())
+      // console.log(res.data.slice(-6).reverse(),"here is response")
     )
     }
     catch(error){
