@@ -113,7 +113,7 @@ export default function GovernmentSchemesPage(){
       </Container>
         {/* <h1>I am working In Schemes</h1> */}
         
-            {filter.map((data)=><Paper className={classes.paper}>
+            {filter.map((data)=><Paper key={data.id} className={classes.paper}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt={data.id}/></Grid>
             <Grid item xs={9} >

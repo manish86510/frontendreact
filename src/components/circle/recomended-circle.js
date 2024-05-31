@@ -144,7 +144,7 @@ class RecomendedCircle extends React.Component {
                             {
                                 (this.state.recomendedCircle !== null && this.state.recomendedCircle !== undefined) ? (
                                     this.state.recomendedCircle.map((user, index) => (
-                                        <ListItem alignItems="flex-start">
+                                        <ListItem key={index} alignItems="flex-start">
                                             <ListItemAvatar>
                                                 <Avatar alt="Remy Sharp" src={user.avatar} />
                                             </ListItemAvatar>
@@ -187,7 +187,7 @@ class RecomendedCircle extends React.Component {
                                     {
                                         (this.state.recomendedCircle !== null && this.state.recomendedCircle !== undefined) ? (
                                             this.state.recomendedCircle.results.map((user, index) => (
-                                                <Grid item xs={3} style={{ margin: '10px 22px' }}>
+                                                <Grid key={index} item xs={3} style={{ margin: '10px 22px' }}>
                                                     <Card className={classes.suggest_circle_paper}>
                                                         <Grid item xs={12}>
                                                             <ListItemAvatar className={classes.avtar_followers}>

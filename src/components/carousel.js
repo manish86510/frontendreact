@@ -163,7 +163,7 @@ export default function Carousel(){
       nav={true}
       dots={false}
       >
-      {data.map((m)=><div class='item'>
+      {data.map((m)=><div key={m.id} className='item'>
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
         <Link to='/component-tabs' className={classes.heading} ><h4 >{m.short_desc}</h4></Link>
         <p className={classes.heading}>{m.long_desc}</p>

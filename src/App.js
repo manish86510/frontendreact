@@ -51,7 +51,7 @@ const theme = createTheme({
     },
 });
 
-console.log('theme', theme);
+// console.log('theme', theme);
 
 export default function App() {
     // const setTokens = (data) => {

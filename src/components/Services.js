@@ -158,7 +158,7 @@ export default function Services(){
             <Container>
         <Typography variant="h5">Services</Typography><hr/>
         <Box className={classes.maincard}>{data.map((card,index)=>{
-                return <div className={classes.maincard1}>
+                return <div key={index} className={classes.maincard1}>
                     <Box>
                         <Link to="/company-tabs"  className={classes.maincard11}>
                         <img className={classes.icons1} src="/images/it.png" alt="console"/>
