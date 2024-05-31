@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -10,6 +10,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
+import axios from "axios";
+import endpoints,{post_company} from "../../api/endpoints";
 
 // class CompanyProfile extends React.Component{
 
