@@ -28,11 +28,18 @@ const News = () => {
 
   console.log("allnews", allNews);
   return (
-    <>
+    <Container>
       {/* <div style={{ textAlign: "center" }}>
         <h3>News</h3>
       </div> */}
-      <div style={{ textAlign: "end", paddingBottom: "8px", paddingTop:'8px' , paddingRight:"8px"}}>
+      <div
+        style={{
+          textAlign: "end",
+          paddingBottom: "8px",
+          paddingTop: "8px",
+          paddingRight: "8px",
+        }}
+      >
         <Button
           variant="contained"
           color="primary"
@@ -44,7 +51,7 @@ const News = () => {
 
       {showAdd && <AddNews />}
       {!showAdd && <AdminTable rows={allNews} />}
-    </>
+    </Container>
   );
 };
 

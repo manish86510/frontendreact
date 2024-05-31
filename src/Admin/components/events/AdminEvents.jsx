@@ -27,10 +27,7 @@ const AdminEvents = () => {
   }, [showAdd]);
 
   return (
-    <>
-      {/* <div style={{ textAlign: "center" }}>
-    <h3>News</h3>
-  </div> */}
+    <Container>
       <div
         style={{
           textAlign: "end",
@@ -51,7 +48,7 @@ const AdminEvents = () => {
       {showAdd && <AddEvents setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
       {!showAdd && <EventsTable rows={allEvents} />}
-    </>
+    </Container>
   );
 };
 

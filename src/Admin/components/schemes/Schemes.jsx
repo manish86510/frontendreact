@@ -26,8 +26,9 @@ const Schemes = () => {
     getAllEvents();
   }, [showAdd]);
 
+  
   return (
-    <>
+    <Container>
       <div
         style={{
           textAlign: "end",
@@ -48,7 +49,7 @@ const Schemes = () => {
       {showAdd && <AddSchemes setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
       {!showAdd && <SchemesTable rows={allSchemes} />}
-    </>
+    </Container>
   );
 };
 
