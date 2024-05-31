@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import endpoints,{base_uri} from "../../api/endpoints";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
     image:{
         width: '100%',
-        height: '100%',
+        height: '15rem',
         objectFit:"contain",
-        borderRadius:"1rem"
+        // borderRadius:"1rem"
     },
     heading:{
         textAlign:"center",
@@ -38,19 +40,36 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function CommonComponent(){
+    const [data,setData] = useState([]);
     const classes = useStyles();
+
+    var getToken = localStorage.getItem('access');
+    const fetchSchemesData = async ()=>{
+        await axios.get(endpoints.GET_ALL_SCHEMES,{
+            headers:{
+                Authorization : 'Bearer ' + getToken
+            }
+        }).then((res)=>setData(res.data.data[1])
+            // console.log("response governmentSchemes",res.data.data[1])
+        )
+    }
+
+    useEffect(()=>{
+        fetchSchemesData()
+    },[])
+
+    // console.log(data)
     return(
         <>
         <Container>
             <Box className={classes.imageContainer} >
-                <img src="https://st.adda247.com/https://adda247jobs-wp-assets-prod.adda247.com/articles/wp-content/uploads/2022/11/24173027/Schemes-of-Indian-Government.jpg" alt="imageishere" className={classes.image}/>
+                <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>Here Is Heading Of Government Scheme</Typography>
-            <Typography>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</Typography>
+            <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
+            <Typography variant="h6">{data.launched_date}</Typography><br/>
+            <Typography>{data.long_desc}</Typography>
             <br/><br/><br/>
-            <Box className={classes.website}><ArrowForwardIcon/> <a href="https://omms.nic.in/" target="_blank"><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
+            <Box className={classes.website}><ArrowForwardIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
         </Container>
         </>
     )
