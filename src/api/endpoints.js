@@ -55,6 +55,7 @@ const endpoints = {
   DELETE_SCHEMES: base_uri + '/api/delete_scheme',
 
   post_industry: base_uri + '/industry/add/',
+  GET_ALL_SERVICES: base_uri + '/api/services/',
 
   // New API
   // get_news: base_uri + '/api/news',
