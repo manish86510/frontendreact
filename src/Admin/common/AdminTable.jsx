@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { base_uri } from "../../api/endpoints";
+import Button from "@material-ui/core/Button";
 
 const columns = [
   { id: "author", label: "Author", minWidth: 170 },
@@ -44,6 +45,12 @@ const columns = [
     minWidth: 170,
     align: "right",
   },
+  {
+    id: "actions",
+    label: "Actions",
+    minWidth: 170,
+    align: "right",
+  },
 ];
 
 const useStyles = makeStyles({
@@ -59,7 +66,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable({ rows }) {
+export default function StickyHeadTable({ rows, handleDelete }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -106,6 +113,14 @@ export default function StickyHeadTable({ rows }) {
                               alt="banner"
                               className={classes.img}
                             />
+                          ) : column.id === "actions" ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => handleDelete(row.id)}
+                            >
+                              Delete
+                            </Button>
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

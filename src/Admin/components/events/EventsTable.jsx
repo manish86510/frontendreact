@@ -26,14 +26,14 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "long_desc",
-    label: "Long Description",
+    id: "short_desc",
+    label: "Short Description",
     minWidth: 180,
     align: "center",
   },
   {
-    id: "short_desc",
-    label: "Short Description",
+    id: "long_desc",
+    label: "Long Description",
     minWidth: 180,
     align: "center",
   },

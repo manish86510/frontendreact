@@ -49,6 +49,8 @@ const endpoints = {
   get_industry: base_uri + '/api/industry/',
   get_allCompany : base_uri + '/api/company/',
   post_company : base_uri + '/company/add/',
+  COMPANY_VERIFY: base_uri + '/verify-company/'
+  
 
   // New API
   // get_news: base_uri + '/api/news',
