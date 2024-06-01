@@ -26,6 +26,15 @@ const News = () => {
     getAllNews();
   }, []);
 
+  const handleDelete = async (id) => {
+    await axios.delete(`${endpoints}/${id}`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      }, 
+    });
+    setAllNews(allNews.filter((news) => news.id !== id));
+  };
+
   console.log("allnews", allNews);
   return (
     <Container>
@@ -50,7 +59,7 @@ const News = () => {
       </div>
 
       {showAdd && <AddNews />}
-      {!showAdd && <AdminTable rows={allNews} />}
+      {!showAdd && <AdminTable rows={allNews} handleDelete={handleDelete} />}
     </Container>
   );
 };

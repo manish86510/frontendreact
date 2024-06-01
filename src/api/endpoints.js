@@ -47,10 +47,11 @@ const endpoints = {
   GET_ALL_EVENTS: base_uri + '/api/events/',
   GET_ALL_SCHEMES: base_uri + '/api/scheme/',
   get_industry: base_uri + '/api/industry/',
-  get_allCompany : base_uri + '/api/company/',
-  post_company : base_uri + '/company/add/',
-  post_industry : base_uri + '/industry/add/',
-  get_id_company: base_uri + '/companies/'
+  get_allCompany: base_uri + '/api/company/',
+  post_company: base_uri + '/company/add/',
+  COMPANY_VERIFY: base_uri + '/verify-company/',
+
+  post_industry: base_uri + '/industry/add/',
 
   // New API
   // get_news: base_uri + '/api/news',
