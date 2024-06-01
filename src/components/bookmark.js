@@ -5,6 +5,8 @@ import BookmarkTabs from './bookmark-tab'
 import { withStyles } from '@material-ui/styles';
 import RightTab from './rightTab/RightTab';
 import Carousel from './carousel';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useEffect } from 'react';
 
 
 const styles = theme => ({
@@ -19,8 +21,10 @@ class Bookmark extends React.Component {
     // constructor(props) {
     //     super(props);
     // };
+    
 
     render() {
+        
         // const { classes } = this.props;
         return (
             <div>

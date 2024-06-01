@@ -114,30 +114,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Carousel(){ 
 
-    const [data,setData] = useState([])
+    const [data,setData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const classes = useStyles();
     var getToken = localStorage.getItem('access');
-    const fetchNews = async ()=>{
-      try{
-        await axios.get(endpoints.GET_ALL_NEWS,{
-          headers:{
-            Authorization : 'Bearer ' + getToken,
+    const fetchNews = async () => {
+      try {
+        const res = await axios.get(endpoints.GET_ALL_NEWS, {
+          headers: {
+            Authorization: 'Bearer ' + getToken,
           }
-        }).then((res)=>setData(res.data.data)
-          // console.log('response in carousel',res)
-        )
+        });
+        setData(res.data.data);
+        setLoading(false); 
+      } catch (error) {
+        console.log(error);
+        setLoading(false); 
       }
-      catch(error){
-        console.log(error)
-      }
-    }
+    };
 
     // console.log('here is data', data)
 
     useEffect(()=>{
       fetchNews()
-    },[data])
+    },[])
    
     return (
         <>
@@ -162,7 +163,7 @@ export default function Carousel(){
       nav={true}
       dots={false}
       >
-      {data.map((m)=><div class='item'>
+      {data.map((m)=><div key={m.id} className='item'>
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
         <Link to='/component-tabs' className={classes.heading} ><h4 >{m.short_desc}</h4></Link>
         <p className={classes.heading}>{m.long_desc}</p>

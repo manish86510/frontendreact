@@ -119,7 +119,7 @@
         render() {
             const { classes } = this.props;
             // const { isFormVisible } = this.state;  //form visiblity
-            console.log("Postlist", this.state.postList)
+            // console.log("Postlist", this.state.postList)
             return (
                 <div id="feed_content" ref={this.handleScroll} >
                     <Grid container spacing={0}>
