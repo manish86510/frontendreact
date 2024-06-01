@@ -49,7 +49,7 @@ export default function CommonComponent(){
             headers:{
                 Authorization : 'Bearer ' + getToken
             }
-        }).then((res)=>setData(res.data.data[1])
+        }).then((res)=>setData(res.data.data[0])
             // console.log("response governmentSchemes",res.data.data[1])
         )
     }
@@ -58,7 +58,7 @@ export default function CommonComponent(){
         fetchSchemesData()
     },[])
 
-    // console.log(data)
+    // console.log(data,"data in common components")
     return(
         <>
         <Container>

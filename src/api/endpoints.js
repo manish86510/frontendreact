@@ -50,6 +50,7 @@ const endpoints = {
   get_allCompany : base_uri + '/api/company/',
   post_company : base_uri + '/company/add/',
   post_industry : base_uri + '/industry/add/',
+  get_id_company: base_uri + '/companies/'
 
   // New API
   // get_news: base_uri + '/api/news',
