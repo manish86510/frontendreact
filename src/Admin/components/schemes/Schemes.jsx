@@ -4,6 +4,7 @@ import SchemesTable from "./SchemesTable";
 import AddSchemes from "./AddSchemes";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
+import toast from "react-hot-toast";
 
 const Schemes = () => {
   const [showAdd, setShowAdd] = useState(false);
@@ -26,7 +27,20 @@ const Schemes = () => {
     getAllEvents();
   }, [showAdd]);
 
-  
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${endpoints.DELETE_SCHEMES}/${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      setAllSchemes(allSchemes.filter((events) => events.id !== id));
+      toast.success("Scheme succesfully deleted!");
+    } catch (error) {
+      toast.error("Scheme not Deleted!");
+    }
+  };
+
   return (
     <Container>
       <div
@@ -48,7 +62,9 @@ const Schemes = () => {
 
       {showAdd && <AddSchemes setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
-      {!showAdd && <SchemesTable rows={allSchemes} />}
+      {!showAdd && (
+        <SchemesTable rows={allSchemes} handleDelete={handleDelete} />
+      )}
     </Container>
   );
 };

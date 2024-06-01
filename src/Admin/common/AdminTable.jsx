@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { base_uri } from "../../api/endpoints";
 import Button from "@material-ui/core/Button";
+import { Toaster } from "react-hot-toast";
 
 const columns = [
   { id: "author", label: "Author", minWidth: 170 },
@@ -82,6 +83,7 @@ export default function StickyHeadTable({ rows, handleDelete }) {
 
   return (
     <Paper className={classes.root}>
+      <Toaster position="top-right" reverseOrder={false} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

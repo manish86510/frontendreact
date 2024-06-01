@@ -50,6 +50,9 @@ const endpoints = {
   get_allCompany: base_uri + '/api/company/',
   post_company: base_uri + '/company/add/',
   COMPANY_VERIFY: base_uri + '/verify-company/',
+  DELETE_NEWS: base_uri + '/api/delete_news',
+  DELETE_EVENTS: base_uri + '/api/delete_events',
+  DELETE_SCHEMES: base_uri + '/api/delete_scheme',
 
   post_industry: base_uri + '/industry/add/',
 

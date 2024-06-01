@@ -48,7 +48,7 @@ const MainPage = () => {
             <Grid item xs={6}>
               <Link to={data.url}>
                 <Paper className={classes.paper}>
-                  <CardX data={data.name} />
+                  <CardX data={data.name} />  
                 </Paper>
               </Link>
             </Grid>

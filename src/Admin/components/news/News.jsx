@@ -4,6 +4,7 @@ import { Container, Button } from "@material-ui/core";
 import AddNews from "./AddNews";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
+import toast from "react-hot-toast";
 
 const News = () => {
   const [showAdd, setShowAdd] = useState(false);
@@ -20,19 +21,25 @@ const News = () => {
       });
       const data = response.data.data;
 
-      setAllNews(data);
+      setAllNews(data); 
       // console.log(response);
     };
     getAllNews();
-  }, []);
+  }, [showAdd]);
 
   const handleDelete = async (id) => {
-    await axios.delete(`${endpoints}/${id}`, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      }, 
-    });
-    setAllNews(allNews.filter((news) => news.id !== id));
+    try {
+      await axios.delete(`${endpoints.DELETE_NEWS}/${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      setAllNews(allNews.filter((news) => news.id !== id));
+      toast.success("News succesfully deleted!");
+    } catch (error) {
+      toast.error("News not deleted!");
+    }
+  
   };
 
   console.log("allnews", allNews);
@@ -58,7 +65,7 @@ const News = () => {
         </Button>
       </div>
 
-      {showAdd && <AddNews />}
+      {showAdd && <AddNews setShowAdd={setShowAdd} />}
       {!showAdd && <AdminTable rows={allNews} handleDelete={handleDelete} />}
     </Container>
   );

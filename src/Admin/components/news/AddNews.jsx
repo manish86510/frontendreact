@@ -11,6 +11,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
+import toast, { Toaster } from "react-hot-toast";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddNews = () => {
+const AddNews = ({setShowAdd}) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     date: "",
@@ -92,8 +93,13 @@ const AddNews = () => {
         },
       });
       console.log("Form Data: ", response);
+      toast.success("News succesfully created");
+      setTimeout(() => {
+        setShowAdd(false);
+      }, 2000);
     } catch (error) {
       console.log(error);
+      toast.error("News not created!");
     }
 
     console.log("Form Data: ", formData);
@@ -101,12 +107,13 @@ const AddNews = () => {
 
   return (
     <Container maxWidth="sm">
+      <Toaster position="top-right" reverseOrder={false} />
       <Typography variant="h4" component="h1" gutterBottom>
         Add News
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <TextField
               label="Title"
               name="title"
@@ -144,7 +151,7 @@ const AddNews = () => {
               onChange={handleChange}
             />
           </Grid>
-        
+
           <Grid item xs={12}>
             <Typography variant="h6" className={classes.editorLabel}>
               Short Description

@@ -9,6 +9,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { base_uri } from "../../../api/endpoints";
+import Button from "@material-ui/core/Button";
+import toast, { Toaster } from "react-hot-toast";
 
 const columns = [
   {
@@ -50,6 +52,12 @@ const columns = [
     minWidth: 170,
     align: "center",
   },
+  {
+    id: "actions",
+    label: "Actions",
+    minWidth: 80,
+    align: "right",
+  },
 ];
 
 const useStyles = makeStyles({
@@ -65,7 +73,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventsTable({ rows }) {
+export default function EventsTable({ rows, handleDelete }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -81,6 +89,7 @@ export default function EventsTable({ rows }) {
 
   return (
     <Paper className={classes.root}>
+      <Toaster position="top-right" reverseOrder={false} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -112,6 +121,14 @@ export default function EventsTable({ rows }) {
                               alt="banner"
                               className={classes.img}
                             />
+                          ) : column.id === "actions" ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => handleDelete(row.id)}
+                            >
+                              Delete
+                            </Button>
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

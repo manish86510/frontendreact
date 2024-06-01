@@ -4,6 +4,7 @@ import AddEvents from "./AddEvents";
 import EventsTable from "./EventsTable";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
+import toast from "react-hot-toast";
 
 const AdminEvents = () => {
   const [showAdd, setShowAdd] = useState(false);
@@ -26,6 +27,20 @@ const AdminEvents = () => {
     getAllEvents();
   }, [showAdd]);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${endpoints.DELETE_EVENTS}/${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      setAllEvents(allEvents.filter((events) => events.id !== id));
+      toast.success("Event succesfully deleted!");
+    } catch (error) {
+      toast.error("Event not Deleted!");
+    }
+  };
+
   return (
     <Container>
       <div
@@ -47,7 +62,7 @@ const AdminEvents = () => {
 
       {showAdd && <AddEvents setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
-      {!showAdd && <EventsTable rows={allEvents} />}
+      {!showAdd && <EventsTable rows={allEvents} handleDelete={handleDelete} />}
     </Container>
   );
 };
