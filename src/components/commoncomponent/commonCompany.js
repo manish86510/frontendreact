@@ -58,7 +58,9 @@ const useStyles = makeStyles((theme) => ({
       // width:"34rem"
     },
   }));
-export default function CommonCompany(){
+
+
+export default function CommonCompany({id,data1}){
   const [data,setData] = useState([])
   const [search,setSearch] = useState("");
 
@@ -82,6 +84,8 @@ export default function CommonCompany(){
   useEffect(()=>{
     getCompany()
   },[])
+
+    // console.log("id in common company",id)
 
     const classes = useStyles();
     const { pathname } = useLocation();
@@ -137,15 +141,16 @@ export default function CommonCompany(){
       </Container>
         
             {filter.map((card,index)=>{
-                return <Grid key={index} className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
+                return <Grid key={card.id} className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={card.image} alt={card.label}/> 
                       </Box>
                     
-                    <Container>
-                        <Link to="/company-detail">
-                        <Typography variant="h6" className={classes.label}>{card.name}</Typography></Link>
+                    <Container >
+                        <Link to="/company-detail" >
+                        <Typography variant="h6" className={classes.label} onClick={()=>id(card.id)}
+                        >{card.name}{id}</Typography></Link>
                     <Typography className={classes.label}>{card.description}</Typography></Container>
                     
                     </Box>

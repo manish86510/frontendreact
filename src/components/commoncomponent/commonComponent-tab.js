@@ -6,7 +6,7 @@ import Projects from '../feed/projects';
 import RightTab from "../rightTab/RightTab";
 import Grid from '@material-ui/core/Grid';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect } from "react";
+import {useEffect} from "react";
 
 
 export default function ComponentTabs(){

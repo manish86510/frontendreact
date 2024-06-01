@@ -1,10 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 // import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
 // import ReactDOM from 'react-dom'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme, createTheme } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme, createTheme, useScrollTrigger } from '@material-ui/core';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
@@ -35,7 +35,7 @@ import AdminEvents from './Admin/components/events/AdminEvents';
 import AdminCompanies from './Admin/components/companies/AdminCompanies';
 import GovernmentSchemesTab from './components/governmentschemes/GovernmentSchemesTab';
 import MainPage from './Admin/components/MainPage';
-
+import CardCall from './components/commoncomponent/cardCall';
 
 
 const theme = createTheme({
@@ -54,6 +54,7 @@ const theme = createTheme({
 // console.log('theme', theme);
 
 export default function App() {
+    const [id,setId] = useState("")
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -104,6 +105,7 @@ export default function App() {
                         <Route path="/company-detail" component={CompanyDetailTab} />
                         <Route path="/governmentSchemes-tab" component={GovernmentSchemesTab} />
                         <Route path="/wallet" component={Wallet} />
+                        <Route path="/cardCall" component={CardCall} />
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/logout" component={() => {

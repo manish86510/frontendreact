@@ -82,7 +82,7 @@ export default function GovernmentSchemes(){
         headers : {
           Authorization : 'Bearer ' + getToken
         }
-      }).then((res)=> setData(res.data.data.slice(-9).reverse())
+      }).then((res)=> setData(res.data.data.slice(0,9))
         // console.log("response of schemes" ,res.data.data)
       )
     }
