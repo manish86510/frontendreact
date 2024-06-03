@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
 import axios from "axios";
 import endpoints,{post_company} from "../../api/endpoints";
+import toast, { Toaster } from 'react-hot-toast';
 
 // class CompanyProfile extends React.Component{
 
@@ -125,10 +126,13 @@ function CompanyProfile(){
             }
           })
 
-          console.log(posts,"here is posted s form")
+          toast.success(posts.data.message || "Form Submitted Successfully")
+
+          // console.log(posts,"here is posted s form")
         }
         catch(error){
-          console.log(error,"error in sform")
+          // console.log(error,"error in sform")
+          toast.error(error.posts.data.message ||"Form Not Submitted.")
         }
         
         handleClose()
@@ -142,11 +146,14 @@ function CompanyProfile(){
           headers:{
             Authorization : 'Bearer ' + getToken
           }
-        }).then((res)=>console.log(res,"submitted response"))
+        })
+        toast.success(response.data.message || "Form Submitted Successfully")
+
         // console.log(response,"response of form")
       }
       catch(error){
-        console.log(error.response.data)
+        // console.log(error.response.data)
+        toast.error(error.response.data.message ||"Form Not Submitted.")
       }
       setCForm({
         name: '',
@@ -386,6 +393,9 @@ function CompanyProfile(){
         })}
         {/* {sliceData.length>0 ? sliceData.map((sliced)=>(<p>{sliced.long_desc.slice(0,100)}<span onClick={handleExpand}>...{expand}</span></p>)) :""} */}
         </Grid>
+        <Toaster 
+         position="top-right"
+         reverseOrder={false} />
         </>
     )
 }

@@ -60,9 +60,11 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function CommonCompany({id,data1}){
+export default function CommonCompany({id,selectedId}){
   const [data,setData] = useState([])
   const [search,setSearch] = useState("");
+
+
 
 
   var getToken = localStorage.getItem('access');
@@ -131,6 +133,8 @@ export default function CommonCompany({id,data1}){
       }
 
       const filter = data.filter((f)=>f.name.toLowerCase().includes(search.toLowerCase()))
+
+      // console.log("id in common company",id)
 
     return(
         <>

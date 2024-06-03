@@ -40,14 +40,14 @@ const endpoints = {
   all_city: base_uri + '/user/city/',
 
   // Admin panel APIs and Client Panel
-  GET_ALL_NEWS: base_uri + '/api/news',
-  ADD_NEWS: base_uri + '/news/add/',
-  ADD_EVENTS: base_uri + '/events/add/',
-  ADD_SCHEMES: base_uri + '/scheme/add/',
-  GET_ALL_EVENTS: base_uri + '/api/events/',
-  GET_ALL_SCHEMES: base_uri + '/api/scheme/',
-  get_industry: base_uri + '/api/industry/',
-  get_allCompany: base_uri + '/api/company/',
+  GET_ALL_NEWS: base_uri + '/news/',
+  ADD_NEWS: base_uri + '/news/',
+  ADD_EVENTS: base_uri + '/events/',
+  ADD_SCHEMES: base_uri + '/schemes/',
+  GET_ALL_EVENTS: base_uri + '/events/',
+  GET_ALL_SCHEMES: base_uri + '/schemes/',
+  get_industry: base_uri + '/industry/',
+  get_allCompany: base_uri + '/company/',
   post_company: base_uri + '/company/add/',
   COMPANY_VERIFY: base_uri + '/verify-company/',
   DELETE_NEWS: base_uri + '/api/delete_news',
@@ -55,8 +55,13 @@ const endpoints = {
   DELETE_SCHEMES: base_uri + '/api/delete_scheme',
   UPDATE_NEWS: base_uri + '/update_news',
 
-  post_industry: base_uri + '/industry/add/',
-  GET_ALL_SERVICES: base_uri + '/api/services/',
+  post_industry: base_uri + '/industry/',
+  GET_ALL_SERVICES: base_uri + '/service/',
+
+
+  // get id details 
+  get_id_company : base_uri + '/company/',
+  get_id_schemes : base_uri + '/schemes/'
 
   // New API
   // get_news: base_uri + '/api/news',

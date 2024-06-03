@@ -53,7 +53,7 @@ export default function CompanyDetail({id}){
 
     var getToken = localStorage.getItem('access');
     const fetchSpecificCompany = async ()=>{
-        const fetch = await axios.get(`${endpoints.get_id_company}4`,{
+        const fetch = await axios.get(`${endpoints.get_id_company}${id}`,{
             headers:{
                 Authorization : 'Bearer ' + getToken
             }
@@ -65,8 +65,6 @@ export default function CompanyDetail({id}){
     useEffect(()=>{
         fetchSpecificCompany()
     },[])
-
-    console.log("specific data",data)
     return(
         <>
         <Container>

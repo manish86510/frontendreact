@@ -73,57 +73,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function GovernmentSchemesPage(){
-    const [data,setData] = useState([]);
-    const [search,setSearch] = useState("");
+export default function GovernmentSchemesPage({card,id,setSelectedId}){
     const classes = useStyles();
-
-    var getToken = localStorage.getItem('access');
-    const fetchSchemes = async ()=>{
-        try{
-        await axios.get(endpoints.GET_ALL_SCHEMES,{
-            headers:{
-                Authorization : 'Bearer ' + getToken
-            }
-        }).then((res)=>setData(res.data.data)
-            // console.log(res.data.data,"here is response of schemes")
-        )
-    }
-    catch(error){
-        console.log(error)
-    }
+    const selectId = ()=>{
+        setSelectedId(id)
     }
 
-    useEffect(()=>{
-        fetchSchemes()
-    },[])
+    console.log(card,"data in card of govt schemes")
 
-    const handleChange = (e)=>{
-        setSearch(e.target.value)
-    }
-    // console.log(data,"data of scheme")
-
-    const filter = data.filter((f)=>f.name.toLowerCase().includes(search.toLowerCase()))
     return(
         <>
-        <Typography variant="h4">Government Schemes</Typography><hr/>
-        <Container className={classes.search}>
-          <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search} variant="outlined" fullWidth onChange={handleChange} /> 
-          {/* <Button variant="contained" color="primary">Primary</Button> */}
-      </Container>
-        {/* <h1>I am working In Schemes</h1> */}
-        
-            {filter.map((data)=><Paper key={data.id} className={classes.paper}>
+           <Paper key={card.id} className={classes.paper}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
-            <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt={data.id}/></Grid>
+            <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${card.banner}`} alt={card.id}/></Grid>
             <Grid item xs={9} >
                 <Link to="/component-tabs">
-                <Typography variant="h6" className={classes.heading}>{data.name}</Typography></Link>
-                <Typography className={classes.description}>{data.short_desc}</Typography>
+                <Typography variant="h6" className={classes.heading} onClick={()=>selectId}>{card.name}</Typography></Link>
+                <Typography className={classes.description}>{card.short_desc}</Typography>
              </Grid>
             </Grid> </Box>
-        </Paper>)}
-       
+        </Paper>   
         </>
     )
 }
