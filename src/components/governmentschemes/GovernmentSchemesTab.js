@@ -8,16 +8,47 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-      },
+      flexGrow: 1,
+    },
+    Box:{
+        backgroundColor:"white",
+        // height:"4%",
+        borderRadius:"0.5rem"
+    },
+    image:{
+        width:"8rem",
+        height:"8rem",
+        // ObjectFit:"contain",
+        
+    },
+    heading:{
+        fontWeight:600,
+        textDecoration:"none",
+        color:"black"
+    },
+    gridImage:{
+        display:"flex",
+        justifyContent:"center",
+        marginTop:"0.3rem"
+    },
+    description:{
+        // marginRight:"0.5rem",
+        margin: '0rem 0.7rem 0rem 0rem'
+    },
+    paper:{
+        marginTop:"4%"
+    }
 }))
 
-export default function GovernmentSchemesTab({setSelectedId}){
+export default function GovernmentSchemesTab(){
     const [data,setData] = useState([]);
     const [search,setSearch] = useState("");
     const classes = useStyles();
@@ -25,13 +56,14 @@ export default function GovernmentSchemesTab({setSelectedId}){
     var getToken = localStorage.getItem('access');
     const fetchSchemes = async ()=>{
         try{
-        await axios.get(endpoints.GET_ALL_SCHEMES,{
+       const fetch =  await axios.get(endpoints.GET_ALL_SCHEMES,{
             headers:{
                 Authorization : 'Bearer ' + getToken
             }
-        }).then((res)=>setData(res.data.data)
-            // console.log(res.data.data,"here is response of schemes")
-        )
+        })
+        setData(fetch.data.data)
+            console.log(fetch.data.data,"here is response of schemes")
+        
     }
     catch(error){
         console.log(error)
@@ -47,9 +79,17 @@ export default function GovernmentSchemesTab({setSelectedId}){
     }
     // console.log(data[0].id,"data of govt scheme")
 
-    const filter = data.filter((f)=>f.name.toLowerCase().includes(search.toLowerCase()))
+    const filter = data.filter((f)=>f.name.toLowerCase().includes(search.toLowerCase()));
 
-    console.log("id in schemes",setSelectedId)
+    const history = useHistory();
+
+    const handleClick = (id) => {
+      history.push({
+        pathname: '/govt-description',
+        state: { id }
+      });
+    };
+
     return(
         <> 
         <Grid container direction="row"  spacing={3}>
@@ -59,7 +99,16 @@ export default function GovernmentSchemesTab({setSelectedId}){
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
         {/* <h1>I am working In Schemes</h1> */}</Grid>
-        <Grid item xs={8}>{filter.map((data)=><GovernmentSchemes card={data} id={data.id} setSelectedId={setSelectedId}/>)}</Grid>
+        <Grid item xs={8}>{filter.map((data)=> <Paper  className={classes.paper} onClick={() => handleClick(data.id)}>
+        <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
+            <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
+            <Grid item xs={9} >
+                <Link to="/govt-description">
+                <Typography variant="h6" className={classes.heading} >{data.name}</Typography></Link>
+                <Typography className={classes.description}>{data.short_desc}</Typography>
+             </Grid>
+            </Grid> </Box>
+        </Paper> )}</Grid>
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

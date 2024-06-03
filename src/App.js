@@ -38,6 +38,7 @@ import MainPage from './Admin/components/MainPage';
 import CardCall from './components/commoncomponent/cardCall';
 import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
+import GovernmentDescription from './components/governmentschemes/governmentDescription';
 
 
 const theme = createTheme({
@@ -117,7 +118,7 @@ export default function App() {
                              <CommonComponent selectedId={selectedId} card={card} />
                          </GovernmentSchemesTab>
                             </Route> */}
-                        
+                        <Route path="/govt-description" component={GovernmentDescription} />
                         <Route path="/wallet" component={Wallet} />
                         {/* <Route path="/cardCall" component={ CardCall} /> */}
                         <Route path="/cardCall">
