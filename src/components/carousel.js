@@ -10,6 +10,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import '../styles/Owl.css';
 import endpoints, {base_uri} from '../api/endpoints';
+import { useHistory } from "react-router-dom";
 // import from '../api/endpoints';
 import axios from 'axios';
 
@@ -113,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Carousel(){ 
-
     const [data,setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -139,7 +139,18 @@ export default function Carousel(){
     useEffect(()=>{
       fetchNews()
     },[])
-   
+
+    const history = useHistory();
+
+    const handleClick = (id) => {
+      history.push({
+        pathname: '/carousel-call',
+        state: { id }
+      });
+    };
+
+    
+  
     return (
         <>
       {/* <div 
@@ -154,7 +165,7 @@ export default function Carousel(){
       </div>)}</Slider></div> */}
 
 
-      <div className={classes.carouselContainer}>
+      <div className={classes.carouselContainer} >
       <OwlCarousel 
       autoplay 
       autoplayTimeout='2000' 
@@ -163,9 +174,10 @@ export default function Carousel(){
       nav={true}
       dots={false}
       >
-      {data.map((m)=><div key={m.id} className='item'>
+      {data.map((m)=><div key={m.id} className='item' onClick={() => handleClick(m.id)}>
+        {console.log("map id",m.id)}
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
-        <Link to='/component-tabs' className={classes.heading} ><h4 >{m.short_desc}</h4></Link>
+        <Link to='/carousel-call' state={m.id} className={classes.heading}><h4 >{m.short_desc}</h4></Link>
         <p className={classes.heading}>{m.long_desc}</p>
         <p className={classes.heading}>{m.date}</p>
     </div>)}

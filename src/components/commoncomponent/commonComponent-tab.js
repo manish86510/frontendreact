@@ -3,17 +3,65 @@ import CommonComponent from "./commonComponent";
 import Posts from '../Posts/posts';
 import Feed from '../feed/feed';
 import Projects from '../feed/projects';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import RightTab from "../rightTab/RightTab";
 import Grid from '@material-ui/core/Grid';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { Container } from "@material-ui/core";
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import endpoints,{base_uri} from "../../api/endpoints";
 import axios from "axios";
-import endpoints from "../../api/endpoints";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
-export default function ComponentTabs(){
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 400,
+    flexGrow: 1,
+  },
+  imageContainer:{
+      width:'100%',
+      height:"100%",
+      overflow:"hidden",
+  },
+  image:{
+      width: '100%',
+      height: '15rem',
+      objectFit:"contain",
+      // borderRadius:"1rem"
+  },
+  heading:{
+      textAlign:"center",
+      padding:"1rem 0rem 1rem 0rem"
+  },
+  website:{
+      display:"flex",
+  },
+  websiteText:{
+      margin:"0rem 0rem 0rem 1rem",
+      textDecoration:"none",
+      color:"black"
+  }
+}));
 
-  const [data,setData] = useState([]);
-  const [id,setId] = useState("")
+export default function ComponentTabs({card}){
+
+  const [data,setData] = useState(null);
+  const [loading, setLoading] = useState(true); // Define loading state
+  const [error, setError] = useState(null);
+  const classes = useStyles();
+  const location = useLocation();
+    const history = useHistory();
+   
+    useEffect(() => {
+      if (location.state && location.state.id) {
+        fetchSchemesData(location.state.id);
+      } else {
+        history.push("/");  // Redirect to home if no state is found
+      }
+    }, [location.state]);
 
     const { pathname } = useLocation();
     useEffect(() => {
@@ -21,15 +69,21 @@ export default function ComponentTabs(){
     }, [pathname]);
 
     var getToken = localStorage.getItem('access');
-    const fetchSchemesData = async ()=>{
-        await axios.get(endpoints.get_id_schemes,{
-            headers:{
-                Authorization : 'Bearer ' + getToken
+    const fetchSchemesData = async (id) => {
+        try {
+          const response = await axios.get(`${endpoints.get_id_schemes}${id}`, {
+            headers: {
+              Authorization: 'Bearer ' + getToken
             }
-        }).then((res)=>setData(res.data)
-            // console.log("response governmentSchemes",res.data)
-        )
-    }
+          });
+          setData(response.data.data);
+          setLoading(false); // Update loading state
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setError(error); // Set error state
+          setLoading(false); // Update loading state
+        }
+      };
 
     useEffect(()=>{
         fetchSchemesData()
@@ -39,10 +93,20 @@ export default function ComponentTabs(){
 
     return(
         <>
-        <Grid container direction="row"  spacing={3}>
-        <Grid item xs={8}><CommonComponent card={data}/></Grid>
+        {data ? <Grid container direction="row"  spacing={3}>
+        <Grid item xs={8}><Container>
+            <Typography variant="h4">Government Scheme Page</Typography>
+            <Box className={classes.imageContainer} >
+                <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
+            </Box>
+            <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
+            <Typography variant="h6">Date {data.launched_date}</Typography><br/>
+            <Typography>{data.long_desc}</Typography>
+            <br/><br/><br/>
+            {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
+        </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid>
+        </Grid> : <h1>Data Still Loading</h1>}
         </>
     )
 }

@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import endpoints,{base_uri} from "../api/endpoints";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -125,13 +126,23 @@ export default function GovernmentSchemes(){
         
       ];
 
+      const history = useHistory();
+
+      const handleClick = (id) => {
+        history.push({
+          pathname: '/component-tabs',
+          state: { id }
+        });
+      };
+  
+
     return(
         <>
         <Grid className={classes.topService}>
             <Container>
         <Typography  variant="h5">Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{data.map((card,index)=>{
-                return <div key={index} className={classes.maincard1}>
+                return <div key={index} className={classes.maincard1} onClick={() => handleClick(card.id)} >
                     <Box >
                     <Link to="/component-tabs" className={classes.maincard11}>
                     <Box className={classes.icons1} >

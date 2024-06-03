@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 // import PostHotTopics from './hot-topics/hot-topic';
 import Grid from '@material-ui/core/Grid';
 import BookmarkTabs from './bookmark-tab'
@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/styles';
 import RightTab from './rightTab/RightTab';
 import Carousel from './carousel';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useEffect } from 'react';
 
 
 const styles = theme => ({
@@ -17,15 +16,8 @@ const styles = theme => ({
     },
 });
 
-class Bookmark extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // };
-    
+export default function Bookmark(){
 
-    render() {
-        
-        // const { classes } = this.props;
         return (
             <div>
                  <Grid >
@@ -45,5 +37,3 @@ class Bookmark extends React.Component {
             </div>
         );
     }
-}
-export default withStyles(styles)(Bookmark);

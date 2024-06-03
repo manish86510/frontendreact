@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
     },
     maincard1:{
         margin:'0.5rem',
+        display:"flex",
+        justifyContent:"left",
         // height:'4rem',
         // width:'12rem'
     },
@@ -80,13 +82,14 @@ export default function Services(){
 
   const getIndustry = async ()=>{
     try{
-       await axios.get(endpoints.GET_ALL_SERVICES,{
+      const res =  await axios.get(endpoints.GET_ALL_SERVICES,{
         headers: {
             Authorization: 'Bearer ' + accessToken,
         }
-    }).then((res)=>setData(res.data.slice(0,9))
-      // console.log(res.data.slice(0,5),"here is response")
-    )
+    })
+    setData(res.data.data.slice(0,9))
+    // console.log(res.data.data,"here is response")
+    
     }
     catch(error){
       console.log(error)
