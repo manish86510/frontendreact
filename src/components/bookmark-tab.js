@@ -45,7 +45,7 @@ class BookmarkTabs extends React.Component {
         </Tabs> */}
         <Services/>
         <GovernmentSchemes/>
-        {value === 0 &&  <Feed /> }
+        {/* {value === 0 &&  <Feed /> } */}
         {value === 1 &&  <Projects /> }
         {value === 2 &&  <Posts /> }
       </div>

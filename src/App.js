@@ -54,7 +54,7 @@ const theme = createTheme({
 // console.log('theme', theme);
 
 export default function App() {
-    const [id,setId] = useState("")
+    const [selectedId, setSelectedId] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -102,10 +102,16 @@ export default function App() {
                         <Route path="/events" component={Events} />
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/company-tabs" component={CompanyTab} />
-                        <Route path="/company-detail" component={CompanyDetailTab} />
+                        {/* <Route path="/company-detail" component= {CompanyDetailTab}/> */}
+                        <Route path="/company-detail">
+                            <CompanyDetailTab selectedId={selectedId} />
+                        </Route>
                         <Route path="/governmentSchemes-tab" component={GovernmentSchemesTab} />
                         <Route path="/wallet" component={Wallet} />
-                        <Route path="/cardCall" component={CardCall} />
+                        {/* <Route path="/cardCall" component={ CardCall} /> */}
+                        <Route path="/cardCall">
+                            <CardCall setSelectedId={setSelectedId} />
+                        </Route>
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/logout" component={() => {

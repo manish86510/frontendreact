@@ -2,7 +2,6 @@ import React,{ useState } from "react";
 import RightTab from "../rightTab/RightTab";
 import Grid from '@material-ui/core/Grid';
 import CommonCompany from "./commonCompany";
-import { useScrollTrigger } from "@material-ui/core";
 
 
 export default function CompanyTab(){

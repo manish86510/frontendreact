@@ -80,7 +80,7 @@ export default function Services(){
 
   const getIndustry = async ()=>{
     try{
-       await axios.get(endpoints.get_industry,{
+       await axios.get(endpoints.GET_ALL_SERVICES,{
         headers: {
             Authorization: 'Bearer ' + accessToken,
         }
@@ -160,7 +160,7 @@ export default function Services(){
         <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div key={index} className={classes.maincard1}>
                     <Box>
-                        <Link to="/company-tabs"  className={classes.maincard11}>
+                        <Link to="/cardCall"  className={classes.maincard11}>
                         <img className={classes.icons1} src="/images/it.png" alt="console"/>
                     {/* <Box className={classes.icons1}>{card.icons}</Box> */}
                     <Box className={classes.label}>{card.name}</Box></Link>
