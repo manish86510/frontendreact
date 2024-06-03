@@ -4,11 +4,14 @@ import { Container, Button } from "@material-ui/core";
 import AddNews from "./AddNews";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import EditNews from "./EditNews";
 
 const News = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [allNews, setAllNews] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [selectedNewsId, setSelectedNewsId] = useState(null);
 
   const accessToken = localStorage.getItem("access");
 
@@ -21,7 +24,7 @@ const News = () => {
       });
       const data = response.data.data;
 
-      setAllNews(data); 
+      setAllNews(data);
       // console.log(response);
     };
     getAllNews();
@@ -39,12 +42,17 @@ const News = () => {
     } catch (error) {
       toast.error("News not deleted!");
     }
-  
+  };
+
+  const handleEdit = (id) => {
+    setSelectedNewsId(id);
+    setShowEdit(true);
   };
 
   console.log("allnews", allNews);
   return (
     <Container>
+      <Toaster position="top-right" reverseOrder={false} />
       {/* <div style={{ textAlign: "center" }}>
         <h3>News</h3>
       </div> */}
@@ -66,7 +74,17 @@ const News = () => {
       </div>
 
       {showAdd && <AddNews setShowAdd={setShowAdd} />}
-      {!showAdd && <AdminTable rows={allNews} handleDelete={handleDelete} />}
+      {showEdit && (
+        <EditNews newsId={selectedNewsId} setShowEdit={setShowEdit} />
+      )}
+     
+      {!showAdd && !showEdit && (
+        <AdminTable
+          rows={allNews}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
+      )}
     </Container>
   );
 };

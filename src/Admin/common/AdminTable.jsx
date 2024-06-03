@@ -47,9 +47,15 @@ const columns = [
     align: "right",
   },
   {
+    id: "edit",
+    label: "Actions",
+    minWidth: 80,
+    align: "right",
+  },
+  {
     id: "actions",
     label: "Actions",
-    minWidth: 170,
+    minWidth: 80,
     align: "right",
   },
 ];
@@ -67,7 +73,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable({ rows, handleDelete }) {
+export default function StickyHeadTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -83,7 +89,6 @@ export default function StickyHeadTable({ rows, handleDelete }) {
 
   return (
     <Paper className={classes.root}>
-      <Toaster position="top-right" reverseOrder={false} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -115,6 +120,14 @@ export default function StickyHeadTable({ rows, handleDelete }) {
                               alt="banner"
                               className={classes.img}
                             />
+                          ) : column.id === "edit" ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => handleEdit(row.id)}
+                            >
+                              Edit
+                            </Button>
                           ) : column.id === "actions" ? (
                             <Button
                               variant="contained"
@@ -137,6 +150,7 @@ export default function StickyHeadTable({ rows, handleDelete }) {
           </TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
