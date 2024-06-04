@@ -134,7 +134,7 @@ const EditScheme = ({ schemeId, setShowEdit }) => {
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h5" component="h1" gutterBottom>
         Edit Scheme
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>

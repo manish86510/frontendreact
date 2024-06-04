@@ -6,12 +6,15 @@ import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast, { Toaster } from "react-hot-toast";
 import EditNews from "./EditNews";
+import TextField from "@material-ui/core/TextField";
 
 const News = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [allNews, setAllNews] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedNewsId, setSelectedNewsId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
@@ -32,7 +35,7 @@ const News = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${endpoints.DELETE_NEWS}/${id}/`, {
+      await axios.delete(`${endpoints.ADD_NEWS}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
@@ -49,16 +52,27 @@ const News = () => {
     setShowEdit(true);
   };
 
+  const searchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  useEffect(() => {
+    const filter = allNews.filter((element) =>
+      element.title.toLowerCase().includes(search?.toLowerCase())
+    );
+    setFilteredData(filter);
+    console.log(filter);
+  }, [search, allNews]);
 
   return (
     <Container>
       <Toaster position="top-right" reverseOrder={false} />
-      {/* <div style={{ textAlign: "center" }}>
-        <h3>News</h3>
-      </div> */}
+      <div style={{ textAlign: "center" }}>
+        <h1>News</h1>
+      </div>
       <div
         style={{
-          textAlign: "end",
+          display: "flex",
+          justifyContent: !showAdd && !showEdit ? "space-between" : "end",
           paddingBottom: "8px",
           paddingTop: "8px",
           paddingRight: "8px",
@@ -67,10 +81,21 @@ const News = () => {
         <Button
           variant="contained"
           color="primary"
+          style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
           {showAdd ? <>Close</> : <>Add News</>}
         </Button>
+        {!showAdd && !showEdit && (
+          <TextField
+            id="standard-basic"
+            label="Search..."
+            variant="standard"
+            type="text"
+            onChange={searchChange}
+            style={{ marginBottom: "12px" }}
+          />
+        )}
       </div>
 
       {showAdd && <AddNews setShowAdd={setShowAdd} />}
@@ -80,7 +105,7 @@ const News = () => {
 
       {!showAdd && !showEdit && (
         <AdminTable
-          rows={allNews}
+          rows={filteredData}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
         />

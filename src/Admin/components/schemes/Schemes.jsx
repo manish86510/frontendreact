@@ -6,12 +6,15 @@ import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast from "react-hot-toast";
 import EditScheme from "./EditScheme";
+import TextField from "@material-ui/core/TextField";
 
 const Schemes = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [allSchemes, setAllSchemes] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedSchemesId, setSelectedSchemesId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
@@ -32,7 +35,7 @@ const Schemes = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${endpoints.DELETE_SCHEMES}/${id}/`, {
+      await axios.delete(`${endpoints.ADD_SCHEMES}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
@@ -48,12 +51,32 @@ const Schemes = () => {
     setSelectedSchemesId(id);
     setShowEdit(true);
   };
+  const searchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  useEffect(() => {
+    const filter = allSchemes.filter((element) =>
+      element.name.toLowerCase().includes(search?.toLowerCase())
+    );
+    setFilteredData(filter);
+    console.log(filter);
+  }, [search, allSchemes]);
 
   return (
     <Container>
+      {/* {!showAdd && !showEdit && (
+        <div style={{ textAlign: "center" }}>
+          <h2>Govt Schemes</h2>
+        </div>
+      )} */}
+      <div style={{ textAlign: "center" }}>
+        <h1>Govt Schemes</h1>
+      </div>
+
       <div
         style={{
-          textAlign: "end",
+          display: "flex",
+          justifyContent: !showAdd && !showEdit ? "space-between" : "end",
           paddingBottom: "8px",
           paddingTop: "8px",
           paddingRight: "8px",
@@ -62,10 +85,21 @@ const Schemes = () => {
         <Button
           variant="contained"
           color="primary"
+          style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
-          {showAdd ? <>Close</> : <>Add Scheme</>}
+          {showAdd ? <>Close</> : <>Add News</>}
         </Button>
+        {!showAdd && !showEdit && (
+          <TextField
+            id="standard-basic"
+            label="Search..."
+            variant="standard"
+            type="text"
+            onChange={searchChange}
+            style={{ marginBottom: "12px" }}
+          />
+        )}
       </div>
 
       {showAdd && <AddSchemes setShowAdd={setShowAdd} />}
@@ -79,7 +113,7 @@ const Schemes = () => {
 
       {!showAdd && !showEdit && (
         <SchemesTable
-          rows={allSchemes}
+          rows={filteredData}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
         />

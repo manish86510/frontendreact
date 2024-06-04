@@ -110,7 +110,7 @@ const AddEvents = ({ setShowAdd }) => {
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h5" component="h1" gutterBottom>
         Add Events
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>

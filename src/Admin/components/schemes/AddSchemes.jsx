@@ -109,7 +109,7 @@ const AddSchemes = ({ setShowAdd }) => {
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h5" component="h4" gutterBottom>
         Add Schemes
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>

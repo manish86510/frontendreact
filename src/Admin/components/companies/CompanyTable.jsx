@@ -14,6 +14,8 @@ import axios from "axios";
 import Switch from "@material-ui/core/Switch";
 import toast, { Toaster } from "react-hot-toast";
 
+import TextField from "@material-ui/core/TextField";
+
 const columns = [
   {
     id: "name",
@@ -109,6 +111,8 @@ export default function EventsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [switchState, setSwitchState] = useState({});
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
@@ -138,6 +142,17 @@ export default function EventsTable() {
     setPage(0);
   };
   useEffect(() => {}, [switchState]);
+
+  const searchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  useEffect(() => {
+    const filter = rows.filter((element) =>
+      element.name.toLowerCase().includes(search?.toLowerCase())
+    );
+    setFilteredData(filter);
+    console.log(filter);
+  }, [search, rows]);
 
   // useEffect(() => {
   //   const initialSwitchState = {};
@@ -184,76 +199,95 @@ export default function EventsTable() {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Toaster position="top-right" reverseOrder={false} />
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.id === "banner" ? (
-                            <img
-                              src={`${base_uri}${value}`}
-                              alt="banner"
-                              className={classes.img}
-                            />
-                          ) : column.id === "action" ? (
-                            // <Button
-                            //   variant="contained"
-                            //   color="primary"
-                            //   onClick={() => handleVerifyClick(row)}
-                            // >
-                            //   Verify
-                            // </Button>
-                            <Switch
-                              checked={row?.is_verify}
-                              // onChange={() => handleVerifyToggle(row)}
-                              onClick={() => handleVerifyClick(row)}
-                              color="primary"
-                            />
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <>
+      <div style={{textAlign:'end'}}> 
+        <TextField
+          id="standard-basic"
+          label="Search..."
+          variant="standard"
+          type="text"
+          onChange={searchChange}
+          style={{ marginBottom: "12px" }}
+        />
+      </div>
+
+      <Paper className={classes.root}>
+        <Toaster position="top-right" reverseOrder={false} />
+
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredData
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.code}
+                    >
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.id === "banner" ? (
+                              <img
+                                src={`${base_uri}${value}`}
+                                alt="banner"
+                                className={classes.img}
+                              />
+                            ) : column.id === "action" ? (
+                              // <Button
+                              //   variant="contained"
+                              //   color="primary"
+                              //   onClick={() => handleVerifyClick(row)}
+                              // >
+                              //   Verify
+                              // </Button>
+                              <Switch
+                                checked={row?.is_verify}
+                                // onChange={() => handleVerifyToggle(row)}
+                                onClick={() => handleVerifyClick(row)}
+                                color="primary"
+                              />
+                            ) : column.format && typeof value === "number" ? (
+                              column.format(value)
+                            ) : (
+                              value
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </>
   );
 }
