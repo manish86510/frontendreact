@@ -28,7 +28,7 @@ const News = () => {
       // console.log(response);
     };
     getAllNews();
-  }, [showAdd]);
+  }, [showAdd, showEdit]);
 
   const handleDelete = async (id) => {
     try {
@@ -49,7 +49,7 @@ const News = () => {
     setShowEdit(true);
   };
 
-  console.log("allnews", allNews);
+
   return (
     <Container>
       <Toaster position="top-right" reverseOrder={false} />
@@ -77,7 +77,7 @@ const News = () => {
       {showEdit && (
         <EditNews newsId={selectedNewsId} setShowEdit={setShowEdit} />
       )}
-     
+
       {!showAdd && !showEdit && (
         <AdminTable
           rows={allNews}

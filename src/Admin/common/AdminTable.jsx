@@ -13,38 +13,38 @@ import Button from "@material-ui/core/Button";
 import { Toaster } from "react-hot-toast";
 
 const columns = [
-  { id: "author", label: "Author", minWidth: 170 },
-  { id: "banner", label: "Banner", minWidth: 100 },
+  { id: "author", label: "Author", minWidth: 150., align: "center", },
+  { id: "banner", label: "Banner", minWidth: 100 , align: "center",},
   {
     id: "date",
     label: "Date",
-    minWidth: 170,
-    align: "right",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "long_desc",
-    label: "Long Description",
-    minWidth: 170,
-    align: "right",
   },
   {
     id: "short_desc",
     label: "Short Description",
-    minWidth: 170,
-    align: "right",
+    minWidth: 120,
+    align: "center",
+  },
+  {
+    id: "long_desc",
+    label: "Long Description",
+    minWidth: 350,
+    align: "center",
   },
   {
     id: "title",
     label: "Title",
     minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "source",
     label: "Source",
     minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "edit",
@@ -56,7 +56,7 @@ const columns = [
     id: "actions",
     label: "Actions",
     minWidth: 80,
-    align: "right",
+    align: "center",
   },
 ];
 

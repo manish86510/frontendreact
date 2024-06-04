@@ -120,6 +120,7 @@ const AddEvents = ({ setShowAdd }) => {
               label="Title"
               name="title"
               fullWidth
+              required
               value={formData.title}
               onChange={handleChange}
             />
@@ -130,6 +131,7 @@ const AddEvents = ({ setShowAdd }) => {
               type="date"
               name="date"
               fullWidth
+              required
               InputLabelProps={{ shrink: true }}
               value={formData.date}
               onChange={handleChange}
@@ -140,6 +142,7 @@ const AddEvents = ({ setShowAdd }) => {
               label="Guests"
               name="guests"
               fullWidth
+              required
               value={formData.author}
               onChange={handleChange}
             />
@@ -149,6 +152,7 @@ const AddEvents = ({ setShowAdd }) => {
               label="Amount"
               name="amount"
               fullWidth
+              required
               type="number"
               value={formData.source}
               onChange={handleChange}
@@ -161,6 +165,7 @@ const AddEvents = ({ setShowAdd }) => {
             </Typography>
             <ReactQuill
               value={formData.short_desc}
+              required
               onChange={(value) => handleEditorChange("short_desc", value)}
               className={classes.editor}
             />
@@ -171,6 +176,7 @@ const AddEvents = ({ setShowAdd }) => {
             </Typography>
             <ReactQuill
               value={formData.long_desc}
+              required
               onChange={(value) => handleEditorChange("long_desc", value)}
               className={classes.editor}
             />
@@ -181,6 +187,7 @@ const AddEvents = ({ setShowAdd }) => {
               name="banner"
               type="file"
               fullWidth
+              required
               // value={formData.banner}
               onChange={handleChange}
             />

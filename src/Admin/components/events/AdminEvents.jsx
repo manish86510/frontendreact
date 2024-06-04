@@ -5,10 +5,13 @@ import EventsTable from "./EventsTable";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast from "react-hot-toast";
+import EditEvents from "./EditEvents";
 
 const AdminEvents = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [allEvents, setAllEvents] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [selectedEventsId, setSelectedEventsId] = useState(null);
 
   const accessToken = localStorage.getItem("access");
 
@@ -25,7 +28,7 @@ const AdminEvents = () => {
       // console.log(response);
     };
     getAllEvents();
-  }, [showAdd]);
+  }, [showAdd, showEdit]);
 
   const handleDelete = async (id) => {
     try {
@@ -39,6 +42,11 @@ const AdminEvents = () => {
     } catch (error) {
       toast.error("Event not Deleted!");
     }
+  };
+
+  const handleEdit = (id) => {
+    setSelectedEventsId(id);
+    setShowEdit(true);
   };
 
   return (
@@ -62,7 +70,16 @@ const AdminEvents = () => {
 
       {showAdd && <AddEvents setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
-      {!showAdd && <EventsTable rows={allEvents} handleDelete={handleDelete} />}
+      {showEdit && (
+        <EditEvents eventId={selectedEventsId} setShowEdit={setShowEdit} />
+      )}
+      {!showAdd && !showEdit && (
+        <EventsTable
+          rows={allEvents}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
+      )}
     </Container>
   );
 };

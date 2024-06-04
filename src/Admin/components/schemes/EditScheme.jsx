@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -44,20 +44,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddNews = ({ setShowAdd }) => {
+const initialFormdata = {
+  launched_date: "",
+  name: "",
+  url: "",
+  short_desc: "",
+  long_desc: "",
+  banner: null,
+};
+
+const EditScheme = ({ schemeId, setShowEdit }) => {
   const classes = useStyles();
-  const [formData, setFormData] = useState({
-    date: "",
-    author: "",
-    source: "",
-    title: "",
-    short_desc: "",
-    long_desc: "",
-    banner: null,
-  });
+  const [formData, setFormData] = useState(initialFormdata);
 
   const accessToken = localStorage.getItem("access");
   console.log(accessToken);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(
+          `${endpoints.GET_ALL_SCHEMES}${schemeId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + accessToken,
+            },
+          }
+        );
+        const data = response.data.data;
+        setFormData(data);
+      } catch (error) {
+        toast.error("Failed to fetch news data!");
+      }
+    };
+
+    fetchEvent();
+  }, [schemeId, accessToken]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -85,21 +107,25 @@ const AddNews = ({ setShowAdd }) => {
     e.preventDefault();
 
     try {
-      console.log(accessToken);
-      const response = await axios.post(endpoints.ADD_NEWS, formData, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "content-type": "multipart/form-data",
-        },
-      });
+      //   console.log(accessToken);
+      const response = await axios.put(
+        `${endpoints.GET_ALL_SCHEMES}${schemeId}/`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "content-type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Form Data: ", response);
-      toast.success("News succesfully created");
+      toast.success("Scheme succesfully created");
       setTimeout(() => {
-        setShowAdd(false);
+        setShowEdit(false);
       }, 2000);
     } catch (error) {
       console.log(error);
-      toast.error("News not created!");
+      toast.error("Scheme not created!");
     }
 
     console.log("Form Data: ", formData);
@@ -109,49 +135,39 @@ const AddNews = ({ setShowAdd }) => {
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
       <Typography variant="h4" component="h1" gutterBottom>
-        Add News
+        Edit Scheme
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
-              label="Title"
-              name="title"
-              fullWidth
+              label="Name"
+              name="name"
               required
-              value={formData.title}
+              fullWidth
+              value={formData.name}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Date"
+              label="Launch Date"
               type="date"
-              name="date"
+              name="launched_date"
               fullWidth
               required
               InputLabelProps={{ shrink: true }}
-              value={formData.date}
+              value={formData.launched_date}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Author"
-              name="author"
+              label="Url"
+              name="url"
               fullWidth
               required
-              value={formData.author}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Source"
-              name="source"
-              fullWidth
-              required
-              value={formData.source}
+              value={formData.url}
               onChange={handleChange}
             />
           </Grid>
@@ -205,4 +221,4 @@ const AddNews = ({ setShowAdd }) => {
   );
 };
 
-export default AddNews;
+export default EditScheme;

@@ -1,4 +1,3 @@
-// EditNews.jsx
 import React, { useState, useEffect } from "react";
 import {
   TextField,
@@ -11,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import endpoints from "../../../api/endpoints";
+import endpoints, { base_uri } from "../../../api/endpoints";
 import toast, { Toaster } from "react-hot-toast";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,15 +61,12 @@ const EditNews = ({ newsId, setShowEdit }) => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get(
-          `http://103.251.94.87:8083/news/${newsId}`,
-          {
-            headers: {
-              Authorization: "Bearer " + accessToken,
-            },
-          }
-        );
-        const data = response.data;
+        const response = await axios.get(`${endpoints.GET_ALL_NEWS}${newsId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        });
+        const data = response.data.data;
         setFormData(data);
       } catch (error) {
         toast.error("Failed to fetch news data!");
@@ -107,7 +103,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
 
     try {
       const response = await axios.put(
-        `http://103.251.94.87:8083/news/${newsId}/`,
+        `${endpoints.GET_ALL_NEWS}${newsId}/`,
         formData,
         {
           headers: {
@@ -129,6 +125,8 @@ const EditNews = ({ newsId, setShowEdit }) => {
     console.log("Form Data: ", formData);
   };
 
+  console.log("f", formData);
+
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
@@ -144,6 +142,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
               fullWidth
               value={formData.title}
               onChange={handleChange}
+              required
             />
           </Grid>
           <Grid item xs={12}>
@@ -154,6 +153,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
               fullWidth
               InputLabelProps={{ shrink: true }}
               value={formData.date}
+              required
               onChange={handleChange}
             />
           </Grid>
@@ -163,6 +163,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
               name="author"
               fullWidth
               value={formData.author}
+              required
               onChange={handleChange}
             />
           </Grid>
@@ -172,6 +173,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
               name="source"
               fullWidth
               value={formData.source}
+              required
               onChange={handleChange}
             />
           </Grid>
@@ -182,6 +184,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
             </Typography>
             <ReactQuill
               value={formData.short_desc}
+              required
               onChange={(value) => handleEditorChange("short_desc", value)}
               className={classes.editor}
             />
@@ -192,6 +195,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
             </Typography>
             <ReactQuill
               value={formData.long_desc}
+              required
               onChange={(value) => handleEditorChange("long_desc", value)}
               className={classes.editor}
             />
@@ -202,6 +206,7 @@ const EditNews = ({ newsId, setShowEdit }) => {
               name="banner"
               type="file"
               fullWidth
+              required
               // value={formData.banner}
               onChange={handleChange}
             />

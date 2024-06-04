@@ -16,10 +16,11 @@ const columns = [
   {
     id: "name",
     label: "Name",
-    minWidth: 100,
+    minWidth: 150,
+    align: "center",
     align: "center",
   },
-  { id: "banner", label: "Banner", minWidth: 120 },
+  { id: "banner", label: "Banner", minWidth: 120, align: "center" },
   {
     id: "url",
     label: "Url",
@@ -36,7 +37,7 @@ const columns = [
   {
     id: "long_desc",
     label: "Long Description",
-    minWidth: 180,
+    minWidth: 350,
     align: "center",
   },
 
@@ -45,6 +46,12 @@ const columns = [
     label: "launched date",
     minWidth: 100,
     align: "center",
+  },
+  {
+    id: "edit",
+    label: "Actions",
+    minWidth: 80,
+    align: "right",
   },
   {
     id: "actions",
@@ -67,7 +74,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SchemesTable({ rows, handleDelete }) {
+export default function SchemesTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -116,6 +123,14 @@ export default function SchemesTable({ rows, handleDelete }) {
                               alt="banner"
                               className={classes.img}
                             />
+                          ) : column.id === "edit" ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => handleEdit(row.id)}
+                            >
+                              Edit
+                            </Button>
                           ) : column.id === "actions" ? (
                             <Button
                               variant="contained"

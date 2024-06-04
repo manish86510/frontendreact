@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -44,20 +44,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddNews = ({ setShowAdd }) => {
+const initialFormdata = {
+  date: "",
+  guests: "",
+  amount: "",
+  title: "",
+  short_desc: "",
+  long_desc: "",
+  banner: null,
+};
+
+const EditEvents = ({ eventId, setShowEdit }) => {
   const classes = useStyles();
-  const [formData, setFormData] = useState({
-    date: "",
-    author: "",
-    source: "",
-    title: "",
-    short_desc: "",
-    long_desc: "",
-    banner: null,
-  });
+  const [formData, setFormData] = useState(initialFormdata);
 
   const accessToken = localStorage.getItem("access");
   console.log(accessToken);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(`${endpoints.ADD_EVENTS}${eventId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        });
+        const data = response.data.data;
+        setFormData(data);
+      } catch (error) {
+        toast.error("Failed to fetch news data!");
+      }
+    };
+
+    fetchEvent();
+  }, [eventId, accessToken]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -86,20 +106,24 @@ const AddNews = ({ setShowAdd }) => {
 
     try {
       console.log(accessToken);
-      const response = await axios.post(endpoints.ADD_NEWS, formData, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "content-type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${endpoints.ADD_EVENTS}${eventId}/`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "content-type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Form Data: ", response);
-      toast.success("News succesfully created");
+      toast.success("Event succesfully created");
       setTimeout(() => {
-        setShowAdd(false);
+        setShowEdit(false);
       }, 2000);
     } catch (error) {
       console.log(error);
-      toast.error("News not created!");
+      toast.error("Event not created!");
     }
 
     console.log("Form Data: ", formData);
@@ -109,7 +133,7 @@ const AddNews = ({ setShowAdd }) => {
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
       <Typography variant="h4" component="h1" gutterBottom>
-        Add News
+        Edit Event
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
@@ -137,21 +161,22 @@ const AddNews = ({ setShowAdd }) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Author"
-              name="author"
+              label="Guests"
+              name="guests"
               fullWidth
               required
-              value={formData.author}
+              value={formData.guests}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Source"
-              name="source"
+              label="Amount"
+              name="amount"
               fullWidth
               required
-              value={formData.source}
+              type="number"
+              value={formData.amount}
               onChange={handleChange}
             />
           </Grid>
@@ -205,4 +230,4 @@ const AddNews = ({ setShowAdd }) => {
   );
 };
 
-export default AddNews;
+export default EditEvents;

@@ -12,7 +12,7 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast, { Toaster } from "react-hot-toast";
-  
+
 const useStyles = makeStyles((theme) => ({
   formContainer: {
     marginTop: theme.spacing(4),
@@ -118,6 +118,7 @@ const AddSchemes = ({ setShowAdd }) => {
             <TextField
               label="Name"
               name="name"
+              required
               fullWidth
               value={formData.title}
               onChange={handleChange}
@@ -129,6 +130,7 @@ const AddSchemes = ({ setShowAdd }) => {
               type="date"
               name="launched_date"
               fullWidth
+              required
               InputLabelProps={{ shrink: true }}
               value={formData.date}
               onChange={handleChange}
@@ -139,6 +141,7 @@ const AddSchemes = ({ setShowAdd }) => {
               label="Url"
               name="url"
               fullWidth
+              required
               value={formData.author}
               onChange={handleChange}
             />
@@ -150,6 +153,7 @@ const AddSchemes = ({ setShowAdd }) => {
             </Typography>
             <ReactQuill
               value={formData.short_desc}
+              required
               onChange={(value) => handleEditorChange("short_desc", value)}
               className={classes.editor}
             />
@@ -160,6 +164,7 @@ const AddSchemes = ({ setShowAdd }) => {
             </Typography>
             <ReactQuill
               value={formData.long_desc}
+              required
               onChange={(value) => handleEditorChange("long_desc", value)}
               className={classes.editor}
             />
@@ -170,6 +175,7 @@ const AddSchemes = ({ setShowAdd }) => {
               name="banner"
               type="file"
               fullWidth
+              required
               // value={formData.banner}
               onChange={handleChange}
             />
