@@ -61,7 +61,8 @@ const endpoints = {
 
   // get id details 
   get_id_company : base_uri + '/company/',
-  get_id_schemes : base_uri + '/schemes/'
+  get_id_schemes : base_uri + '/schemes/',
+  
 
   // New API
   // get_news: base_uri + '/api/news',

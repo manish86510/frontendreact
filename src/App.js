@@ -36,6 +36,9 @@ import AdminCompanies from './Admin/components/companies/AdminCompanies';
 import GovernmentSchemesTab from './components/governmentschemes/GovernmentSchemesTab';
 import MainPage from './Admin/components/MainPage';
 import CardCall from './components/commoncomponent/cardCall';
+import CarouselCall from './components/carousel/carouselCall';
+import CommonComponent from './components/commoncomponent/commonComponent';
+import GovernmentDescription from './components/governmentschemes/governmentDescription';
 
 
 const theme = createTheme({
@@ -55,6 +58,7 @@ const theme = createTheme({
 
 export default function App() {
     const [selectedId, setSelectedId] = useState("");
+    const [schemes,setSchemes] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -101,12 +105,20 @@ export default function App() {
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
                         <Route path="/component-tabs" component={componentTabs} />
+                        <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/company-tabs" component={CompanyTab} />
                         {/* <Route path="/company-detail" component= {CompanyDetailTab}/> */}
                         <Route path="/company-detail">
                             <CompanyDetailTab selectedId={selectedId} />
                         </Route>
                         <Route path="/governmentSchemes-tab" component={GovernmentSchemesTab} />
+
+                        {/* <Route path="/governmentSchemes-tab">
+                         <GovernmentSchemesTab>
+                             <CommonComponent selectedId={selectedId} card={card} />
+                         </GovernmentSchemesTab>
+                            </Route> */}
+                        <Route path="/govt-description" component={GovernmentDescription} />
                         <Route path="/wallet" component={Wallet} />
                         {/* <Route path="/cardCall" component={ CardCall} /> */}
                         <Route path="/cardCall">

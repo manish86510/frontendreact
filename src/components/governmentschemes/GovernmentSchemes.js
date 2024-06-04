@@ -73,22 +73,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function GovernmentSchemesPage({card,id,setSelectedId}){
+export default function GovernmentSchemesPage({card}){
     const classes = useStyles();
-    const selectId = ()=>{
-        setSelectedId(id)
-    }
-
-    console.log(card,"data in card of govt schemes")
-
     return(
         <>
-           <Paper key={card.id} className={classes.paper}>
+           <Paper  className={classes.paper}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
-            <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${card.banner}`} alt={card.id}/></Grid>
+            <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${card.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
-                <Link to="/component-tabs">
-                <Typography variant="h6" className={classes.heading} onClick={()=>selectId}>{card.name}</Typography></Link>
+                <Link to="/govt-description">
+                <Typography variant="h6" className={classes.heading} >{card.name}</Typography></Link>
                 <Typography className={classes.description}>{card.short_desc}</Typography>
              </Grid>
             </Grid> </Box>
