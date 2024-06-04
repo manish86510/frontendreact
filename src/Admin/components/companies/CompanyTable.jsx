@@ -12,12 +12,15 @@ import Button from "@material-ui/core/Button";
 import endpoints, { base_uri } from "../../../api/endpoints";
 import axios from "axios";
 import Switch from "@material-ui/core/Switch";
+import toast, { Toaster } from "react-hot-toast";
+
+import TextField from "@material-ui/core/TextField";
 
 const columns = [
   {
     id: "name",
     label: "Name",
-    minWidth: 100,
+    minWidth: 150,
     align: "center",
   },
   {
@@ -35,13 +38,13 @@ const columns = [
   {
     id: "number",
     label: "Number",
-    minWidth: 180,
+    minWidth: 100,
     align: "center",
   },
   {
     id: "gst_number",
     label: "Gst number",
-    minWidth: 180,
+    minWidth: 150,
     align: "center",
   },
   {
@@ -65,7 +68,7 @@ const columns = [
   {
     id: "description",
     label: "Description",
-    minWidth: 100,
+    minWidth: 200,
     align: "center",
   },
   {
@@ -108,6 +111,8 @@ export default function EventsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [switchState, setSwitchState] = useState({});
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
@@ -138,6 +143,17 @@ export default function EventsTable() {
   };
   useEffect(() => {}, [switchState]);
 
+  const searchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  useEffect(() => {
+    const filter = rows.filter((element) =>
+      element.name.toLowerCase().includes(search?.toLowerCase())
+    );
+    setFilteredData(filter);
+    console.log(filter);
+  }, [search, rows]);
+
   // useEffect(() => {
   //   const initialSwitchState = {};
   //   rows.forEach((row) => {
@@ -147,112 +163,131 @@ export default function EventsTable() {
   // }, [rows]);
 
   const handleVerifyClick = async (row) => {
-    // console.log("Verify button clicked for:", row);
-    // const newSwitchState = { ...switchState };
-    // newSwitchState[row.is_verify] = !newSwitchState[row.is_verify];
-    // setSwitchState(newSwitchState);
     const updatedRows = rows.map((r) =>
       r.id === row.id ? { ...r, is_verify: !r.is_verify } : r
     );
     setRows(updatedRows);
-    // const originalRow = rows.find((row) => row.id === row.id);
 
-    // let is_verify, customMessage;
-    // if (row.is_verify == true) {
-    //   is_verify = "false";
-    //   customMessage = "In-active Successfully";
-    // } else {
-    //   is_verify = "true";
-    //   customMessage = "Active Successfully!";
-    // }
+    let customMessage;
 
-    const response = await axios.post(
-      endpoints.COMPANY_VERIFY,
-      {
-        company_id: row.id,
-        is_verify: !row.is_verify,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + accessToken,
+    if (row.is_verify === true) {
+      customMessage = "Company unassigned successfully!";
+    } else {
+      customMessage = "Company assigned succesfully!";
+    }
+
+    try {
+      const response = await axios.post(
+        endpoints.COMPANY_VERIFY,
+        {
+          company_id: row.id,
+          is_verify: !row.is_verify,
         },
-      }
-    );
-    const data = response.data;
-    row.is_verify = data.is_verify;
-    console.log(data, "heer is dt", row);
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
+      const data = response.data;
+      row.is_verify = data.is_verify;
+      toast.success(customMessage);
+      console.log(data, "heer is dt", row);
+    } catch (error) {
+      toast.error("Company not assigned!");
+    }
   };
 
   return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.id === "banner" ? (
-                            <img
-                              src={`${base_uri}${value}`}
-                              alt="banner"
-                              className={classes.img}
-                            />
-                          ) : column.id === "action" ? (
-                            // <Button
-                            //   variant="contained"
-                            //   color="primary"
-                            //   onClick={() => handleVerifyClick(row)}
-                            // >
-                            //   Verify
-                            // </Button>
-                            <Switch
-                              checked={row?.is_verify}
-                              // onChange={() => handleVerifyToggle(row)}
-                              onClick={() => handleVerifyClick(row)}
-                              color="primary"
-                            />
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <>
+      <div style={{textAlign:'end'}}> 
+        <TextField
+          id="standard-basic"
+          label="Search..."
+          variant="standard"
+          type="text"
+          onChange={searchChange}
+          style={{ marginBottom: "12px" }}
+        />
+      </div>
+
+      <Paper className={classes.root}>
+        <Toaster position="top-right" reverseOrder={false} />
+
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredData
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.code}
+                    >
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.id === "banner" ? (
+                              <img
+                                src={`${base_uri}${value}`}
+                                alt="banner"
+                                className={classes.img}
+                              />
+                            ) : column.id === "action" ? (
+                              // <Button
+                              //   variant="contained"
+                              //   color="primary"
+                              //   onClick={() => handleVerifyClick(row)}
+                              // >
+                              //   Verify
+                              // </Button>
+                              <Switch
+                                checked={row?.is_verify}
+                                // onChange={() => handleVerifyToggle(row)}
+                                onClick={() => handleVerifyClick(row)}
+                                color="primary"
+                              />
+                            ) : column.format && typeof value === "number" ? (
+                              column.format(value)
+                            ) : (
+                              value
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </>
   );
 }

@@ -16,10 +16,10 @@ const columns = [
   {
     id: "title",
     label: "Title",
-    minWidth: 100,
+    minWidth: 150,
     align: "center",
   },
-  { id: "banner", label: "Banner", minWidth: 120 },
+  { id: "banner", label: "Banner", minWidth: 120, align: "center", },
   {
     id: "date",
     label: "Date",
@@ -36,7 +36,7 @@ const columns = [
   {
     id: "long_desc",
     label: "Long Description",
-    minWidth: 180,
+    minWidth: 350,
     align: "center",
   },
 
@@ -49,8 +49,14 @@ const columns = [
   {
     id: "guests",
     label: "guests",
-    minWidth: 170,
+    minWidth: 150,
     align: "center",
+  },
+  {
+    id: "edit",
+    label: "Actions",
+    minWidth: 80,
+    align: "right",
   },
   {
     id: "actions",
@@ -73,7 +79,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventsTable({ rows, handleDelete }) {
+export default function EventsTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -121,6 +127,14 @@ export default function EventsTable({ rows, handleDelete }) {
                               alt="banner"
                               className={classes.img}
                             />
+                          ) : column.id === "edit" ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => handleEdit(row.id)}
+                            >
+                              Edit
+                            </Button>
                           ) : column.id === "actions" ? (
                             <Button
                               variant="contained"

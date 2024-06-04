@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddNews = ({setShowAdd}) => {
+const AddNews = ({ setShowAdd }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     date: "",
@@ -108,7 +108,7 @@ const AddNews = ({setShowAdd}) => {
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h5" component="h1" gutterBottom>
         Add News
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
@@ -118,6 +118,7 @@ const AddNews = ({setShowAdd}) => {
               label="Title"
               name="title"
               fullWidth
+              required
               value={formData.title}
               onChange={handleChange}
             />
@@ -128,6 +129,7 @@ const AddNews = ({setShowAdd}) => {
               type="date"
               name="date"
               fullWidth
+              required
               InputLabelProps={{ shrink: true }}
               value={formData.date}
               onChange={handleChange}
@@ -138,6 +140,7 @@ const AddNews = ({setShowAdd}) => {
               label="Author"
               name="author"
               fullWidth
+              required
               value={formData.author}
               onChange={handleChange}
             />
@@ -147,6 +150,7 @@ const AddNews = ({setShowAdd}) => {
               label="Source"
               name="source"
               fullWidth
+              required
               value={formData.source}
               onChange={handleChange}
             />
@@ -158,6 +162,7 @@ const AddNews = ({setShowAdd}) => {
             </Typography>
             <ReactQuill
               value={formData.short_desc}
+              required
               onChange={(value) => handleEditorChange("short_desc", value)}
               className={classes.editor}
             />
@@ -168,6 +173,7 @@ const AddNews = ({setShowAdd}) => {
             </Typography>
             <ReactQuill
               value={formData.long_desc}
+              required
               onChange={(value) => handleEditorChange("long_desc", value)}
               className={classes.editor}
             />
@@ -178,6 +184,7 @@ const AddNews = ({setShowAdd}) => {
               name="banner"
               type="file"
               fullWidth
+              required
               // value={formData.banner}
               onChange={handleChange}
             />

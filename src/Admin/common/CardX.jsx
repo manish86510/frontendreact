@@ -13,7 +13,10 @@ const useStyles = makeStyles({
     transition: "transform 0.3s, box-shadow 0.3s",
     "&:hover": {
       transform: "scale(1.05)",
-      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+      // boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+      boxShadow:
+        // "-5px -5px  10px 2px rgb(50,151,77), 5px 5px 10px 2px rgb(242,101,34)",
+        " 2px 2px 15px 2px rgb(242,101,34)",
     },
   },
   bullet: {
@@ -43,8 +46,11 @@ export default function CardX({ data }) {
         >
           Word of the Day
         </Typography> */}
-        <Typography variant="h5" component="h2">
-          {data}
+        <Typography variant="h5" component="h2" style={{marginBottom:'8px'}}>
+          {data.name}
+        </Typography>
+        <Typography variant="p" component="p">
+          {data.desc}
         </Typography>
         {/* <Typography className={classes.pos} color="textSecondary">
           adjective

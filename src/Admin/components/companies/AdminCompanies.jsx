@@ -49,7 +49,7 @@ const AdminCompanies = () => {
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
       {/* {!showAdd && <CompanyTable rows={allCompanies} />} */}
       <div style={{textAlign: "center", marginTop:"4px"}}>
-       <h2>Companies</h2>
+       <h1>Companies</h1>
       </div>
       <div style={{marginTop:"3rem"}}>
         <CompanyTable />

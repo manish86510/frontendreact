@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import endpoints from "../../../api/endpoints";
+import endpoints, { base_uri } from "../../../api/endpoints";
 import toast, { Toaster } from "react-hot-toast";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,22 +44,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const initialFormdata = {
-  date: "",
-  guests: "",
-  amount: "",
-  title: "",
-  short_desc: "",
-  long_desc: "",
-  banner: null,
-};
-
-const AddEvents = ({ setShowAdd }) => {
+const EditNews = ({ newsId, setShowEdit }) => {
   const classes = useStyles();
-  const [formData, setFormData] = useState(initialFormdata);
+  const [formData, setFormData] = useState({
+    date: "",
+    author: "",
+    source: "",
+    title: "",
+    short_desc: "",
+    long_desc: "",
+    banner: null,
+  });
 
   const accessToken = localStorage.getItem("access");
-  console.log(accessToken);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(`${endpoints.GET_ALL_NEWS}${newsId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        });
+        const data = response.data.data;
+        setFormData(data);
+      } catch (error) {
+        toast.error("Failed to fetch news data!");
+      }
+    };
+
+    fetchNews();
+  }, [newsId, accessToken]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -87,31 +102,36 @@ const AddEvents = ({ setShowAdd }) => {
     e.preventDefault();
 
     try {
-      console.log(accessToken);
-      const response = await axios.post(endpoints.ADD_EVENTS, formData, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "content-type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${endpoints.GET_ALL_NEWS}${newsId}/`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "content-type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Form Data: ", response);
-      toast.success("Event succesfully created");
+      toast.success("News successfully updated!");
       setTimeout(() => {
-        setShowAdd(false);
+        setShowEdit(false);
       }, 2000);
     } catch (error) {
       console.log(error);
-      toast.error("Event not created!");
+      toast.error("News not updated!");
     }
 
     console.log("Form Data: ", formData);
   };
 
+  console.log("f", formData);
+
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
       <Typography variant="h5" component="h1" gutterBottom>
-        Add Events
+        Edit News
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
@@ -120,9 +140,9 @@ const AddEvents = ({ setShowAdd }) => {
               label="Title"
               name="title"
               fullWidth
-              required
               value={formData.title}
               onChange={handleChange}
+              required
             />
           </Grid>
           <Grid item xs={12}>
@@ -131,30 +151,29 @@ const AddEvents = ({ setShowAdd }) => {
               type="date"
               name="date"
               fullWidth
-              required
               InputLabelProps={{ shrink: true }}
               value={formData.date}
+              required
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Guests"
-              name="guests"
+              label="Author"
+              name="author"
               fullWidth
-              required
               value={formData.author}
+              required
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Amount"
-              name="amount"
+              label="Source"
+              name="source"
               fullWidth
-              required
-              type="number"
               value={formData.source}
+              required
               onChange={handleChange}
             />
           </Grid>
@@ -208,4 +227,4 @@ const AddEvents = ({ setShowAdd }) => {
   );
 };
 
-export default AddEvents;
+export default EditNews;

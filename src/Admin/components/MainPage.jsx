@@ -25,18 +25,22 @@ const MainPage = () => {
   const data = [
     {
       name: "News",
+      desc: "Drive engagement with dynamic content. This card allows admins to add and manage news articles, keeping users informed and engaged with timely updates and stories.",
       url: "/admin/news",
     },
     {
       name: "Events",
+      desc: "Foster community interaction. Admins can use this card to add and organize events and participation by providing users with opportunities to attend or participate in relevant gatherings.",
       url: "/admin/event",
     },
     {
       name: "Government Schemes",
+      desc:"Empower users with valuable resources. Admins can utilize this card to add information about government schemes and initiatives, empowering users with access to  opportunities that can benefit them.",
       url: "/admin/schemes",
     },
     {
       name: "Total Companies",
+      desc: "Track platform growth and impact. This card provides admins with insights into the total number of companies registered or affiliated with the platform, serving as a measure of platform growth and impact over time.",
       url: "/admin/companies",
     },
   ];
@@ -48,7 +52,7 @@ const MainPage = () => {
             <Grid item xs={6}>
               <Link to={data.url}>
                 <Paper className={classes.paper}>
-                  <CardX data={data.name} />  
+                  <CardX data={data}  />  
                 </Paper>
               </Link>
             </Grid>

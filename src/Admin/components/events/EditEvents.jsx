@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -54,12 +54,30 @@ const initialFormdata = {
   banner: null,
 };
 
-const AddEvents = ({ setShowAdd }) => {
+const EditEvents = ({ eventId, setShowEdit }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialFormdata);
 
   const accessToken = localStorage.getItem("access");
   console.log(accessToken);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(`${endpoints.ADD_EVENTS}${eventId}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        });
+        const data = response.data.data;
+        setFormData(data);
+      } catch (error) {
+        toast.error("Failed to fetch news data!");
+      }
+    };
+
+    fetchEvent();
+  }, [eventId, accessToken]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -88,16 +106,20 @@ const AddEvents = ({ setShowAdd }) => {
 
     try {
       console.log(accessToken);
-      const response = await axios.post(endpoints.ADD_EVENTS, formData, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-          "content-type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${endpoints.ADD_EVENTS}${eventId}/`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "content-type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Form Data: ", response);
       toast.success("Event succesfully created");
       setTimeout(() => {
-        setShowAdd(false);
+        setShowEdit(false);
       }, 2000);
     } catch (error) {
       console.log(error);
@@ -110,8 +132,8 @@ const AddEvents = ({ setShowAdd }) => {
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h5" component="h1" gutterBottom>
-        Add Events
+      <Typography variant="h4" component="h1" gutterBottom>
+        Edit Event
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
@@ -143,7 +165,7 @@ const AddEvents = ({ setShowAdd }) => {
               name="guests"
               fullWidth
               required
-              value={formData.author}
+              value={formData.guests}
               onChange={handleChange}
             />
           </Grid>
@@ -154,7 +176,7 @@ const AddEvents = ({ setShowAdd }) => {
               fullWidth
               required
               type="number"
-              value={formData.source}
+              value={formData.amount}
               onChange={handleChange}
             />
           </Grid>
@@ -208,4 +230,4 @@ const AddEvents = ({ setShowAdd }) => {
   );
 };
 
-export default AddEvents;
+export default EditEvents;
