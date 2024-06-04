@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     heading:{
         fontWeight:600,
         textDecoration:"none",
-        color:"black"
+        color:"black",
+        fontFamily:"Daikon-Bold"
     },
     gridImage:{
         display:"flex",
@@ -41,10 +42,17 @@ const useStyles = makeStyles((theme) => ({
     },
     description:{
         // marginRight:"0.5rem",
-        margin: '0rem 0.7rem 0rem 0rem'
+        margin: '0rem 0.7rem 0rem 0rem',
+        fontFamily:"Daikon-Regular"
     },
     paper:{
         marginTop:"4%"
+    },
+    loader:{
+        // display:"flex",
+        // justifyContent:"center",
+        // textAlign:"center",
+        padding:"20% 0% 0% 30%"
     }
 }))
 
@@ -99,7 +107,8 @@ export default function GovernmentSchemesTab(){
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
         {/* <h1>I am working In Schemes</h1> */}</Grid>
-        <Grid item xs={8}>{filter.map((data)=> <Paper  className={classes.paper} onClick={() => handleClick(data.id)}>
+        
+        {data ? <Grid item xs={8}>{filter.map((data)=> <Paper  className={classes.paper} onClick={() => handleClick(data.id)}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
@@ -108,7 +117,7 @@ export default function GovernmentSchemesTab(){
                 <Typography className={classes.description}>{data.short_desc}</Typography>
              </Grid>
             </Grid> </Box>
-        </Paper> )}</Grid>
+        </Paper> )}</Grid> :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

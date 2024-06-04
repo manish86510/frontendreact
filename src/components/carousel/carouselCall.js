@@ -10,6 +10,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         justifyContent:"center",
         textAlign:"center",
-        paddingBottom:"1rem"
+        paddingBottom:"1rem",
+        fontFamily:"Daikon-Bold"
     },
     imageContainer:{
         width:'100%',
@@ -36,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     },
     heading:{
         textAlign:"center",
-        padding:"1rem 0rem 1rem 0rem"
+        padding:"1rem 0rem 1rem 0rem",
+        fontFamily:"Daikon-Bold"
     },
     website:{
         display:"flex",
@@ -45,7 +48,19 @@ const useStyles = makeStyles((theme) => ({
         margin:"0rem 0rem 0rem 1rem",
         textDecoration:"none",
         color:"black"
-    }
+    },
+    loader:{
+      // display:"flex",
+      // justifyContent:"center",
+      // textAlign:"center",
+      padding:"20% 0% 0% 30%"
+  },
+  longdesc:{
+      fontFamily:"Daikon-Regular"
+  },
+  date:{
+      fontFamily:"Daikon-Regular"
+  }
 }));
 
 
@@ -95,13 +110,13 @@ export default function CarouselCall(){
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
             <Typography variant="h4" className={classes.heading}>{data.source}</Typography>
-            <Typography variant="h6">Date : {data.date}</Typography><br/>
-            <Typography>{data.long_desc}</Typography>
+            <Typography className={classes.date}>Date : {data.date}</Typography><br/>
+            <Typography className={classes.longdesc}>{data.long_desc}</Typography>
             <br/><br/><br/>
             {/* <Box className={classes.website}><ArrowForwardIcon/> <a href="google.com" target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid> : <h1>Still Fetching Data</h1>}
+        </Grid> :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
         </>
     )
 }

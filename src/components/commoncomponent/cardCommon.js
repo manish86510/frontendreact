@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme) => ({
     },
     label:{
         padding:"0.2rem 0rem 0rem 0.5rem",
+        color:"black",
+        fontFamily:"Daikon-Bold"
     },
+    label1:{
+      padding:"0.2rem 0rem 0rem 0.5rem",
+      color:"black",
+      fontFamily:"Daikon-Regular"
+  },
     image:{
         width:"10rem",
         height:"5rem",
@@ -84,7 +91,7 @@ export default function CardCommon({id,card, setSelectedId}){
                         // onClick={() => getid(card.id)}
                         onClick={handleSelect}
                         >{card.name}</Typography></Link>
-                    <Typography className={classes.label}>{card.description}</Typography></Container>
+                    <Typography className={classes.label1}>{card.description}</Typography></Container>
                     </Box>
                 </div></Box></Container></Grid>
         </>

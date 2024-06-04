@@ -39,6 +39,7 @@ import CardCall from './components/commoncomponent/cardCall';
 import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
+import MyWorkTab from './components/myWork/MyWorkTab';
 
 
 const theme = createTheme({
@@ -105,6 +106,7 @@ export default function App() {
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
                         <Route path="/component-tabs" component={componentTabs} />
+                        <Route path="/my_work" component={MyWorkTab} />
                         <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/company-tabs" component={CompanyTab} />
                         {/* <Route path="/company-detail" component= {CompanyDetailTab}/> */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SlidingForm = ({ isVisible }) => {
+const SlidingForm = () => {
 
     const [formData, setFormData] = useState({
         subject: '',
@@ -27,7 +27,7 @@ const SlidingForm = ({ isVisible }) => {
         })
     };
 
-    if (!isVisible) return null;
+    // if (!isVisible) return null;
 
     return (
         <div style={{ padding: 16, backgroundColor: '#fff', borderRadius: 10 }}>

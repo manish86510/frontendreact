@@ -16,12 +16,12 @@ import endpoints from "../api/endpoints";
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 400,
-      flexGrow: 1,
+      flexGrow: 1
     },
     maincard:{
         display:"flex",
         flexWrap:"wrap",
-        justifyContent:"space-evenly",
+        // justifyContent:"space-evenly",
     },
     maincard11:{
         display:"flex",
@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
         color : "black",
         width:"100%",
         overflow:"hidden",
-        textOverflow:"ellipsis"
+        textOverflow:"ellipsis",
+        fontFamily:"Daikon-Regular"
         // height:"2rem"
     },
     icons:{
@@ -159,7 +160,7 @@ export default function Services(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography variant="h5">Services</Typography><hr/>
+        <Typography variant="h5" style={{fontFamily:'Daikon-Bold'}}>Services</Typography><hr/>
         <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div key={index} className={classes.maincard1}>
                     <Box>

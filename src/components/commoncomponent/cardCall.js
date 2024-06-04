@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Container } from "@material-ui/core";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   search:{
@@ -19,13 +20,22 @@ const useStyles = makeStyles((theme) => ({
   TextArea:{
     // width:"34rem"
   },
+  loader:{
+    // display:"flex",
+    // justifyContent:"center",
+    // textAlign:"center",
+    padding:"20% 0% 0% 30%"
+  },
+  heading:{
+    fontFamily:"Daikon-Bold"
+  }
 }))
 
 
 export default function CardCall({setSelectedId}){
 
     const [data,setData] = useState([]);
-    const [search,setSearch] = useState("")
+    const [search,setSearch] = useState("");
     
 
     const classes = useStyles();
@@ -52,6 +62,7 @@ export default function CardCall({setSelectedId}){
   const handleChange = (e)=>{
     setSearch(e.target.value)
   }
+  
 
    const filter = data.filter((f)=>f.name.toLowerCase().includes(search.toLowerCase()))
 
@@ -60,17 +71,18 @@ export default function CardCall({setSelectedId}){
 
     return(
         <>
-        <Grid container direction="row"  spacing={3} >
+        {data ? <Grid container direction="row"  spacing={3} >
           <Grid item xs={8}>
-          <Typography variant="h4">Company List</Typography><hr/>
+          <Typography variant="h4" className={classes.heading}>Company List</Typography><hr/>
         <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search} variant="outlined" fullWidth onChange={handleChange} /> 
-          {/* <Button variant="contained" color="primary">Primary</Button> */}
+        {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
           </Grid>
         <Grid item xs={8}>{filter.map((m)=><CardCommon card={m} id={m.id} setSelectedId={setSelectedId} />)}</Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid>
+        </Grid>:<Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
+
         </>
     )
 }

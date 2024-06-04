@@ -109,7 +109,14 @@ const useStyles = makeStyles((theme) => ({
   heading:{
     color:"black",
     textAlign: 'center',
-    textDecoration:"none"
+    textDecoration:"none",
+    fontFamily:"Daikon-Bold"
+  },
+  heading1:{
+    color:"black",
+    textAlign: 'center',
+    textDecoration:"none",
+    fontFamily:"Daikon-Regular"
   }
 }));
 
@@ -175,10 +182,9 @@ export default function Carousel(){
       dots={false}
       >
       {data.map((m)=><div key={m.id} className='item' onClick={() => handleClick(m.id)}>
-        {console.log("map id",m.id)}
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
         <Link to='/carousel-call' state={m.id} className={classes.heading}><h4 >{m.short_desc}</h4></Link>
-        <p className={classes.heading}>{m.long_desc}</p>
+        <p className={classes.heading1}>{m.long_desc}</p>
         <p className={classes.heading}>{m.date}</p>
     </div>)}
     </OwlCarousel></div>

@@ -19,7 +19,8 @@ const styles = theme => ({
     },
     cardHeader: {
         fontSize: 16,
-        fontWeight: 'bold'
+        // fontWeight: 'bold',
+        fontFamily:"Daikon-Bold"
     },
     registerButton: {
         // color: 'white',
@@ -45,6 +46,13 @@ const styles = theme => ({
     body:{
         marginTop: theme.spacing(1),
         marginLeft: theme.spacing(1),
+        
+    },
+    event:{
+        fontFamily:"Daikon-Regular"
+    },
+    eventTitle:{
+        fontFamily:"Daikon-Bold"
     }
 });
 
@@ -78,15 +86,15 @@ const UpcomingEventCard = ({ classes }) => {
                         <Typography variant="subtitle1">{eventData.month}</Typography>
                     </div>
                     <div className={classes.body}>
-                        <Typography variant="body1" component="p">{eventData.title}</Typography>
-                        <Typography variant="body2" color="textSecondary">{eventData.time}</Typography>
-                        <Typography variant="body2" color="textSecondary">Speaker: {eventData.speaker}</Typography>
-                        <Typography variant="body2" color="textSecondary">{eventData.role}</Typography>
-                        <Typography variant="body2" color="textSecondary">Registered: {eventData.registered}</Typography>
+                        <Typography variant="body1" className={classes.eventTitle} component="p">{eventData.title}</Typography>
+                        <Typography variant="body2" className={classes.event} color="textSecondary">{eventData.time}</Typography>
+                        <Typography variant="body2" className={classes.event} color="textSecondary">Speaker: {eventData.speaker}</Typography>
+                        <Typography variant="body2" className={classes.event} color="textSecondary">{eventData.role}</Typography>
+                        <Typography variant="body2" className={classes.event} color="textSecondary">Registered: {eventData.registered}</Typography>
                     </div>
                 </div>
-                <Button variant='contained' className={classes.registerButton}>
-                    Register
+                <Button variant='contained' color="primary" className={classes.registerButton}>
+                    Register Here
                 </Button>
             </CardContent>
         </Card>

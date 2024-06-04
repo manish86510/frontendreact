@@ -29,7 +29,7 @@ import Icon from '@material-ui/core/Icon';
 import Badge from '@material-ui/core/Badge';
 
 
-const drawerWidth = 248;
+const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
@@ -51,7 +51,8 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         background: '#fafafa',
-        color: '#657786'
+        color: '#657786',
+        fontFamily:"Daikon-Regular"
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -74,7 +75,7 @@ const styles = theme => ({
         background: '#fafafa',
     },
     drawerOpen: {
-        width: '15.5rem',
+        width: '15rem',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -134,45 +135,45 @@ class SideNav extends React.Component {
                     "selected": true,
                     "link": "/home",
                 },
-                {
-                    "title": "Bookmark",
-                    "icon": "explore",
-                    "selected": false,
-                    "link": "/bookmark",
-                },
-                {
-                    "title": "Notification",
-                    "icon": "notifications",
-                    "selected": false,
-                    "link": "/notifications",
-                },
-                {
-                    "title": "Collaborate",
-                    "icon": "wb_incandescent",
-                    "selected": false,
-                    "link": "/collaborate",
-                },
+                // {
+                //     "title": "Bookmark",
+                //     "icon": "explore",
+                //     "selected": false,
+                //     "link": "/bookmark",
+                // },
+                // {
+                //     "title": "Notification",
+                //     "icon": "notifications",
+                //     "selected": false,
+                //     "link": "/notifications",
+                // },
+                // {
+                //     "title": "Collaborate",
+                //     "icon": "wb_incandescent",
+                //     "selected": false,
+                //     "link": "/collaborate",
+                // },
                 {
                     "title": "Events",
-                    "icon": "date_range",
+                    "icon": "explore",
                     "selected": false,
                     "link": "/events",
                 },
-                {
-                    "title": "Tag",
-                    "icon": "local_offer",
-                    "selected": false,
-                    "link": "/tags",
-                },
                 // {
-                //     "title": "Services",
-                //     "icon": "date_range",
+                //     "title": "Tag",
+                //     "icon": "local_offer",
                 //     "selected": false,
-                //     "link": "/services",
+                //     "link": "/tags",
                 // },
                 {
-                    "title": "Government Schemes",
+                    "title": "chapter",
                     "icon": "date_range",
+                    "selected": false,
+                    "link": "/chapter",
+                },
+                {
+                    "title": "Govt. Schemes",
+                    "icon": "local_offer",
                     "selected": false,
                     "link": "/governmentSchemes-tab",
                 },
@@ -477,7 +478,7 @@ class SideNav extends React.Component {
                                             // color={menu.selected?"primary":"default"} 
                                             className={"material-icons-outlined " + menu.icon}>{menu.icon}</Icon>
                                     </ListItemIcon>
-                                    <ListItemText primary={menu.title} />
+                                    <ListItemText primary={menu.title}  />
                                 </ListItem>
                             ))
                         }

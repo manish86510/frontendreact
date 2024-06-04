@@ -9,6 +9,23 @@ import Button from '@material-ui/core/Button';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import axios from "axios";
 import endpoints,{base_uri} from "../../api/endpoints";
+import SlidingForm from "../feed/SlidingForm";
+import Modal from '@material-ui/core/Modal';
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+  }
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,28 +45,40 @@ const useStyles = makeStyles((theme) => ({
     },
     heading:{
         textAlign:"center",
-        padding:"1rem 0rem 1rem 0rem"
+        padding:"1rem 0rem 1rem 0rem",
+        fontFamily:"Daikon-Bold"
     },
     topHeader:{
         // padding:"1rem",
         textAlign:"center",
-        padding:"1rem"
+        padding:"1rem",
+        fontFamily:"Daikon-Bold"
     },
     redirect:{
         display:"flex"
     },
     redirectHeading:{
-        margin:"0rem 0rem 0rem 0.5rem"
+        margin:"0rem 0rem 0rem 0.5rem",
+        fontFamily:"Daikon-Bold"
     },
     apply:{
         display:"flex",
         justifyContent:"space-between"
-    }
+    },
+    description:{
+        fontFamily:"Daikon-Regular"
+    },
+    modal:{
+        paddingTop:"6rem",
+        width:"50%"
+    },
+    
 }));
 
 export default function CompanyDetail({id}){
-    const [data,setData] = useState([])
+    const [data,setData] = useState([]);
     const classes = useStyles();
+    const [open, setOpen] = useState(false);
 
     var getToken = localStorage.getItem('access');
     const fetchSpecificCompany = async ()=>{
@@ -65,26 +94,40 @@ export default function CompanyDetail({id}){
     useEffect(()=>{
         fetchSpecificCompany()
     },[])
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
     return(
         <>
-        <Container>
-            <Container className={classes.topHeader}><Typography variant="h4">{data.name}</Typography></Container>
+        <Container >
+           <Typography className={classes.topHeader} variant="h4">{data.name}</Typography>
             
             <Box className={classes.imageContainer} >
                 <img src="https://bharatpreneurs.org/images/mainh.webp" alt="imageishere" className={classes.image}/>
             </Box>
             <Typography variant="h4" className={classes.heading}>Here Is Heading Of Bharatpreneurs</Typography>
-            <Typography>{data.description}</Typography><br/>
-            
-            {/* <Typography> At Bharatpreneurs, our diverse exhibition stalls cater to three pivotal sectors. Explore finance and funding with leading banks, finance companies, and management consultants. Delve into technology and operations with legal services, IT firms, and cutting-edge cloud and data companies. Lastly, engage with cutting-edge Media and Marketing companies, spanning media outlets, branding agencies, digital marketing, and brand management. Join us for a convergence of industries, fostering collaboration and innovation in the heart of Indian entrepreneurship.
-            </Typography> */}
+            <Typography className={classes.description}>{data.description}</Typography><br/>
             <br/><br/><br/>
             <Box className={classes.apply}>
             <Box className={classes.redirect}>
             <ArrowRightAltIcon/> <a target="_blank" href="https://bharatpreneurs.org/"><Typography className={classes.redirectHeading}>Redirect to Company Website</Typography></a></Box>
-            <Button variant="contained" color="primary"> &nbsp;Apply &nbsp;
+            <Button variant="contained" color="primary" type="button" onClick={handleOpen}> &nbsp;Apply &nbsp;
       </Button></Box>
         </Container>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Container className={classes.modal}>
+        <SlidingForm/></Container>
+      </Modal>
         </>
     )
 }

@@ -14,7 +14,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import endpoints,{base_uri} from "../../api/endpoints";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
       margin:"0rem 0rem 0rem 1rem",
       textDecoration:"none",
       color:"black"
+  },
+  loader:{
+      // display:"flex",
+      // justifyContent:"center",
+      // textAlign:"center",
+      padding:"20% 0% 0% 30%"
   }
 }));
 
@@ -106,7 +112,7 @@ export default function ComponentTabs({card}){
             {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid> : <h1>Data Still Loading</h1>}
+        </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
         </>
     )
 }

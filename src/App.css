@@ -47,3 +47,7 @@
   width:100%;
   position:absolute;
 }
+
+.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock{
+  font-family: 'Daikon-Regular';
+}
