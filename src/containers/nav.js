@@ -153,7 +153,7 @@ class SideNav extends React.Component {
                 // },
                 {
                     "title": "Events",
-                    "icon": "explore",
+                    "icon": "date_range",
                     "selected": false,
                     "link": "/events",
                 },
@@ -165,7 +165,7 @@ class SideNav extends React.Component {
                 // },
                 {
                     "title": "chapter",
-                    "icon": "date_range",
+                    "icon": "explore",
                     "selected": false,
                     "link": "/chapter",
                 },
@@ -342,12 +342,13 @@ class SideNav extends React.Component {
                 item.selected = true;
             }
         });
-        this.setState({ menuArray: menu_list });
+        this.setState({ menuArray: menu_list, home_title: menu.title });
         this.props.history.push({ pathname: menu.link });
     }
 
     render() {
         const { classes, children } = this.props;
+        // console.log("arrayyyyy",this.state.menuArray)
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -456,7 +457,7 @@ class SideNav extends React.Component {
                     <div className={classes.toolbar} style={{paddingRight:'35px', }}>
                         <IconButton onClick={this.handleDrawerClose}>
                             {/* <ChevronLeftIcon /> */}
-                            <img style={{width:'140px'}} src='/images/BP.png' />
+                            <img style={{width:'140px'}} src='/images/BP.png' alt='altimage' />
                         </IconButton>
                     </div>
 

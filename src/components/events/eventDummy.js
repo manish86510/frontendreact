@@ -67,7 +67,7 @@ const EventCard = () => {
   };
 
   const loader = {
-    padding:"20% 0% 0% 30%"
+    padding:"20% 0% 0% 45%"
   }
 
   const photoStyle = {

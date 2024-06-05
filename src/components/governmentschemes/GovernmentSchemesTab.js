@@ -49,10 +49,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop:"4%"
     },
     loader:{
-        // display:"flex",
-        // justifyContent:"center",
-        // textAlign:"center",
-        padding:"20% 0% 0% 30%"
+        padding:"20% 0% 0% 45%"
     }
 }))
 
@@ -108,7 +105,7 @@ export default function GovernmentSchemesTab(){
       </Container>
         {/* <h1>I am working In Schemes</h1> */}</Grid>
         
-        {data ? <Grid item xs={8}>{filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
+        {data.length > 0 ? <Grid item xs={8}>{filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
@@ -117,7 +114,7 @@ export default function GovernmentSchemesTab(){
                 <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:data.short_desc }}></Typography>
              </Grid>
             </Grid> </Box>
-        </Paper> )}</Grid> :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
+        </Paper> )}</Grid> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>
