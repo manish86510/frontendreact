@@ -48,7 +48,7 @@ const endpoints = {
   GET_ALL_SCHEMES: base_uri + '/schemes/',
   get_industry: base_uri + '/industry/',
   get_allCompany: base_uri + '/company/',
-  post_company: base_uri + '/company/add/',
+  post_company: base_uri + '/company/',
   COMPANY_VERIFY: base_uri + '/verify-company/',
   DELETE_NEWS: base_uri + '/api/delete_news',
   DELETE_EVENTS: base_uri + '/api/delete_events',

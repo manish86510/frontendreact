@@ -134,16 +134,16 @@ const EventCard = () => {
     <>
       {data.length>0 ? <Grid> {data.map((event) => (
         <div key={event.id} style={cardStyle}>
-          <div style={titleStyle}>{event.title}</div>
+          <div style={titleStyle} dangerouslySetInnerHTML={{ __html:event.title }}></div>
           <div style={dateStyle}>{event.date}</div>
-          <div style={shortDescStyle}>{event.short_desc}</div>
+          <div style={shortDescStyle} dangerouslySetInnerHTML={{ __html:event.short_desc }}></div>
           <img src={`${base_uri}${event.banner}`} alt="Event" style={photoStyle} />
           <div style={priceStyle}>{`₹${event.amount}`}</div>
           <div
             id={`long-desc-${event.id}`}
             style={expanded[event.id] ? expandedDescStyle : longDescStyle}
+            dangerouslySetInnerHTML={{ __html: event.long_desc }}
           >
-            {event.long_desc}
           </div>
           {isOverflowing[event.id] && (
             <span

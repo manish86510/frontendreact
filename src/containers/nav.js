@@ -119,12 +119,10 @@ class SideNav extends React.Component {
             userMenuOpen: false,
             sideList: '',
             homeLink: true,
-            bookmarkLink: false,
-            bookmarkLink1: false,
-            bookmarkLink2: false,
-            eventsLink: false,
-            collabrationLink: false,
-            notificationLink: false,
+            eventLink: false,
+            chapterLink: false,
+            schemesLink: false,
+            myworkLink: false,
             myAccount: false,
             userProfile: JSON.parse(localStorage.getItem("userInfo")),
             home_title: "",
@@ -234,12 +232,10 @@ class SideNav extends React.Component {
         this.setState({
             home_title: "Home",
             homeLink: true,
-            bookmarkLink: false,
-            bookmarkLink1: false,
-            bookmarkLink2: false,
-            notificationLink: false,
-            collabrationLink: false,
-            eventsLink: false,
+            eventLink: false,
+            chapterLink: false,
+            schemesLink: false,
+            myworkLink: false,
         });
         this.props.history.push({ pathname: "/home" })
     }
@@ -279,6 +275,7 @@ class SideNav extends React.Component {
         });
         this.props.history.push({ pathname: "/notifications" })
     }
+    
     nav_collaborate = () => {
         // this.state.home_title = "Collaborate";
         this.setState({

@@ -108,13 +108,13 @@ export default function GovernmentSchemesTab(){
       </Container>
         {/* <h1>I am working In Schemes</h1> */}</Grid>
         
-        {data ? <Grid item xs={8}>{filter.map((data)=> <Paper  className={classes.paper} onClick={() => handleClick(data.id)}>
+        {data ? <Grid item xs={8}>{filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
                 <Link to="/govt-description">
                 <Typography variant="h6" className={classes.heading} >{data.name}</Typography></Link>
-                <Typography className={classes.description}>{data.short_desc}</Typography>
+                <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:data.short_desc }}></Typography>
              </Grid>
             </Grid> </Box>
         </Paper> )}</Grid> :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}

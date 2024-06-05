@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     color:"black",
     textAlign: 'center',
     textDecoration:"none",
-    fontFamily:"Daikon-Bold"
+    fontFamily:"Daikon-Regular"
   },
   heading1:{
     color:"black",
@@ -175,7 +175,7 @@ export default function Carousel(){
       <div className={classes.carouselContainer} >
       <OwlCarousel 
       autoplay 
-      autoplayTimeout='2000' 
+      autoplayTimeout='2500' 
       className='owl-theme' 
       loop margin={10} 
       nav={true}
@@ -183,8 +183,9 @@ export default function Carousel(){
       >
       {data.map((m)=><div key={m.id} className='item' onClick={() => handleClick(m.id)}>
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
-        <Link to='/carousel-call' state={m.id} className={classes.heading}><h4 >{m.short_desc}</h4></Link>
-        <p className={classes.heading1}>{m.long_desc}</p>
+        <Link to='/carousel-call' state={m.id} className={classes.heading}>
+          <h4 dangerouslySetInnerHTML={{ __html: m.short_desc }}></h4>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.long_desc }}></p></Link>
         <p className={classes.heading}>{m.date}</p>
     </div>)}
     </OwlCarousel></div>

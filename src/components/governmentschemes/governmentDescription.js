@@ -5,6 +5,7 @@ import endpoints,{base_uri} from "../../api/endpoints";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -91,7 +92,7 @@ export default function GovernmentDescription(){
             }
         })
         setData(fetch.data.data)
-            console.log(fetch.data.data,"here is response of description")
+            // console.log(fetch.data.data,"here is response of description")
         
     }
     catch(error){
@@ -112,9 +113,9 @@ export default function GovernmentDescription(){
             </Box>
             <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
             <Typography className={classes.date}>Date: {data.launched_date} </Typography><br/>
-            <Typography className={classes.longdesc}>{data.long_desc}</Typography>
+            <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html:data.long_desc }}></Typography>
             <br/><br/><br/>
-            {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
+            <Box className={classes.website}><ArrowRightAltIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
         </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}

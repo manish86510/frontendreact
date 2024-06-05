@@ -109,9 +109,9 @@ export default function CarouselCall(){
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>{data.source}</Typography>
+            <Typography className={classes.heading}>Source :{data.source}</Typography>
             <Typography className={classes.date}>Date : {data.date}</Typography><br/>
-            <Typography className={classes.longdesc}>{data.long_desc}</Typography>
+            <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html: data.long_desc }}></Typography>
             <br/><br/><br/>
             {/* <Box className={classes.website}><ArrowForwardIcon/> <a href="google.com" target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
         </Container></Grid>

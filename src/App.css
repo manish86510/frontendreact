@@ -51,3 +51,11 @@
 .MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock{
   font-family: 'Daikon-Regular';
 }
+
+.quill{
+  padding: 0rem 2rem 0rem 0.5rem;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow{
+  height: 7rem;
+}

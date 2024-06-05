@@ -11,8 +11,11 @@ import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
 import axios from "axios";
+import DoneIcon from '@material-ui/icons/Done';
 import endpoints,{post_company} from "../../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 // class CompanyProfile extends React.Component{
 
@@ -76,6 +79,8 @@ function CompanyProfile(){
     const classes = useStyles();
     const [open,setOpen] = useState(false);
     const [modalData,setModalData] = useState([]);
+    const [id,setId] = useState(null)
+    const [getIdData,setIdData] = useState(null)
     // const [expand,setExpand] = useState([]);
     const [cform,setCForm] = useState({
       name: '',
@@ -106,8 +111,63 @@ function CompanyProfile(){
       const handleChange = (e) => {
         const {name,value} = e.target;
         setCForm({...cform,[name]:value})
+      }
+
+      const handleChange1 = (e) => {
+        const {name,value} = e.target;
         setSform({...sform, [name]:value})
       }
+
+      const handleDescriptionChange = (value) => {
+        setCForm({ ...cform, description: value });
+    };
+
+    useEffect(()=>{
+      const getData = localStorage.getItem('userInfo')
+      const jsData = JSON.parse(getData);
+      setId(jsData.pk)
+      // console.log("json data",jsData.pk)
+    },[])
+
+    // console.log("id is here",id)
+
+    
+
+    useEffect(()=>{
+      const getId = async ()=>{
+        try{
+        const gettingId = await axios.get(`${endpoints.get_allCompany}${id}`,{
+          headers:{
+            Authorization : 'Bearer ' + getToken
+          }
+        })
+        console.log("i am gettingId",gettingId.data)
+        setIdData(gettingId.data)
+        // const companyData = gettingId.data; // Adjust this according to the actual data structure returned
+              // setCForm({
+              //     name: companyData.name || '',
+              //     email: companyData.email || '',
+              //     number: companyData.number || '',
+              //     gst_number: companyData.gst_number || '',
+              //     reg_number: companyData.reg_number || '',
+              //     reg_date: companyData.reg_date || '',
+              //     sector: companyData.sector || '',
+              //     description: companyData.description || '',
+              //     address: companyData.address || '',
+              // });
+              setCForm({...getIdData})
+      }
+      catch(error){
+
+      }
+  
+      }
+      if(id!== undefined){
+      getId()
+      }
+    },[getIdData,getToken,id])
+
+    // console.log("gettingId data",getIdData)
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -125,7 +185,6 @@ function CompanyProfile(){
               Authorization : 'Bearer ' + getToken
             }
           })
-
           toast.success(posts.data.message || "Form Submitted Successfully")
 
           // console.log(posts,"here is posted s form")
@@ -149,25 +208,13 @@ function CompanyProfile(){
         })
         toast.success(response.data.message || "Form Submitted Successfully")
 
-        // console.log(response,"response of form")
+        console.log(response,"response of form")
       }
       catch(error){
         // console.log(error.response.data)
         toast.error(error.response.data.message ||"Form Not Submitted.")
       }
-      setCForm({
-        name: '',
-        email: '',
-        number: '',
-        gst_number: '',
-        reg_number: '',
-        reg_date: '',
-        sector: '',
-        description : '',
-        address: '',
-        // Portfolio: '',
-    })
-      // console.log("submitted form ",cform)
+      console.log("submitted form ",cform)
       }
       
       // useEffect(()=>{
@@ -272,6 +319,10 @@ function CompanyProfile(){
             fontWeight:500,
             padding:"0.5rem 0rem 0.3rem 1.3rem",
           },
+          reactQuillContainer: {
+            maxHeight: "10rem", 
+            overflow: "auto"
+        }
     }
 
    
@@ -292,39 +343,52 @@ function CompanyProfile(){
       <Box>
         <form onSubmit={companySubmit}>
             <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
-            // InputLabelProps={{ shrink: true }} 
+            InputLabelProps={{ shrink: true }} 
             name="name" value={cform.name} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="email" value={cform.email} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="gst_number" value={cform.gst_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="reg_number" value={cform.reg_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
             <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="sector" value={cform.sector} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
+            {/* <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
             name="description" value={cform.description} onChange={handleChange}
-            />
-            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" multiline minRows={2}
+            /> */}
+            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
             />
+            <Box className={classes.reactQuillContainer}><ReactQuill
+              value={cform.description}
+              required
+              onChange={ handleDescriptionChange}
+              className={classes.editor}
+            /></Box>
             {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
             name="Portfolio" value={cform.Portfolio} onChange={handleChange}
             /> */}
             <Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" type="submit" >
-                    Submit
+                    <DoneIcon/>
             </Button></Box></form>
             </Box> 
             </Box>
@@ -346,10 +410,10 @@ function CompanyProfile(){
           <Typography variant="h6" style={styles.headingmodal}>Input Company Details</Typography>
           <Container>
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
-            name="name" value={sform.name} onChange={handleChange}
+            name="name" value={sform.name} onChange={handleChange1}
             /></Box>  
             <Box><Typography style={styles.modalinputhead}>Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text" multiline minRows={3} variant="outlined" className={classes.outlinedBasic}
-            name="desc" value={sform.desc} onChange={handleChange}
+            name="desc" value={sform.desc} onChange={handleChange1}
             /></Box>  
             {/* <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
             name="long_desc" value={sform.long_desc} onChange={handleChange}

@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
   heading:{
       textAlign:"center",
-      padding:"1rem 0rem 1rem 0rem"
+      padding:"1rem 0rem 1rem 0rem",
+      fontFamily:"Daikon-Bold"
   },
   website:{
       display:"flex",
@@ -49,6 +50,18 @@ const useStyles = makeStyles((theme) => ({
       // justifyContent:"center",
       // textAlign:"center",
       padding:"20% 0% 0% 30%"
+  },
+  top:{
+    display:"flex",
+    justifyContent:"center",
+    padding:"0rem 0rem 1rem 0rem",
+    fontFamily:"Daikon-Bold"
+  },
+  longdesc:{
+    fontFamily:"Daikon-Regular"
+  },
+  date:{
+    fontFamily:"Daikon-Regular"
   }
 }));
 
@@ -101,13 +114,13 @@ export default function ComponentTabs({card}){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4">Government Scheme Page</Typography>
+            <Typography variant="h4" className={classes.top}>Government Scheme Page</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
             <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
-            <Typography variant="h6">Date {data.launched_date}</Typography><br/>
-            <Typography>{data.long_desc}</Typography>
+            <Typography className={classes.date}>Date: {data.launched_date}</Typography><br/>
+            <Typography dangerouslySetInnerHTML={{ __html:data.long_desc }} className={classes.longdesc}></Typography>
             <br/><br/><br/>
             {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
         </Container></Grid>

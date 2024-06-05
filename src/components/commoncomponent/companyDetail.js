@@ -12,20 +12,6 @@ import endpoints,{base_uri} from "../../api/endpoints";
 import SlidingForm from "../feed/SlidingForm";
 import Modal from '@material-ui/core/Modal';
 
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-  }
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     heading:{
         textAlign:"center",
         padding:"1rem 0rem 1rem 0rem",
-        fontFamily:"Daikon-Bold"
+        fontFamily:"Daikon-Bold",
+        fontSize:"x-large"
     },
     topHeader:{
         // padding:"1rem",
@@ -110,7 +97,7 @@ export default function CompanyDetail({id}){
             <Box className={classes.imageContainer} >
                 <img src="https://bharatpreneurs.org/images/mainh.webp" alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>Here Is Heading Of Bharatpreneurs</Typography>
+            <Typography className={classes.heading}>Here Is Heading Of Bharatpreneurs</Typography>
             <Typography className={classes.description}>{data.description}</Typography><br/>
             <br/><br/><br/>
             <Box className={classes.apply}>
