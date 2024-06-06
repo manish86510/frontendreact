@@ -110,13 +110,28 @@ const useStyles = makeStyles((theme) => ({
     color:"black",
     textAlign: 'center',
     textDecoration:"none",
-    fontFamily:"Daikon-Regular"
+    fontFamily:"Daikon-Regular",
+    margin: '0', // Remove default margin
+    padding: '-1rem 0'
   },
   heading1:{
     color:"black",
     textAlign: 'center',
     textDecoration:"none",
-    fontFamily:"Daikon-Regular"
+    fontFamily:"Daikon-Regular",
+    overflow:"hidden",
+    textOverflow:"ellipsis",
+    margin: '0', // Remove default margin
+    padding: '-0.5rem 0',
+
+  },
+  date: {
+    color: "black",
+    textAlign: 'center',
+    textDecoration: "none",
+    fontFamily: "Daikon-Regular",
+    margin: '0', // Remove default margin
+    padding: '-0.5rem 0', // Adjust as needed for spacing
   }
 }));
 
@@ -135,6 +150,7 @@ export default function Carousel(){
         });
         setData(res.data.data);
         setLoading(false); 
+        console.log("response in carousel",data)
       } catch (error) {
         console.log(error);
         setLoading(false); 
@@ -174,18 +190,18 @@ export default function Carousel(){
 
       <div className={classes.carouselContainer} >
       <OwlCarousel 
-      autoplay 
-      autoplayTimeout='2500' 
+      // autoplay 
+      // autoplayTimeout='2500' 
       className='owl-theme' 
       loop margin={10} 
       nav={true}
       dots={false}
       >
-      {data.map((m)=><div key={m.id} className='item' onClick={() => handleClick(m.id)}>
+      {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}>
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
-        <Link to='/carousel-call' state={m.id} className={classes.heading}>
-          <h4 dangerouslySetInnerHTML={{ __html: m.short_desc }}></h4>
-        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.long_desc }}></p></Link>
+        <Link to='/carousel-call' state={m.id} className={classes.heading} >
+          <h4 dangerouslySetInnerHTML={{ __html: m.title }} ></h4>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc }} style={{margin:0}}></p></Link>
         <p className={classes.heading}>{m.date}</p>
     </div>)}
     </OwlCarousel></div>

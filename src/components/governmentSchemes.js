@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
         
         margin:'0.5rem',
     },
-    label:{
-        padding:"0.2rem 0rem 0rem 0.5rem",
-        color:"black",
-    },
+    // label:{
+    //     padding:"0.2rem 0rem 0rem 0.5rem",
+    //     color:"black",
+    // },
     icons:{
         // width:"2rem",
         // height:"rem"
@@ -72,7 +72,9 @@ const useStyles = makeStyles((theme) => ({
     label:{
       fontFamily:"Daikon-Regular",
       color:"black",
-      padding:"0rem 0rem 0rem 0.5rem"
+      padding:"0rem 0rem 0rem 0.5rem",
+      overflow:"hidden",
+        textOverflow:"ellipsis",
     }
   }));
 
