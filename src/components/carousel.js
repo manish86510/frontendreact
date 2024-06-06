@@ -201,7 +201,7 @@ export default function Carousel(){
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
         <Link to='/carousel-call' state={m.id} className={classes.heading} >
           <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1}}></h4>
-        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc }} style={{marginTop:0}}></p></Link>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc.slice(0,50) }} style={{marginTop:0}}></p></Link>
         <p className={classes.heading} >{m.date}</p>
     </div>)}
     </OwlCarousel></div>

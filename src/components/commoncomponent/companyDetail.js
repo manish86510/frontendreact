@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
         paddingTop:"6rem",
         width:"50%"
     },
+    belowText:{
+        display:"flex",
+        justifyContent:" space-between"
+    }
     
 }));
 
@@ -98,7 +102,11 @@ export default function CompanyDetail({id}){
                 <img src="https://bharatpreneurs.org/images/mainh.webp" alt="imageishere" className={classes.image}/>
             </Box>
             <Typography className={classes.heading}>Here Is Heading Of Bharatpreneurs</Typography>
-            <Typography className={classes.description}>{data.description}</Typography><br/>
+            <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:data.description }}></Typography><br/>
+            <Box className={classes.belowText}><Typography className={classes.description}>Email: {data.email}</Typography>
+            <Typography className={classes.description}>Number: {data.number}</Typography></Box><br/>
+            <Typography className={classes.description}>Address: {data.address}</Typography>
+            <br/>
             <br/><br/><br/>
             <Box className={classes.apply}>
             <Box className={classes.redirect}>

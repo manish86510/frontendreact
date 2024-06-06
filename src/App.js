@@ -40,6 +40,7 @@ import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
 import MyWorkTab from './components/myWork/MyWorkTab';
+import Chapter from './components/chapter/chapter';
 
 
 const theme = createTheme({
@@ -108,10 +109,11 @@ export default function App() {
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/my_work" component={MyWorkTab} />
                         <Route path="/carousel-call" component={CarouselCall} />
+                        <Route path="/chapter" component={Chapter} />
                         <Route path="/company-tabs" component={CompanyTab} />
                         {/* <Route path="/company-detail" component= {CompanyDetailTab}/> */}
                         <Route path="/company-detail">
-                            <CompanyDetailTab selectedId={selectedId} />
+                            <CompanyDetailTab   selectedId={selectedId}/>
                         </Route>
                         <Route path="/governmentSchemes-tab" component={GovernmentSchemesTab} />
 

@@ -91,7 +91,7 @@ export default function CardCommon({id,card, setSelectedId}){
                         // onClick={() => getid(card.id)}
                         onClick={handleSelect}
                         >{card.name}</Typography></Link>
-                    <Typography className={classes.label1}>{card.description}</Typography></Container>
+                    <Typography className={classes.label1} dangerouslySetInnerHTML={{ __html:card.description }}></Typography></Container>
                     </Box>
                 </div></Box></Container></Grid>
         </>

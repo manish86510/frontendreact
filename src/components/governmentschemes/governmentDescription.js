@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
     heading:{
         textAlign:"center",
         padding:"1rem 0rem 1rem 0rem",
-        fontFamily:"Daikon-Bold"
+        fontFamily:"Daikon-Bold",
+        fontSize:"large"
     },
     website:{
         display:"flex",
@@ -111,7 +112,7 @@ export default function GovernmentDescription(){
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
+            <Typography className={classes.heading}>{data.name}</Typography>
             <Typography className={classes.date}>Date: {data.launched_date} </Typography><br/>
             <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html:data.long_desc }}></Typography>
             <br/><br/><br/>

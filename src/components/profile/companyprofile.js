@@ -17,56 +17,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-// class CompanyProfile extends React.Component{
-
-//     constructor(props){
-//         super(props);
-//         this.state = {
-//             name: '',
-//             email: '',
-//             number: '',
-//             gST_no: '',
-//             reg_no: '',
-//             reg_date: '',
-//             sector: '',
-//             description : '',
-//             address: '',
-//             portfolio: '',
-//         };
-//     }
-
-//     componentDidMount(){
-
-//     }
-
-//     render(){
-//         const { classes } = this.props;
-//         return(
-//             <>
-//             <h1>I am working</h1>
-//             <TextField id="outlined-basic" fullWidth label="Name" type="text" variant="outlined" name="name" value={} />
- 
-//             </>
-
-//         )
-//     }
-// }
-
-// const data = [
-//   {
-//   name:"rahul",
-//   shortdesc:"describe",
-//   longdesc:"long describe"},
-//   {
-//     name:"satya",
-//     shortdesc:"shrtdesc",
-//     longdesc:"lgdesc"},
-//   {
-//     name:"shubham",
-//     shortdesc:"shrtdesc",
-//     longdesc:"lngdesc"},
-// ]
-
 const useStyles = makeStyles({
     outlinedBasic: {
         height: "6rem", 
@@ -79,8 +29,8 @@ function CompanyProfile(){
     const classes = useStyles();
     const [open,setOpen] = useState(false);
     const [modalData,setModalData] = useState([]);
-    const [id,setId] = useState(null)
-    const [getIdData,setIdData] = useState(null)
+    // const [id,setId] = useState(null)
+    // const [getIdData,setGetIdData] = useState(null)
     // const [expand,setExpand] = useState([]);
     const [cform,setCForm] = useState({
       name: '',
@@ -100,6 +50,44 @@ function CompanyProfile(){
       // long_desc : ""
     })
 
+
+    
+    const getToken = localStorage.getItem('access');
+    const getData = localStorage.getItem('userInfo')
+    const jsData = JSON.parse(getData);
+    // setId(jsData.pk)
+    const id = jsData.pk
+    // console.log('line 59',id)
+
+    useEffect(()=>{
+      const getId = async ()=>{
+        try{
+        const gettingId = await axios.get(`${endpoints.get_allCompany}${id}`,{
+          headers:{
+            Authorization : 'Bearer ' + getToken
+          }
+        })
+
+        const data = gettingId.data
+        
+        // setGetIdData(gettingId.data)
+        // const gData = gettingId.data
+        // console.log("here gdata",gData)
+              // setCForm({...gData})     
+              data.description = data.description || ''; // handle null value
+  
+              setCForm(data)   
+              // console.log("inside form",cform)    
+      }
+      catch(error){
+        console.log(error)
+      }
+  
+      }
+      getId()
+    },[id])
+
+    // console.log("after useeffect",cform)
     const handleOpen = () => {
         setOpen(true);
       };
@@ -118,60 +106,34 @@ function CompanyProfile(){
         setSform({...sform, [name]:value})
       }
 
-      const handleDescriptionChange = (value) => {
-        setCForm({ ...cform, description: value });
-    };
+    //   const handleDescriptionChange = (value) => {
+    //     setCForm({ ...cform, description: value });
+    // };
 
-    useEffect(()=>{
-      const getData = localStorage.getItem('userInfo')
-      const jsData = JSON.parse(getData);
-      setId(jsData.pk)
-      // console.log("json data",jsData.pk)
-    },[])
+    const handleEditorChange = (name, value) => {
+      setCForm({
+        ...cform,
+        [name]: value,
+      });
+    };
+    
+    
+
+   
+    // useEffect(()=>{
+   
+    //   // console.log("json data",jsData.pk)
+    // },[])
 
     // console.log("id is here",id)
 
     
 
-    useEffect(()=>{
-      const getId = async ()=>{
-        try{
-        const gettingId = await axios.get(`${endpoints.get_allCompany}${id}`,{
-          headers:{
-            Authorization : 'Bearer ' + getToken
-          }
-        })
-        console.log("i am gettingId",gettingId.data)
-        setIdData(gettingId.data)
-        // const companyData = gettingId.data; // Adjust this according to the actual data structure returned
-              // setCForm({
-              //     name: companyData.name || '',
-              //     email: companyData.email || '',
-              //     number: companyData.number || '',
-              //     gst_number: companyData.gst_number || '',
-              //     reg_number: companyData.reg_number || '',
-              //     reg_date: companyData.reg_date || '',
-              //     sector: companyData.sector || '',
-              //     description: companyData.description || '',
-              //     address: companyData.address || '',
-              // });
-              setCForm({...getIdData})
-      }
-      catch(error){
+   
 
-      }
-  
-      }
-      if(id!== undefined){
-      getId()
-      }
-    },[getIdData,getToken,id])
-
-    // console.log("gettingId data",getIdData)
 
       const handleSubmit = async (e) => {
         e.preventDefault();
-        // setModalData([...modalData,sform]);
         setModalData([...modalData, { ...sform, expanded: false }]);
         setSform({
         name :"",
@@ -197,7 +159,7 @@ function CompanyProfile(){
         handleClose()
       }
 
-      var getToken = localStorage.getItem('access');
+  
       const companySubmit =async (e)=>{
         e.preventDefault()
         try{
@@ -214,7 +176,25 @@ function CompanyProfile(){
         // console.log(error.response.data)
         toast.error(error.response.data.message ||"Form Not Submitted.")
       }
-      console.log("submitted form ",cform)
+      // console.log("submitted form ",cform)
+      }
+
+      const handleEdit = async (e)=>{
+        e.preventDefault()
+        try{
+          const response = await axios.put(`${endpoints.get_allCompany}${id}/`,cform,{
+            headers:{
+              Authorization : 'Bearer ' + getToken
+            }
+          })
+          toast.success(response.data.message || "Form Submitted Successfully")
+
+          console.log(response,"response of form after put")
+
+        }
+        catch(error){
+          toast.error(error.response.data.message ||"Form Not Edited.")
+        }
       }
       
       // useEffect(()=>{
@@ -282,7 +262,7 @@ function CompanyProfile(){
         buttonContainer: {
             display: "flex",
             justifyContent: "right",
-            margin: "1rem 5rem 0rem 0rem"
+            margin: "1rem 1rem 0rem 0rem"
           },
           modal:{
             color:"black",
@@ -322,6 +302,11 @@ function CompanyProfile(){
           reactQuillContainer: {
             maxHeight: "10rem", 
             overflow: "auto"
+        },
+        buttons:{
+          display:"flex",
+          justifyContent:"right",
+          padding:"1rem "
         }
     }
 
@@ -332,7 +317,6 @@ function CompanyProfile(){
 
     return(
         <>
-        {/* <h1>I am working</h1> */}
         <Box style={styles.headtop}>
         <Container style={styles.heading}>
         <Typography variant="h6" color="primary" style={styles.head}>
@@ -377,19 +361,30 @@ function CompanyProfile(){
             InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
             />
-            <Box className={classes.reactQuillContainer}><ReactQuill
-              value={cform.description}
-              required
-              onChange={ handleDescriptionChange}
-              className={classes.editor}
-            /></Box>
+            <Box className={classes.reactQuillContainer}>
+            {cform.name && (
+  <ReactQuill
+    value={cform.description}
+    required
+    onChange={(value) => handleEditorChange("description", value)}
+    className={classes.editor}
+  />
+)}
+
+            </Box>
             {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
             name="Portfolio" value={cform.Portfolio} onChange={handleChange}
             /> */}
+            <Box style={styles.buttons}>
             <Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" type="submit" >
                     <DoneIcon/>
-            </Button></Box></form>
+            </Button></Box>
+            <Box style={styles.buttonContainer}>
+            <Button variant="contained" color="primary" onClick={handleEdit} >
+                    Save
+            </Button></Box></Box></form>
+            
             </Box> 
             </Box>
             <Grid item xs={12} style={styles.headtop}>
