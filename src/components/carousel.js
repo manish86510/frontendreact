@@ -190,8 +190,8 @@ export default function Carousel(){
 
       <div className={classes.carouselContainer} >
       <OwlCarousel 
-      // autoplay 
-      // autoplayTimeout='2500' 
+      autoplay 
+      autoplayTimeout='2500' 
       className='owl-theme' 
       loop margin={10} 
       nav={true}
@@ -200,9 +200,9 @@ export default function Carousel(){
       {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}>
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
         <Link to='/carousel-call' state={m.id} className={classes.heading} >
-          <h4 dangerouslySetInnerHTML={{ __html: m.title }} ></h4>
-        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc }} style={{margin:0}}></p></Link>
-        <p className={classes.heading}>{m.date}</p>
+          <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1}}></h4>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc }} style={{marginTop:0}}></p></Link>
+        <p className={classes.heading} >{m.date}</p>
     </div>)}
     </OwlCarousel></div>
       </>
