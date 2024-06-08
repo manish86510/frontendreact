@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import "../../styles/commonCompany.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import endpoints from "../../api/endpoints";
+import endpoints,{base_uri} from "../../api/endpoints";
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,7 +83,7 @@ export default function CardCommon({id,card, setSelectedId}){
              <Grid  className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
-                      <img className={classes.image} src={card.image} alt={card.label}/> 
+                      <img className={classes.image} src={`${base_uri}${card.banner}`} alt={card.label}/> 
                       </Box>
                     <Container>
                         <Link to="/company-detail" >

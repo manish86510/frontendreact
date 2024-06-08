@@ -7,7 +7,9 @@ export default function Chapter(){
     return(
         <>
         <Grid container direction="row"  spacing={3}>
-            <Grid item xs={8}><Typography variant="h3">I am working in mapping area</Typography></Grid>
+            <Grid item xs={8}>
+                <Typography variant="h4">I am working </Typography>
+                </Grid>
             <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

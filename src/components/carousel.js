@@ -150,7 +150,7 @@ export default function Carousel(){
         });
         setData(res.data.data);
         setLoading(false); 
-        console.log("response in carousel",data)
+        // console.log("response in carousel",data)
       } catch (error) {
         console.log(error);
         setLoading(false); 
@@ -171,6 +171,13 @@ export default function Carousel(){
         state: { id }
       });
     };
+
+    const cutItShort =(data,limit)=>{
+      if(data.length>limit){
+        return data.slice(0,limit) + "...";
+      }
+      return data
+    }
 
     
   
@@ -197,12 +204,12 @@ export default function Carousel(){
       nav={true}
       dots={false}
       >
-      {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}>
+      {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}> <Link to='/carousel-call' state={m.id} className={classes.heading}  >
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
-        <Link to='/carousel-call' state={m.id} className={classes.heading} >
+       
           <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1}}></h4>
-        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: m.short_desc.slice(0,50) }} style={{marginTop:0}}></p></Link>
-        <p className={classes.heading} >{m.date}</p>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,39) }} style={{marginTop:0}}></p>
+        <p className={classes.heading} >{m.date}</p></Link>
     </div>)}
     </OwlCarousel></div>
       </>

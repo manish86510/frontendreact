@@ -40,7 +40,7 @@ import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
 import MyWorkTab from './components/myWork/MyWorkTab';
-import Chapter from './components/chapter/chapter';
+import Chapter from './components/chapter/Chapter';
 
 
 const theme = createTheme({
@@ -107,7 +107,9 @@ export default function App() {
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
                         <Route path="/component-tabs" component={componentTabs} />
-                        <Route path="/my_work" component={MyWorkTab} />
+                        <Route path="/my_work" >
+                        <MyWorkTab selectedId={selectedId}/>
+                        </Route>
                         <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/chapter" component={Chapter} />
                         <Route path="/company-tabs" component={CompanyTab} />

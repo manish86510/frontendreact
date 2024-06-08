@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     topheading:{
         display:"flex",
         justifyContent:"center",
-        textAlign:"center",
+        textAlign:"left",
         paddingBottom:"1rem",
         fontFamily:"Daikon-Bold"
     },
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         width:'100%',
         height:"100%",
         overflow:"hidden",
+        // display:"flex",
+        // justifyContent:"left",
+        // textAlign:"left"
     },
     image:{
         width: '100%',
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         // borderRadius:"1rem"
     },
     heading:{
-        textAlign:"center",
+        textAlign:"left",
         padding:"1rem 0rem 1rem 0rem",
         fontFamily:"Daikon-Bold"
     },
@@ -56,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
       padding:"20% 0% 0% 30%"
   },
   longdesc:{
-      fontFamily:"Daikon-Regular"
+      fontFamily:"Daikon-Regular",
+      
   },
   date:{
       fontFamily:"Daikon-Regular"
@@ -69,6 +73,7 @@ export default function CarouselCall(){
     const [loading, setLoading] = useState(true);
     const location = useLocation();
     const history = useHistory();
+    // console.log("here is props",props)
    
     useEffect(() => {
       if (location.state && location.state.id) {
@@ -89,7 +94,7 @@ export default function CarouselCall(){
           } 
         });
         setData(res.data.data);
-        console.log("data in carousel",res.data.data)
+        // console.log("data in carousel",res.data.data)
         setLoading(false); 
       } catch (error) {
         console.log(error);
@@ -109,7 +114,7 @@ export default function CarouselCall(){
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography className={classes.heading}>Source :{data.source}</Typography>
+            <Typography className={classes.heading}>Source : {data.source}</Typography>
             <Typography className={classes.date}>Date : {data.date}</Typography><br/>
             <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html: data.long_desc }}></Typography>
             <br/><br/><br/>

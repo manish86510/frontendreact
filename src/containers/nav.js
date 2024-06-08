@@ -164,7 +164,7 @@ class SideNav extends React.Component {
                 //     "link": "/tags",
                 // },
                 {
-                    "title": "chapter",
+                    "title": "Chapter",
                     "icon": "explore",
                     "selected": false,
                     "link": "/chapter",

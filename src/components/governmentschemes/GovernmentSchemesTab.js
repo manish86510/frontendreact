@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GovernmentSchemesTab(){
     const [data,setData] = useState([]);
     const [search,setSearch] = useState("");
+    const [sliced,setSliced]= useState("")
     const classes = useStyles();
 
     var getToken = localStorage.getItem('access');
@@ -67,7 +68,7 @@ export default function GovernmentSchemesTab(){
             }
         })
         setData(fetch.data.data)
-            console.log(fetch.data.data,"here is response of schemes")
+            // console.log(fetch.data.data,"here is response of schemes")
         
     }
     catch(error){
@@ -95,6 +96,13 @@ export default function GovernmentSchemesTab(){
       });
     };
 
+    const cutItShort = (data,limit)=>{
+        if (data.length> limit){
+            return data.slice(0,limit) + "..." ;
+        }
+        return data
+    }
+
     return(
         <> 
         <Grid container direction="row"  spacing={3}>
@@ -111,7 +119,7 @@ export default function GovernmentSchemesTab(){
             <Grid item xs={9} >
                 <Link to="/govt-description">
                 <Typography variant="h6" className={classes.heading} >{data.name}</Typography></Link>
-                <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:data.short_desc }}></Typography>
+                <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:cutItShort(data.short_desc,110) }}></Typography>
              </Grid>
             </Grid> </Box>
         </Paper> )}</Grid> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}

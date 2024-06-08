@@ -54,14 +54,16 @@ const endpoints = {
   DELETE_EVENTS: base_uri + '/api/delete_events',
   DELETE_SCHEMES: base_uri + '/api/delete_scheme',
   UPDATE_NEWS: base_uri + '/update_news',
-
+  post_company_apply: base_uri + '/apply/create/',  
   post_industry: base_uri + '/industry/',
-  GET_ALL_SERVICES: base_uri + '/service/',
-
-
+  GET_ALL_SERVICES: base_uri + '/services',
+  post_services : base_uri + '/services/',
+  
+  
   // get id details 
   get_id_company : base_uri + '/company/',
   get_id_schemes : base_uri + '/schemes/',
+  get_id_company_services: base_uri + '/services/',
   
 
   // New API
