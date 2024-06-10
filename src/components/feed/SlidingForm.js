@@ -1,24 +1,62 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import endpoints from '../../api/endpoints';
+import toast, { Toaster } from 'react-hot-toast';
 
-const SlidingForm = ({ isVisible }) => {
-
+const SlidingForm = ({id}) => {
     const [formData, setFormData] = useState({
         subject: '',
         attachment: null,
         description: ''
     });
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: files ? files[0] : value
-        }));
-    };
+    var getToken = localStorage.getItem('access');
+    // console.log("getted",getToken)
 
-    const handleSubmit = (e) => {
+    // const handleChange = (e) => {
+    //     const { name, value, files } = e.target;
+    //     const newValue = files ? files[0] : value;
+    //     setFormData((prevData) => {
+    //         const updatedFormData = new FormData(prevData);
+    //         updatedFormData.set(name, newValue);
+    //         return updatedFormData;
+    //     });
+    // };
+
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        setFormData({ ...formData, [name]: files[0] });
+      };
+
+      const handleChange = (e) => {
+        const {name,value} = e.target;
+        setFormData({...formData,[name]:value})
+      }
+
+
+
+
+    
+    
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission logic here
+        try{
+            const postData = await axios.post(`${endpoints.post_company_apply}${id}/`,formData,{
+                headers:{
+                    Authorization: 'Bearer ' + getToken,
+                    "content-type": "multipart/form-data",
+                }
+            })
+            console.log("post querry",postData)
+            toast.success(postData.data.message || "Form Submitted Successfully")
+    
+        }
+        catch(error){
+            console.log(error)
+            toast.error(error.response.data.message ||"Form Not Submitted.")
+        }
         console.log("Form Data", formData);
         setFormData({
             subject: '',
@@ -27,7 +65,7 @@ const SlidingForm = ({ isVisible }) => {
         })
     };
 
-    if (!isVisible) return null;
+    // if (!isVisible) return null;
 
     return (
         <div style={{ padding: 16, backgroundColor: '#fff', borderRadius: 10 }}>
@@ -54,7 +92,7 @@ const SlidingForm = ({ isVisible }) => {
                                 type="file"
                                 name="attachment"
                                 accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                                onChange={handleChange}
+                                onChange={handleFileChange}
                                 style={{ display: 'block', marginTop: 8 }}
                                 required
                             />
@@ -81,6 +119,9 @@ const SlidingForm = ({ isVisible }) => {
                     Submit
                 </button>
             </form>
+            <Toaster 
+         position="top-right"
+         reverseOrder={false} />
         </div>
     );
 };

@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import "../../styles/commonCompany.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import endpoints from "../../api/endpoints";
+import endpoints,{base_uri} from "../../api/endpoints";
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme) => ({
     },
     label:{
         padding:"0.2rem 0rem 0rem 0.5rem",
+        color:"black",
+        fontFamily:"Daikon-Bold"
     },
+    label1:{
+      padding:"0.2rem 0rem 0rem 0.5rem",
+      color:"black",
+      fontFamily:"Daikon-Regular"
+  },
     image:{
         width:"10rem",
         height:"5rem",
@@ -76,7 +83,7 @@ export default function CardCommon({id,card, setSelectedId}){
              <Grid  className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
-                      <img className={classes.image} src={card.image} alt={card.label}/> 
+                      <img className={classes.image} src={`${base_uri}${card.banner}`} alt={card.label}/> 
                       </Box>
                     <Container>
                         <Link to="/company-detail" >
@@ -84,7 +91,7 @@ export default function CardCommon({id,card, setSelectedId}){
                         // onClick={() => getid(card.id)}
                         onClick={handleSelect}
                         >{card.name}</Typography></Link>
-                    <Typography className={classes.label}>{card.description}</Typography></Container>
+                    <Typography className={classes.label1} dangerouslySetInnerHTML={{ __html:card.description }}></Typography></Container>
                     </Box>
                 </div></Box></Container></Grid>
         </>

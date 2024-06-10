@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import endpoints, { base_uri } from '../../api/endpoints';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 const EventCard = () => {
   const [data, setData] = useState([]);
@@ -63,6 +66,10 @@ const EventCard = () => {
     backgroundColor: 'white',
   };
 
+  const loader = {
+    padding:"20% 0% 0% 45%"
+  }
+
   const photoStyle = {
     width: '100%',
     maxWidth: '250px',
@@ -76,6 +83,7 @@ const EventCard = () => {
     fontSize: '24px',
     fontWeight: 'bold',
     margin: '10px 0',
+    fontFamily :'Daikon-Bold'
   };
 
   const dateStyle = {
@@ -92,6 +100,7 @@ const EventCard = () => {
   const shortDescStyle = {
     fontSize: '16px',
     marginBottom: '10px',
+    fontFamily :'Daikon-Regular'
   };
 
   const longDescStyle = {
@@ -101,6 +110,7 @@ const EventCard = () => {
     display: '-webkit-box',
     WebkitLineClamp: 2,
     WebkitBoxOrient: 'vertical',
+    fontFamily :'Daikon-Regular'
   };
 
   const expandedDescStyle = {
@@ -111,27 +121,29 @@ const EventCard = () => {
   const guestStyle = {
     fontStyle: 'italic',
     color: '#555',
+    fontFamily :'Daikon-Regular'
   };
 
   const readMoreStyle = {
     color: '#007BFF',
     cursor: 'pointer',
+    fontFamily :'Daikon-Regular'
   };
 
   return (
     <>
-      {data.map((event) => (
+      {data.length>0 ? <Grid> {data.map((event) => (
         <div key={event.id} style={cardStyle}>
-          <div style={titleStyle}>{event.title}</div>
+          <div style={titleStyle} dangerouslySetInnerHTML={{ __html:event.title }}></div>
           <div style={dateStyle}>{event.date}</div>
-          <div style={shortDescStyle}>{event.short_desc}</div>
+          <div style={shortDescStyle} dangerouslySetInnerHTML={{ __html:event.short_desc }}></div>
           <img src={`${base_uri}${event.banner}`} alt="Event" style={photoStyle} />
           <div style={priceStyle}>{`₹${event.amount}`}</div>
           <div
             id={`long-desc-${event.id}`}
             style={expanded[event.id] ? expandedDescStyle : longDescStyle}
+            dangerouslySetInnerHTML={{ __html: event.long_desc }}
           >
-            {event.long_desc}
           </div>
           {isOverflowing[event.id] && (
             <span
@@ -143,7 +155,7 @@ const EventCard = () => {
           )}
           <div style={guestStyle}>Guest: {event.guests}</div>
         </div>
-      ))}
+      ))}</Grid> : <Box style={loader}> <CircularProgress  color="secondary" /></Box>}
     </>
   );
 };

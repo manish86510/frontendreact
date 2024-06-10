@@ -3,6 +3,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withStyles } from '@material-ui/styles';
 import Event from './event';
+import EventCard from './eventDummy';
 
 
 const styles = theme => ({
@@ -28,7 +29,7 @@ class EventsTabs extends React.Component {
     // console.log(value);
     return (
       <div className={classes.root}>
-        <Tabs
+        {/* <Tabs
           value={this.state.value}
           onChange={this.handleChange}
           indicatorColor="primary"
@@ -41,7 +42,8 @@ class EventsTabs extends React.Component {
         </Tabs>
         {value === 0 && <Event />}
         {value === 1 && <Event />}
-        {value === 2 && <Event />}
+        {value === 2 && <Event />} */}
+        <EventCard/>
       </div>
     );
   }

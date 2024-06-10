@@ -10,18 +10,19 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import axios from 'axios';
-import endpoints from "../api/endpoints";
+import endpoints,{base_uri} from "../api/endpoints";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 400,
-      flexGrow: 1,
+      flexGrow: 1
     },
     maincard:{
         display:"flex",
         flexWrap:"wrap",
-        justifyContent:"space-evenly",
+        // justifyContent:"space-evenly",
     },
     maincard11:{
         display:"flex",
@@ -41,11 +42,12 @@ const useStyles = makeStyles((theme) => ({
         // width:'12rem'
     },
     label:{
-        padding:"0.2rem 0rem 0rem 0.5rem",
+        padding:"0rem 0rem 0rem 0.5rem",
         color : "black",
         width:"100%",
         overflow:"hidden",
-        textOverflow:"ellipsis"
+        textOverflow:"ellipsis",
+        fontFamily:"Daikon-Regular"
         // height:"2rem"
     },
     icons:{
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 'xx-large'
     },
     icons1:{
-      backgroundColor: 'palegoldenrod',
+      // backgroundColor: 'palegoldenrod',
         // backgroundColor: 'wheat',
         justifyContent: 'center',
         display: 'flex',
@@ -103,68 +105,76 @@ export default function Services(){
 
 
 
-    const tutorialSteps = [
-        {
-          label: 'Finance',
-          icons: <AssignmentIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Business Services',
-          icons:<AssignmentIndIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Health',
-          icons:<LanguageIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Construction',
-          icons:<PersonOutlineIcon  className={classes.icons}/>
-        },
-        {
-            label: 'Insurance',
-            icons: <AssignmentIcon className={classes.icons}/>
-          },
-          {
-            label: 'Law',
-            icons:<AssignmentIndIcon className={classes.icons}/>
-          },
-          {
-            label: 'Marketing',
-            icons:<LanguageIcon className={classes.icons}/>
-          },
-          {
-            label: 'Communication',
-            icons:<PersonOutlineIcon className={classes.icons}/>
-          },
-          {
-            label: 'Tourism',
-            icons: <AssignmentIcon className={classes.icons}/>
-          },
-          {
-            label: 'Education',
-            icons:<AssignmentIndIcon className={classes.icons}/>
-          },
-          {
-            label: 'Consulting',
-            icons:<LanguageIcon className={classes.icons}/>
-          },
-          {
-            label: 'Banking',
-            icons:<PersonOutlineIcon className={classes.icons}/>
-          },
+    // const tutorialSteps = [
+    //     {
+    //       label: 'Finance',
+    //       icons: <AssignmentIcon  className={classes.icons}/>
+    //     },
+    //     {
+    //       label: 'Business Services',
+    //       icons:<AssignmentIndIcon  className={classes.icons}/>
+    //     },
+    //     {
+    //       label: 'Health',
+    //       icons:<LanguageIcon  className={classes.icons}/>
+    //     },
+    //     {
+    //       label: 'Construction',
+    //       icons:<PersonOutlineIcon  className={classes.icons}/>
+    //     },
+    //     {
+    //         label: 'Insurance',
+    //         icons: <AssignmentIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Law',
+    //         icons:<AssignmentIndIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Marketing',
+    //         icons:<LanguageIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Communication',
+    //         icons:<PersonOutlineIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Tourism',
+    //         icons: <AssignmentIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Education',
+    //         icons:<AssignmentIndIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Consulting',
+    //         icons:<LanguageIcon className={classes.icons}/>
+    //       },
+    //       {
+    //         label: 'Banking',
+    //         icons:<PersonOutlineIcon className={classes.icons}/>
+    //       },
         
-      ];
+    //   ];
     
+    const history = useHistory();
+
+    const handleClick = (id) => {
+      history.push({
+        pathname: '/cardCall',
+        state: { id }
+      });
+    };
     return(
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography variant="h5">Services</Typography><hr/>
+        <Typography variant="h5" style={{fontFamily:'Daikon-Bold'}}>Services</Typography><hr/>
         <Box className={classes.maincard}>{data.map((card,index)=>{
-                return <div key={index} className={classes.maincard1}>
+                return <div key={index} className={classes.maincard1} onClick={()=>handleClick(card.id)}>
                     <Box>
                         <Link to="/cardCall"  className={classes.maincard11}>
-                        <img className={classes.icons1} src="/images/it.png" alt="console"/>
+                        <img className={classes.icons1} src={`${base_uri}${card.banner}`} alt="console"/>
                     {/* <Box className={classes.icons1}>{card.icons}</Box> */}
                     <Box className={classes.label}>{card.name}</Box></Link>
                     </Box>

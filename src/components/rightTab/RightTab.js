@@ -9,11 +9,11 @@ const RightTab = () => {
         <div>
             <UpcomingEvents style={{ margin: '10px 0' }} />
             {/* <br /><br /> */}
-            <HotTopic style={{ margin: '10px 0' }} />
+            {/* <HotTopic style={{ margin: '10px 0' }} /> */}
             {/* <br /><br /> */}
-            <FriendsList style={{ margin: '10px 0' }} />
+            {/* <FriendsList style={{ margin: '10px 0' }} /> */}
             {/* <br /><br /> */}
-            <RecomendedCircle layoutType={'list'} style={{ margin: '10px 0' }} />
+            {/* <RecomendedCircle layoutType={'list'} style={{ margin: '10px 0' }} /> */}
         </div>
     )
 }

@@ -29,7 +29,7 @@ import Icon from '@material-ui/core/Icon';
 import Badge from '@material-ui/core/Badge';
 
 
-const drawerWidth = 248;
+const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
@@ -51,7 +51,8 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         background: '#fafafa',
-        color: '#657786'
+        color: '#657786',
+        fontFamily:"Daikon-Regular"
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -74,7 +75,7 @@ const styles = theme => ({
         background: '#fafafa',
     },
     drawerOpen: {
-        width: '15.5rem',
+        width: '15rem',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -118,12 +119,10 @@ class SideNav extends React.Component {
             userMenuOpen: false,
             sideList: '',
             homeLink: true,
-            bookmarkLink: false,
-            bookmarkLink1: false,
-            bookmarkLink2: false,
-            eventsLink: false,
-            collabrationLink: false,
-            notificationLink: false,
+            eventLink: false,
+            chapterLink: false,
+            schemesLink: false,
+            myworkLink: false,
             myAccount: false,
             userProfile: JSON.parse(localStorage.getItem("userInfo")),
             home_title: "",
@@ -134,45 +133,45 @@ class SideNav extends React.Component {
                     "selected": true,
                     "link": "/home",
                 },
-                {
-                    "title": "Bookmark",
-                    "icon": "explore",
-                    "selected": false,
-                    "link": "/bookmark",
-                },
-                {
-                    "title": "Notification",
-                    "icon": "notifications",
-                    "selected": false,
-                    "link": "/notifications",
-                },
-                {
-                    "title": "Collaborate",
-                    "icon": "wb_incandescent",
-                    "selected": false,
-                    "link": "/collaborate",
-                },
+                // {
+                //     "title": "Bookmark",
+                //     "icon": "explore",
+                //     "selected": false,
+                //     "link": "/bookmark",
+                // },
+                // {
+                //     "title": "Notification",
+                //     "icon": "notifications",
+                //     "selected": false,
+                //     "link": "/notifications",
+                // },
+                // {
+                //     "title": "Collaborate",
+                //     "icon": "wb_incandescent",
+                //     "selected": false,
+                //     "link": "/collaborate",
+                // },
                 {
                     "title": "Events",
                     "icon": "date_range",
                     "selected": false,
                     "link": "/events",
                 },
-                {
-                    "title": "Tag",
-                    "icon": "local_offer",
-                    "selected": false,
-                    "link": "/tags",
-                },
                 // {
-                //     "title": "Services",
-                //     "icon": "date_range",
+                //     "title": "Tag",
+                //     "icon": "local_offer",
                 //     "selected": false,
-                //     "link": "/services",
+                //     "link": "/tags",
                 // },
                 {
-                    "title": "Government Schemes",
-                    "icon": "date_range",
+                    "title": "Chapter",
+                    "icon": "explore",
+                    "selected": false,
+                    "link": "/chapter",
+                },
+                {
+                    "title": "Govt. Schemes",
+                    "icon": "local_offer",
                     "selected": false,
                     "link": "/governmentSchemes-tab",
                 },
@@ -233,12 +232,10 @@ class SideNav extends React.Component {
         this.setState({
             home_title: "Home",
             homeLink: true,
-            bookmarkLink: false,
-            bookmarkLink1: false,
-            bookmarkLink2: false,
-            notificationLink: false,
-            collabrationLink: false,
-            eventsLink: false,
+            eventLink: false,
+            chapterLink: false,
+            schemesLink: false,
+            myworkLink: false,
         });
         this.props.history.push({ pathname: "/home" })
     }
@@ -278,6 +275,7 @@ class SideNav extends React.Component {
         });
         this.props.history.push({ pathname: "/notifications" })
     }
+    
     nav_collaborate = () => {
         // this.state.home_title = "Collaborate";
         this.setState({
@@ -344,12 +342,13 @@ class SideNav extends React.Component {
                 item.selected = true;
             }
         });
-        this.setState({ menuArray: menu_list });
+        this.setState({ menuArray: menu_list, home_title: menu.title });
         this.props.history.push({ pathname: menu.link });
     }
 
     render() {
         const { classes, children } = this.props;
+        // console.log("arrayyyyy",this.state.menuArray)
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -458,7 +457,7 @@ class SideNav extends React.Component {
                     <div className={classes.toolbar} style={{paddingRight:'35px', }}>
                         <IconButton onClick={this.handleDrawerClose}>
                             {/* <ChevronLeftIcon /> */}
-                            <img style={{width:'140px'}} src='/images/BP.png' />
+                            <img style={{width:'140px'}} src='/images/BP.png' alt='altimage' />
                         </IconButton>
                     </div>
 
@@ -477,7 +476,7 @@ class SideNav extends React.Component {
                                             // color={menu.selected?"primary":"default"} 
                                             className={"material-icons-outlined " + menu.icon}>{menu.icon}</Icon>
                                     </ListItemIcon>
-                                    <ListItemText primary={menu.title} />
+                                    <ListItemText primary={menu.title}  />
                                 </ListItem>
                             ))
                         }

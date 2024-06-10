@@ -10,6 +10,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,13 +21,17 @@ const useStyles = makeStyles((theme) => ({
     topheading:{
         display:"flex",
         justifyContent:"center",
-        textAlign:"center",
-        paddingBottom:"1rem"
+        textAlign:"left",
+        paddingBottom:"1rem",
+        fontFamily:"Daikon-Bold"
     },
     imageContainer:{
         width:'100%',
         height:"100%",
         overflow:"hidden",
+        // display:"flex",
+        // justifyContent:"left",
+        // textAlign:"left"
     },
     image:{
         width: '100%',
@@ -35,8 +40,9 @@ const useStyles = makeStyles((theme) => ({
         // borderRadius:"1rem"
     },
     heading:{
-        textAlign:"center",
-        padding:"1rem 0rem 1rem 0rem"
+        textAlign:"left",
+        padding:"1rem 0rem 1rem 0rem",
+        fontFamily:"Daikon-Bold"
     },
     website:{
         display:"flex",
@@ -45,7 +51,20 @@ const useStyles = makeStyles((theme) => ({
         margin:"0rem 0rem 0rem 1rem",
         textDecoration:"none",
         color:"black"
-    }
+    },
+    loader:{
+      // display:"flex",
+      // justifyContent:"center",
+      // textAlign:"center",
+      padding:"20% 0% 0% 30%"
+  },
+  longdesc:{
+      fontFamily:"Daikon-Regular",
+      
+  },
+  date:{
+      fontFamily:"Daikon-Regular"
+  }
 }));
 
 
@@ -54,6 +73,7 @@ export default function CarouselCall(){
     const [loading, setLoading] = useState(true);
     const location = useLocation();
     const history = useHistory();
+    // console.log("here is props",props)
    
     useEffect(() => {
       if (location.state && location.state.id) {
@@ -74,7 +94,7 @@ export default function CarouselCall(){
           } 
         });
         setData(res.data.data);
-        console.log("data in carousel",res.data.data)
+        // console.log("data in carousel",res.data.data)
         setLoading(false); 
       } catch (error) {
         console.log(error);
@@ -94,14 +114,14 @@ export default function CarouselCall(){
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>{data.source}</Typography>
-            <Typography variant="h6">Date : {data.date}</Typography><br/>
-            <Typography>{data.long_desc}</Typography>
+            <Typography className={classes.heading}>Source : {data.source}</Typography>
+            <Typography className={classes.date}>Date : {data.date}</Typography><br/>
+            <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html: data.long_desc }}></Typography>
             <br/><br/><br/>
             {/* <Box className={classes.website}><ArrowForwardIcon/> <a href="google.com" target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid> : <h1>Still Fetching Data</h1>}
+        </Grid> :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
         </>
     )
 }

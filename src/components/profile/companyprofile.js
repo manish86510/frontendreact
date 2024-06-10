@@ -11,64 +11,17 @@ import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
 import axios from "axios";
+import DoneIcon from '@material-ui/icons/Done';
 import endpoints,{post_company} from "../../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
-
-// class CompanyProfile extends React.Component{
-
-//     constructor(props){
-//         super(props);
-//         this.state = {
-//             name: '',
-//             email: '',
-//             number: '',
-//             gST_no: '',
-//             reg_no: '',
-//             reg_date: '',
-//             sector: '',
-//             description : '',
-//             address: '',
-//             portfolio: '',
-//         };
-//     }
-
-//     componentDidMount(){
-
-//     }
-
-//     render(){
-//         const { classes } = this.props;
-//         return(
-//             <>
-//             <h1>I am working</h1>
-//             <TextField id="outlined-basic" fullWidth label="Name" type="text" variant="outlined" name="name" value={} />
- 
-//             </>
-
-//         )
-//     }
-// }
-
-// const data = [
-//   {
-//   name:"rahul",
-//   shortdesc:"describe",
-//   longdesc:"long describe"},
-//   {
-//     name:"satya",
-//     shortdesc:"shrtdesc",
-//     longdesc:"lgdesc"},
-//   {
-//     name:"shubham",
-//     shortdesc:"shrtdesc",
-//     longdesc:"lngdesc"},
-// ]
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const useStyles = makeStyles({
     outlinedBasic: {
-        height: "6rem", 
+        // height: "6rem", 
         // overflow: "auto"
-        overflowY:"scroll"
+        // overflowY:"scroll"
     },
   });
 
@@ -76,6 +29,9 @@ function CompanyProfile(){
     const classes = useStyles();
     const [open,setOpen] = useState(false);
     const [modalData,setModalData] = useState([]);
+    const [mode,setMode] = useState('');
+    // const [id,setId] = useState(null)
+    // const [getIdData,setGetIdData] = useState(null)
     // const [expand,setExpand] = useState([]);
     const [cform,setCForm] = useState({
       name: '',
@@ -87,14 +43,56 @@ function CompanyProfile(){
       sector: '',
       description : '',
       address: '',
+      banner: null,
+      logo:null,
       // Portfolio: '',
   });
     const [sform,setSform] = useState({
       name :"",
-      desc : "",
+      short_description : "",
+      banner:null
       // long_desc : ""
     })
 
+
+    
+    const getToken = localStorage.getItem('access');
+    const getData = localStorage.getItem('userInfo')
+    const jsData = JSON.parse(getData);
+    // setId(jsData.pk)
+    const id = jsData.pk
+    // console.log('line 59',id)
+
+    useEffect(()=>{
+      const getId = async ()=>{
+        try{
+        const gettingId = await axios.get(`${endpoints.get_allCompany}${id}`,{
+          headers:{
+            Authorization : 'Bearer ' + getToken
+          }
+        })
+
+        const data = gettingId.data
+        
+        // setGetIdData(gettingId.data)
+        // const gData = gettingId.data
+        // console.log("here gdata",gData)
+              // setCForm({...gData})     
+              data.description = data.description || ''; // handle null value
+  
+              setCForm(data) 
+              setMode('edit')  
+              // console.log("inside form",cform)    
+      }
+      catch(error){
+        console.log(error)
+      }
+  
+      }
+      getId()
+    },[id])
+
+    // console.log("after useeffect",cform)
     const handleOpen = () => {
         setOpen(true);
       };
@@ -106,68 +104,94 @@ function CompanyProfile(){
       const handleChange = (e) => {
         const {name,value} = e.target;
         setCForm({...cform,[name]:value})
+      }
+
+      const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        setCForm({ ...cform, [name]: files[0] });
+      };
+      const handleFileChange1 = (e) => {
+        const { name, files } = e.target;
+        setSform({ ...sform, [name]: files[0] });
+      };
+
+      const handleChange1 = (e) => {
+        const {name,value} = e.target;
         setSform({...sform, [name]:value})
       }
 
+    const handleEditorChange = (name, value) => {
+      setCForm({
+        ...cform,
+        [name]: value,
+      });
+    };
+    
       const handleSubmit = async (e) => {
         e.preventDefault();
-        // setModalData([...modalData,sform]);
-        setModalData([...modalData, { ...sform, expanded: false }]);
-        setSform({
-        name :"",
-        desc : "",
-        // long_desc : ""
-      })
+      //   setModalData([...modalData, { ...sform, expanded: false }]);
+      //   setSform({
+      //     name :"",
+      //     short_description : "",
+      //     banner:null
+      // })
 
         try{
-          const posts = await axios.post(endpoints.post_industry,sform,{
+          const posts = await axios.post(endpoints.post_services,sform,{
             headers:{
-              Authorization : 'Bearer ' + getToken
+              Authorization : 'Bearer ' + getToken,
+              "content-type": "multipart/form-data",
             }
           })
+          // toast.success(posts || "Form Submitted Successfully")
 
-          toast.success(posts.data.message || "Form Submitted Successfully")
-
-          // console.log(posts,"here is posted s form")
+          console.log(posts,"here is posted s form")
         }
         catch(error){
-          // console.log(error,"error in sform")
-          toast.error(error.posts.data.message ||"Form Not Submitted.")
+          console.log(error,"error in sform")
+          // toast.error(error.posts.message ||"Form Not Submitted.")
         }
         
         handleClose()
       }
 
-      var getToken = localStorage.getItem('access');
+  
       const companySubmit =async (e)=>{
         e.preventDefault()
         try{
         const response = await axios.post(endpoints.post_company,cform,{
           headers:{
-            Authorization : 'Bearer ' + getToken
+            Authorization : 'Bearer ' + getToken,
+            "content-type": "multipart/form-data",
           }
         })
         toast.success(response.data.message || "Form Submitted Successfully")
-
-        // console.log(response,"response of form")
+        setMode('add')
+        console.log(response,"response of form")
       }
       catch(error){
         // console.log(error.response.data)
         toast.error(error.response.data.message ||"Form Not Submitted.")
       }
-      setCForm({
-        name: '',
-        email: '',
-        number: '',
-        gst_number: '',
-        reg_number: '',
-        reg_date: '',
-        sector: '',
-        description : '',
-        address: '',
-        // Portfolio: '',
-    })
       // console.log("submitted form ",cform)
+      }
+
+      const handleEdit = async (e)=>{
+        e.preventDefault()
+        try{
+          const response = await axios.put(`${endpoints.get_allCompany}${id}/`,cform,{
+            headers:{
+              Authorization : 'Bearer ' + getToken
+            }
+          })
+          toast.success(response.data.message || "Form Submitted Successfully")
+          setMode('edit')
+          console.log(response,"response of form after put")
+
+        }
+        catch(error){
+          toast.error(error.response.data.message ||"Form Not Edited.")
+        }
       }
       
       // useEffect(()=>{
@@ -184,11 +208,11 @@ function CompanyProfile(){
 
       // console.log(expand,"here is expand")
 
-      const handleExpandToggle = (index) => {
-        setModalData(modalData.map((item, i) => (
-            i === index ? { ...item, expanded: !item.expanded } : item
-        )));
-    };
+    //   const handleExpandToggle = (index) => {
+    //     setModalData(modalData.map((item, i) => (
+    //         i === index ? { ...item, expanded: !item.expanded } : item
+    //     )));
+    // };
 
     const styles = {
         headtop:{
@@ -232,10 +256,22 @@ function CompanyProfile(){
             margin:"0rem 0.5rem 0.5rem 1rem",
             // overflow:"auto",
         },
+        textField2:{
+          width:"90%",
+          // height:'10%',
+          // height:"3rem !important",
+          margin:"1rem 0.5rem 0.5rem 1rem",
+          // overflow:"auto",
+      },
         buttonContainer: {
             display: "flex",
             justifyContent: "right",
-            margin: "1rem 5rem 0rem 0rem"
+            margin: "1rem 1rem 0rem 0rem"
+          },
+          buttonContainer1: {
+            display: "flex",
+            justifyContent: "center",
+            margin: "1rem 1rem 0rem -2rem"
           },
           modal:{
             color:"black",
@@ -272,6 +308,15 @@ function CompanyProfile(){
             fontWeight:500,
             padding:"0.5rem 0rem 0.3rem 1.3rem",
           },
+          reactQuillContainer: {
+            maxHeight: "10rem", 
+            overflow: "auto"
+        },
+        buttons:{
+          display:"flex",
+          justifyContent:"right",
+          padding:"1rem "
+        }
     }
 
    
@@ -281,7 +326,6 @@ function CompanyProfile(){
 
     return(
         <>
-        {/* <h1>I am working</h1> */}
         <Box style={styles.headtop}>
         <Container style={styles.heading}>
         <Typography variant="h6" color="primary" style={styles.head}>
@@ -290,42 +334,80 @@ function CompanyProfile(){
       </Container>
 
       <Box>
-        <form onSubmit={companySubmit}>
+        <form onSubmit={companySubmit} >
             <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }} 
             name="name" value={cform.name} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="email" value={cform.email} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="gst_number" value={cform.gst_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="reg_number" value={cform.reg_number} onChange={handleChange}
             />
             <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
             <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="sector" value={cform.sector} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
-            name="description" value={cform.description} onChange={handleChange}
+            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
+            name="banner" 
+            inputProps={{ accept: "image/*" }}
+            // value={cform.sector} 
+            onChange={handleFileChange}
             />
-            <TextField id="outlined-basic"  label="Address" style={styles.textField} type="text" variant="outlined" multiline minRows={2}
+            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
+            name="logo" 
+            // value={cform.sector} 
+            inputProps={{ accept: "image/*" }}
+            onChange={handleFileChange}
+            />
+            {/* <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
+            name="description" value={cform.description} onChange={handleChange}
+            /> */}
+            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
             />
+            <Box className={classes.reactQuillContainer}>
+            {(cform.name || cform.address) && (
+  <ReactQuill
+    value={cform.description}
+    required
+    onChange={(value) => handleEditorChange("description", value)}
+    className={classes.editor}
+  />
+)}
+
+            </Box>
             {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
             name="Portfolio" value={cform.Portfolio} onChange={handleChange}
             /> */}
-            <Box style={styles.buttonContainer}>
+            <Box style={styles.buttons}>
+           {mode ==='edit' ?  <Box style={styles.buttonContainer}>
+            <Button variant="contained" color="primary" onClick={handleEdit} >
+                    Save
+            </Button></Box> :<Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" type="submit" >
-                    Submit
-            </Button></Box></form>
+                    <DoneIcon/>
+            </Button></Box>  }
+           </Box></form>
+            
             </Box> 
             </Box>
             <Grid item xs={12} style={styles.headtop}>
@@ -346,19 +428,26 @@ function CompanyProfile(){
           <Typography variant="h6" style={styles.headingmodal}>Input Company Details</Typography>
           <Container>
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
-            name="name" value={sform.name} onChange={handleChange}
+            name="name" value={sform.name} onChange={handleChange1}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text" multiline minRows={3} variant="outlined" className={classes.outlinedBasic}
-            name="desc" value={sform.desc} onChange={handleChange}
+            <Box><Typography style={styles.modalinputhead}>Short Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text"  variant="outlined" className={classes.outlinedBasic}
+            name="short_description" value={sform.short_description} onChange={handleChange1}
             /></Box>  
+             <Box><TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField2} type="file" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
+            name="logo" 
+            // value={cform.sector} 
+            // inputProps={{ accept: "image/*" }}
+            onChange={handleFileChange1}
+            /></Box>
             {/* <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
             name="long_desc" value={sform.long_desc} onChange={handleChange}
              /></Box> */}
              </Container>
             
-            <Box style={styles.buttonContainer}><Button variant="contained" color="primary" type="submit" >
+            <Container style={styles.buttonContainer}><Button variant="contained" color="primary" type="submit" >
                     Submit
-            </Button></Box></form>
+            </Button></Container></form>
         
         </div>
       </Modal></Box></Container>
@@ -378,7 +467,7 @@ function CompanyProfile(){
         </table>}):<p> Hello I am Modal Which Has Opened </p>} */}
         {/* <Typography variant="h6">Name || Long Description || Short Description</Typography>
           <Typography variant="p">Services Provided : Consultancy and Software Management</Typography> */}
-        {modalData.map((data,index)=>{
+        {/* {modalData.map((data,index)=>{
           return <Grid key={index} style={styles.services}>  
           <Services name={data.name} 
           // shortdesc={data.desc} 
@@ -390,7 +479,7 @@ function CompanyProfile(){
           // onClick={handleExpand}
           />
           </Grid>
-        })}
+        })} */}
         {/* {sliceData.length>0 ? sliceData.map((sliced)=>(<p>{sliced.long_desc.slice(0,100)}<span onClick={handleExpand}>...{expand}</span></p>)) :""} */}
         </Grid>
         <Toaster 

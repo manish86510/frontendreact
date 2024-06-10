@@ -5,11 +5,13 @@ import endpoints,{base_uri} from "../../api/endpoints";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
     },
     heading:{
         textAlign:"center",
-        padding:"1rem 0rem 1rem 0rem"
+        padding:"1rem 0rem 1rem 0rem",
+        fontFamily:"Daikon-Bold",
+        fontSize:"large"
     },
     website:{
         display:"flex",
@@ -43,6 +47,25 @@ const useStyles = makeStyles((theme) => ({
         margin:"0rem 0rem 0rem 1rem",
         textDecoration:"none",
         color:"black"
+    },
+    topHeading:{
+        padding:'0rem 0rem 1rem 0rem',
+        display:"flex",
+        justifyContent:"center",
+        textAlign:"center",
+        fontFamily:"Daikon-Bold"
+    },
+    loader:{
+        // display:"flex",
+        // justifyContent:"center",
+        // textAlign:"center",
+        padding:"20% 0% 0% 30%"
+    },
+    longdesc:{
+        fontFamily:"Daikon-Regular"
+    },
+    date:{
+        fontFamily:"Daikon-Regular"
     }
 }))
 
@@ -70,7 +93,7 @@ export default function GovernmentDescription(){
             }
         })
         setData(fetch.data.data)
-            console.log(fetch.data.data,"here is response of description")
+            // console.log(fetch.data.data,"here is response of description")
         
     }
     catch(error){
@@ -85,18 +108,19 @@ export default function GovernmentDescription(){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4">Government Scheme Page</Typography>
+            <Typography variant="h4" className={classes.topHeading}>Government Scheme Page</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
-            <Typography variant="h6">Date: {data.launched_date} </Typography><br/>
-            <Typography>{data.long_desc}</Typography>
+            <Typography className={classes.heading}>{data.name}</Typography>
+            <Typography className={classes.date}>Date: {data.launched_date} </Typography><br/>
+            <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html:data.long_desc }}></Typography>
             <br/><br/><br/>
-            {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
+            <Box className={classes.website}><ArrowRightAltIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid> : <h1>Still Loading Data</h1>}
+        </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
+
         </>
     )
 }

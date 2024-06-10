@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     maincard:{
         display:"flex",
         flexWrap:"wrap",
-        justifyContent:"space-evenly",
+        // justifyContent:"space-evenly",
     },
     maincard11:{
         display:"flex",
@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
         
         margin:'0.5rem',
     },
-    label:{
-        padding:"0.2rem 0rem 0rem 0.5rem",
-        color:"black",
-    },
+    // label:{
+    //     padding:"0.2rem 0rem 0rem 0.5rem",
+    //     color:"black",
+    // },
     icons:{
         // width:"2rem",
         // height:"rem"
@@ -68,6 +68,13 @@ const useStyles = makeStyles((theme) => ({
     },
     image:{
       width: '3rem'
+    },
+    label:{
+      fontFamily:"Daikon-Regular",
+      color:"black",
+      padding:"0rem 0rem 0rem 0.5rem",
+      overflow:"hidden",
+        textOverflow:"ellipsis",
     }
   }));
 
@@ -140,7 +147,7 @@ export default function GovernmentSchemes(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography  variant="h5">Government Schemes</Typography><hr/>
+        <Typography  variant="h5" style={{fontFamily:"Daikon-Bold"}}>Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div key={index} className={classes.maincard1} onClick={() => handleClick(card.id)} >
                     <Box >

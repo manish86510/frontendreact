@@ -9,12 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import Typography from '@material-ui/core/Typography';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import endpoints,{base_uri} from "../../api/endpoints";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   heading:{
       textAlign:"center",
-      padding:"1rem 0rem 1rem 0rem"
+      padding:"1rem 0rem 1rem 0rem",
+      fontFamily:"Daikon-Bold",
+      fontSize:"large"
   },
   website:{
       display:"flex",
@@ -43,6 +46,24 @@ const useStyles = makeStyles((theme) => ({
       margin:"0rem 0rem 0rem 1rem",
       textDecoration:"none",
       color:"black"
+  },
+  loader:{
+      // display:"flex",
+      // justifyContent:"center",
+      // textAlign:"center",
+      padding:"20% 0% 0% 30%"
+  },
+  top:{
+    display:"flex",
+    justifyContent:"center",
+    padding:"0rem 0rem 1rem 0rem",
+    fontFamily:"Daikon-Bold"
+  },
+  longdesc:{
+    fontFamily:"Daikon-Regular"
+  },
+  date:{
+    fontFamily:"Daikon-Regular"
   }
 }));
 
@@ -78,6 +99,7 @@ export default function ComponentTabs({card}){
           });
           setData(response.data.data);
           setLoading(false); // Update loading state
+          console.log("response in component tab",response.data.data)
         } catch (error) {
           console.error('Error fetching data:', error);
           setError(error); // Set error state
@@ -95,18 +117,18 @@ export default function ComponentTabs({card}){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4">Government Scheme Page</Typography>
+            <Typography variant="h4" className={classes.top}>Government Scheme Page</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography variant="h4" className={classes.heading}>{data.name}</Typography>
-            <Typography variant="h6">Date {data.launched_date}</Typography><br/>
-            <Typography>{data.long_desc}</Typography>
+            <Typography className={classes.heading}>{data.name}</Typography>
+            <Typography className={classes.date}>Date: {data.launched_date}</Typography><br/>
+            <Typography dangerouslySetInnerHTML={{ __html:data.long_desc }} className={classes.longdesc}></Typography>
             <br/><br/><br/>
-            {/* <Box className={classes.website}><ArrowForwardIcon/> <a href={card.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box> */}
+            <Box className={classes.website}><ArrowRightAltIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Apply From Here</Typography></a></Box>
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
-        </Grid> : <h1>Data Still Loading</h1>}
+        </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
         </>
     )
 }

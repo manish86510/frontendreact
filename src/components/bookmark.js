@@ -22,11 +22,7 @@ export default function Bookmark(){
             <div>
                  <Grid >
                         <Carousel/></Grid>
-                <Grid container direction="row"
-                //  justify="space-between" 
-                //  alignItems="flex-start"
-                  spacing={3}>
-               
+                <Grid container direction="row" spacing={3}>
                     <Grid item xs={8}>
                         <BookmarkTabs />
                     </Grid>

@@ -11,6 +11,7 @@ import "../../styles/commonCompany.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import endpoints from "../../api/endpoints";
 import axios from 'axios';
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -136,6 +137,16 @@ export default function CommonCompany({id,selectedId}){
 
       // console.log("id in common company",id)
 
+      const history = useHistory()
+
+      const handleClick = (id)=>{
+        history.push({
+          pathname:'/company-detail',
+          state:{id}
+        });
+      }
+    
+
     return(
         <>
         <Typography variant="h4">Company List</Typography><hr/>
@@ -153,9 +164,9 @@ export default function CommonCompany({id,selectedId}){
                     
                     <Container >
                         <Link to="/company-detail" >
-                        <Typography variant="h6" className={classes.label} onClick={()=>id(card.id)}
+                        <Typography variant="h6" className={classes.label} onClick={()=>handleClick(card.id)}
                         >{card.name}{id}</Typography></Link>
-                    <Typography className={classes.label}>{card.description}</Typography></Container>
+                    <Typography className={classes.label} dangerouslySetInnerHTML={{ __html:card.description }}></Typography></Container>
                     
                     </Box>
                 </div></Box></Container></Grid>

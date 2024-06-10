@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     heading:{
         fontWeight:600,
         textDecoration:"none",
-        color:"black"
+        color:"black",
+        fontFamily:"Daikon-Bold"
     },
     gridImage:{
         display:"flex",
@@ -41,16 +42,21 @@ const useStyles = makeStyles((theme) => ({
     },
     description:{
         // marginRight:"0.5rem",
-        margin: '0rem 0.7rem 0rem 0rem'
+        margin: '0rem 0.7rem 0rem 0rem',
+        fontFamily:"Daikon-Regular"
     },
     paper:{
         marginTop:"4%"
+    },
+    loader:{
+        padding:"20% 0% 0% 45%"
     }
 }))
 
 export default function GovernmentSchemesTab(){
     const [data,setData] = useState([]);
     const [search,setSearch] = useState("");
+    const [sliced,setSliced]= useState("")
     const classes = useStyles();
 
     var getToken = localStorage.getItem('access');
@@ -62,7 +68,7 @@ export default function GovernmentSchemesTab(){
             }
         })
         setData(fetch.data.data)
-            console.log(fetch.data.data,"here is response of schemes")
+            // console.log(fetch.data.data,"here is response of schemes")
         
     }
     catch(error){
@@ -90,6 +96,13 @@ export default function GovernmentSchemesTab(){
       });
     };
 
+    const cutItShort = (data,limit)=>{
+        if (data.length> limit){
+            return data.slice(0,limit) + "..." ;
+        }
+        return data
+    }
+
     return(
         <> 
         <Grid container direction="row"  spacing={3}>
@@ -99,16 +112,17 @@ export default function GovernmentSchemesTab(){
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
         {/* <h1>I am working In Schemes</h1> */}</Grid>
-        <Grid item xs={8}>{filter.map((data)=> <Paper  className={classes.paper} onClick={() => handleClick(data.id)}>
+        
+        {data.length > 0 ? <Grid item xs={8}>{filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
                 <Link to="/govt-description">
                 <Typography variant="h6" className={classes.heading} >{data.name}</Typography></Link>
-                <Typography className={classes.description}>{data.short_desc}</Typography>
+                <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:cutItShort(data.short_desc,110) }}></Typography>
              </Grid>
             </Grid> </Box>
-        </Paper> )}</Grid>
+        </Paper> )}</Grid> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

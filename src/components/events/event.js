@@ -719,7 +719,7 @@ export default function Event() {
     longDescription={data.long_desc}
     guestName={data.guests}
     />)} */}
-    <EventDummy/>
+    {/* <EventDummy/> */}
    </>
   );
 }
