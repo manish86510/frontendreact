@@ -88,7 +88,7 @@ const Schemes = () => {
           style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
-          {showAdd ? <>Close</> : <>Add News</>}
+          {showAdd ? <>Close</> : <>Add Schemes</>}
         </Button>
         {!showAdd && !showEdit && (
           <TextField

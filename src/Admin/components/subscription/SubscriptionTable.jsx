@@ -20,63 +20,34 @@ const columns = [
   {
     id: "user",
     label: "User",
-    minWidth: 150,
+    minWidth: 80,
     align: "center",
   },
   {
     id: "plan",
     label: "Plan",
-    minWidth: 100,
+    minWidth: 80,
     align: "center",
   },
   {
     id: "payment_method",
-    label: "Email",
+    label: "Payment Method",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "reference",
+    label: "Reference",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "source",
+    label: "Source",
     minWidth: 70,
     align: "center",
   },
-  {
-    id: "number",
-    label: "Number",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "gst_number",
-    label: "Gst number",
-    minWidth: 150,
-    align: "center",
-  },
-  {
-    id: "reg_number",
-    label: "Reg number",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "reg_date",
-    label: "Reg date",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "sector",
-    label: "Sector",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "description",
-    label: "Description",
-    minWidth: 200,
-    align: "center",
-  },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 100,
-    align: "center",
-  },
+
   // {
   //   id: "is_verify",
   //   label: "Is Verified",
@@ -116,20 +87,20 @@ export default function SubscriptionTable() {
 
   const accessToken = localStorage.getItem("access");
 
-  // useEffect(() => {
-  //   const getAllCompanies = async () => {
-  //     const response = await axios.get(endpoints.get_allCompany, {
-  //       headers: {
-  //         Authorization: "Bearer " + accessToken,
-  //       },
-  //     });
-  //     const data = response.data;
+  useEffect(() => {
+    const getAllSubscriptions = async () => {
+      const response = await axios.get(endpoints.GET_ALL_SUBSCRIPTIONS, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      const data = response.data;
 
-  //     setRows(data);
-  //     // console.log(response);
-  //   };
-  //   getAllCompanies();
-  // }, []);
+      setRows(data);
+      // console.log(response);
+    };
+    getAllSubscriptions();
+  }, []);
 
   console.log(rows);
 
@@ -148,7 +119,7 @@ export default function SubscriptionTable() {
   };
   useEffect(() => {
     const filter = rows.filter((element) =>
-      element.name.toLowerCase().includes(search?.toLowerCase())
+      element.payment_method.toLowerCase().includes(search?.toLowerCase())
     );
     setFilteredData(filter);
     console.log(filter);
@@ -170,10 +141,10 @@ export default function SubscriptionTable() {
 
     let customMessage;
 
-    if (row.is_verify === true) {
-      customMessage = "Company unassigned successfully!";
+    if (row.is_active === true) {
+      customMessage = "Active!";
     } else {
-      customMessage = "Company assigned succesfully!";
+      customMessage = "In active!";
     }
 
     try {
@@ -181,7 +152,7 @@ export default function SubscriptionTable() {
         endpoints.COMPANY_VERIFY,
         {
           company_id: row.id,
-          is_verify: !row.is_verify,
+          is_active: !row.is_active,
         },
         {
           headers: {

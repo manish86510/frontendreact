@@ -82,7 +82,7 @@ const AdminEvents = () => {
           style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
-          {showAdd ? <>Close</> : <>Add News</>}
+          {showAdd ? <>Close</> : <>Add Events</>}
         </Button>
         {!showAdd && !showEdit && (
           <TextField
