@@ -5,6 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import Button from '@material-ui/core/Button';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const EventCard = () => {
   const [data, setData] = useState([]);
@@ -104,6 +106,12 @@ const EventCard = () => {
     fontFamily :'Daikon-Regular'
   };
 
+  const venue ={
+    fontSize: '16px',
+    marginBottom: '10px',
+    fontFamily :'Daikon-Bold'
+  }
+
   const longDescStyle = {
     fontSize: '14px',
     marginBottom: '10px',
@@ -125,11 +133,26 @@ const EventCard = () => {
     fontFamily :'Daikon-Regular'
   };
 
+  const datetime ={
+    display :'flex',
+    justifyContent: 'space-between'
+  }
+
   const readMoreStyle = {
     color: '#007BFF',
     cursor: 'pointer',
     fontFamily :'Daikon-Regular'
   };
+
+  const anchor ={
+    textDecoration: 'none',
+    color: 'inherit',
+    padding:'0.1rem 0rem 0rem 0.5rem'
+  }
+
+  const arrow={
+    display:'flex'
+  }
 
   const { pathname } = useLocation();
   useEffect(() => {
@@ -141,10 +164,15 @@ const EventCard = () => {
       {data.length>0 ? <Grid> {data.map((event) => (
         <div key={event.id} style={cardStyle}>
           <div style={titleStyle} dangerouslySetInnerHTML={{ __html:event.title }}></div>
+          <div style={datetime}>
           <div style={dateStyle}>{event.date}</div>
+          <div style={dateStyle}>11:00 PM</div></div>
           <div style={shortDescStyle} dangerouslySetInnerHTML={{ __html:event.short_desc }}></div>
           <img src={`${base_uri}${event.banner}`} alt="Event" style={photoStyle} />
-          <div style={priceStyle}>{`₹${event.amount}`}</div>
+          <div style={datetime}>
+            <div style={priceStyle}>{`₹${event.amount}`}</div>
+            <div style={venue}>Venue: Ithum Noida</div>
+            </div>
           <div
             id={`long-desc-${event.id}`}
             style={expanded[event.id] ? expandedDescStyle : longDescStyle}
@@ -159,7 +187,11 @@ const EventCard = () => {
               {expanded[event.id] ? ' Show less' : '...Read more'}
             </span>
           )}
+          <div style={datetime}>
           <div style={guestStyle}>Guest: {event.guests}</div>
+          <Button variant="contained" color="primary">Apply</Button>
+          </div>
+          <div style={arrow}><ArrowForwardIcon/><a href='https://www.google.com' target='_blank' style={anchor}>Redirect To Website</a></div>
         </div>
       ))}</Grid> : <Box style={loader}> <CircularProgress  color="secondary" /></Box>}
     </>
