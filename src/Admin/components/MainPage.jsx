@@ -35,13 +35,18 @@ const MainPage = () => {
     },
     {
       name: "Government Schemes",
-      desc:"Empower users with valuable resources. Admins can utilize this card to add information about government schemes and initiatives, empowering users with access to  opportunities that can benefit them.",
+      desc: "Empower users with valuable resources. Admins can utilize this card to add information about government schemes and initiatives, empowering users with access to  opportunities that can benefit them.",
       url: "/admin/schemes",
     },
     {
-      name: "Total Companies",
+      name: "Companies",
       desc: "Track platform growth and impact. This card provides admins with insights into the total number of companies registered or affiliated with the platform, serving as a measure of platform growth and impact over time.",
       url: "/admin/companies",
+    },
+    {
+      name: "User Subscription",
+      desc: " Manage and review subscription details. This tab provides a comprehensive list of users who have purchased subscriptions, allowing admins to oversee subscription status, monitor user engagement, and manage subscription-related activities effectively.",
+      url: "/admin/subscription",
     },
   ];
   return (
@@ -52,7 +57,7 @@ const MainPage = () => {
             <Grid item xs={6}>
               <Link to={data.url}>
                 <Paper className={classes.paper}>
-                  <CardX data={data}  />  
+                  <CardX data={data} />
                 </Paper>
               </Link>
             </Grid>

@@ -18,65 +18,36 @@ import TextField from "@material-ui/core/TextField";
 
 const columns = [
   {
-    id: "name",
-    label: "Name",
-    minWidth: 150,
+    id: "user",
+    label: "User",
+    minWidth: 80,
     align: "center",
   },
   {
-    id: "created_by_name",
-    label: "Created By",
+    id: "plan",
+    label: "Plan",
+    minWidth: 80,
+    align: "center",
+  },
+  {
+    id: "payment_method",
+    label: "Payment Method",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "email",
-    label: "Email",
+    id: "reference",
+    label: "Reference",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "source",
+    label: "Source",
     minWidth: 70,
     align: "center",
   },
-  {
-    id: "number",
-    label: "Number",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "gst_number",
-    label: "Gst number",
-    minWidth: 150,
-    align: "center",
-  },
-  {
-    id: "reg_number",
-    label: "Reg number",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "reg_date",
-    label: "Reg date",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "sector",
-    label: "Sector",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "description",
-    label: "Description",
-    minWidth: 200,
-    align: "center",
-  },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 100,
-    align: "center",
-  },
+
   // {
   //   id: "is_verify",
   //   label: "Is Verified",
@@ -104,7 +75,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CompanyTable() {
+export default function SubscriptionTable() {
   const classes = useStyles();
 
   const [rows, setRows] = useState([]);
@@ -117,8 +88,8 @@ export default function CompanyTable() {
   const accessToken = localStorage.getItem("access");
 
   useEffect(() => {
-    const getAllCompanies = async () => {
-      const response = await axios.get(endpoints.get_allCompany, {
+    const getAllSubscriptions = async () => {
+      const response = await axios.get(endpoints.GET_ALL_SUBSCRIPTIONS, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
@@ -128,7 +99,7 @@ export default function CompanyTable() {
       setRows(data);
       // console.log(response);
     };
-    getAllCompanies();
+    getAllSubscriptions();
   }, []);
 
   console.log(rows);
@@ -148,7 +119,7 @@ export default function CompanyTable() {
   };
   useEffect(() => {
     const filter = rows.filter((element) =>
-      element.name.toLowerCase().includes(search?.toLowerCase())
+      element.payment_method.toLowerCase().includes(search?.toLowerCase())
     );
     setFilteredData(filter);
     console.log(filter);
@@ -170,10 +141,10 @@ export default function CompanyTable() {
 
     let customMessage;
 
-    if (row.is_verify === true) {
-      customMessage = "Company unassigned successfully!";
+    if (row.is_active === true) {
+      customMessage = "Active!";
     } else {
-      customMessage = "Company assigned succesfully!";
+      customMessage = "In active!";
     }
 
     try {
@@ -181,7 +152,7 @@ export default function CompanyTable() {
         endpoints.COMPANY_VERIFY,
         {
           company_id: row.id,
-          is_verify: !row.is_verify,
+          is_active: !row.is_active,
         },
         {
           headers: {
@@ -200,7 +171,7 @@ export default function CompanyTable() {
 
   return (
     <>
-      <div style={{textAlign:'end'}}> 
+      <div style={{ textAlign: "end" }}>
         <TextField
           id="standard-basic"
           label="Search..."

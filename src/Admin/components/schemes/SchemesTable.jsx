@@ -66,7 +66,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: 600,
+    // maxHeight: 600,
   },
   img: {
     width: "100px",
@@ -139,6 +139,9 @@ export default function SchemesTable({ rows, handleDelete, handleEdit }) {
                             >
                               Delete
                             </Button>
+                          ) : column.id === "short_desc" ||
+                            column.id === "long_desc" ? (
+                            <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.id === "url" ? (
                             <a
                               href={value}

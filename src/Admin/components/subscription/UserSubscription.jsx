@@ -1,72 +1,79 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button } from "@material-ui/core";
-import AddEvents from "./AddEvents";
-import EventsTable from "./EventsTable";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast from "react-hot-toast";
-import EditEvents from "./EditEvents";
 import TextField from "@material-ui/core/TextField";
-const AdminEvents = () => {
+import SubscriptionTable from "./SubscriptionTable";
+import AddPlan from "./AddPlan";
+import PlanTable from "./PlanTable";
+import EditPlan from "./EditPlan";
+
+const UserSubscription = () => {
   const [showAdd, setShowAdd] = useState(false);
-  const [allEvents, setAllEvents] = useState([]);
+  const [allPlan, setAllPlan] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
-  const [selectedEventsId, setSelectedEventsId] = useState(null);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
   useEffect(() => {
-    const getAllEvents = async () => {
-      const response = await axios.get(endpoints.GET_ALL_EVENTS, {
+    const getAllPlans = async () => {
+      const response = await axios.get(endpoints.GET_PLAN, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
       });
-      const data = response.data.data;
+      const data = response.data;
 
-      setAllEvents(data);
+      setAllPlan(data);
       // console.log(response);
     };
-    getAllEvents();
+    getAllPlans();
   }, [showAdd, showEdit]);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${endpoints.ADD_EVENTS}${id}/`, {
+      await axios.delete(`${endpoints.ADD_SCHEMES}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
       });
-      setAllEvents(allEvents.filter((events) => events.id !== id));
-      toast.success("Event succesfully deleted!");
+      setAllPlan(allPlan.filter((events) => events.id !== id));
+      toast.success("Scheme succesfully deleted!");
     } catch (error) {
-      toast.error("Event not Deleted!");
+      toast.error("Scheme not Deleted!");
     }
   };
 
   const handleEdit = (id) => {
-    setSelectedEventsId(id);
+    setSelectedPlanId(id);
     setShowEdit(true);
   };
-
   const searchChange = (e) => {
     setSearch(e.target.value);
   };
   useEffect(() => {
-    const filter = allEvents.filter((element) =>
-      element.title.toLowerCase().includes(search?.toLowerCase())
+    const filter = allPlan.filter((element) =>
+      element.name.toLowerCase().includes(search?.toLowerCase())
     );
     setFilteredData(filter);
     console.log(filter);
-  }, [search, allEvents]);
+  }, [search, allPlan]);
 
   return (
     <Container>
+      {/* {!showAdd && !showEdit && (
+        <div style={{ textAlign: "center" }}>
+          <h2>Govt Schemes</h2>
+        </div>
+      )} */}
       <div style={{ textAlign: "center" }}>
-        <h1>Events</h1>
+        <h1>User Subsription</h1>
       </div>
+
       <div
         style={{
           display: "flex",
@@ -82,7 +89,7 @@ const AdminEvents = () => {
           style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
-          {showAdd ? <>Close</> : <>Add Events</>}
+          {showAdd ? <>Close</> : <>Add Plan</>}
         </Button>
         {!showAdd && !showEdit && (
           <TextField
@@ -96,20 +103,21 @@ const AdminEvents = () => {
         )}
       </div>
 
-      {showAdd && <AddEvents setShowAdd={setShowAdd} />}
-      {/* {!showAdd && <AdminTable rows={allNews} />} */}
+      {showAdd && <AddPlan setShowAdd={setShowAdd} />}
+
       {showEdit && (
-        <EditEvents eventId={selectedEventsId} setShowEdit={setShowEdit} />
+        <EditPlan PlanId={selectedPlanId} setShowEdit={setShowEdit} />
       )}
+      {/* {!showAdd && (
+        <SchemesTable rows={allSchemes} handleDelete={handleDelete} />
+      )} */}
+
       {!showAdd && !showEdit && (
-        <EventsTable
-          rows={filteredData}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-        />
+        <PlanTable  rows={filteredData} handleDelete={handleDelete} handleEdit={handleEdit} />
+        // <SubscriptionTable />
       )}
     </Container>
   );
 };
 
-export default AdminEvents;
+export default UserSubscription;

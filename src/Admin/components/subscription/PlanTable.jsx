@@ -9,47 +9,28 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { base_uri } from "../../../api/endpoints";
+import { Toaster } from "react-hot-toast";
 import Button from "@material-ui/core/Button";
-import toast, { Toaster } from "react-hot-toast";
 
 const columns = [
   {
-    id: "title",
-    label: "Title",
+    id: "name",
+    label: "Name",
     minWidth: 150,
     align: "center",
-  },
-  { id: "banner", label: "Banner", minWidth: 120, align: "center" },
-  {
-    id: "date",
-    label: "Date",
-    minWidth: 70,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
+  { id: "price", label: "Price", minWidth: 120, align: "center" },
   {
-    id: "short_desc",
-    label: "Short Description",
+    id: "tenure",
+    label: "Tenure",
     minWidth: 180,
     align: "center",
   },
   {
-    id: "long_desc",
-    label: "Long Description",
+    id: "description",
+    label: "Description",
     minWidth: 350,
-    align: "center",
-  },
-
-  {
-    id: "amount",
-    label: "amount",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "guests",
-    label: "guests",
-    minWidth: 150,
     align: "center",
   },
   {
@@ -79,7 +60,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventsTable({ rows, handleDelete, handleEdit }) {
+export default function PlanTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -96,6 +77,7 @@ export default function EventsTable({ rows, handleDelete, handleEdit }) {
   return (
     <Paper className={classes.root}>
       <Toaster position="top-right" reverseOrder={false} />
+
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -146,8 +128,14 @@ export default function EventsTable({ rows, handleDelete, handleEdit }) {
                           ) : column.id === "short_desc" ||
                             column.id === "long_desc" ? (
                             <div dangerouslySetInnerHTML={{ __html: value }} />
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
+                          ) : column.id === "url" ? (
+                            <a
+                              href={value}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {value}
+                            </a>
                           ) : (
                             value
                           )}

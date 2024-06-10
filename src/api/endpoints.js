@@ -58,6 +58,9 @@ const endpoints = {
   post_industry: base_uri + '/industry/',
   GET_ALL_SERVICES: base_uri + '/services',
   post_services : base_uri + '/services/',
+  GET_ALL_SUBSCRIPTIONS: base_uri +'/subscriptions/',
+  GET_PLAN: base_uri+'/plan/',
+  GET_USER_COMPANY: base_uri +'/my-company/',
   
   
   // get id details 

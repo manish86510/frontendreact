@@ -40,7 +40,8 @@ import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
 import MyWorkTab from './components/myWork/MyWorkTab';
-import Chapter from './components/chapter/Chapter';
+import Chapter from './components/chapter/chapter';
+import UserSubscription from './Admin/components/subscription/UserSubscription';
 
 
 const theme = createTheme({
@@ -93,6 +94,7 @@ export default function App() {
                                 <Route path="/admin/event" component={AdminEvents} />
                                 <Route path="/admin/schemes" component={Schemes} />
                                 <Route path="/admin/companies" component={AdminCompanies} />
+                                <Route path="/admin/subscription" component={UserSubscription} />
                             </Switch>
                         </div>
                     </Route>
