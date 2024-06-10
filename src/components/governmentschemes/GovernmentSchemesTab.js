@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -102,6 +103,11 @@ export default function GovernmentSchemesTab(){
         }
         return data
     }
+
+    const { pathname } = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
 
     return(
         <> 

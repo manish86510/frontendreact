@@ -16,6 +16,7 @@ import endpoints,{post_company} from "../../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Label } from "@material-ui/icons";
 
 const useStyles = makeStyles({
     outlinedBasic: {
@@ -28,8 +29,9 @@ const useStyles = makeStyles({
 function CompanyProfile(){
     const classes = useStyles();
     const [open,setOpen] = useState(false);
-    const [modalData,setModalData] = useState([]);
+    const [tableData,setTableData] = useState([]);
     const [mode,setMode] = useState('');
+    
     // const [id,setId] = useState(null)
     // const [getIdData,setGetIdData] = useState(null)
     // const [expand,setExpand] = useState([]);
@@ -62,6 +64,7 @@ function CompanyProfile(){
     // setId(jsData.pk)
     const id = jsData.pk
     // console.log('line 59',id)
+    
 
     useEffect(()=>{
       const getId = async ()=>{
@@ -80,17 +83,31 @@ function CompanyProfile(){
               // setCForm({...gData})     
               data.description = data.description || ''; // handle null value
   
+             
               setCForm(data) 
-              setMode('edit')  
-              // console.log("inside form",cform)    
+              setMode('getting')  
+              console.log("inside form in getting data",cform)    
+              const getValues = Object.values(cform)
+              setTableData(getValues)
+              console.log("values of cform", getValues)
+              console.log("type of cform", typeof getValues)
+              console.log("here are values of cform",tableData) 
+              console.log("here is type of cform",typeof tableData) 
+              
+            
       }
       catch(error){
         console.log(error)
       }
   
       }
+      
       getId()
-    },[id])
+    },[id,getToken])
+
+   
+
+    
 
     // console.log("after useeffect",cform)
     const handleOpen = () => {
@@ -179,7 +196,7 @@ function CompanyProfile(){
       const handleEdit = async (e)=>{
         e.preventDefault()
         try{
-          const response = await axios.put(`${endpoints.get_allCompany}${id}/`,cform,{
+          const response = await axios.put(`${endpoints.get_allCompany}${id}`,cform,{
             headers:{
               Authorization : 'Bearer ' + getToken
             }
@@ -316,7 +333,66 @@ function CompanyProfile(){
           display:"flex",
           justifyContent:"right",
           padding:"1rem "
-        }
+        },
+        heading:{
+          display :"flex",
+          justifyContent:"space-between"
+        },
+        headingedit:{
+          margin: '2rem 0rem 0rem 0rem'
+        },
+        showdata:{
+          display:"flex",
+          flexWrap:"wrap",
+        },
+        tabledata:{
+          width: '100%',
+          // height: '2rem',
+          // border: '1px solid lightgray',
+          display: 'flex',
+          fontSize: 'large',
+          // borderRadius: '0.3rem',
+          // padding: '0rem 0rem 0rem 3rem',
+          // margin :'1rem',
+          margin :'0.5rem 0rem 0rem 1rem',
+          justifyContent:"center",
+          textAlign:"center"
+        },
+        tabledata1:{
+          width: '100%',
+          // height: '2rem',
+          // border: '1px solid lightgray',
+          display: 'flex',
+          fontSize: 'large',
+          // borderRadius: '0.3rem',
+          // padding: '0rem 0rem 0rem 3rem',
+          margin :'-0.5rem 0rem 0rem 1rem',
+        },
+        boxTop:{
+          display:"flex",
+          // flexWrap:"wrap",
+          flexDirection :"row",
+          margin:"0.5rem",
+          justifyContent:"left",
+          textAlign:"left",
+          width:"47%",
+          fintWeight:800
+        },
+        text:{
+          margin: '0.5rem 0rem 0rem 0rem',
+          fontSize: 'medium',
+          fontWeight: 800,
+        },
+        boxTop1:{
+          display:"flex",
+          // flexWrap:"wrap",
+          flexDirection :"row",
+          // margin:"1rem",
+          justifyContent:"left",
+          textAlign:"left",
+          width:"100%",
+          // height:'3rem'
+        },
     }
 
    
@@ -331,9 +407,10 @@ function CompanyProfile(){
         <Typography variant="h6" color="primary" style={styles.head}>
         Company
       </Typography>
+       <IconButton> <EditIcon onClick={()=>setMode('edit')}/></IconButton>
       </Container>
 
-      <Box>
+      {mode === 'add' && <Box>
         <form onSubmit={companySubmit} >
             <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }} 
@@ -399,16 +476,142 @@ function CompanyProfile(){
             name="Portfolio" value={cform.Portfolio} onChange={handleChange}
             /> */}
             <Box style={styles.buttons}>
-           {mode ==='edit' ?  <Box style={styles.buttonContainer}>
-            <Button variant="contained" color="primary" onClick={handleEdit} >
-                    Save
-            </Button></Box> :<Box style={styles.buttonContainer}>
+           <Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" type="submit" >
                     <DoneIcon/>
-            </Button></Box>  }
+            </Button></Box>  
            </Box></form>
             
-            </Box> 
+            </Box> }
+
+            {mode === 'edit' && <Box>
+        <form onSubmit={companySubmit} >
+            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
+            // InputLabelProps={{ shrink: true }} 
+            name="name" value={cform.name} onChange={handleChange}
+            />
+            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="email" value={cform.email} onChange={handleChange}
+            />
+            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="number" value={cform.number} onChange={handleChange}
+            />
+            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="gst_number" value={cform.gst_number} onChange={handleChange}
+            />
+            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="reg_number" value={cform.reg_number} onChange={handleChange}
+            />
+            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="reg_date" value={cform.reg_date} onChange={handleChange}
+            />
+            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="sector" value={cform.sector} onChange={handleChange}
+            />
+            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
+            name="banner" 
+            inputProps={{ accept: "image/*" }}
+            // value={cform.sector} 
+            onChange={handleFileChange}
+            />
+            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" 
+            InputLabelProps={{ shrink: true }}
+            name="logo" 
+            // value={cform.sector} 
+            inputProps={{ accept: "image/*" }}
+            onChange={handleFileChange}
+            />
+            {/* <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
+            name="description" value={cform.description} onChange={handleChange}
+            /> */}
+            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            // InputLabelProps={{ shrink: true }}
+            name="address" value={cform.address} onChange={handleChange}
+            />
+            <Box className={classes.reactQuillContainer}>
+            {(cform.name || cform.address) && (
+  <ReactQuill
+    value={cform.description}
+    required
+    onChange={(value) => handleEditorChange("description", value)}
+    className={classes.editor}
+  />
+)}
+
+            </Box>
+            {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
+            name="Portfolio" value={cform.Portfolio} onChange={handleChange}
+            /> */}
+            <Box style={styles.buttons}>
+            <Box style={styles.buttonContainer}>
+            <Button variant="contained" color="primary" onClick={handleEdit} >
+                    Save
+            </Button></Box> 
+           </Box></form>
+            
+            </Box> }
+            
+              {/* {tableData && tableData.map((m)=><Box style={styles.tabledata}> {m}</Box>)} */}
+
+              {mode === 'getting' && tableData && <Grid item xs={12} style={styles.headtop}><Box style={styles.showdata}> 
+                
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Name:</Typography> 
+                <Box style={styles.tabledata}>   {cform.name}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Email:</Typography> 
+                <Box style={styles.tabledata}>   {cform.email}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Number:</Typography> 
+                <Box style={styles.tabledata}>   {cform.number}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>GST Number:</Typography>
+                 <Box style={styles.tabledata}>   {cform.gst_number}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Registered Number:</Typography>
+                 <Box style={styles.tabledata}>   {cform.reg_number}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Registered Date:</Typography>
+                 <Box style={styles.tabledata}>   {cform.reg_date}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Sector:</Typography>
+                 <Box style={styles.tabledata}>   {cform.sector}</Box>
+                </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Address:</Typography>
+                 <Box style={styles.tabledata}>   {cform.address}</Box>
+                </Box>
+                <Box style={styles.boxTop1}>
+                <Typography style={styles.text}>Description: </Typography> 
+                <Box style={styles.tabledata1} dangerouslySetInnerHTML={{ __html:cform.description }}></Box>
+                </Box>
+                  {/* <Box style={styles.tabledata}> {cform.email}</Box>
+                  <Box style={styles.tabledata}> {cform.number}</Box>
+                  <Box style={styles.tabledata}> {cform.gst_number}</Box>
+                  <Box style={styles.tabledata}> {cform.reg_number}</Box>
+                  <Box style={styles.tabledata}> {cform.reg_date}</Box>
+                  <Box style={styles.tabledata}> {cform.sector}</Box>
+                  <Box style={styles.tabledata}> {cform.address}</Box>
+                  <Box style={styles.tabledata1} ><Typography dangerouslySetInnerHTML={{ __html:cform.description }}/></Box> */}
+                   </Box> </Grid>}
+              
+              {/* <Box style={styles.tabledata}> here is show data</Box>
+              <Box style={styles.tabledata}> here is show data</Box>
+              <Box style={styles.tabledata}> here is show data</Box> */}
+           
             </Box>
             <Grid item xs={12} style={styles.headtop}>
                 <Container style={styles.head1}>

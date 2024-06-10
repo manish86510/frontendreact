@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
       color:"black",
       padding:"0rem 0rem 0rem 0.5rem",
       overflow:"hidden",
-        textOverflow:"ellipsis",
+      textOverflow:"ellipsis",
     }
   }));
 

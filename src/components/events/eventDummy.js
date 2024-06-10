@@ -4,6 +4,7 @@ import endpoints, { base_uri } from '../../api/endpoints';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const EventCard = () => {
   const [data, setData] = useState([]);
@@ -129,6 +130,11 @@ const EventCard = () => {
     cursor: 'pointer',
     fontFamily :'Daikon-Regular'
   };
+
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>

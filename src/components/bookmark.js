@@ -17,6 +17,10 @@ const styles = theme => ({
 });
 
 export default function Bookmark(){
+    const { pathname } = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
 
         return (
             <div>
