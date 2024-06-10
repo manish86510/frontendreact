@@ -19,7 +19,7 @@ const columns = [
     minWidth: 150,
     align: "center",
   },
-  { id: "banner", label: "Banner", minWidth: 120, align: "center", },
+  { id: "banner", label: "Banner", minWidth: 120, align: "center" },
   {
     id: "date",
     label: "Date",
@@ -71,7 +71,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: 600,
+    // maxHeight: 600,
   },
   img: {
     width: "100px",
@@ -143,6 +143,9 @@ export default function EventsTable({ rows, handleDelete, handleEdit }) {
                             >
                               Delete
                             </Button>
+                          ) : column.id === "short_desc" ||
+                            column.id === "long_desc" ? (
+                            <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

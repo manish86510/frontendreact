@@ -164,6 +164,11 @@ export default function StickyHeadTable({ rows, handleDelete, handleEdit }) {
                               >
                                 Delete
                               </Button>
+                            ) : column.id === "short_desc" ||
+                              column.id === "long_desc" ? (
+                              <div
+                                dangerouslySetInnerHTML={{ __html: value }}
+                              />
                             ) : column.format && typeof value === "number" ? (
                               column.format(value)
                             ) : (

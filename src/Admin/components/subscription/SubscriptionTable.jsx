@@ -18,19 +18,19 @@ import TextField from "@material-ui/core/TextField";
 
 const columns = [
   {
-    id: "name",
-    label: "Name",
+    id: "user",
+    label: "User",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "created_by_name",
-    label: "Created By",
+    id: "plan",
+    label: "Plan",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "email",
+    id: "payment_method",
     label: "Email",
     minWidth: 70,
     align: "center",
@@ -104,7 +104,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CompanyTable() {
+export default function SubscriptionTable() {
   const classes = useStyles();
 
   const [rows, setRows] = useState([]);
@@ -116,20 +116,20 @@ export default function CompanyTable() {
 
   const accessToken = localStorage.getItem("access");
 
-  useEffect(() => {
-    const getAllCompanies = async () => {
-      const response = await axios.get(endpoints.get_allCompany, {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      });
-      const data = response.data;
+  // useEffect(() => {
+  //   const getAllCompanies = async () => {
+  //     const response = await axios.get(endpoints.get_allCompany, {
+  //       headers: {
+  //         Authorization: "Bearer " + accessToken,
+  //       },
+  //     });
+  //     const data = response.data;
 
-      setRows(data);
-      // console.log(response);
-    };
-    getAllCompanies();
-  }, []);
+  //     setRows(data);
+  //     // console.log(response);
+  //   };
+  //   getAllCompanies();
+  // }, []);
 
   console.log(rows);
 
@@ -200,7 +200,7 @@ export default function CompanyTable() {
 
   return (
     <>
-      <div style={{textAlign:'end'}}> 
+      <div style={{ textAlign: "end" }}>
         <TextField
           id="standard-basic"
           label="Search..."
