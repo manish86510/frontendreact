@@ -45,6 +45,8 @@ import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
 import Industry from './Admin/components/industry/Industry';
 import MyWorkDetail from './components/myWork/MyWorkDetail';
+import my_account_tab from './components/my-account/my_account_tab';
+import Subscription from './components/my-account/Subscription';
 
 
 const theme = createTheme({
@@ -138,6 +140,7 @@ export default function App() {
                         </Route>
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
+                        <Route path="/my_account" component={Subscription} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/workdetail" component={MyWorkDetail} />
                         {/* <Route path="/logout" component={() => {
