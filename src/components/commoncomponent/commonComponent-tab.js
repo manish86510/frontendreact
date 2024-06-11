@@ -125,7 +125,7 @@ export default function ComponentTabs({card}){
             <Typography className={classes.date}>Date: {data.launched_date}</Typography><br/>
             <Typography dangerouslySetInnerHTML={{ __html:data.long_desc }} className={classes.longdesc}></Typography>
             <br/><br/><br/>
-            <Box className={classes.website}><ArrowRightAltIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Apply From Here</Typography></a></Box>
+            <Box className={classes.website}><ArrowRightAltIcon/> <a href={data.url} target="_blank" ><Typography className={classes.websiteText}>Redirect To Website</Typography></a></Box>
         </Container></Grid>
         <Grid item xs={4}><RightTab/></Grid>
         </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}

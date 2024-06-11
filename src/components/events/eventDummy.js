@@ -58,6 +58,18 @@ const EventCard = () => {
     }));
   };
 
+  const Time = (time)=>{
+    if(time>=12 && time<=24){
+      return time + "PM"
+    }
+    else if (time<12){
+      return time + "AM"
+    }
+    else {
+      return null
+    }
+  }
+
   const cardStyle = {
     border: '1px solid #ddd',
     borderRadius: '8px',
@@ -166,7 +178,7 @@ const EventCard = () => {
           <div style={titleStyle} dangerouslySetInnerHTML={{ __html:event.title }}></div>
           <div style={datetime}>
           <div style={dateStyle}>{event.date}</div>
-          <div style={dateStyle}>11:00 PM</div></div>
+          <div style={dateStyle}>{event.time} PM</div></div>
           <div style={shortDescStyle} dangerouslySetInnerHTML={{ __html:event.short_desc }}></div>
           <img src={`${base_uri}${event.banner}`} alt="Event" style={photoStyle} />
           <div style={datetime}>
@@ -189,9 +201,9 @@ const EventCard = () => {
           )}
           <div style={datetime}>
           <div style={guestStyle}>Guest: {event.guests}</div>
-          <Button variant="contained" color="primary">Apply</Button>
+          <div style={arrow}><ArrowForwardIcon/><a href='https://www.google.com' target='_blank' style={anchor}>Apply From Here</a></div>
           </div>
-          <div style={arrow}><ArrowForwardIcon/><a href='https://www.google.com' target='_blank' style={anchor}>Redirect To Website</a></div>
+          
         </div>
       ))}</Grid> : <Box style={loader}> <CircularProgress  color="secondary" /></Box>}
     </>

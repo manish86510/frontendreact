@@ -43,6 +43,7 @@ import MyWorkTab from './components/myWork/MyWorkTab';
 import Chapter from './components/Chapter/Chapter';
 import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
+import MyWorkDetail from './components/myWork/MyWorkDetail';
 
 
 const theme = createTheme({
@@ -136,6 +137,7 @@ export default function App() {
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/logout" component={Logout} />
+                        <Route path="/workdetail" component={MyWorkDetail} />
                         {/* <Route path="/logout" component={() => {
                             localStorage.clear();
                             window.location.href = '/';
