@@ -64,7 +64,7 @@ const endpoints = {
   MY_WORK: base_uri + '/user/applied-forms/',
   ADD_APPLY: base_uri + '/apply/create/',
   GET_APPLY: base_uri + '/apply/list/',
-  USER_APPLY_COMPANY: base_uri + '/api/user-applied-companies/'
+  USER_APPLY_COMPANY: base_uri + '/api/user-applied-companies/',
 
   // get id details 
   get_id_company: base_uri + '/company/',
