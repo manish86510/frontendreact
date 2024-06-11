@@ -117,8 +117,8 @@ export default function MyWorkDetailGetting(){
             }
         })
 
-        // console.log("fetched Data",fetch.data)
-        setData(fetch.data[0])
+        console.log("fetched Data",fetch.data)
+        setData(fetch.data)
         const attachmentURL = await axios.get(fetch.data[0].attachment,{
             headers: {
                 Authorization:'Bearer ' + getToken
@@ -151,7 +151,7 @@ export default function MyWorkDetailGetting(){
         <>
         <h1>Getting Work</h1>
         <Grid container direction="row"  spacing={3}>
-        <Grid item xs={8}><Container >
+        <Grid item xs={8}>{data.map((data)=><Container >
             <Box className={classes.top}>
             <img className={classes.topimage} src={`${base_uri}${data.company_logo}`} 
             alt="random"/>
@@ -161,7 +161,7 @@ export default function MyWorkDetailGetting(){
                {data.subject} </Typography>
             <Typography className={classes.description} >{data.description}</Typography><br/> 
             <Typography className={classes.description} >Attachment Here</Typography><br/>            
-        </Container></Grid>
+        </Container>)}</Grid>
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

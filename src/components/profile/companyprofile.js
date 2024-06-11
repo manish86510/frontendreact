@@ -202,7 +202,7 @@ function CompanyProfile(){
       const handleEdit = async (e)=>{
         e.preventDefault()
         try{
-          const response = await axios.put(`${endpoints.get_allCompany}${id}`,cform,{
+          const response = await axios.put(`${endpoints.get_allCompany}${id}/`,cform,{
             headers:{
               Authorization : 'Bearer ' + getToken
             }
@@ -367,7 +367,7 @@ function CompanyProfile(){
           // borderRadius: '0.3rem',
           // padding: '0rem 0rem 0rem 3rem',
           // margin :'1rem',
-          margin :'0.5rem 0rem 0rem 1rem',
+          margin :'0.6rem 0rem 0rem 0.3rem',
           justifyContent:"left",
           textAlign:"left",
           color:"darkgray"
@@ -443,9 +443,9 @@ function CompanyProfile(){
       boxTop11:{
         width:"100%",
         display:"flex",
-        justifyContent:"center",
-        textAlign:"center",
-        margin:"0rem 0rem 1rem 0rem"
+        justifyContent:"left",
+        textAlign:"left",
+        margin:"0rem 0rem 0.5rem 0.5rem"
       },
       imageText11:{
         fontFamily:"Daikon-Bold",
@@ -537,7 +537,7 @@ function CompanyProfile(){
 
             </Box>
             <Box style={styles.buttons}>
-          {mode==='edit' ?  <Box style={styles.buttonContainer}>
+          {editMode ?  <Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" onClick={handleEdit} >
                     Save
             </Button></Box> : <Box style={styles.buttonContainer}>
@@ -549,8 +549,6 @@ function CompanyProfile(){
             </Box> : <Grid item xs={12} style={styles.headtop1}><Box style={styles.showdata}>
                 
             <Box style={styles.boxTop11}>
-                {/* <Typography style={styles.text}>Banner:</Typography>  */}
-                {/* <Box style={styles.tabledata}>   {cform.name}</Box> */}
                 <img src={`${base_uri}${cform.banner}`} alt={cform.id} style={styles.image}/>
                 <Box style={styles.imageText11}>{cform.name}</Box>
                 </Box>
