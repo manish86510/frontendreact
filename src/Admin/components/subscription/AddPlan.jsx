@@ -118,7 +118,7 @@ const AddPlan = ({ setShowAdd }) => {
               name="name"
               required
               fullWidth
-              value={formData.title}
+              value={formData.name}
               onChange={handleChange}
             />
           </Grid>
@@ -141,7 +141,7 @@ const AddPlan = ({ setShowAdd }) => {
               name="tenure"
               fullWidth
               required
-              value={formData.date}
+              value={formData.tenure}
               onChange={handleChange}
             />
           </Grid>

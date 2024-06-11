@@ -11,7 +11,6 @@ import TableRow from "@material-ui/core/TableRow";
 import { base_uri } from "../../../api/endpoints";
 import { Toaster } from "react-hot-toast";
 import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
 
 const columns = [
   {
@@ -21,32 +20,24 @@ const columns = [
     align: "center",
     align: "center",
   },
-  { id: "price", label: "Price", minWidth: 120, align: "center" },
   {
-    id: "tenure",
-    label: "Tenure",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "description",
+    id: "desc",
     label: "Description",
     minWidth: 350,
     align: "center",
   },
   {
     id: "edit",
-    label: "Edit",
+    label: "Actions",
     minWidth: 80,
-    align: "center",
+    align: "right",
   },
   {
     id: "actions",
     label: "Actions",
     minWidth: 80,
-    align: "center",
+    align: "right",
   },
-  { id: "is_active", label: "Active", minWidth: 80, align: "center" },
 ];
 
 const useStyles = makeStyles({
@@ -62,12 +53,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PlanTable({
-  rows,
-  handleDelete,
-  handleEdit,
-  handleToggle,
-}) {
+export default function IndustryTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -132,16 +118,8 @@ export default function PlanTable({
                             >
                               Delete
                             </Button>
-                          ) : column.id === "is_active" ? (
-                            <Switch
-                              checked={row.is_active}
-                              onClick={() =>
-                                handleToggle(row.id, row.is_active)
-                              }
-                              color="primary"
-                            />
-                          ) : column.id === "short_desc" ||
-                            column.id === "long_desc" ? (
+                          ) : column.id === "desc" ||
+                            column.id === "desc" ? (
                             <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.id === "url" ? (
                             <a

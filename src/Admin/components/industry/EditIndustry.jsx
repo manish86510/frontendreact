@@ -46,87 +46,92 @@ const useStyles = makeStyles((theme) => ({
 
 const initialFormdata = {
   name: "",
-  price: "",
-  tenure: "",
-  description: "",
+  desc: "",
 };
 
-const EditScheme = ({ planId, setShowEdit }) => {
+const EditIndustry = ({ industryId, setShowEdit }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialFormdata);
 
   const accessToken = localStorage.getItem("access");
+  console.log(accessToken);
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`${endpoints.GET_PLAN}${planId}`, {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
-        });
+        const response = await axios.get(
+          `${endpoints.get_industry}${industryId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + accessToken,
+            },
+          }
+        );
         const data = response.data.data;
-        console.log("Fetched Data: ", data); // Debugging log
-
-        setFormData({
-          name: data.name || "",
-          price: data.price || "",
-          tenure: data.tenure || "",
-          description: data.description || "",
-        });
+        setFormData(data);
       } catch (error) {
-        console.error("Error fetching data: ", error);
-        toast.error("Failed to fetch scheme data!");
+        toast.error("Failed to fetch news data!");
       }
     };
 
     fetchEvent();
-  }, [planId, accessToken]);
+  }, [industryId, accessToken]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setFormData({
+        ...formData,
+        [name]: files[0],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleEditorChange = (name, value) => {
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
-  const handleEditorChange = (value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      description: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      //   console.log(accessToken);
       const response = await axios.put(
-        `${endpoints.GET_PLAN}${planId}/`,
+        `${endpoints.get_industry}${industryId}/`,
         formData,
         {
           headers: {
             Authorization: "Bearer " + accessToken,
-            "Content-Type": "application/json",
+            "content-type": "multipart/form-data",
           },
         }
       );
       console.log("Form Data: ", response);
-      toast.success("Scheme successfully updated");
+      toast.success("Industry succesfully created");
       setTimeout(() => {
         setShowEdit(false);
       }, 2000);
     } catch (error) {
-      console.error("Error updating scheme: ", error);
-      toast.error("Scheme not updated!");
+      console.log(error);
+      toast.error("Industry not created!");
     }
+
+    console.log("Form Data: ", formData);
   };
 
   return (
     <Container maxWidth="sm">
       <Toaster position="top-right" reverseOrder={false} />
       <Typography variant="h5" component="h1" gutterBottom>
-        Edit Scheme
+        Edit Industry
       </Typography>
       <form onSubmit={handleSubmit} className={classes.formContainer}>
         <Grid container spacing={3}>
@@ -140,37 +145,14 @@ const EditScheme = ({ planId, setShowEdit }) => {
               onChange={handleChange}
             />
           </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Price"
-              name="price"
-              type="number"
-              fullWidth
-              required
-              value={formData.price}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Tenure"
-              type="text"
-              name="tenure"
-              fullWidth
-              required
-              value={formData.tenure}
-              onChange={handleChange}
-            />
-          </Grid>
           <Grid item xs={12}>
             <Typography variant="h6" className={classes.editorLabel}>
-              Description
+            Description
             </Typography>
             <ReactQuill
-              value={formData.description}
+              value={formData.desc}
               required
-              onChange={handleEditorChange}
+              onChange={(value) => handleEditorChange("desc", value)}
               className={classes.editor}
             />
           </Grid>
@@ -190,4 +172,4 @@ const EditScheme = ({ planId, setShowEdit }) => {
   );
 };
 
-export default EditScheme;
+export default EditIndustry;

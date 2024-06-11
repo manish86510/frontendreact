@@ -48,6 +48,11 @@ const MainPage = () => {
       desc: " Manage and review subscription details. This tab provides a comprehensive list of users who have purchased subscriptions, allowing admins to oversee subscription status, monitor user engagement, and manage subscription-related activities effectively.",
       url: "/admin/subscription",
     },
+    {
+      name: "Industry",
+      desc: " Manage and review industry details. This tab provides a comprehensive list of users who have purchased subscriptions, allowing admins to oversee subscription status, monitor user engagement, and manage subscription-related activities effectively.",
+      url: "/admin/industry",
+    },
   ];
   return (
     <Container>

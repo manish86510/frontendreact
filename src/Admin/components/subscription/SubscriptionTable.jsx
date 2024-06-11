@@ -54,12 +54,12 @@ const columns = [
   //   minWidth: 100,
   //   align: "center",
   // },
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 100,
-    align: "center",
-  },
+  // {
+  //   id: "action",
+  //   label: "Action",
+  //   minWidth: 100,
+  //   align: "center",
+  // },
 ];
 
 const useStyles = makeStyles({

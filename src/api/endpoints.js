@@ -54,20 +54,22 @@ const endpoints = {
   DELETE_EVENTS: base_uri + '/api/delete_events',
   DELETE_SCHEMES: base_uri + '/api/delete_scheme',
   UPDATE_NEWS: base_uri + '/update_news',
-  post_company_apply: base_uri + '/apply/create/',  
+  post_company_apply: base_uri + '/apply/create/',
   post_industry: base_uri + '/industry/',
   GET_ALL_SERVICES: base_uri + '/services',
-  post_services : base_uri + '/services/',
-  GET_ALL_SUBSCRIPTIONS: base_uri +'/subscriptions/',
-  GET_PLAN: base_uri+'/plan/',
-  GET_USER_COMPANY: base_uri +'/my-company/',
-  
-  
+  post_services: base_uri + '/services/',
+  GET_ALL_SUBSCRIPTIONS: base_uri + '/subscriptions/',
+  GET_PLAN: base_uri + '/plan/',
+  GET_USER_COMPANY: base_uri + '/my-company/',
+  MY_WORK: base_uri = '/user/applied-forms/',
+  ADD_APPLY: base_uri + '/apply/create/',
+  GET_APPLY: base_uri + '/apply/list/',
+
   // get id details 
-  get_id_company : base_uri + '/company/',
-  get_id_schemes : base_uri + '/schemes/',
+  get_id_company: base_uri + '/company/',
+  get_id_schemes: base_uri + '/schemes/',
   get_id_company_services: base_uri + '/services/',
-  
+
 
   // New API
   // get_news: base_uri + '/api/news',

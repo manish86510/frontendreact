@@ -16,6 +16,7 @@ const UserSubscription = () => {
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [showSubscriptions, setShowSubscriptions] = useState(false); // New state
 
   const accessToken = localStorage.getItem("access");
 
@@ -36,7 +37,7 @@ const UserSubscription = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${endpoints.ADD_SCHEMES}${id}/`, {
+      await axios.delete(`${endpoints.GET_PLAN}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
@@ -52,6 +53,33 @@ const UserSubscription = () => {
     setSelectedPlanId(id);
     setShowEdit(true);
   };
+
+  const handleToggle = async (id, isActive) => {
+    try {
+      const response = await axios.put(
+        `${endpoints.GET_PLAN}${id}/`,
+        {
+          is_active: !isActive,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
+      setAllPlan(
+        allPlan.map((plan) =>
+          plan.id === id ? { ...plan, is_active: !isActive } : plan
+        )
+      );
+      toast.success(
+        `Plan ${!isActive ? "activated" : "deactivated"} successfully!`
+      );
+    } catch (error) {
+      toast.error("Failed to update plan status!");
+    }
+  };
+
   const searchChange = (e) => {
     setSearch(e.target.value);
   };
@@ -66,12 +94,12 @@ const UserSubscription = () => {
   return (
     <Container>
       {/* {!showAdd && !showEdit && (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center" }}> 
           <h2>Govt Schemes</h2>
         </div>
       )} */}
       <div style={{ textAlign: "center" }}>
-        <h1>User Subsription</h1>
+        <h1>All Plans</h1>
       </div>
 
       <div
@@ -91,7 +119,32 @@ const UserSubscription = () => {
         >
           {showAdd ? <>Close</> : <>Add Plan</>}
         </Button>
+
+        {/* <Button
+          variant="contained"
+          color="primary"
+          style={{ height: "40px", borderRadius: "18px" }}
+         
+        >
+          All subcriptions
+        </Button> */}
+
         {!showAdd && !showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px", marginLeft: "7rem" }}
+            onClick={() => setShowSubscriptions(!showSubscriptions)}
+          >
+            {showSubscriptions ? (
+              <>Hide Subscriptions</>
+            ) : (
+              <>All Subscriptions</>
+            )}
+          </Button>
+        )}
+
+        {!showAdd && !showEdit && !showSubscriptions && (
           <TextField
             id="standard-basic"
             label="Search..."
@@ -106,14 +159,21 @@ const UserSubscription = () => {
       {showAdd && <AddPlan setShowAdd={setShowAdd} />}
 
       {showEdit && (
-        <EditPlan PlanId={selectedPlanId} setShowEdit={setShowEdit} />
+        <EditPlan planId={selectedPlanId} setShowEdit={setShowEdit} />
       )}
       {/* {!showAdd && (
         <SchemesTable rows={allSchemes} handleDelete={handleDelete} />
       )} */}
 
-      {!showAdd && !showEdit && (
-        <PlanTable  rows={filteredData} handleDelete={handleDelete} handleEdit={handleEdit} />
+      {showSubscriptions && <SubscriptionTable />}
+
+      {!showAdd && !showEdit && !showSubscriptions && (
+        <PlanTable
+          rows={filteredData}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          handleToggle={handleToggle}
+        />
         // <SubscriptionTable />
       )}
     </Container>

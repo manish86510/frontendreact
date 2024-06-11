@@ -173,7 +173,7 @@ export default function CompanyTable() {
     if (row.is_verify === true) {
       customMessage = "Company unassigned successfully!";
     } else {
-      customMessage = "Company assigned succesfully!";
+      customMessage = "Company assigned succesfully!"; 
     }
 
     try {

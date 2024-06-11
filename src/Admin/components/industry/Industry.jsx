@@ -1,46 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button } from "@material-ui/core";
-import SchemesTable from "./SchemesTable";
-import AddSchemes from "./AddSchemes";
 import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast from "react-hot-toast";
-import EditScheme from "./EditScheme";
-import TextField from "@material-ui/core/TextField"; 
+import TextField from "@material-ui/core/TextField";
+import IndustryTable from "./IndustryTable";
+import AddIndustry from "./AddIndustry";
+import EditIndustry from "./EditIndustry";
 
-const Schemes = () => {
+const Industry = () => {
   const [showAdd, setShowAdd] = useState(false);
-  const [allSchemes, setAllSchemes] = useState([]);
+  const [allIndustry, setAllIndustry] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
-  const [selectedSchemesId, setSelectedSchemesId] = useState(null);
+  const [selectedIndustryId, setSelectedIndustryId] = useState(null);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
   const accessToken = localStorage.getItem("access");
 
   useEffect(() => {
-    const getAllEvents = async () => {
-      const response = await axios.get(endpoints.GET_ALL_SCHEMES, {
+    const getAllIndustry = async () => {
+      const response = await axios.get(endpoints.get_industry, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
       });
       const data = response.data.data;
 
-      setAllSchemes(data);
+      setAllIndustry(data);
       // console.log(response);
     };
-    getAllEvents();
+    getAllIndustry();
   }, [showAdd, showEdit]);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${endpoints.ADD_SCHEMES}${id}/`, {
+      await axios.delete(`${endpoints.get_industry}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
       });
-      setAllSchemes(allSchemes.filter((events) => events.id !== id));
+      setAllIndustry(allIndustry.filter((events) => events.id !== id));
       toast.success("Scheme succesfully deleted!");
     } catch (error) {
       toast.error("Scheme not Deleted!");
@@ -48,19 +48,19 @@ const Schemes = () => {
   };
 
   const handleEdit = (id) => {
-    setSelectedSchemesId(id);
+    setSelectedIndustryId(id);
     setShowEdit(true);
   };
   const searchChange = (e) => {
     setSearch(e.target.value);
   };
   useEffect(() => {
-    const filter = allSchemes.filter((element) =>
+    const filter = allIndustry.filter((element) =>
       element.name.toLowerCase().includes(search?.toLowerCase())
     );
     setFilteredData(filter);
     console.log(filter);
-  }, [search, allSchemes]);
+  }, [search, allIndustry]);
 
   return (
     <Container>
@@ -70,7 +70,7 @@ const Schemes = () => {
         </div>
       )} */}
       <div style={{ textAlign: "center" }}>
-        <h1>Govt Schemes</h1>
+        <h1>Industries</h1>
       </div>
 
       <div
@@ -88,7 +88,7 @@ const Schemes = () => {
           style={{ height: "40px", borderRadius: "18px" }}
           onClick={() => setShowAdd(!showAdd)}
         >
-          {showAdd ? <>Close</> : <>Add Schemes</>}
+          {showAdd ? <>Close</> : <>Add Industry</>}
         </Button>
         {!showAdd && !showEdit && (
           <TextField
@@ -102,17 +102,17 @@ const Schemes = () => {
         )}
       </div>
 
-      {showAdd && <AddSchemes setShowAdd={setShowAdd} />}
+      {showAdd && <AddIndustry setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
       {showEdit && (
-        <EditScheme schemeId={selectedSchemesId} setShowEdit={setShowEdit} />
+        <EditIndustry industryId={selectedIndustryId} setShowEdit={setShowEdit} />
       )}
       {/* {!showAdd && (
-        <SchemesTable rows={allSchemes} handleDelete={handleDelete} />
+        <SchemesTable rows={allIndustry} handleDelete={handleDelete} />
       )} */}
 
       {!showAdd && !showEdit && (
-        <SchemesTable
+        <IndustryTable
           rows={filteredData}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
@@ -122,4 +122,4 @@ const Schemes = () => {
   );
 };
 
-export default Schemes;
+export default Industry;
