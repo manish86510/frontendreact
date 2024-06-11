@@ -61,7 +61,7 @@ const endpoints = {
   GET_ALL_SUBSCRIPTIONS: base_uri + '/subscriptions/',
   GET_PLAN: base_uri + '/plan/',
   GET_USER_COMPANY: base_uri + '/my-company/',
-  MY_WORK: base_uri = '/user/applied-forms/',
+  MY_WORK: base_uri + '/user/applied-forms/',
   ADD_APPLY: base_uri + '/apply/create/',
   GET_APPLY: base_uri + '/apply/list/',
 
