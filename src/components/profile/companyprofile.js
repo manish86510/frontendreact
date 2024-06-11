@@ -12,11 +12,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
 import axios from "axios";
 import DoneIcon from '@material-ui/icons/Done';
-import endpoints,{post_company} from "../../api/endpoints";
+import endpoints,{base_uri} from "../../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Label } from "@material-ui/icons";
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     outlinedBasic: {
@@ -78,7 +79,7 @@ function CompanyProfile(){
         })
 
         const data = gettingId.data
-        console.log("getting Id" , gettingId.data)
+        console.log("getting data in form" , data)
         setFormSubmitted(true)
         
         // setGetIdData(gettingId.data)
@@ -218,8 +219,8 @@ function CompanyProfile(){
       }
 
       const handleEditClick = () => {
-        setEditMode(true);
-        setMode('edit')
+        setEditMode(!editMode);
+        // setMode('edit')
     };
       
       // useEffect(()=>{
@@ -362,13 +363,14 @@ function CompanyProfile(){
           // height: '2rem',
           // border: '1px solid lightgray',
           display: 'flex',
-          fontSize: 'large',
+          fontSize: 'medium',
           // borderRadius: '0.3rem',
           // padding: '0rem 0rem 0rem 3rem',
           // margin :'1rem',
           margin :'0.5rem 0rem 0rem 1rem',
           justifyContent:"left",
-          textAlign:"left"
+          textAlign:"left",
+          color:"darkgray"
         },
         tabledata1:{
           width: '100%',
@@ -376,10 +378,19 @@ function CompanyProfile(){
           // height: '2rem',
           // border: '1px solid lightgray',
           display: 'flex',
-          fontSize: 'large',
+          fontSize: 'medium',
           // borderRadius: '0.3rem',
           // padding: '0rem 0rem 0rem 3rem',
-          margin :'-0.5rem 0rem 0rem 1rem',
+          margin :'0.6rem 0rem 0rem 0.5rem',
+          
+        },
+        tabledata12:{
+          width: '100%',
+          fontFamily:"Daikon-Regular",
+          display: 'flex',
+          fontSize: 'medium',
+          // margin :'0.5rem 0rem 0rem 0rem',
+          color:"darkgray"
         },
         boxTop:{
           display:"flex",
@@ -392,20 +403,56 @@ function CompanyProfile(){
         },
         text:{
           margin: '0.5rem 0rem 0rem 0rem',
-          fontSize: 'large',
+          fontSize: 'medium',
           fontFamily:"Daikon-Bold",
           whiteSpace: 'nowrap'
         },
         boxTop1:{
           display:"flex",
           // flexWrap:"wrap",
-          flexDirection :"row",
+          flexDirection :"column",
           margin:"0.5rem",
           justifyContent:"left",
           textAlign:"left",
           width:"100%",
           // height:'3rem'
         },
+        headtop1:{
+          backgroundColor:"white",
+          borderRadius:"1rem",
+          margin:"0rem 0rem 1rem 0rem",
+          width: '100%',
+          padding:"0.5rem"
+      },
+      outerBox:{
+        borderRadius:"0.5rem"
+      },
+      image:{
+        width:"4rem",
+        objectFit:"contain"
+      },
+      imageText:{
+        width: '100%',
+          fontFamily:"Daikon-Regular",
+          display: 'flex',
+          fontSize: 'medium',
+          margin :'0.5rem 0rem 0rem 1rem',
+          // justifyContent:"left",
+          // textAlign:"left"
+      },
+      boxTop11:{
+        width:"100%",
+        display:"flex",
+        justifyContent:"center",
+        textAlign:"center",
+        margin:"0rem 0rem 1rem 0rem"
+      },
+      imageText11:{
+        fontFamily:"Daikon-Bold",
+          display: 'flex',
+          fontSize: 'xx-large',
+          margin :'0.5rem 0rem 0rem 1rem',
+      }
     }
 
    
@@ -415,6 +462,7 @@ function CompanyProfile(){
 
     return(
         <>
+        <Paper style={styles.outerBox}>
         <Box style={styles.headtop}>
         <Container style={styles.heading}>
         <Typography variant="h6" color="primary" style={styles.head}>
@@ -488,9 +536,6 @@ function CompanyProfile(){
 )}
 
             </Box>
-            {/* <TextField size="small" id="outlined-basic" fullWidth  type="file" style={styles.textField} variant="outlined" 
-            name="Portfolio" value={cform.Portfolio} onChange={handleChange}
-            /> */}
             <Box style={styles.buttons}>
           {mode==='edit' ?  <Box style={styles.buttonContainer}>
             <Button variant="contained" color="primary" onClick={handleEdit} >
@@ -501,12 +546,18 @@ function CompanyProfile(){
             </Button></Box> } 
            </Box></form>
             
-            </Box> : <Grid item xs={12} style={styles.headtop}><Box style={styles.showdata}>
+            </Box> : <Grid item xs={12} style={styles.headtop1}><Box style={styles.showdata}>
                 
-                <Box style={styles.boxTop}>
+            <Box style={styles.boxTop11}>
+                {/* <Typography style={styles.text}>Banner:</Typography>  */}
+                {/* <Box style={styles.tabledata}>   {cform.name}</Box> */}
+                <img src={`${base_uri}${cform.banner}`} alt={cform.id} style={styles.image}/>
+                <Box style={styles.imageText11}>{cform.name}</Box>
+                </Box>
+                {/* <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Name:</Typography> 
                 <Box style={styles.tabledata}>   {cform.name}</Box>
-                </Box>
+                </Box> */}
                 <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Email:</Typography> 
                 <Box style={styles.tabledata}>   {cform.email}</Box>
@@ -519,10 +570,7 @@ function CompanyProfile(){
                 <Typography style={styles.text}>GST Number:</Typography>
                  <Box style={styles.tabledata}>   {cform.gst_number}</Box>
                 </Box>
-                <Box style={styles.boxTop1}>
-                <Typography style={styles.text}>Registered Number:</Typography>
-                 <Box style={styles.tabledata}>   {cform.reg_number}</Box>
-                </Box>
+                
                 <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Registered Date:</Typography>
                  <Box style={styles.tabledata}>   {cform.reg_date}</Box>
@@ -531,13 +579,17 @@ function CompanyProfile(){
                 <Typography style={styles.text}>Sector:</Typography>
                  <Box style={styles.tabledata}>   {cform.sector}</Box>
                 </Box>
-                <Box style={styles.boxTop}>
+                <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Address:</Typography>
-                 <Box style={styles.tabledata}>   {cform.address}</Box>
+                 <Box style={styles.tabledata12}>   {cform.address}</Box>
                 </Box>
                 <Box style={styles.boxTop1}>
-                <Typography style={styles.text}>Description: </Typography> 
-                <Box style={styles.tabledata1} dangerouslySetInnerHTML={{ __html:cform.description }}></Box>
+                <Typography style={styles.text}>Registered Number:</Typography>
+                 <Box style={styles.tabledata12}>   {cform.reg_number}</Box>
+                </Box>
+                <Box style={styles.boxTop1}>
+                <Typography style={styles.text}>Overview: </Typography> 
+                <Box style={styles.tabledata12} dangerouslySetInnerHTML={{ __html:cform.description }}></Box>
                 </Box>
                   {/* <Box style={styles.tabledata}> {cform.email}</Box>
                   <Box style={styles.tabledata}> {cform.number}</Box>
@@ -665,7 +717,7 @@ function CompanyProfile(){
               <Box style={styles.tabledata}> here is show data</Box>
               <Box style={styles.tabledata}> here is show data</Box> */}
            
-            </Box>
+            </Box></Paper>
             <Grid item xs={12} style={styles.headtop}>
                 <Container style={styles.head1}>
                 <Typography variant="h6" color="primary" style={styles.head}>

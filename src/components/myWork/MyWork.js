@@ -1,13 +1,42 @@
-import React from "react";
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import React,{useState} from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import GettingWork from "./GettingWork";
+import PostingWork from "./PostingWork";
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+  }));
 
 export default function MyWork(){
+    const classes = useStyles();
+    const [value, setValue] = useState(0);
+  
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+
     return(
         <>
-        <h1>I am working in work</h1>
+
+        <div className={classes.root}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab label="Work Getting" />
+        <Tab label="Work Posted" />
+      </Tabs>
+      {value === 0 && <GettingWork/>}
+      {value === 1 && <PostingWork/>}
+    </div>
 
         </>
     )
