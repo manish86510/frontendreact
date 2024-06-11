@@ -118,20 +118,20 @@ export default function GettingWork(){
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search}  variant="outlined" fullWidth onChange={handleChange} /> 
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
-               {filter.map((data,index)=><Grid key={index} className={classes.topService}><Box><Box className={classes.maincard}><div className={classes.maincard1}>
+               {filter.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting" ><Box><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={data.image} alt="random"/> 
                       </Box>
                     <Container>
-                        <Link to="/workdetail" >
+                        
                         <Typography variant="h6" className={classes.label} 
                         // onClick={() => getid(card.id)}
                         // onClick={handleSelect}
-                        >{data.name}</Typography></Link>
+                        >{data.name}</Typography>
                     <Typography className={classes.label1} >{sliceData(data.description)}</Typography></Container>
                     </Box>
-                </div></Box></Box></Grid>)}
+                </div></Box></Box></Link></Grid>)}
                 </Grid>
         </>
     )

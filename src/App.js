@@ -40,11 +40,12 @@ import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
 import MyWorkTab from './components/myWork/MyWorkTab';
-import Chapter from './components/chapter/chapter';
+import Chapter from './components/Chapter/Chapter';
 import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
 import Industry from './Admin/components/industry/Industry';
-import MyWorkDetail from './components/myWork/MyWorkDetail';
+import MyWorkDetailGetting from './components/myWork/MyWorkDetailGetting';
+import MyWorkDetailPosted from './components/myWork/MyWorkDetailPosted';
 
 
 const theme = createTheme({
@@ -139,7 +140,8 @@ export default function App() {
                         <Route path="/walletcoins" component={WalletCoins} />
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/logout" component={Logout} />
-                        <Route path="/workdetail" component={MyWorkDetail} />
+                        <Route path="/workdetailgetting" component={MyWorkDetailGetting} />
+                        <Route path="/workdetailposting" component={MyWorkDetailPosted} />
                         {/* <Route path="/logout" component={() => {
                             localStorage.clear();
                             window.location.href = '/';
