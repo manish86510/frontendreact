@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Services from "./services";
 import axios from "axios";
 import DoneIcon from '@material-ui/icons/Done';
-import endpoints,{base_uri} from "../../api/endpoints";
+import endpoints, { base_uri } from "../../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -70,12 +70,12 @@ function CompanyProfile(){
       logo:null,
       // Portfolio: '',
   });
-    const [sform,setSform] = useState({
-      name :"",
-      short_description : "",
-      banner:null
-      // long_desc : ""
-    })
+  const [sform, setSform] = useState({
+    name: "",
+    short_description: "",
+    banner: null
+    // long_desc : ""
+  })
 
 
     
@@ -108,78 +108,78 @@ function CompanyProfile(){
       getIndustry()
     },[])
 
-    useEffect(()=>{
-      const getId = async ()=>{
-        try{
-        const gettingId = await axios.get(`${endpoints.GET_USER_COMPANY}`,{
-          headers:{
-            Authorization : 'Bearer ' + getToken
+  useEffect(() => {
+    const getId = async () => {
+      try {
+        const gettingId = await axios.get(`${endpoints.GET_USER_COMPANY}`, {
+          headers: {
+            Authorization: 'Bearer ' + getToken
           }
         })
 
         const data = gettingId.data
-        console.log("getting data in form" , data)
+        console.log("getting data in form", data)
         setFormSubmitted(true)
-        
+
         // setGetIdData(gettingId.data)
         // const gData = gettingId.data
         // console.log("here gdata",gData)
-              // setCForm({...gData})     
-              // data.description = data.description || ''; // handle null value
-  
-             
-              setCForm(data) 
-              setMode('getting')  
-              // console.log("inside form in getting data",cform)    
-              // const getValues = Object.values(cform)
-              // setTableData(getValues)
-              // console.log("values of cform", getValues)
-              // console.log("type of cform", typeof getValues)
-              // console.log("here are values of cform",tableData) 
-              // console.log("here is type of cform",typeof tableData) 
-              
-            
+        // setCForm({...gData})     
+        // data.description = data.description || ''; // handle null value
+
+
+        setCForm(data)
+        setMode('getting')
+        // console.log("inside form in getting data",cform)    
+        // const getValues = Object.values(cform)
+        // setTableData(getValues)
+        // console.log("values of cform", getValues)
+        // console.log("type of cform", typeof getValues)
+        // console.log("here are values of cform",tableData) 
+        // console.log("here is type of cform",typeof tableData) 
+
+
       }
-      catch(error){
+      catch (error) {
         console.log(error)
       }
-  
-      }
-      
-      getId()
-    },[id,getToken])
 
-   
+    }
 
-    
+    getId()
+  }, [id, getToken])
 
-    // console.log("after useeffect",cform)
-    const handleOpen = () => {
-        setOpen(true);
-      };
-    
-      const handleClose = () => {
-        setOpen(false);
-      };
 
-      const handleChange = (e) => {
-        const {name,value} = e.target;
-        setCForm({...cform,[name]:value})
-      }
 
-      const handleFileChange = (e) => {
-        const { name, files } = e.target;
-        setCForm({ ...cform, [name]: files[0] });
-      };
-      const handleFileChange1 = (e) => {
-        const { name, files } = e.target;
-        setSform({ ...sform, [name]: files[0] });
-      };
 
-      const handleChange1 = (e) => {
-        const {name,value} = e.target;
-        setSform({...sform, [name]:value})
-      }
+
+  // console.log("after useeffect",cform)
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCForm({ ...cform, [name]: value })
+  }
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setCForm({ ...cform, [name]: files[0] });
+  };
+  const handleFileChange1 = (e) => {
+    const { name, files } = e.target;
+    setSform({ ...sform, [name]: files[0] });
+  };
+
+  const handleChange1 = (e) => {
+    const { name, value } = e.target;
+    setSform({ ...sform, [name]: value })
+  }
 
     const handleEditorChange = (name, value) => {
       setCForm({
@@ -195,65 +195,65 @@ function CompanyProfile(){
       const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try{
-          const posts = await axios.post(endpoints.post_services,sform,{
-            headers:{
-              Authorization : 'Bearer ' + getToken,
-              "content-type": "multipart/form-data",
-            }
-          })
-          // toast.success(posts || "Form Submitted Successfully")
-
-          console.log(posts,"here is posted s form")
+    try {
+      const posts = await axios.post(endpoints.post_services, sform, {
+        headers: {
+          Authorization: 'Bearer ' + getToken,
+          "content-type": "multipart/form-data",
         }
-        catch(error){
-          console.log(error,"error in sform")
-          // toast.error(error.posts.message ||"Form Not Submitted.")
-        }
-        
-        handleClose()
-      }
+      })
+      // toast.success(posts || "Form Submitted Successfully")
 
-  
-      const companySubmit =async (e)=>{
-        e.preventDefault()
-        try{
-        const response = await axios.post(endpoints.post_company,cform,{
-          headers:{
-            Authorization : 'Bearer ' + getToken,
-            "content-type": "multipart/form-data",
-          }
-        })
-        toast.success(response.data.message || "Form Submitted Successfully")
-        setMode('add')
-        setEditMode(false);
-        console.log(response,"response of form")
-      }
-      catch(error){
-        // console.log(error.response.data)
-        toast.error(error.response.data.message ||"Form Not Submitted.")
-      }
-      // console.log("submitted form ",cform)
-      }
+      console.log(posts, "here is posted s form")
+    }
+    catch (error) {
+      console.log(error, "error in sform")
+      // toast.error(error.posts.message ||"Form Not Submitted.")
+    }
 
-      const handleEdit = async (e)=>{
-        e.preventDefault()
-        try{
-          const response = await axios.put(`${endpoints.get_allCompany}${id}/`,cform,{
-            headers:{
-              Authorization : 'Bearer ' + getToken
-            }
-          })
-          toast.success(response.data.message || "Form Submitted Successfully")
-          
-          setEditMode(false);
-          console.log(response,"response of form after put")
+    handleClose()
+  }
 
+
+  const companySubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post(endpoints.post_company, cform, {
+        headers: {
+          Authorization: 'Bearer ' + getToken,
+          "content-type": "multipart/form-data",
         }
-        catch(error){
-          toast.error(error.response.data.message ||"Form Not Edited.")
+      })
+      toast.success(response.data.message || "Form Submitted Successfully")
+      setMode('add')
+      setEditMode(false);
+      console.log(response, "response of form")
+    }
+    catch (error) {
+      // console.log(error.response.data)
+      toast.error(error.response.data.message || "Form Not Submitted.")
+    }
+    // console.log("submitted form ",cform)
+  }
+
+  const handleEdit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.put(`${endpoints.get_allCompany}${id}/`, cform, {
+        headers: {
+          Authorization: 'Bearer ' + getToken
         }
-      }
+      })
+      toast.success(response.data.message || "Form Submitted Successfully")
+
+      setEditMode(false);
+      console.log(response, "response of form after put")
+
+    }
+    catch (error) {
+      toast.error(error.response.data.message || "Form Not Edited.")
+    }
+  }
 
       const handleEditClick = () => {
         setEditMode(!editMode);
@@ -487,23 +487,23 @@ function CompanyProfile(){
       // }
     }
 
-   
-
-    
 
 
-    return(
-        <>
-        <Paper style={styles.outerBox}>
+
+
+
+  return (
+    <>
+      <Paper style={styles.outerBox}>
         <Box style={styles.headtop}>
-        <Container style={styles.heading}>
-        <Typography variant="h6" color="primary" style={styles.head}>
-        Company
-      </Typography>
-      <IconButton onClick={handleEditClick}>
-                        <EditIcon /> 
-                    </IconButton>
-      </Container>
+          <Container style={styles.heading}>
+            <Typography variant="h6" color="primary" style={styles.head}>
+              Company
+            </Typography>
+            <IconButton onClick={handleEditClick}>
+              <EditIcon />
+            </IconButton>
+          </Container>
 
       {(!formSubmitted || editMode) ?
        <Box>
@@ -586,45 +586,45 @@ function CompanyProfile(){
   />
 )}
 
-            </Box>
-            <Box style={styles.buttons}>
-          {editMode ?  <Box style={styles.buttonContainer}>
-            <Button variant="contained" color="primary" onClick={handleEdit} >
-                    Save
-            </Button></Box> : <Box style={styles.buttonContainer}>
-            <Button variant="contained" color="primary" type="submit" >
-                    <DoneIcon/>
-            </Button></Box> } 
-           </Box></form>
-            
-            </Box> : <Grid item xs={12} style={styles.headtop1}><Box style={styles.showdata}>
-                
-            <Box style={styles.boxTop11}>
-                <img src={`${base_uri}${cform.banner}`} alt={cform.id} style={styles.image}/>
-                <Box style={styles.imageText11}>{cform.name}</Box>
                 </Box>
-                {/* <Box style={styles.boxTop}>
+                <Box style={styles.buttons}>
+                  {editMode ? <Box style={styles.buttonContainer}>
+                    <Button variant="contained" color="primary" onClick={handleEdit} >
+                      Save
+                    </Button></Box> : <Box style={styles.buttonContainer}>
+                    <Button variant="contained" color="primary" type="submit" >
+                      <DoneIcon />
+                    </Button></Box>}
+                </Box></form>
+
+            </Box> : <Grid item xs={12} style={styles.headtop1}><Box style={styles.showdata}>
+
+              <Box style={styles.boxTop11}>
+                <img src={`${base_uri}${cform.banner}`} alt={cform.id} style={styles.image} />
+                <Box style={styles.imageText11}>{cform.name}</Box>
+              </Box>
+              {/* <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Name:</Typography> 
                 <Box style={styles.tabledata}>   {cform.name}</Box>
                 </Box> */}
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Email:</Typography> 
+              <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Email:</Typography>
                 <Box style={styles.tabledata}>   {cform.email}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Number:</Typography> 
+              </Box>
+              <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Number:</Typography>
                 <Box style={styles.tabledata}>   {cform.number}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
+              </Box>
+              <Box style={styles.boxTop}>
                 <Typography style={styles.text}>GST Number:</Typography>
-                 <Box style={styles.tabledata}>   {cform.gst_number}</Box>
-                </Box>
-                
-                <Box style={styles.boxTop}>
+                <Box style={styles.tabledata}>   {cform.gst_number}</Box>
+              </Box>
+
+              <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Registered Date:</Typography>
-                 <Box style={styles.tabledata}>   {cform.reg_date}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
+                <Box style={styles.tabledata}>   {cform.reg_date}</Box>
+              </Box>
+              <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Sector:</Typography>
                  <Box style={styles.tabledata}>   {cform.sector}</Box>
                 </Box>
@@ -634,9 +634,9 @@ function CompanyProfile(){
                 </Box>
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Address:</Typography>
-                 <Box style={styles.tabledata12}>   {cform.address}</Box>
-                </Box>
-                <Box style={styles.boxTop1}>
+                <Box style={styles.tabledata12}>   {cform.address}</Box>
+              </Box>
+              <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Registered Number:</Typography>
                  <Box style={styles.tabledata12}>   {cform.reg_number}</Box>
                 </Box>
@@ -801,46 +801,17 @@ function CompanyProfile(){
             
             <Container style={styles.buttonContainer}><Button variant="contained" color="primary" type="submit" >
                     Submit
-            </Button></Container></form>
-        
-        </div>
-      </Modal></Box></Container>
-      {/* {modalData.length > 0 ? modalData.map((m)=>{return <table>
-          <thead>
-          <tr>
-            <td>Name</td>
-            <td>Long Description</td>
-            <td>Short Description</td>
-          </tr></thead>
-          <tbody>
-            <tr>
-            <th>{m.Name}</th>
-            <th>{m.long_desc}</th>
-            <th>{m.short_dis}</th></tr>
-          </tbody>
-        </table>}):<p> Hello I am Modal Which Has Opened </p>} */}
-        {/* <Typography variant="h6">Name || Long Description || Short Description</Typography>
-          <Typography variant="p">Services Provided : Consultancy and Software Management</Typography> */}
-        {/* {modalData.map((data,index)=>{
-          return <Grid key={index} style={styles.services}>  
-          <Services name={data.name} 
-          // shortdesc={data.desc} 
-          longdesc={data.expanded ? data.desc : data.desc.slice(0, 100)}
-          ellipsis={!data.expanded}
-          onClick={() => handleExpandToggle(index)}
-          // longdesc={data.long_desc.slice(0,100)} 
-          // ellipsis={expand} 
-          // onClick={handleExpand}
-          />
-          </Grid>
-        })} */}
-        {/* {sliceData.length>0 ? sliceData.map((sliced)=>(<p>{sliced.long_desc.slice(0,100)}<span onClick={handleExpand}>...{expand}</span></p>)) :""} */}
-        </Grid>
-        <Toaster 
-         position="top-right"
-         reverseOrder={false} />
-        </>
-    )
+                  </Button></Container></form>
+
+              </div>
+            </Modal></Box></Container>
+
+      </Grid>
+      <Toaster
+        position="top-right"
+        reverseOrder={false} />
+    </>
+  )
 }
 
 export default CompanyProfile;

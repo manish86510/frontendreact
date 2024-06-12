@@ -111,14 +111,16 @@ const UserSubscription = () => {
           paddingRight: "8px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ height: "40px", borderRadius: "18px" }}
-          onClick={() => setShowAdd(!showAdd)}
-        >
-          {showAdd ? <>Close</> : <>Add Plan</>}
-        </Button>
+        {!showSubscriptions && !showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px" }}
+            onClick={() => setShowAdd(!showAdd)}
+          >
+            {showAdd ? <>Close</> : <>Add Plan</>}
+          </Button>
+        )}
 
         {/* <Button
           variant="contained"
@@ -133,11 +135,12 @@ const UserSubscription = () => {
           <Button
             variant="contained"
             color="primary"
-            style={{ height: "40px", borderRadius: "18px", marginLeft: "7rem" }}
+            style={{ height: "40px", borderRadius: "18px", marginLeft: showSubscriptions? '0rem': "7rem" }}
             onClick={() => setShowSubscriptions(!showSubscriptions)}
           >
             {showSubscriptions ? (
-              <>Hide Subscriptions</>
+              // <>Hide Subscriptions</>
+              <div >Back</div>
             ) : (
               <>All Subscriptions</>
             )}
