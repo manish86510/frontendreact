@@ -77,8 +77,8 @@ const StreamingPlans = () => {
 
   return (
     <div>
-      <div >
-        <h1 style={{ fontFamily: "Daikon-Bold" , marginLeft:'1rem'}}>Plans</h1>
+      <div>
+        {/* <h1 style={{ fontFamily: "Daikon-Bold", marginLeft: "1rem" }}>Plans</h1> */}
       </div>
       {plans.map((plan) => (
         <Paper key={plan.id} className={classes.root}>
@@ -99,9 +99,10 @@ const StreamingPlans = () => {
             <Typography
               variant="h6"
               className={classes.price}
-              style={{ fontFamily: "Daikon-regular" }}
+              style={{ fontFamily: "Daikon-regular"}}
             >
-              ₹149/month
+              {/* ₹ {plan.price}/m */}
+              ₹{plan.price}
             </Typography>
             <Button
               variant="contained"

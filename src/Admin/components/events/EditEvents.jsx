@@ -52,6 +52,9 @@ const initialFormdata = {
   short_desc: "",
   long_desc: "",
   banner: null,
+  url:"",
+  time:"",
+  venue:""
 };
 
 const EditEvents = ({ eventId, setShowEdit }) => {
@@ -156,6 +159,40 @@ const EditEvents = ({ eventId, setShowEdit }) => {
               required
               InputLabelProps={{ shrink: true }}
               value={formData.date}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="time"
+              type="time"
+              name="time"
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+              value={formData.time}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Venue"
+              type="venue"
+              name="venue"
+              fullWidth
+              required
+              value={formData.venue}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="URL"
+              type="url"
+              name="url"
+              fullWidth
+              required
+              value={formData.url}
               onChange={handleChange}
             />
           </Grid>
