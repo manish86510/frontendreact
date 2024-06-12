@@ -40,7 +40,7 @@ import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
 import MyWorkTab from './components/myWork/MyWorkTab';
-import Chapter from './components/Chapter/Chapter';
+import Chapter from './components/chapter/chapter';
 import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
 import Industry from './Admin/components/industry/Industry';
