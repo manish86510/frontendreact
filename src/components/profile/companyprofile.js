@@ -18,15 +18,30 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Label } from "@material-ui/icons";
 import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const useStyles = makeStyles({
-    outlinedBasic: {
-        // height: "6rem", 
-        // overflow: "auto"
-        // overflowY:"scroll"
-    },
-  });
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+  toplist:{
+    width:"46%",
+    margin:"0.5rem 0.5rem 0.5rem 0.5rem",
+  }
+}));
 function CompanyProfile(){
     const classes = useStyles();
     const [open,setOpen] = useState(false);
@@ -34,6 +49,9 @@ function CompanyProfile(){
     const [mode,setMode] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [dropOpen, setDropOpen] = useState(true);
+    const [currency, setCurrency] = useState('');
+    const [industry,setIndustry] = useState([])
     
     // const [id,setId] = useState(null)
     // const [getIdData,setGetIdData] = useState(null)
@@ -68,6 +86,27 @@ function CompanyProfile(){
     const id = jsData.pk
     // console.log('line 59',id)
     
+    const getIndustry = async ()=>{
+      try{
+        const indus = await axios.get(endpoints.get_industry,{
+          headers:{
+            Authorization : 'Bearer ' + getToken
+          }
+        })
+        console.log("industry",indus.data.data)
+        setIndustry(indus.data.data)
+        setCurrency(indus.data.data)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    console.log("here industry",industry)
+
+    useEffect(()=>{
+      getIndustry()
+    },[])
 
     useEffect(()=>{
       const getId = async ()=>{
@@ -148,15 +187,13 @@ function CompanyProfile(){
         [name]: value,
       });
     };
+
+    const handleClickList = () => {
+      setDropOpen(!dropOpen);
+    };
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-      //   setModalData([...modalData, { ...sform, expanded: false }]);
-      //   setSform({
-      //     name :"",
-      //     short_description : "",
-      //     banner:null
-      // })
 
         try{
           const posts = await axios.post(endpoints.post_services,sform,{
@@ -222,26 +259,12 @@ function CompanyProfile(){
         setEditMode(!editMode);
         // setMode('edit')
     };
+
+    const handleChangeSelect = (event) => {
+      setCurrency(event.target.value);
+    };
       
-      // useEffect(()=>{
-      //   setSliceData(modalData)
-      // },[modalData])
-
-      // console.log(modalData,"text is here")
-      // console.log(modalData[0].long_desc,"text is with modal here")
-
-      // const handleExpand = ()=>{
-      //   const sliced = modalData.map((sliced)=>(sliced.long_desc.slice(100)));
-      //   setExpand(sliced);
-      // }
-
-      // console.log(expand,"here is expand")
-
-    //   const handleExpandToggle = (index) => {
-    //     setModalData(modalData.map((item, i) => (
-    //         i === index ? { ...item, expanded: !item.expanded } : item
-    //     )));
-    // };
+      
 
     const styles = {
         headtop:{
@@ -259,15 +282,17 @@ function CompanyProfile(){
             padding:'1rem 0rem 1rem 0rem'
         },
         head1:{
+          width:"100%",
             display: 'flex',
+            justifyContent:"space-between"
         },
         head2:{
             cursor:"pointer",
             display: 'flex',
-            margin: '1rem 0rem 0rem 30rem',
+            // margin: '1rem 0rem 0rem 30rem',
             height:'2.5rem',
             width:'2.5rem',
-            justifyContent:'center',
+            justifyContent:'right',
             // borderRadius:'2rem',
             // maxWidth: 400,
             // margin: 'auto',
@@ -452,7 +477,14 @@ function CompanyProfile(){
           display: 'flex',
           fontSize: 'xx-large',
           margin :'0.5rem 0rem 0rem 1rem',
+      },
+      head12:{
+        marginLeft:"30rem"
       }
+      // form:{
+      //   display:"flex",
+      //   flexWrap:"wrap"
+      // }
     }
 
    
@@ -475,7 +507,7 @@ function CompanyProfile(){
 
       {(!formSubmitted || editMode) ?
        <Box>
-        <form onSubmit={companySubmit} >
+        <form onSubmit={companySubmit} style={styles.form} >
             <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }} 
             name="name" value={cform.name} onChange={handleChange}
@@ -484,6 +516,27 @@ function CompanyProfile(){
             // InputLabelProps={{ shrink: true }}
             name="email" value={cform.email} onChange={handleChange}
             />
+            
+            <TextField
+            style={styles.textField}
+          id="outlined-select-currency-native"
+          select
+          size="small"
+          label="Industry"
+          value={currency}
+          onChange={handleChangeSelect}
+          SelectProps={{
+            native: true,
+          }}
+          // helperText="Please select your Industry"
+          variant="outlined"
+        >
+          {industry.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </TextField>
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
             // InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
@@ -518,9 +571,7 @@ function CompanyProfile(){
             inputProps={{ accept: "image/*" }}
             onChange={handleFileChange}
             />
-            {/* <TextField size="small" id="outlined-basic"  label="Description" style={styles.textField} type="text" variant="outlined" 
-            name="description" value={cform.description} onChange={handleChange}
-            /> */}
+            
             <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
@@ -577,6 +628,10 @@ function CompanyProfile(){
                 <Typography style={styles.text}>Sector:</Typography>
                  <Box style={styles.tabledata}>   {cform.sector}</Box>
                 </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Industry:</Typography>
+                 <Box style={styles.tabledata}>   {cform.industry_name}</Box>
+                </Box>
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Address:</Typography>
                  <Box style={styles.tabledata12}>   {cform.address}</Box>
@@ -589,14 +644,7 @@ function CompanyProfile(){
                 <Typography style={styles.text}>Overview: </Typography> 
                 <Box style={styles.tabledata12} dangerouslySetInnerHTML={{ __html:cform.description }}></Box>
                 </Box>
-                  {/* <Box style={styles.tabledata}> {cform.email}</Box>
-                  <Box style={styles.tabledata}> {cform.number}</Box>
-                  <Box style={styles.tabledata}> {cform.gst_number}</Box>
-                  <Box style={styles.tabledata}> {cform.reg_number}</Box>
-                  <Box style={styles.tabledata}> {cform.reg_date}</Box>
-                  <Box style={styles.tabledata}> {cform.sector}</Box>
-                  <Box style={styles.tabledata}> {cform.address}</Box>
-                  <Box style={styles.tabledata1} ><Typography dangerouslySetInnerHTML={{ __html:cform.description }}/></Box> */}
+                  
                    </Box> </Grid>}
 
             {/* {mode === 'edit' && <Box>
@@ -721,8 +769,8 @@ function CompanyProfile(){
                 <Typography variant="h6" color="primary" style={styles.head}>
         Services
       </Typography>
+      <IconButton style={styles.head12}><EditIcon onClick={handleOpen}/></IconButton>
       <Box style={styles.head2}>
-      <IconButton><EditIcon onClick={handleOpen}/></IconButton>
         <Modal
         open={open}
         onClose={handleClose}
