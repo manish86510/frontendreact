@@ -27,6 +27,7 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
+  { id: "time", label: "Time", minWidth: 70, align: "center" },
   {
     id: "short_desc",
     label: "Short Description",
@@ -78,6 +79,14 @@ const useStyles = makeStyles({
     height: "auto",
   },
 });
+
+const convertTo12HourFormat = (time) => {
+  const [hour, minute] = time.split(":");
+  const hours = (hour % 12 || 12).toString().padStart(2, "0");
+  const minutes = minute.padStart(2, "0");
+  const ampm = hour >= 12 ? "PM" : "AM";
+  return `${hours}:${minutes} ${ampm}`;
+};
 
 export default function EventsTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
@@ -148,7 +157,9 @@ export default function EventsTable({ rows, handleDelete, handleEdit }) {
                             <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
-                          ) : (
+                          ) : column.id === "time" ? (
+                            convertTo12HourFormat(value)
+                          ) :  (
                             value
                           )}
                         </TableCell>

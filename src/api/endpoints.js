@@ -65,6 +65,8 @@ const endpoints = {
   ADD_APPLY: base_uri + '/apply/create/',
   GET_APPLY: base_uri + '/apply/list/',
   USER_APPLY_COMPANY: base_uri + '/api/user-applied-companies/',
+  BUY_PLAN: base_uri + '/buy-plan/',
+  GET_BOUGHT_PLAN: base_uri + '/user/plan/',
 
   // get id details 
   get_id_company: base_uri + '/company/',
