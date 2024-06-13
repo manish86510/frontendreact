@@ -16,6 +16,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Paper from '@material-ui/core/Paper';
 import ReactQuill from 'react-quill';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 
 
@@ -335,12 +336,58 @@ const useStyles = makeStyles((theme) => ({
     },
     post:{
       marginTop:"2%",
+    },
+    icon:{
+      cursor:"pointer",
+    },
+    attachment:{
+      display:"flex"
+    },
+    attachmenttext:{
+      fontFamily:"Daikon-Regular",
+      cursor:"pointer",
     }
   }));
   
   const Card = () => {
+    const [data,setData] = useState([]);
+    const [attachmentURL,setAttachmentURL] = useState(null);
+
     const classes = useStyles();
     const [expandedItems, setExpandedItems] = useState({});
+
+    var getToken = localStorage.getItem('access');
+
+    const fetchCompanies = async()=>{
+        try{
+        const companies = await axios.get(endpoints.MY_WORK,{
+            headers:{
+                Authorization : 'Bearer ' + getToken
+            }
+        })
+        console.log("companies in posting detail",companies.data)
+        setData(companies.data)
+
+        const attachmentURL = await axios.get(`${base_uri}${companies.data[1].attachment}`,{
+          headers:{
+            Authorization:"Bearer " + getToken
+          },
+          responseType:'blob'
+        })
+
+        console.log("url 371",attachmentURL)
+        const url = URL.createObjectURL(attachmentURL.data)
+        console.log("url 373",url)
+        setAttachmentURL(url)
+    }
+    catch(error){
+        console.log(error)
+    }
+    }
+
+    useEffect(()=>{
+        fetchCompanies()
+    },[])
 
     const toggleDescription = (index) => {
         setExpandedItems((prevState) => ({
@@ -354,60 +401,33 @@ const useStyles = makeStyles((theme) => ({
     // };
     
 
-    const data = [{
-        id:1,
-        companyName:"Enorvision",
-        logo:"https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000033063/83b19e19e8f0ddd4c098f8a075bc85b3957a6041eaca83a186b8dc9c15e68db2",
-        subject:"Subject 1",
-        description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.",
-    },
-    {
-        id:2,
-        companyName:"HBF",
-        logo:"https://i.kinja-img.com/image/upload/c_fill,h_900,q_60,w_1600/93ba769837af538161278ffb5ee69d01.jpg",
-        subject:"Subject 2",
-        description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-        id:3,
-        companyName:"AQT",
-        logo:"https://images.immediate.co.uk/production/volatile/sites/3/2021/09/Lost-in-Random-2-sequel-spinoff-6626bda.jpg?quality=90&resize=620,414",
-        subject:"Subject 3",
-        description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.",
-    },
-]
+//     const data = [{
+//         id:1,
+//         companyName:"Enorvision",
+//         logo:"https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000033063/83b19e19e8f0ddd4c098f8a075bc85b3957a6041eaca83a186b8dc9c15e68db2",
+//         subject:"Subject 1",
+//         description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.",
+//     },
+//     {
+//         id:2,
+//         companyName:"HBF",
+//         logo:"https://i.kinja-img.com/image/upload/c_fill,h_900,q_60,w_1600/93ba769837af538161278ffb5ee69d01.jpg",
+//         subject:"Subject 2",
+//         description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+//     },
+//     {
+//         id:3,
+//         companyName:"AQT",
+//         logo:"https://images.immediate.co.uk/production/volatile/sites/3/2021/09/Lost-in-Random-2-sequel-spinoff-6626bda.jpg?quality=90&resize=620,414",
+//         subject:"Subject 3",
+//         description:"Lost in Random was released on September 10, 2021. I randomly came across IGN's review on Youtube and decided to play it on my switch. I just finished it and I ABSOLUTELY loved it.",
+//     },
+// ]
   
     return (
         <>
         <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}>
-        <Container >
-            <Box className={classes.top}>
-            <img className={classes.topimage} src="https://bharatpreneurs.org/images/mainh.webp" alt={data.id}/>
-           <Typography className={classes.topHeader} variant="h4">Company Name</Typography>
-            </Box>
-            
-            <Box className={classes.imageContainer} >
-                <img src="https://bharatpreneurs.org/images/mainh.webp" className={classes.image} alt={data.id}/>
-            </Box>
-            <Typography className={classes.heading}>
-                {/* GST Number: &nbsp;{data.gst_number} */}
-               Heading Of Bharatpreneurs </Typography>
-            <Typography className={classes.description} > Description Of Bharat</Typography><br/>
-            <Box className={classes.services} >
-            <Typography className={classes.heading1}>Services Provided : </Typography>
-                <Box className={classes.servicesIN}>
-               <Typography className={classes.serviceText}><CheckCircleIcon/> &nbsp;Education</Typography>
-                <Typography className={classes.serviceText}><CheckCircleIcon/> &nbsp;HealthCare</Typography>
-                <Typography className={classes.serviceText}><CheckCircleIcon/> &nbsp;Finance</Typography>
-                <Typography className={classes.serviceText}><CheckCircleIcon/> &nbsp;IT</Typography></Box>
-            </Box>
-            <Box className={classes.belowText}><Typography className={classes.description}><EmailIcon/> &nbsp;dummy@dummy.com</Typography>
-            <Typography className={classes.description}><CallIcon/> &nbsp;1234567890</Typography></Box><br/>
-            <Typography className={classes.description}><HomeIcon/> &nbsp;dummy address</Typography>
-            <br/>
-            <br/><br/><br/>
-        </Container>
                 <h1>Messages</h1>
                 {data.map((data)=><Paper><div className={classes.card}>
                   <Box className={classes.header}>
@@ -419,9 +439,11 @@ const useStyles = makeStyles((theme) => ({
               {data.description}
             </Typography>
             <Box className={classes.header3}>
-            <Button variant="contained" color="primary" onClick={() => window.open(data.pdfUrl, '_blank')}>
+              <Box className={classes.attachment} onClick={() => window.open(attachmentURL, '_blank')}>
+              <AttachFileIcon className={classes.icon} /><Typography className={classes.attachmenttext}>Attachment</Typography></Box>
+            {/* <Button variant="contained" color="primary" onClick={() => window.open(data.pdfUrl, '_blank')}>
                   Open PDF
-                </Button>
+                </Button> */}
                {expandedItems[data.id] ?<Button variant="contained" color="primary" onClick={() => toggleDescription(data.id)}>
                   Close
                 </Button> :<Button variant="contained" color="primary" onClick={() => toggleDescription(data.id)}>

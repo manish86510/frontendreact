@@ -207,7 +207,7 @@ export default function Carousel(){
       {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}> <Link to='/carousel-call' state={m.id} className={classes.heading}  >
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
        
-          <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1}}></h4>
+          <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1,color:'black'}}></h4>
         <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,39) }} style={{marginTop:0}}></p>
         <p className={classes.heading} >{m.date}</p></Link>
     </div>)}

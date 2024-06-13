@@ -11,6 +11,7 @@ import EventIcon from '@material-ui/icons/Event';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LocationOnTwoToneIcon from '@material-ui/icons/LocationOnTwoTone';
 import TodayTwoToneIcon from '@material-ui/icons/TodayTwoTone';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
 const EventCard = () => {
   const [data, setData] = useState([]);
@@ -209,7 +210,7 @@ const EventCard = () => {
           <div style={datetime}>
             <div style={priceStyle}>Ticket Price: {`₹${event.amount}`}</div>
             </div>
-            <div style={venue}><LocationOnTwoToneIcon/>&nbsp; {event.venue}</div>
+            <div style={venue}><LocationOnOutlinedIcon/>&nbsp; {event.venue}</div>
           <div
             id={`long-desc-${event.id}`}
             style={expanded[event.id] ? expandedDescStyle : longDescStyle}

@@ -24,8 +24,7 @@ export default function Bookmark(){
 
         return (
             <div>
-                 <Grid >
-                        <Carousel/></Grid>
+                 <Grid ><Carousel/></Grid>
                 <Grid container direction="row" spacing={3}>
                     <Grid item xs={8}>
                         <BookmarkTabs />
