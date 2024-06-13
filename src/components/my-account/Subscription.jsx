@@ -122,6 +122,8 @@ const StreamingPlans = () => {
     return <CircularProgress />;
   }
 
+  console.log("plans:",plans)
+
   console.log(currentPlan);
   return (
     <div>

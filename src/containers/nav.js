@@ -182,10 +182,10 @@ class SideNav extends React.Component {
                     "link": "/my_work",
                 },
                 {
-                    "title": "Settings",
+                    "title": "Help",
                     "icon": "settings",
                     "selected": false,
-                    "link": "/settings",
+                    "link": "/help",
                 },
             ],
             pendding_message: 3,
@@ -301,7 +301,7 @@ class SideNav extends React.Component {
     nav_my_account = () => {
         // this.state.home_title = "My Account";
         this.setState({
-            home_title: "My Plans"
+            home_title: "Our Plans"
         });
         this.props.history.push({ pathname: "/my_account" })
     }
@@ -427,7 +427,7 @@ class SideNav extends React.Component {
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
                                                     <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
-                                                    <MenuItem onClick={this.nav_my_account}>Plans</MenuItem>
+                                                    <MenuItem onClick={this.nav_my_account}>Our Plans</MenuItem>
                                                     <MenuItem onClick={this.nav_logout}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
