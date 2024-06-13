@@ -111,15 +111,12 @@ export default function GovernmentSchemesTab(){
 
     return(
         <> 
-        <Grid container direction="row"  spacing={3}>
-            <Grid item xs={8}> <Typography variant="h4">Government Schemes</Typography><hr/>
+        <Grid container direction="row"  spacing={3}> 
+        {data.length > 0 ?<> <Grid item xs={8}> <Typography variant="h4">Government Schemes</Typography><hr/>
         <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search} variant="outlined" fullWidth onChange={handleChange} /> 
-          {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
-        {/* <h1>I am working In Schemes</h1> */}</Grid>
-        
-        {data.length > 0 ? <Grid item xs={8}>{filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
+      {filter.map((data)=> <Paper key={data.id}  className={classes.paper} onClick={() => handleClick(data.id)}>
         <Box className={classes.Box}><Grid container direction="row"  spacing={3}>
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
@@ -128,7 +125,10 @@ export default function GovernmentSchemesTab(){
                 <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:cutItShort(data.short_desc,110) }}></Typography>
              </Grid>
             </Grid> </Box>
-        </Paper> )}</Grid> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
+        </Paper> )}
+        </Grid>
+        
+         </>: <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
         <Grid item xs={4}><RightTab/></Grid>
         </Grid>
         </>

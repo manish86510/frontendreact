@@ -68,6 +68,7 @@ function CompanyProfile(){
       address: '',
       banner: null,
       logo:null,
+      industry_name:'',
       // Portfolio: '',
   });
     const [sform,setSform] = useState({
@@ -93,16 +94,16 @@ function CompanyProfile(){
             Authorization : 'Bearer ' + getToken
           }
         })
-        console.log("industry",indus.data.data)
+        // console.log("industry",indus.data.data)
         setIndustry(indus.data.data)
-        setCurrency(indus.data.data)
+        // setCurrency(indus.data.data)
       }
       catch(error){
         console.log(error)
       }
     }
 
-    console.log("here industry",industry)
+    // console.log("here industry",industry)
 
     useEffect(()=>{
       getIndustry()
@@ -118,7 +119,7 @@ function CompanyProfile(){
         })
 
         const data = gettingId.data
-        console.log("getting data in form" , data)
+        // console.log("getting data in form" , data)
         setFormSubmitted(true)
         
         // setGetIdData(gettingId.data)
@@ -162,10 +163,46 @@ function CompanyProfile(){
         setOpen(false);
       };
 
+      // const handleChange = (e) => {
+      //   const {name,value} = e.target;
+      //   // setCForm({...cform,[name]:value})
+      //   setCForm((prevCForm)=>({
+      //     ...prevCForm, [name]:value
+      //   }))
+      //   console.log("in handle change",e.target.value);
+      //   console.log('cform', cform)
+      // }
+
+
       const handleChange = (e) => {
-        const {name,value} = e.target;
-        setCForm({...cform,[name]:value})
-      }
+        const { name, value } = e.target;
+        if (name === "industry_name") {
+          // If the field is industry_name, directly set the value
+          setCForm({ ...cform, [name]: value });
+        } 
+        else {
+          // For other fields, update the state as before
+          setCForm((prevCForm) => ({
+            ...prevCForm,
+            [name]: value,
+          }));
+        }
+      };
+      
+
+  //     const handleSelect = (e)=>{
+  //       let value = e.target.value
+  //       console.log(value, 'value')
+  //  setCForm((prevCForm)=>({
+  // ...prevCForm, industry_name:value
+  //  }))
+  //  console.log(cform)
+  //     }
+
+      // useEffect(() => {
+      //   console.log("Updated cform:", cform);
+      // }, [cform]);
+
 
       const handleFileChange = (e) => {
         const { name, files } = e.target;
@@ -260,9 +297,9 @@ function CompanyProfile(){
         // setMode('edit')
     };
 
-    const handleChangeSelect = (event) => {
-      setCurrency(event.target.value);
-    };
+    // const handleChangeSelect = (event) => {
+    //   setCurrency(event.target.value);
+    // };
       
       
 
@@ -489,7 +526,7 @@ function CompanyProfile(){
 
    
 
-    
+    console.log("here is cform",cform)
 
 
     return(
@@ -523,19 +560,33 @@ function CompanyProfile(){
           select
           size="small"
           label="Industry"
-          value={currency}
-          onChange={handleChangeSelect}
+          name="industry_name"
+          value={cform.industry_name}
+          InputLabelProps={{ shrink: true }}
+          onChange={handleChange}
           SelectProps={{
             native: true,
           }}
           // helperText="Please select your Industry"
           variant="outlined"
         >
-          {industry.map((option) => (
-            <option key={option.value} value={option.value}>
+          <option value=''>
+            Select Industry
+          </option>
+          <option value='Finance'>
+            Finance
+          </option>
+          <option value='IT'>
+            IT
+          </option>
+          <option value='Pharmaceutical'>
+          Pharmaceutical
+          </option>
+          {/* {industry.map((option) => (
+            <option key={option.value} value={option.name}>
               {option.name}
             </option>
-          ))}
+          ))} */}
         </TextField>
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
             // InputLabelProps={{ shrink: true }}
@@ -647,121 +698,6 @@ function CompanyProfile(){
                   
                    </Box> </Grid>}
 
-            {/* {mode === 'edit' && <Box>
-        <form onSubmit={companySubmit} >
-            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
-            // InputLabelProps={{ shrink: true }} 
-            name="name" value={cform.name} onChange={handleChange}
-            />
-            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="email" value={cform.email} onChange={handleChange}
-            />
-            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="number" value={cform.number} onChange={handleChange}
-            />
-            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="gst_number" value={cform.gst_number} onChange={handleChange}
-            />
-            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="reg_number" value={cform.reg_number} onChange={handleChange}
-            />
-            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="reg_date" value={cform.reg_date} onChange={handleChange}
-            />
-            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="sector" value={cform.sector} onChange={handleChange}
-            />
-            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" 
-            InputLabelProps={{ shrink: true }}
-            name="banner" 
-            inputProps={{ accept: "image/*" }}
-            // value={cform.sector} 
-            onChange={handleFileChange}
-            />
-            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" 
-            InputLabelProps={{ shrink: true }}
-            name="logo" 
-            // value={cform.sector} 
-            inputProps={{ accept: "image/*" }}
-            onChange={handleFileChange}
-            />
-           
-            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
-            // InputLabelProps={{ shrink: true }}
-            name="address" value={cform.address} onChange={handleChange}
-            />
-            <Box className={classes.reactQuillContainer}>
-            {(cform.name || cform.address) && (
-  <ReactQuill
-    value={cform.description}
-    required
-    onChange={(value) => handleEditorChange("description", value)}
-    className={classes.editor}
-  />
-)}
-
-            </Box>
-            
-            <Box style={styles.buttons}>
-            <Box style={styles.buttonContainer}>
-            <Button variant="contained" color="primary" onClick={handleEdit} >
-                    Save
-            </Button></Box> 
-           </Box></form>
-            
-            </Box> } */}
-            
-              {/* {tableData && tableData.map((m)=><Box style={styles.tabledata}> {m}</Box>)} */}
-
-              {/* {mode === 'getting' && tableData && <Grid item xs={12} style={styles.headtop}><Box style={styles.showdata}> 
-                
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Name:</Typography> 
-                <Box style={styles.tabledata}>   {cform.name}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Email:</Typography> 
-                <Box style={styles.tabledata}>   {cform.email}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Number:</Typography> 
-                <Box style={styles.tabledata}>   {cform.number}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>GST Number:</Typography>
-                 <Box style={styles.tabledata}>   {cform.gst_number}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Registered Number:</Typography>
-                 <Box style={styles.tabledata}>   {cform.reg_number}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Registered Date:</Typography>
-                 <Box style={styles.tabledata}>   {cform.reg_date}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Sector:</Typography>
-                 <Box style={styles.tabledata}>   {cform.sector}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Address:</Typography>
-                 <Box style={styles.tabledata}>   {cform.address}</Box>
-                </Box>
-                <Box style={styles.boxTop1}>
-                <Typography style={styles.text}>Description: </Typography> 
-                <Box style={styles.tabledata1} dangerouslySetInnerHTML={{ __html:cform.description }}></Box>
-                </Box>
-                   </Box> </Grid>} */}
-              
-              {/* <Box style={styles.tabledata}> here is show data</Box>
-              <Box style={styles.tabledata}> here is show data</Box>
-              <Box style={styles.tabledata}> here is show data</Box> */}
            
             </Box></Paper>
             <Grid item xs={12} style={styles.headtop}>
@@ -794,9 +730,7 @@ function CompanyProfile(){
             // inputProps={{ accept: "image/*" }}
             onChange={handleFileChange1}
             /></Box>
-            {/* <Box><Typography style={styles.modalinputhead}>Long Description : </Typography><TextField size="small" id="outlined-basic"  label="Long Description" className={classes.outlinedBasic} style={styles.textField1} type="text" variant="outlined" multiline minRows={3}
-            name="long_desc" value={sform.long_desc} onChange={handleChange}
-             /></Box> */}
+            
              </Container>
             
             <Container style={styles.buttonContainer}><Button variant="contained" color="primary" type="submit" >
@@ -805,36 +739,6 @@ function CompanyProfile(){
         
         </div>
       </Modal></Box></Container>
-      {/* {modalData.length > 0 ? modalData.map((m)=>{return <table>
-          <thead>
-          <tr>
-            <td>Name</td>
-            <td>Long Description</td>
-            <td>Short Description</td>
-          </tr></thead>
-          <tbody>
-            <tr>
-            <th>{m.Name}</th>
-            <th>{m.long_desc}</th>
-            <th>{m.short_dis}</th></tr>
-          </tbody>
-        </table>}):<p> Hello I am Modal Which Has Opened </p>} */}
-        {/* <Typography variant="h6">Name || Long Description || Short Description</Typography>
-          <Typography variant="p">Services Provided : Consultancy and Software Management</Typography> */}
-        {/* {modalData.map((data,index)=>{
-          return <Grid key={index} style={styles.services}>  
-          <Services name={data.name} 
-          // shortdesc={data.desc} 
-          longdesc={data.expanded ? data.desc : data.desc.slice(0, 100)}
-          ellipsis={!data.expanded}
-          onClick={() => handleExpandToggle(index)}
-          // longdesc={data.long_desc.slice(0,100)} 
-          // ellipsis={expand} 
-          // onClick={handleExpand}
-          />
-          </Grid>
-        })} */}
-        {/* {sliceData.length>0 ? sliceData.map((sliced)=>(<p>{sliced.long_desc.slice(0,100)}<span onClick={handleExpand}>...{expand}</span></p>)) :""} */}
         </Grid>
         <Toaster 
          position="top-right"

@@ -25,10 +25,13 @@ const styles = theme => ({
     },
     registerButton: {
         // color: 'white',
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-        marginLeft: theme.spacing(9),
-        marginRight: theme.spacing(2),
+        // marginTop: theme.spacing(2),
+        // marginBottom: theme.spacing(2),
+        // marginLeft: theme.spacing(9),
+        // marginRight: theme.spacing(2),
+        margin:"1rem 0rem 1rem 5rem",
+        // display:"flex",
+        // justifyContent:"center",
         width:'10rem',
         // marginLeft: '3.5rem'
     },

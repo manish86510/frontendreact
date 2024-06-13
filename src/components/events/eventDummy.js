@@ -7,6 +7,10 @@ import Box from '@material-ui/core/Box';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import EventIcon from '@material-ui/icons/Event';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LocationOnTwoToneIcon from '@material-ui/icons/LocationOnTwoTone';
+import TodayTwoToneIcon from '@material-ui/icons/TodayTwoTone';
 
 const EventCard = () => {
   const [data, setData] = useState([]);
@@ -26,6 +30,7 @@ const EventCard = () => {
       console.error('Error fetching events:', error);
     }
   };
+
 
   useEffect(() => {
     fetchEvents();
@@ -58,17 +63,21 @@ const EventCard = () => {
     }));
   };
 
-  const Time = (time)=>{
-    if(time>=12 && time<=24){
-      return time + "PM"
-    }
-    else if (time<12){
-      return time + "AM"
-    }
-    else {
-      return null
-    }
-  }
+  // const Time = (data)=>{
+  //   if(data>=12 && data<=24){
+  //     return  " PM"
+  //   }
+  //   else if (data >= 0 && data<12){
+  //     return   " AM"
+  //   }
+  // }
+
+  const convertTo12HourFormat = (time) => { 
+    const [hour, minute] = time.split(':'); 
+    const hours = ((hour % 12) || 12).toString().padStart(2, '0');
+     const minutes = minute.padStart(2, '0'); 
+     const ampm = hour >= 12 ? 'PM' : 'AM';
+      return `${hours}:${minutes} ${ampm}`; };
 
   const cardStyle = {
     border: '1px solid #ddd',
@@ -104,7 +113,15 @@ const EventCard = () => {
   const dateStyle = {
     color: '#888',
     marginBottom: '10px',
+    fontWeight:600,
+    padding:"0.1rem 0.3rem 0rem 0.5rem"
   };
+
+  const time = {
+    fontWeight:600,
+    color: '#888',
+    padding:"0.1rem 0.3rem 0rem 0.3rem"
+  }
 
   const priceStyle = {
     fontSize: '20px',
@@ -121,7 +138,8 @@ const EventCard = () => {
   const venue ={
     fontSize: '16px',
     marginBottom: '10px',
-    fontFamily :'Daikon-Bold'
+    fontFamily :'Daikon-Bold',
+    display :"flex"
   }
 
   const longDescStyle = {
@@ -150,6 +168,10 @@ const EventCard = () => {
     justifyContent: 'space-between'
   }
 
+  const datetime1 ={
+    display :'flex',
+  }
+
   const readMoreStyle = {
     color: '#007BFF',
     cursor: 'pointer',
@@ -176,15 +198,18 @@ const EventCard = () => {
       {data.length>0 ? <Grid> {data.map((event) => (
         <div key={event.id} style={cardStyle}>
           <div style={titleStyle} dangerouslySetInnerHTML={{ __html:event.title }}></div>
-          <div style={datetime}>
-          <div style={dateStyle}>{event.date}</div>
-          <div style={dateStyle}>{event.time} PM</div></div>
+          <div style={datetime1}>
+            <TodayTwoToneIcon/>
+          <div style={dateStyle}>{event.date}</div> | 
+          <div style={time}>{convertTo12HourFormat(event.time)}
+            {/* {Time(Number(event.time.slice(0,2)))} */}
+            </div></div>
           <div style={shortDescStyle} dangerouslySetInnerHTML={{ __html:event.short_desc }}></div>
           <img src={`${base_uri}${event.banner}`} alt="Event" style={photoStyle} />
           <div style={datetime}>
-            <div style={priceStyle}>{`₹${event.amount}`}</div>
-            <div style={venue}>Venue: Ithum Noida</div>
+            <div style={priceStyle}>Ticket Price: {`₹${event.amount}`}</div>
             </div>
+            <div style={venue}><LocationOnTwoToneIcon/>&nbsp; {event.venue}</div>
           <div
             id={`long-desc-${event.id}`}
             style={expanded[event.id] ? expandedDescStyle : longDescStyle}
@@ -201,7 +226,7 @@ const EventCard = () => {
           )}
           <div style={datetime}>
           <div style={guestStyle}>Guest: {event.guests}</div>
-          <div style={arrow}><ArrowForwardIcon/><a href='https://www.google.com' target='_blank' style={anchor}>Apply From Here</a></div>
+          <div style={arrow}><ArrowForwardIcon/><a href={event.url} target='_blank' style={anchor}>Apply From Here</a></div>
           </div>
           
         </div>
