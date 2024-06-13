@@ -48,6 +48,8 @@ import MyWorkDetailGetting from './components/myWork/MyWorkDetailGetting';
 import MyWorkDetailPosted from './components/myWork/MyWorkDetailPosted';
 import my_account_tab from './components/my-account/my_account_tab';
 import Subscription from './components/my-account/Subscription';
+import  Help  from './components/help/Help';
+import Tickets from './Admin/components/tickets/Tickets';
 
 
 const theme = createTheme({
@@ -102,6 +104,7 @@ export default function App() {
                                 <Route path="/admin/companies" component={AdminCompanies} />
                                 <Route path="/admin/subscription" component={UserSubscription} />
                                 <Route path="/admin/industry" component={Industry} />
+                                <Route path="/admin/tickets" component={Tickets} />
                             </Switch>
                         </div>
                     </Route>
@@ -116,6 +119,7 @@ export default function App() {
                         <Route path="/collaborate" component={CollaboarateMain} />
                         <Route path="/events" component={Events} />
                         <Route path="/component-tabs" component={componentTabs} />
+                        <Route path="/help" component={Help} />
                         <Route path="/my_work" >
                         <MyWorkTab />
                         </Route>
