@@ -169,7 +169,7 @@ export default function Services(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography variant="h5" style={{fontFamily:'Daikon-Bold'}}>Services</Typography><hr/>
+        <Typography variant="h6" style={{fontFamily:'Daikon-Bold'}}>Services</Typography><hr/>
         <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div key={index} className={classes.maincard1} onClick={()=>handleClick(card.id)}>
                     <Box>

@@ -147,7 +147,7 @@ export default function GovernmentSchemes(){
         <>
         <Grid className={classes.topService}>
             <Container>
-        <Typography  variant="h5" style={{fontFamily:"Daikon-Bold"}}>Government Schemes</Typography><hr/>
+        <Typography  variant="h6" style={{fontFamily:"Daikon-Bold"}}>Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{data.map((card,index)=>{
                 return <div key={index} className={classes.maincard1} onClick={() => handleClick(card.id)} >
                     <Box >

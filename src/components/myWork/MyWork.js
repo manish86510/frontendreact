@@ -34,8 +34,8 @@ export default function MyWork(){
         <Tab label="Work Getting" />
         <Tab label="Work Posted" />
       </Tabs>
-      {value === 0 && <GettingWork/>}
-      {value === 1 && <PostingWork/>}
+      {value === 0 && <PostingWork/>}
+      {value === 1 && <GettingWork/>}
     </div>
 
         </>

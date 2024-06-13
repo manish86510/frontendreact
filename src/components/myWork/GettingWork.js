@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import endpoints,{base_uri} from "../../api/endpoints";
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
         margin:"1rem 1rem 1rem 0rem",
         paddingLeft:"0px",
     },
+    loader:{
+        display:"flex",
+        justifyContent:"center",
+        marginTop:"10rem"
+    }
  
   }));
 
@@ -96,13 +102,18 @@ export default function GettingWork(){
     var getToken = localStorage.getItem('access');
 
     const fetchCompanies = async()=>{
+        try{
         const companies = await axios.get(endpoints.USER_APPLY_COMPANY,{
             headers:{
                 Authorization : 'Bearer ' + getToken
             }
         })
-        // console.log("companies",companies.data)
+        console.log("companies",companies.data)
         setData(companies.data)
+    }
+    catch(error){
+        console.log(error)
+    }
     }
 
     useEffect(()=>{
@@ -130,12 +141,14 @@ export default function GettingWork(){
 
     return(
         <>  
-             <Grid >
+             {data.length>0 ? <Grid >
              <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search}  variant="outlined" fullWidth onChange={handleChange} /> 
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
-               {data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting" ><Box><Box className={classes.maincard}><div className={classes.maincard1}>
+               { 
+            //    data ?
+                data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting" ><Box><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={data.image} alt="random"/> 
@@ -146,10 +159,13 @@ export default function GettingWork(){
                         // onClick={() => getid(card.id)}
                         // onClick={handleSelect}
                         >{data.company_name}</Typography>
-                    <Typography className={classes.label1} >{sliceData(data.form_subject)}</Typography></Container>
+                   {data.length > 0 &&  <Typography className={classes.label1} >{sliceData(data.form_subject)}</Typography>}
+                    </Container>
                     </Box>
-                </div></Box></Box></Link></Grid>)}
-                </Grid>
+                </div></Box></Box></Link></Grid>) 
+                // :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>
+                }
+                </Grid> : <Grid> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
         </>
     )
 }

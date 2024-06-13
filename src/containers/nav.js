@@ -126,6 +126,7 @@ class SideNav extends React.Component {
             myAccount: false,
             userProfile: JSON.parse(localStorage.getItem("userInfo")),
             home_title: "",
+            selectedIcon: "home",
             menuArray: [
                 {
                     "title": "Home",
@@ -342,7 +343,7 @@ class SideNav extends React.Component {
                 item.selected = true;
             }
         });
-        this.setState({ menuArray: menu_list, home_title: menu.title });
+        this.setState({ menuArray: menu_list, home_title: menu.title,selectedIcon: menu.icon  });
         this.props.history.push({ pathname: menu.link });
     }
 
@@ -372,6 +373,10 @@ class SideNav extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap className={classes.title}>
+                        {/* <div className={classes.pageTitle}>
+                            <Icon className="material-icons-outlined">{this.state.selectedIcon}</Icon> 
+                            {this.state.home_title}
+                                                            </div> */}
                             <div className={classes.pageTitle}>
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
