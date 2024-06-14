@@ -70,7 +70,7 @@ class HotTopic extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card className={classes.card} style={{ margin: '25px 0' }}>
+            <Card className={classes.card}>
                 <CardHeader title={
                     <Typography className={classes.cardHeader}>Hot Topics</Typography>
                 }

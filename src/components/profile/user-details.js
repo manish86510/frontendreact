@@ -168,10 +168,10 @@ class UserDetails extends React.Component {
                                     <Grid item xs={1} md={1} lg={1}>
                                     </Grid>
                                     <Grid item xs={6} md={6} lg={6}>
-                                        <Button className={classes.button} variant="contained" onClick={this.saveMobile} >
+                                        <Button className={classes.button} variant="contained" color="primary" onClick={this.saveMobile} >
                                             Save Changes
                                         </Button>
-                                        <Button className={classes.button} variant="contained" onClick={this.toggleCancel}>Cancel</Button>
+                                        <Button className={classes.button} variant="contained" color="primary" onClick={this.toggleCancel}>Cancel</Button>
                                     </Grid>
                                 </Grid>
                             </Grid>

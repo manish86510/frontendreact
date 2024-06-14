@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     loader:{
         padding:"20% 0% 0% 45%"
-    }
+    },
 }))
 
 export default function GovernmentSchemesTab(){
@@ -130,7 +130,7 @@ export default function GovernmentSchemesTab(){
         </Grid>
         
          </>: <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
-        <Grid item xs={4}><RightTab/></Grid>
+        <Grid item xs={4} className={classes.right}><RightTab/></Grid>
         </Grid>
         </>
     )

@@ -17,6 +17,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Paper from '@material-ui/core/Paper';
 import ReactQuill from 'react-quill';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
@@ -346,7 +347,10 @@ const useStyles = makeStyles((theme) => ({
     attachmenttext:{
       fontFamily:"Daikon-Regular",
       cursor:"pointer",
-    }
+    },
+    loader:{
+      padding:"20% 0% 0% 45%"
+  }
   }));
   
   const Card = ({idWorkPosting}) => {
@@ -428,7 +432,7 @@ const useStyles = makeStyles((theme) => ({
     return (
         <>
         <Grid container direction="row"  spacing={3}>
-        <Grid item xs={8}>
+        {data.length > 0 ? <Grid item xs={8}>
                 <h1>Messages</h1>
                 {data.map((data)=><Paper><div className={classes.card}>
                   <Box className={classes.header}>
@@ -461,7 +465,7 @@ const useStyles = makeStyles((theme) => ({
                   Post
                 </Button> </>: ""}
       </div></Paper>)}
-      </Grid>
+      </Grid>:<Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
       <Grid item xs={4}><RightTab/></Grid>
       </Grid>
       </>
