@@ -230,7 +230,6 @@ export default function MyWorkDetailGetting(){
    
     return(
         <>
-        <h1>Getting Work</h1>
         <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}>
         <Container >

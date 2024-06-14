@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
         fontFamily:"Daikon-Regular"
     },
     paper:{
-        marginTop:"4%"
+        marginTop:"4%",
+        cursor:"pointer",
     },
     loader:{
         padding:"20% 0% 0% 45%"

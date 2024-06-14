@@ -11,8 +11,11 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import '../styles/Owl.css';
 import endpoints, {base_uri} from '../api/endpoints';
 import { useHistory } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import from '../api/endpoints';
 import axios from 'axios';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 
 
 const tutorialSteps = [
@@ -132,6 +135,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Daikon-Regular",
     margin: '0', // Remove default margin
     padding: '-0.5rem 0', // Adjust as needed for spacing
+  },
+  loader:{
+    display:"flex",
+    justifyContent:"center"
   }
 }));
 
@@ -195,7 +202,7 @@ export default function Carousel(){
       </div>)}</Slider></div> */}
 
 
-      <div className={classes.carouselContainer} >
+     {data.length > 0 ?  <div className={classes.carouselContainer} >
       <OwlCarousel 
       autoplay 
       autoplayTimeout='2500' 
@@ -211,7 +218,7 @@ export default function Carousel(){
         <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,39) }} style={{marginTop:0}}></p>
         <p className={classes.heading} >{m.date}</p></Link>
     </div>)}
-    </OwlCarousel></div>
+    </OwlCarousel></div> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
       </>
     );
 }

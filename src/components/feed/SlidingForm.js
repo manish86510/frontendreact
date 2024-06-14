@@ -49,7 +49,7 @@ const SlidingForm = ({id}) => {
                     "content-type": "multipart/form-data",
                 }
             })
-            console.log("post querry",postData)
+            // console.log("post querry",postData)
             toast.success(postData.data.message || "Form Submitted Successfully")
     
         }

@@ -27,6 +27,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -517,11 +520,14 @@ function CompanyProfile(){
       },
       head12:{
         marginLeft:"30rem"
+      },
+      describe:{
+        fontSize:"large",
+        fontFamily:"Daikon-Regular",
+        marginLeft:"1.5%",
+        marginBottom:"0.5%",
       }
-      // form:{
-      //   display:"flex",
-      //   flexWrap:"wrap"
-      // }
+     
     }
 
    
@@ -554,7 +560,7 @@ function CompanyProfile(){
             name="email" value={cform.email} onChange={handleChange}
             />
             
-            <TextField
+            {/* <TextField
             style={styles.textField}
           id="outlined-select-currency-native"
           select
@@ -567,7 +573,6 @@ function CompanyProfile(){
           SelectProps={{
             native: true,
           }}
-          // helperText="Please select your Industry"
           variant="outlined"
         >
           <option value=''>
@@ -582,12 +587,8 @@ function CompanyProfile(){
           <option value='Pharmaceutical'>
           Pharmaceutical
           </option>
-          {/* {industry.map((option) => (
-            <option key={option.value} value={option.name}>
-              {option.name}
-            </option>
-          ))} */}
-        </TextField>
+        </TextField> */}
+        
             <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
             // InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
@@ -604,6 +605,21 @@ function CompanyProfile(){
             // InputLabelProps={{ shrink: true }}
             name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
+            <FormControl variant="outlined" size="small" style={styles.textField}>
+                  <InputLabel>Industry : </InputLabel>
+                  <Select
+                    value={cform.industry_name}
+                    onChange={handleChange}
+                    label="Industry"
+                    name="industry_name"
+                  >
+                    {industry.map((industry) => (
+                      <MenuItem key={industry.id} value={industry.name}>
+                        {industry.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
             <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
             // InputLabelProps={{ shrink: true }}
             name="sector" value={cform.sector} onChange={handleChange}
@@ -628,14 +644,14 @@ function CompanyProfile(){
             name="address" value={cform.address} onChange={handleChange}
             />
             <Box className={classes.reactQuillContainer}>
-            {(cform.name || cform.address) && (
-  <ReactQuill
-    value={cform.description}
-    required
-    onChange={(value) => handleEditorChange("description", value)}
-    className={classes.editor}
-  />
-)}
+            <Typography style={styles.describe}>Description : </Typography>
+            <ReactQuill
+              value={cform.description}
+              required
+              onChange={(value) => handleEditorChange("description", value)}
+              className={classes.editor}
+            />
+
 
             </Box>
             <Box style={styles.buttons}>
@@ -676,17 +692,19 @@ function CompanyProfile(){
                  <Box style={styles.tabledata}>   {cform.reg_date}</Box>
                 </Box>
                 <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Sector:</Typography>
-                 <Box style={styles.tabledata}>   {cform.sector}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Industry:</Typography>
                  <Box style={styles.tabledata}>   {cform.industry_name}</Box>
                 </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Sector:</Typography>
+                 <Box style={styles.tabledata}>   {cform.sector}</Box>
+                </Box>
+               
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Address:</Typography>
                  <Box style={styles.tabledata12}>   {cform.address}</Box>
                 </Box>
+                
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Registered Number:</Typography>
                  <Box style={styles.tabledata12}>   {cform.reg_number}</Box>
@@ -720,7 +738,7 @@ function CompanyProfile(){
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
             name="name" value={sform.name} onChange={handleChange1}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Short Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text"  variant="outlined" className={classes.outlinedBasic}
+            <Box><Typography style={styles.modalinputhead}>Short Description </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text"  variant="outlined" className={classes.outlinedBasic}
             name="short_description" value={sform.short_description} onChange={handleChange1}
             /></Box>  
              <Box><TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField2} type="file" variant="outlined" 

@@ -71,13 +71,14 @@ export default function CommonCompany({id,selectedId}){
   var getToken = localStorage.getItem('access');
   const getCompany = async ()=>{
     try{
-      await axios.get(endpoints.get_allCompany,{
+      const res = await axios.get(endpoints.get_allCompany,{
         headers:{
           Authorization: 'Bearer ' + getToken,
         }
-      }).then((res)=>setData(res.data)
+      })
+      setData(res.data)
         // console.log(res.data,"here is response")
-      )
+      
     }
     catch(error){
       console.log(error)

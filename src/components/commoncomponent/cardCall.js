@@ -43,7 +43,7 @@ export default function CardCall({setSelectedId}){
     useEffect(() => {
       if (location.state && location.state.id) {
         getCompany(location.state.id);
-        console.log("here is issss",location.state.id)
+        // console.log("here is issss",location.state.id)
       } else {
         history.push("/");  // Redirect to home if no state is found
       }
@@ -59,7 +59,7 @@ export default function CardCall({setSelectedId}){
         }
       })
       setData(res.data.data)
-        console.log(res.data.data,"here is response")
+        // console.log(res.data.data,"here is response")
     }
     catch(error){
       console.log(error)
