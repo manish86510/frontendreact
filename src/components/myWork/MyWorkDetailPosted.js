@@ -349,7 +349,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
   
-  const Card = () => {
+  const Card = ({idWorkPosting}) => {
     const [data,setData] = useState([]);
     const [attachmentURL,setAttachmentURL] = useState(null);
 
@@ -366,6 +366,7 @@ const useStyles = makeStyles((theme) => ({
             }
         })
         console.log("companies in posting detail",companies.data)
+        console.log("Posting Id inside posted",idWorkPosting)
         setData(companies.data)
 
         const attachmentURL = await axios.get(`${base_uri}${companies.data[1].attachment}`,{
@@ -375,9 +376,9 @@ const useStyles = makeStyles((theme) => ({
           responseType:'blob'
         })
 
-        console.log("url 371",attachmentURL)
+        // console.log("url 371",attachmentURL)
         const url = URL.createObjectURL(attachmentURL.data)
-        console.log("url 373",url)
+        // console.log("url 373",url)
         setAttachmentURL(url)
     }
     catch(error){

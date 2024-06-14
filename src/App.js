@@ -71,6 +71,7 @@ export default function App() {
     const [selectedId, setSelectedId] = useState("");
     const [schemes,setSchemes] = useState("");
     const [id,setId] = useState("");
+    const [idPost,setIdPost] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
@@ -123,7 +124,7 @@ export default function App() {
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/help" component={Help} />
                         <Route path="/my_work" >
-                        <MyWork myWorkId={setId}/>
+                        <MyWork myWorkId={setId} myPostId={setIdPost}/>
                         </Route>
                         <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/chapter" component={Chapter} />
@@ -153,7 +154,10 @@ export default function App() {
                             <MyWorkDetailGetting idWorkGetting={id} />
                         </Route>
                         {/* <Route path="/workdetailgetting" component={MyWorkDetailGetting} /> */}
-                        <Route path="/workdetailposting" component={MyWorkDetailPosted} />
+                        <Route path="/workdetailposting">
+                            <MyWorkDetailPosted idWorkPosting={idPost} />
+                        </Route>
+                        {/* <Route path="/workdetailposting" component={MyWorkDetailPosted} /> */}
                         {/* <Route path="/logout" component={() => {
                             localStorage.clear();
                             window.location.href = '/';

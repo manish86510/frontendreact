@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function MyWork({myWorkId}){
+export default function MyWork({myWorkId,myPostId}){
     const classes = useStyles();
     const [value, setValue] = useState(0);
-    // const [getMyWork, setGetMyWork] = useState(null);
   
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -29,7 +28,10 @@ export default function MyWork({myWorkId}){
       myWorkId(userId)
       }
 
-    
+    const onPostingUser = (userId)=>{
+      console.log("i am getting id in posting",userId)
+      myPostId(userId)
+    }
 
      
 
@@ -50,7 +52,7 @@ export default function MyWork({myWorkId}){
         <Tab label="Work Posted" />
       </Tabs>
       {value === 0 && <GettingWork id={onGettingUser}/>}
-      {value === 1 && <PostingWork/>}
+      {value === 1 && <PostingWork id={onPostingUser}/>}
     </div>
     </Grid>
     <Grid item xs={4}><RightTab/></Grid>
