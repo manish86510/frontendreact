@@ -270,7 +270,8 @@ function CompanyProfile(){
             // cursor:"pointer"
             display: 'flex',
             // justifyContent: 'left',
-            padding:'1rem 0rem 1rem 0rem'
+            padding:'1rem 0rem 1rem 0rem',
+            fontFamily:"Daikon-Regular"
         },
         head1:{
           width:"100%",

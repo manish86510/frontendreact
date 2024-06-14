@@ -27,6 +27,9 @@ const styles = theme => ({
     button: {
         margin: "0px 4px 0px 8px",
     },
+    label:{
+        fontFamily:"Daikon-Bold"
+    }
 
 })
 
@@ -85,7 +88,7 @@ class UserDetails extends React.Component {
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Grid container direction="row" justify="center" alignItems="center">
-                                    <Grid item xs={1} md={1} lg={1}>
+                                    <Grid className={classes.label} item xs={1} md={1} lg={1}>
                                         Name
                                     </Grid>
                                     <Grid item xs={6} md={6} lg={6}>
@@ -105,7 +108,7 @@ class UserDetails extends React.Component {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Grid container direction="row" justify="center" alignItems="center">
-                                    <Grid item xs={1} md={1} lg={1}>
+                                    <Grid className={classes.label} item xs={1} md={1} lg={1}>
                                         Mobile
                                     </Grid>
                                     <Grid item xs={6} md={6} lg={6}>
@@ -125,7 +128,7 @@ class UserDetails extends React.Component {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Grid container direction="row" justify="center" alignItems="center">
-                                    <Grid item xs={1} md={1} lg={1}>
+                                    <Grid className={classes.label} item xs={1} md={1} lg={1}>
                                         Email
                                     </Grid>
                                     <Grid item xs={6} md={6} lg={6}>
@@ -145,7 +148,7 @@ class UserDetails extends React.Component {
                             </Grid>
                             <Grid item xs={12} md={12} lg={12}>
                                 <Grid container direction="row" justify="center" alignItems="center">
-                                    <Grid item xs={1} md={1} lg={1}>
+                                    <Grid className={classes.label} item xs={1} md={1} lg={1}>
                                         Bio
                                     </Grid>
                                     <Grid item xs={6} md={6} lg={6}>

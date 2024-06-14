@@ -50,7 +50,11 @@ const styles = theme => ({
     textDecoration: 'none',
     cursor: 'pointer',
     color: theme.palette.primary.main,
+    fontFamily:"Daikon-Bold"
   },
+  name:{
+    fontFamily:"Daikon-Regular"
+  }
 });
 
 class ProfileCard extends React.Component {
@@ -123,7 +127,8 @@ class ProfileCard extends React.Component {
             <div className={classes.header}>
               <div>
                 <div>
-                  <span className={classes.label}>Name: </span>{profile.first_name} {profile.last_name}
+                  <span className={classes.label}>Name: </span>
+                 <span className={classes.name}> {profile.first_name} {profile.last_name}</span>
                 </div>
                 <div>
                   <span className={classes.label}>Username: </span>{profile.username}
