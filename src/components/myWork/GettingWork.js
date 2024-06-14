@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function GettingWork(){
+export default function GettingWork({id}){
     const [search,setSearch] = useState("");
     const [data,setData] = useState([])
     const classes = useStyles();
@@ -112,7 +112,7 @@ export default function GettingWork(){
                 Authorization : 'Bearer ' + getToken
             }
         })
-        console.log("companies",companies.data)
+        // console.log("companies",companies.data)
         setData(companies.data)
     }
     catch(error){
@@ -128,20 +128,18 @@ export default function GettingWork(){
         setSearch(e.target.value)
     }
 
-    console.log("companies data",data)
+    // console.log("companies data",data)
     const { pathname } = useLocation();
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
 
-    const history = useHistory();
 
-    const handleClick = (user) => {
-        history.push({
-          pathname: '/workdetailgetting',
-          state: { user }
-        });
-      };
+      const handleClickParent = (user)=>{
+        console.log("user in child",user)
+        id(user)
+
+      }
   
 
     // const sliceData = (data)=>{
@@ -162,7 +160,7 @@ export default function GettingWork(){
       </Container>
                { 
             //    data ?
-                data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting" ><Box onClick={() => handleClick(data.user)}><Box className={classes.maincard}><div className={classes.maincard1}>
+                data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting"><Box onClick={() => handleClickParent(data.user)}><Box className={classes.maincard} ><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={`${base_uri}${data.company_logo}`} alt="random"/> 

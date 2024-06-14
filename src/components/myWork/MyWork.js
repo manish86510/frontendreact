@@ -4,6 +4,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import GettingWork from "./GettingWork";
 import PostingWork from "./PostingWork";
+import Grid from '@material-ui/core/Grid';
+import RightTab from "../rightTab/RightTab";
+import { useEffect } from "react";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -12,17 +15,29 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function MyWork(){
+export default function MyWork({myWorkId}){
     const classes = useStyles();
     const [value, setValue] = useState(0);
+    // const [getMyWork, setGetMyWork] = useState(null);
   
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
 
+    const onGettingUser =(userId)=>{
+      console.log("i am getting user id in parent",userId)
+      myWorkId(userId)
+      }
+
+    
+
+     
+
+
     return(
         <>
-
+        <Grid container direction="row"  spacing={3}>
+        <Grid item xs={8}>
         <div className={classes.root}>
       <Tabs
         value={value}
@@ -34,10 +49,12 @@ export default function MyWork(){
         <Tab label="Work Getting" />
         <Tab label="Work Posted" />
       </Tabs>
-      {value === 0 && <GettingWork/>}
+      {value === 0 && <GettingWork id={onGettingUser}/>}
       {value === 1 && <PostingWork/>}
     </div>
-
+    </Grid>
+    <Grid item xs={4}><RightTab/></Grid>
+    </Grid>
         </>
     )
 }

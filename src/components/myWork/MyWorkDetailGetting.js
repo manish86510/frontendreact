@@ -157,27 +157,16 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-export default function MyWorkDetailGetting(){
+export default function MyWorkDetailGetting({idWorkGetting}){
 
     const [data,setData] = useState([]);
     const [attachmentURL,setAttachmentURL] = useState(null);
     const [expandedItems, setExpandedItems] = useState({});
-    const [getId,setGetId] = useState('')
 
     const classes = useStyles();
+    // console.log("getting id of myget work",getId)
+    console.log("getting id from state and app.js",idWorkGetting)
 
-    // const location = useLocation();
-    // const history = useHistory();
-   
-    // useEffect(() => {
-    //   if (location.state && location.state.user) {
-    //     setGetId(location.state.user);
-    //   } else {
-    //     history.push("/");  // Redirect to home if no state is found
-    //   }
-    // }, [location.state]);
-
-    console.log("getting id of myget work",getId)
 
     var getToken = localStorage.getItem('access');
     const fetchData = async ()=>{
@@ -188,19 +177,19 @@ export default function MyWorkDetailGetting(){
             }
         })
 
-        console.log("fetched Data",fetch.data)
+        // console.log("fetched Data",fetch.data)
         setData(fetch.data)
-        console.log("url of pdf",`${base_uri}${fetch.data[2].attachment}`)
+        // console.log("url of pdf",`${base_uri}${fetch.data[2].attachment}`)
         const attachmentURL = await axios.get(`${base_uri}${fetch.data[2].attachment}`,{
             headers: {
                 Authorization:'Bearer ' + getToken
             },
             responseType: 'blob'
         })
-        console.log("attachment url 200",attachmentURL)
-        console.log("Blob type:", attachmentURL.data.constructor.name);
+        // console.log("attachment url 200",attachmentURL)
+        // console.log("Blob type:", attachmentURL.data.constructor.name);
         const url = URL.createObjectURL(attachmentURL.data)
-        console.log("attachment 202",url)
+        // console.log("attachment 202",url)
         setAttachmentURL(url)
     }
     catch(error){
@@ -213,8 +202,8 @@ export default function MyWorkDetailGetting(){
         fetchData()
     },[])
 
-    console.log("here is get data",data)
-    console.log("here is attachment line 215",attachmentURL)
+    // console.log("here is get data",data)
+    // console.log("here is attachment line 215",attachmentURL)
 
     const toggleDescription = (index) => {
         setExpandedItems((prevState) => ({

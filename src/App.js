@@ -39,7 +39,7 @@ import CardCall from './components/commoncomponent/cardCall';
 import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
-import MyWorkTab from './components/myWork/MyWorkTab';
+import MyWork from './components/myWork/MyWork';
 import Chapter from './components/Chapter/Chapter';
 import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
@@ -70,10 +70,12 @@ const theme = createTheme({
 export default function App() {
     const [selectedId, setSelectedId] = useState("");
     const [schemes,setSchemes] = useState("");
+    const [id,setId] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
     // }
+
 
     return (<div>
         <MuiThemeProvider theme={theme}>
@@ -121,7 +123,7 @@ export default function App() {
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/help" component={Help} />
                         <Route path="/my_work" >
-                        <MyWorkTab />
+                        <MyWork myWorkId={setId}/>
                         </Route>
                         <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/chapter" component={Chapter} />
@@ -147,7 +149,10 @@ export default function App() {
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/my_account" component={Subscription} />
                         <Route path="/logout" component={Logout} />
-                        <Route path="/workdetailgetting" component={MyWorkDetailGetting} />
+                        <Route path="/workdetailgetting">
+                            <MyWorkDetailGetting idWorkGetting={id} />
+                        </Route>
+                        {/* <Route path="/workdetailgetting" component={MyWorkDetailGetting} /> */}
                         <Route path="/workdetailposting" component={MyWorkDetailPosted} />
                         {/* <Route path="/logout" component={() => {
                             localStorage.clear();

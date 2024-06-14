@@ -193,19 +193,6 @@ function CompanyProfile(){
       };
       
 
-  //     const handleSelect = (e)=>{
-  //       let value = e.target.value
-  //       console.log(value, 'value')
-  //  setCForm((prevCForm)=>({
-  // ...prevCForm, industry_name:value
-  //  }))
-  //  console.log(cform)
-  //     }
-
-      // useEffect(() => {
-      //   console.log("Updated cform:", cform);
-      // }, [cform]);
-
 
       const handleFileChange = (e) => {
         const { name, files } = e.target;
@@ -644,7 +631,7 @@ function CompanyProfile(){
             name="address" value={cform.address} onChange={handleChange}
             />
             <Box className={classes.reactQuillContainer}>
-            <Typography style={styles.describe}>Description : </Typography>
+            <Typography style={styles.describe}>Overview : </Typography>
             <ReactQuill
               value={cform.description}
               required
