@@ -29,6 +29,7 @@ import Icon from '@material-ui/core/Icon';
 import Badge from '@material-ui/core/Badge';
 
 
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -179,13 +180,13 @@ class SideNav extends React.Component {
                 },
                 {
                     "title": "My Work",
-                    "icon": "date_range",
+                    "icon": "work_outline",
                     "selected": false,
                     "link": "/my_work",
                 },
                 {
                     "title": "Help",
-                    "icon": "settings",
+                    "icon": "help_outline",
                     "selected": false,
                     "link": "/help",
                 },
