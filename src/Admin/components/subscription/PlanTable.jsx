@@ -18,35 +18,35 @@ const columns = [
     id: "name",
     label: "Name",
     minWidth: 150,
-    align: "center",
-    align: "center",
+    align: "left",
+    align: "left",
   },
-  { id: "price", label: "Price", minWidth: 120, align: "center" },
+  { id: "price", label: "Price", minWidth: 120, align: "left" },
   {
     id: "tenure",
     label: "Tenure",
     minWidth: 180,
-    align: "center",
+    align: "left",
   },
   {
     id: "description",
     label: "Description",
     minWidth: 350,
-    align: "center",
+    align: "left",
   },
   {
     id: "edit",
     label: "Edit",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
   {
     id: "actions",
     label: "Actions",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
-  { id: "is_active", label: "Active", minWidth: 80, align: "center" },
+  { id: "is_active", label: "Active", minWidth: 80, align: "left" },
 ];
 
 const useStyles = makeStyles({
@@ -140,8 +140,7 @@ export default function PlanTable({
                               }
                               color="primary"
                             />
-                          ) : column.id === "short_desc" ||
-                            column.id === "long_desc" ? (
+                          ) : column.id === "description" ? (
                             <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.id === "url" ? (
                             <a

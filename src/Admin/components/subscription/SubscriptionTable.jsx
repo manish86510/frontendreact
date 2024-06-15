@@ -21,44 +21,44 @@ const columns = [
     id: "user",
     label: "User",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
   {
     id: "plan",
     label: "Plan",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
   {
     id: "payment_method",
     label: "Payment Method",
     minWidth: 100,
-    align: "center",
+    align: "left",
   },
   {
     id: "reference",
     label: "Reference",
     minWidth: 100,
-    align: "center",
+    align: "left",
   },
   {
     id: "source",
     label: "Source",
     minWidth: 70,
-    align: "center",
+    align: "left",
   },
 
   // {
   //   id: "is_verify",
   //   label: "Is Verified",
   //   minWidth: 100,
-  //   align: "center",
+  //   align: "left",
   // },
   // {
   //   id: "action",
   //   label: "Action",
   //   minWidth: 100,
-  //   align: "center",
+  //   align: "left",
   // },
 ];
 

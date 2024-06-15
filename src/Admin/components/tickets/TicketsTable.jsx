@@ -14,51 +14,31 @@ import Button from "@material-ui/core/Button";
 
 const columns = [
   {
-    id: "name",
-    label: "Name",
+    id: "title",
+    label: "title",
     minWidth: 150,
-    align: "center",
-    align: "center",
+    align: "left",  
   },
-  { id: "banner", label: "Banner", minWidth: 120, align: "center" },
+  { id: "attachment", label: "Attachment", minWidth: 120, align: "left" },
   {
-    id: "url",
-    label: "Url",
-    minWidth: 70,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "short_desc",
-    label: "Short Description",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "long_desc",
-    label: "Long Description",
+    id: "description",
+    label: "Description",
     minWidth: 350,
-    align: "center",
+    align: "left",
+  },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+    align: "left",
   },
 
-  {
-    id: "launched_date",
-    label: "launched date",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "edit",
-    label: "Actions",
-    minWidth: 80,
-    align: "right",
-  },
-  {
-    id: "actions",
-    label: "Actions",
-    minWidth: 80,
-    align: "right",
-  },
+  // {
+  //   id: "actions",
+  //   label: "Actions",
+  //   minWidth: 80,
+  //   align: "right",
+  // },
 ];
 
 const useStyles = makeStyles({
@@ -74,7 +54,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SchemesTable({ rows, handleDelete, handleEdit }) {
+export default function TicketsTable({ rows, handleDelete, handleEdit }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -117,7 +97,7 @@ export default function SchemesTable({ rows, handleDelete, handleEdit }) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.id === "banner" ? (
+                          {column.id === "attachment" ? (
                             <img
                               src={`${base_uri}${value}`}
                               alt="banner"
@@ -139,8 +119,7 @@ export default function SchemesTable({ rows, handleDelete, handleEdit }) {
                             >
                               Delete
                             </Button>
-                          ) : column.id === "short_desc" ||
-                            column.id === "long_desc" ? (
+                          ) : column.id === "description" ? (
                             <div dangerouslySetInnerHTML={{ __html: value }} />
                           ) : column.id === "url" ? (
                             <a
