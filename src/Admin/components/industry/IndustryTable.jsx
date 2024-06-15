@@ -17,14 +17,14 @@ const columns = [
     id: "name",
     label: "Name",
     minWidth: 150,
-    align: "center",
-    align: "center",
+    align: "left",
+    align: "left",
   },
   {
     id: "desc",
     label: "Description",
     minWidth: 350,
-    align: "center",
+    align: "left",
   },
   {
     id: "edit",

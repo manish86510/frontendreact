@@ -1,170 +1,153 @@
-import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Container,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { AppBar, Tabs, Tab, Box, Container } from "@material-ui/core";
+import RaiseTicketForm from "./RaiseTicketForm";
+import ResponseContent from "./ResponseContent";
+import TicketsTable from "../../Admin/components/tickets/TicketsTable";
 import endpoints from "../../api/endpoints";
+import axios from "axios";
+import TextField from "@material-ui/core/TextField";
+import { Button } from "@material-ui/core";
+
+// import CountContent from './CountContent';
 
 const useStyles = makeStyles((theme) => ({
-  formContainer: {
-    marginTop: theme.spacing(4),
-  },
-  submitButton: {
-    marginTop: theme.spacing(2),
-  },
-  editor: {
-    "& .ql-container": {
-      border: "1px solid rgba(0, 0, 0, 0.23)",
-      borderRadius: theme.shape.borderRadius,
-      "&:hover": {
-        borderColor: theme.palette.text.primary,
-      },
-      "&.ql-container.ql-disabled": {
-        backgroundColor: theme.palette.action.disabledBackground,
-      },
-    },
-    "& .ql-editor": {
-      minHeight: "100px",
-      padding: theme.spacing(1),
-      fontSize: "1rem",
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    },
-  },
-  editorLabel: {
-    marginBottom: theme.spacing(1),
-    color: theme.palette.text.secondary,
+  root: {
+    flexGrow: 1,
   },
 }));
 
-const initialFormdata = {
-  date: "",
-  guests: "",
-  amount: "",
-  title: "",
-  short_desc: "",
-  long_desc: "",
-  banner: null,
-  url: "",
-  time: "",
-  venue: "",
-};
-
-const Help = ({ setShowAdd }) => {
+const Help = () => {
+  // const [value, setValue] = useState(0);
   const classes = useStyles();
-  const [formData, setFormData] = useState(initialFormdata);
+  const [allTickets, setAllTickets] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
   const accessToken = localStorage.getItem("access");
-  console.log(accessToken);
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    if (type === "file") {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
-  const handleEditorChange = (name, value) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      console.log(accessToken);
-      const response = await axios.post(endpoints.ADD_EVENTS, formData, {
+  useEffect(() => {
+    const getAllEvents = async () => {
+      const response = await axios.get(endpoints.RAISE_TICKET, {
         headers: {
           Authorization: "Bearer " + accessToken,
-          "content-type": "multipart/form-data",
         },
       });
-      console.log("Form Data: ", response);
-      toast.success("Event succesfully created");
-      setTimeout(() => {
-        setShowAdd(false);
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-      toast.error("Event not created!");
-    }
+      const data = response.data.data;
 
-    console.log("Form Data: ", formData);
+      setAllTickets(data);
+      // console.log(response);
+    };
+    getAllEvents();
+  }, [accessToken, showForm]);
+
+  const searchChange = (e) => {
+    setSearch(e.target.value);
   };
 
-  return (
-    <Container maxWidth="sm">
-      <Toaster position="top-right" reverseOrder={false} />
-      <Typography variant="h5" component="h1" gutterBottom style={{fontFamily:"Daikon-Bold", textAlign:'center'}}>
-        Raise Ticket
-      </Typography>
-      <form onSubmit={handleSubmit} className={classes.formContainer}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label="Title"
-              name="title"
-              fullWidth
-              required
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Attachment"
-              name="banner"
-              type="file"
-              fullWidth
-              required
-              InputLabelProps={{ shrink: true }}
-              // value={formData.banner}
-              onChange={handleChange}
-            />
-          </Grid>
+  const handleClose = ()=>{
+    setShowForm(!showForm)
+  }
 
-          <Grid item xs={12}>
-            <Typography variant="h6" className={classes.editorLabel}>
-              Description
-            </Typography>
-            <ReactQuill
-              value={formData.long_desc}
-              required
-              onChange={(value) => handleEditorChange("long_desc", value)}
-              className={classes.editor}
+  useEffect(() => {
+    const filter = allTickets.filter((element) =>
+      element.title.toLowerCase().includes(search?.toLowerCase())
+    );
+    setFilteredData(filter);
+    console.log(filter);
+  }, [search, allTickets]);
+
+  return (
+    <div className={classes.root}>
+      {/* <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab label="Raise ticket" />
+
+        <Tab label="Response" />
+      </Tabs>
+      {value === 0 && <RaiseTicketForm />}
+      {value === 1 && (
+        <>
+          <div style={{textAlign:'end', marginBottom:'2rem',marginTop:'1rem'}}>
+            <TextField
+              id="standard-basic"
+              label="Search..."
+              variant="standard"
+              type="text"
+              onChange={searchChange}
+              className={classes.searchField}
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.submitButton}
-            >
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+          </div>
+          <TicketsTable rows={filteredData} />
+        </>
+      )} */}
+
+      {/* New design */}
+
+      {!showForm ? (
+        <div
+          style={{
+            fontSize: "24px",
+            fontFamily: "Daikon-Bold",
+            textAlign: "center",
+          }}
+        >
+          My Support Tickets
+        </div>
+      ) : (
+        <div
+          style={{
+            fontSize: "24px",
+            fontFamily: "Daikon-Bold",
+            textAlign: "center",
+          }}
+        >
+          Raise Tickets
+        </div>
+      )}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: showForm ? "end" : "space-between",
+          marginBottom: "2rem",
+          marginTop: "1rem",
+        }}
+      >
+        {!showForm && (
+          <TextField
+            id="standard-basic"
+            label="Search..."
+            variant="standard"
+            type="text"
+            onChange={searchChange}
+            className={classes.searchField}
+          />
+        )}
+
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ height: "40px", borderRadius: "18px" }}
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? <>Close</> : <>Raise Ticket</>}
+        </Button>
+      </div>
+      {!showForm && <TicketsTable rows={filteredData} />}
+
+      {showForm && <RaiseTicketForm  handleClose={handleClose} />}
+    </div>
   );
 };
 
