@@ -86,13 +86,13 @@ export default function GovernmentSchemes(){
     var getToken = localStorage.getItem('access');
     const fetchScheme = async ()=>{
       try{
-      await axios.get(endpoints.GET_ALL_SCHEMES,{
+      const res = await axios.get(endpoints.GET_ALL_SCHEMES,{
         headers : {
           Authorization : 'Bearer ' + getToken
         }
-      }).then((res)=> setData(res.data.data.slice(0,9))
+      }) 
+      setData(res.data.data.slice(0,9))
         // console.log("response of schemes" ,res.data.data)
-      )
     }
     catch(error){
       console.log(error)

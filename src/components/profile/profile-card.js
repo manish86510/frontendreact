@@ -5,61 +5,69 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import endpoints from '../../api/endpoints';
 import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   cardContainer: {
-    padding: 10,
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   gridItem: {
-    display: 'inline-block',
-    height: 150,
-    // margin: 5,
-    overflow: 'hidden'
+    marginBottom: theme.spacing(2),
+    textAlign: 'center',
   },
   profile_image: {
-    height: '120px',
-    width: '130px',
-    borderRadius: '25px'
+    height: 120,
+    width: 120,
+    borderRadius: '50%',
+    cursor: 'pointer',
   },
-  cover: {
-    width: 151,
+  userInfo: {
+    textAlign: 'left',
+    width: '100%',
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  label: {
+    fontFamily: 'Daikon-Bold',
+  },
+  button: {
+    // marginLeft: theme.spacing(1),
+    marginRight: '3%',
+  },
+  changePhoto: {
+    // marginTop: theme.spacing(1),
+    textDecoration: 'none',
+    cursor: 'pointer',
+    color: theme.palette.primary.main,
+    fontFamily:"Daikon-Bold"
+  },
+  name:{
+    fontFamily:"Daikon-Regular"
+  }
 });
 
-
 class ProfileCard extends React.Component {
-  fileObj = [];
-  fileArray = [];
   constructor(props) {
     super(props);
     this.state = {
       checkedA: true,
       user: {},
       file: null,
-    }
+    };
     this.inputOpenFileRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
   }
-
-  // componentDidMount = () => {
-  //   this.getUserData();
-  // }
-
-  // getUserData = () => {
-  //   axios.get(endpoints.profile_user, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: 'Bearer ' + localStorage.access,
-  //     }
-  //   }).then(res => {
-  //     this.setState({ user: res.data });
-  //   });
-
-  // }
 
   handleProfilePicChange = event => {
     let formData = new FormData();
@@ -68,33 +76,29 @@ class ProfileCard extends React.Component {
     axios.put(endpoints.profile_update, formData, {
       headers: {
         Authorization: 'Bearer ' + token,
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then(res => {
       if (res.status === 200) {
         window.localStorage.setItem('userInfo', JSON.stringify(res.data));
         this.setState({ user: res.data });
       }
-    }).catch(e => {
-
+    })
+    .catch(e => {
+      console.error(e);
     });
   }
 
   handleChange = name => event => {
-    this.setState({ checkedA: event.target.checked });
+    this.setState({ [name]: event.target.checked });
   };
-
 
   showOpenFileDlg = () => {
     this.inputOpenFileRef.current.click();
   }
-  onChange = (event, { newValue, method }) => {
-    this.setState({
-      value: newValue
-    });
-  };
 
-  toggleEdit = ()=>{
+  toggleEdit = () => {
     this.props.editUserNameFunc();
   }
 
@@ -102,73 +106,53 @@ class ProfileCard extends React.Component {
     const { classes, profile } = this.props;
     return (
       <Card className={classes.cardContainer}>
-        <div style={{ position: 'relative' }}>
-          <div className={classes.gridItem}>
-            {
-              (profile.avatar !== undefined && profile.avatar) ? (
-                <CardMedia
-                  className={[classes.media, classes.profile_image]}
-                  onClick={() => { this.inputOpenFileRef.current.click(); }}
-                  image={"https://energeapi.do.viewyoursite.net" + profile.avatar} />
-              ) : (
-                  <CardMedia
-                    className={[classes.media, classes.profile_image]}
-                    onClick={() => { this.inputOpenFileRef.current.click(); }}
-                    image={"https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg"} />
-                )
-
-            }
-
+        <Grid container direction="column" alignItems="center" spacing={3}>
+          <Grid item className={classes.gridItem}>
+            <CardMedia
+              className={classes.profile_image}
+              image={profile.avatar ? `https://energeapi.do.viewyoursite.net${profile.avatar}` : 'https://www.clevelanddentalhc.com/wp-content/uploads/2018/03/sample-avatar-300x300.jpg'}
+              onClick={this.showOpenFileDlg}
+            />
             <input
               ref={this.inputOpenFileRef}
-              type="file" multiple
+              type="file"
               onChange={this.handleProfilePicChange}
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
             />
-            <a
-              href="/#"
-              onClick={this.showOpenFileDlg}
-              disabled={this.state.loading}>
+            <div className={classes.changePhoto} onClick={this.showOpenFileDlg}>
               Change Profile Photo
-            </a>
-          </div>
-          <div className={classes.gridItem} style={{ padding: '1px 10px' }}>
-            <label>
-              Name
-              <IconButton aria-label="add" color="primary" onClick={this.toggleEdit}>
+            </div>
+          </Grid>
+          <Grid item className={classes.userInfo}>
+            <div className={classes.header}>
+              <div>
+                <div>
+                  <span className={classes.label}>Name: </span>
+                 <span className={classes.name}> {profile.first_name} {profile.last_name}</span>
+                </div>
+                <div>
+                  <span className={classes.label}>Username: </span>{profile.username}
+                </div>
+              </div>
+              <IconButton aria-label="edit" className={classes.button} onClick={this.toggleEdit}>
                 <EditIcon fontSize="small" />
               </IconButton>
-            </label>
-            <div>{profile.first_name}&nbsp;{profile.last_name}</div>
-            <br />
-            <label>
-              Username
-            </label>
-            <div>{profile.username}</div>
-          </div>
-
-          <div className={"bioContainer"}>
-            <label>
-              Bio
-            </label>
-            <div>
-              {profile.about}
             </div>
+          </Grid>
+          {/* <Grid item className={classes.userInfo}>
             <FormControlLabel
-              style={{ position: 'absolute', top: 0, right: 0 }}
               control={
                 <Switch
                   checked={this.state.checkedA}
                   onChange={this.handleChange('checkedA')}
                   value="checkedA"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
                   color="primary"
                 />
               }
               label="Private Profile"
             />
-          </div>
-        </div>
+          </Grid> */}
+        </Grid>
       </Card>
     );
   }

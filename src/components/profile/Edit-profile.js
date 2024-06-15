@@ -154,7 +154,7 @@ class EditProfile extends React.Component {
         {this.state.isEditUsername ?
           <Card className={classes.marginTop}>
             <UserDetails
-              title="Details About You"
+              title="Details "
               isUsername={this.state.isEditUsername}
               profile={this.state.user}
               editUserNameFunc={this.editUserName}

@@ -56,42 +56,46 @@ const useStyles = makeStyles((theme) => ({
         margin:"1rem 1rem 1rem 0rem",
         paddingLeft:"0px",
     },
+    nowork:{
+        marginTop:"20%",
+        marginLeft:"25%"
+    }
  
   }));
-export default function PostingWork(){
+export default function PostingWork({id}){
     const [search,setSearch] = useState("")
+    const [data,setData] = useState([])
     const classes = useStyles();
 
-    const data1 = [
-        {
-            image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/ss-090623-alice-wonderland/ss-090623-alice-wonderland-.jpg",
-            name:"Pradhan Mantri aawas yojna",
-            description:"Government Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        },
-        {
-            image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/ss-090623-alice-wonderland/ss-090623-alice-wonderland-.jpg",
-            name:"Atal Pension Yojana",
-            description:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-        },
-        {
-            image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/ss-090623-alice-wonderland/ss-090623-alice-wonderland-.jpg",
-            name:"FAME India Scheme",
-            description:"Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. "
-        },
-        {
-            image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/ss-090623-alice-wonderland/ss-090623-alice-wonderland-.jpg",
-            name:"National Health Policy",
-            description:"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
-        },
-        {
-            image:"https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/ss-090623-alice-wonderland/ss-090623-alice-wonderland-.jpg",
-            name:"Food processing Policy",
-            description:"Government Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        }
-    ]
+    var getToken = localStorage.getItem('access');
+
+    const fetchCompanies = async()=>{
+        try{
+        const companies = await axios.get(endpoints.MY_WORK,{
+            headers:{
+                Authorization : 'Bearer ' + getToken
+            }
+        })
+        console.log("companies in posting",companies.data)
+        setData(companies.data)
+    }
+    catch(error){
+        console.log(error)
+    }
+    }
+
+    useEffect(()=>{
+        fetchCompanies()
+    },[])
+
 
     const handleChange =(e)=>{
         setSearch(e.target.value)
+    }
+
+    const handleClick =(user)=>{
+        console.log("id inside of child",user)
+        id(user)
     }
 
 
@@ -100,36 +104,36 @@ export default function PostingWork(){
       window.scrollTo(0, 0);
     }, [pathname]);
 
-    const sliceData = (data)=>{
-        if(data.length > 120){
-            return data.slice(0,100) + "..."
-        }
-        return data
-    }
+    // const sliceData = (data)=>{
+    //     if(data.length > 120){
+    //         return data.slice(0,100) + "..."
+    //     }
+    //     return data
+    // }
 
-    const filter = data1.filter((m)=>m.name.toLowerCase().includes(search.toLowerCase()))
+    const filter = data.filter((m)=>m.company_name.toLowerCase().includes(search.toLowerCase()))
     return(
         <>
-        <Grid >
+        {data.length>0 ? <Grid >
              <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search}  variant="outlined" fullWidth onChange={handleChange} /> 
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
-               {filter.map((data,index)=><Grid key={index} className={classes.topService}> <Link to="/workdetailposting" ><Box><Box className={classes.maincard}><div className={classes.maincard1}>
+               {filter.map((data,index)=><Grid key={index} className={classes.topService}> <Link to="/workdetailposting" ><Box onClick={handleClick(data.user)}><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
-                      <img className={classes.image} src={data.image} alt="random"/> 
+                      <img className={classes.image} src={`${base_uri}${data.company_logo}`} alt="random"/> 
                       </Box>
                     <Container>
                        
                         <Typography variant="h6" className={classes.label} 
                         // onClick={() => getid(card.id)}
                         // onClick={handleSelect}
-                        >{data.name}</Typography>
-                    <Typography className={classes.label1} >{sliceData(data.description)}</Typography></Container>
+                        >{data.company_name}</Typography>
+                    <Typography className={classes.label1} >{data.description}</Typography></Container>
                     </Box>
                 </div></Box></Box></Link></Grid>)}
-                </Grid>
+                </Grid> : <Typography variant="h4" className={classes.nowork}>No Work Posted Yet</Typography>}
         </>
     )
 }

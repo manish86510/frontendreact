@@ -1,10 +1,13 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import './App.css';
 // import MainContainer from './containers/main-container';
 import * as Colors from '@material-ui/core/colors';
 // import ReactDOM from 'react-dom'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme, createTheme, useScrollTrigger } from '@material-ui/core';
+import {generateToken,messaging} from './containers/firebase/Firebase';
+import {onMessage} from 'firebase/messaging';
+import toast, { Toaster } from 'react-hot-toast';
 import Login from './containers/login';
 import Register from './containers/register';
 import ForgotPassword from './containers/forgot_password';
@@ -39,8 +42,8 @@ import CardCall from './components/commoncomponent/cardCall';
 import CarouselCall from './components/carousel/carouselCall';
 import CommonComponent from './components/commoncomponent/commonComponent';
 import GovernmentDescription from './components/governmentschemes/governmentDescription';
-import MyWorkTab from './components/myWork/MyWorkTab';
-import Chapter from './components/chapter/chapter';
+import MyWork from './components/myWork/MyWork';
+import Chapter from './components/Chapter/Chapter';
 import UserSubscription from './Admin/components/subscription/UserSubscription';
 import Logout from './containers/logout';
 import Industry from './Admin/components/industry/Industry';
@@ -70,12 +73,84 @@ const theme = createTheme({
 export default function App() {
     const [selectedId, setSelectedId] = useState("");
     const [schemes,setSchemes] = useState("");
+    const [id,setId] = useState("");
+    const [idPost,setIdPost] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
     // }
+    useEffect(()=>{
+        generateToken()
+        onMessage(messaging,(payload)=>{
+          console.log(payload.notification,"here is payload")
+          toast.success(payload.notification.title)
+        
+        const { title, body, image } = payload.notification;
+    
+    toast.custom((t) => (
+        <div
+          style={{
+            maxWidth: '100%',
+            width: 'auto',
+            backgroundColor: 'white',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            borderRadius: '0.5rem',
+            pointerEvents: 'auto',
+            display: 'flex',
+            ring: '1px solid black',
+            opacity: '0.9',
+            transition: t.visible ? 'transform 0.2s ease-out, opacity 0.2s ease-out' : 'transform 0.2s ease-in, opacity 0.2s ease-in',
+          }}
+        >
+          <div style={{ flex: '1 0 auto', width: 'auto', padding: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'start' }}>
+              <div style={{ flexShrink: 0, paddingTop: '0.125rem' }}>
+                {image && <img style={{ height: '2.5rem', width: '2.5rem', borderRadius: '50%' }} src={image} alt="" />}
+              </div>
+              <div style={{ marginLeft: '0.75rem', flex: '1' }}>
+                <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1F2937' }}>{title}</p>
+                <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#6B7280' }}>{body}</p>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', borderLeft: '1px solid #E5E7EB' }}>
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              style={{
+                width: '100%',
+                border: 'none',
+                borderRadius: '0 0.5rem 0.5rem 0',
+                padding: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#4F46E5',
+                backgroundColor: 'transparent',
+                cursor: 'pointer',
+                outline: 'none',
+                transition: 'color 0.2s ease-in-out',
+              }}
+              onMouseEnter={(e) => (e.target.style.color = '#4338CA')}
+              onMouseLeave={(e) => (e.target.style.color = '#4F46E5')}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
+        //   toast.success(payload.notification.body)
+          // setData(payload.notification)
+          // setData((prevData) => [...prevData, payload.notification]);
+        })
+      },[])
+
 
     return (<div>
+        
+        <Toaster
+     position="top-right" />
         <MuiThemeProvider theme={theme}>
             <Router>
                 <Switch>
@@ -121,7 +196,7 @@ export default function App() {
                         <Route path="/component-tabs" component={componentTabs} />
                         <Route path="/help" component={Help} />
                         <Route path="/my_work" >
-                        <MyWorkTab />
+                        <MyWork myWorkId={setId} myPostId={setIdPost}/>
                         </Route>
                         <Route path="/carousel-call" component={CarouselCall} />
                         <Route path="/chapter" component={Chapter} />
@@ -147,8 +222,14 @@ export default function App() {
                         <Route path="/morecoins" component={MoreCoins} />
                         <Route path="/my_account" component={Subscription} />
                         <Route path="/logout" component={Logout} />
-                        <Route path="/workdetailgetting" component={MyWorkDetailGetting} />
-                        <Route path="/workdetailposting" component={MyWorkDetailPosted} />
+                        <Route path="/workdetailgetting">
+                            <MyWorkDetailGetting idWorkGetting={id} />
+                        </Route>
+                        {/* <Route path="/workdetailgetting" component={MyWorkDetailGetting} /> */}
+                        <Route path="/workdetailposting">
+                            <MyWorkDetailPosted idWorkPosting={idPost} />
+                        </Route>
+                        {/* <Route path="/workdetailposting" component={MyWorkDetailPosted} /> */}
                         {/* <Route path="/logout" component={() => {
                             localStorage.clear();
                             window.location.href = '/';

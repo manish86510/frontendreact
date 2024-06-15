@@ -117,7 +117,7 @@ export default function CompanyDetail({id}){
                 Authorization : 'Bearer ' + getToken
             }
         })
-        console.log("fetch specific company",fetch.data)
+        // console.log("fetch specific company",fetch.data)
         setData(fetch.data)
     }
 

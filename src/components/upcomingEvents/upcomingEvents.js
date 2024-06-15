@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
 
 const styles = theme => ({
     card: {
@@ -57,6 +59,11 @@ const styles = theme => ({
     },
     eventTitle:{
         fontFamily:"Daikon-Bold"
+    },
+    loader:{
+        marginTop:"50%",
+        display:"flex",
+        justifyContent:"center",
     }
 });
 
@@ -106,7 +113,7 @@ const UpcomingEventCard = ({ classes }) => {
 
     return (
         <>
-        {eventData.map((eventData)=><Card className={classes.card} style={{ margin: '25px 0' }} >
+        {eventData.length > 0 ? eventData.map((eventData,index)=><Card className={classes.card} style={{ margin: '25px 0' }} key={index} >
         <CardHeader title={
                 <Typography className={classes.cardHeader}>Upcoming Events</Typography>
             }  />
@@ -133,7 +140,7 @@ const UpcomingEventCard = ({ classes }) => {
                 Register Here
             </Button>
         </CardContent>
-    </Card>)}
+    </Card>) : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
     </>
     );
 };

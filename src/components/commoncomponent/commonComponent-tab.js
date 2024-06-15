@@ -99,7 +99,7 @@ export default function ComponentTabs({card}){
           });
           setData(response.data.data);
           setLoading(false); // Update loading state
-          console.log("response in component tab",response.data.data)
+          // console.log("response in component tab",response.data.data)
         } catch (error) {
           console.error('Error fetching data:', error);
           setError(error); // Set error state

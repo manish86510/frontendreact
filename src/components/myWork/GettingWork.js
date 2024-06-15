@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import "../../styles/commonCompany.css";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import endpoints,{base_uri} from "../../api/endpoints";
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
@@ -61,12 +61,16 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         justifyContent:"center",
         marginTop:"10rem"
+    },
+    nowork:{
+        marginTop:"20%",
+        marginLeft:"25%"
     }
  
   }));
 
 
-export default function GettingWork(){
+export default function GettingWork({id}){
     const [search,setSearch] = useState("");
     const [data,setData] = useState([])
     const classes = useStyles();
@@ -108,7 +112,7 @@ export default function GettingWork(){
                 Authorization : 'Bearer ' + getToken
             }
         })
-        console.log("companies",companies.data)
+        // console.log("companies",companies.data)
         setData(companies.data)
     }
     catch(error){
@@ -124,20 +128,28 @@ export default function GettingWork(){
         setSearch(e.target.value)
     }
 
-    console.log("companies data",data)
+    // console.log("companies data",data)
     const { pathname } = useLocation();
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
 
-    const sliceData = (data)=>{
-        if(data.length > 65){
-            return data.slice(0,60) + "..."
-        }
-        return data
-    }
 
-    // const filter = data.filter((m)=>m.name.toLowerCase().includes(search.toLowerCase()))
+      const handleClickParent = (user)=>{
+        console.log("user in child",user)
+        id(user)
+
+      }
+  
+
+    // const sliceData = (data)=>{
+    //     if(data.length > 65){
+    //         return data.slice(0,60) + "..."
+    //     }
+    //     return data
+    // }
+
+    const filter = data.filter((m)=>m.company_name.toLowerCase().includes(search.toLowerCase()))
 
     return(
         <>  
@@ -148,10 +160,10 @@ export default function GettingWork(){
       </Container>
                { 
             //    data ?
-                data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting" ><Box><Box className={classes.maincard}><div className={classes.maincard1}>
+            filter.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting"><Box onClick={() => handleClickParent(data.user)}><Box className={classes.maincard} ><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
-                      <img className={classes.image} src={data.image} alt="random"/> 
+                      <img className={classes.image} src={`${base_uri}${data.company_logo}`} alt="random"/> 
                       </Box>
                     <Container>
                         
@@ -159,13 +171,16 @@ export default function GettingWork(){
                         // onClick={() => getid(card.id)}
                         // onClick={handleSelect}
                         >{data.company_name}</Typography>
-                   {data.length > 0 &&  <Typography className={classes.label1} >{sliceData(data.form_subject)}</Typography>}
+                    <Typography className={classes.label1} >{data.subject}</Typography>
                     </Container>
                     </Box>
                 </div></Box></Box></Link></Grid>) 
                 // :  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>
                 }
-                </Grid> : <Grid> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
+                </Grid> : 
+                // <Grid> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>
+                <Typography variant="h4" className={classes.nowork}>No Work To Show</Typography>
+                }
         </>
     )
 }

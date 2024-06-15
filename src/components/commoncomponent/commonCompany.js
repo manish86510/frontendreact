@@ -71,13 +71,14 @@ export default function CommonCompany({id,selectedId}){
   var getToken = localStorage.getItem('access');
   const getCompany = async ()=>{
     try{
-      await axios.get(endpoints.get_allCompany,{
+      const res = await axios.get(endpoints.get_allCompany,{
         headers:{
           Authorization: 'Bearer ' + getToken,
         }
-      }).then((res)=>setData(res.data)
+      })
+      setData(res.data)
         // console.log(res.data,"here is response")
-      )
+      
     }
     catch(error){
       console.log(error)
@@ -95,39 +96,7 @@ export default function CommonCompany({id,selectedId}){
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
-    const tutorialSteps = [
-        {
-          label: 'HBF',
-          image: "https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-        },
-        {
-          label: 'TAIKII',
-          image:"https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y29tcGFueXxlbnwwfHwwfHx8MA%3D%3D",
-          description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-        },
-        {
-          label: 'AQT',
-          image:"https://images.pexels.com/photos/188035/pexels-photo-188035.jpeg?cs=srgb&dl=pexels-ingo-188035.jpg&fm=jpg",
-          description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-        },
-        {
-          label: 'ENORVISION',
-          image:"https://png.pngtree.com/background/20210710/original/pngtree-company-profile-corporate-culture-brochure-cross-page-design-background-material-picture-image_1011696.jpg",
-          description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-        },
-        {
-            label: 'BHARATPRENURS',
-            image: "https://watermark.lovepik.com/photo/40155/7604.jpg_wh1200.jpg",
-            description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-          },
-          {
-            label: 'I AM HERE',
-            image:"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVzaW5lc3MlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww",
-            description:"Schemes Indian Government, at all levels, announces Welfare Schemes for a cross section of the society from time to time...",
-          },
-        
-      ];
+   
 
       const handleChange = (e)=>{
         setSearch(e.target.value)
@@ -155,7 +124,7 @@ export default function CommonCompany({id,selectedId}){
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
         
-            {filter.map((card,index)=>{
+            {filter.map((card)=>{
                 return <Grid key={card.id} className={classes.topService}><Container><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>

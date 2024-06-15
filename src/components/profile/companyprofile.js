@@ -27,6 +27,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,23 +124,10 @@ function CompanyProfile(){
         const data = gettingId.data
         // console.log("getting data in form" , data)
         setFormSubmitted(true)
-        
-        // setGetIdData(gettingId.data)
-        // const gData = gettingId.data
-        // console.log("here gdata",gData)
-              // setCForm({...gData})     
-              // data.description = data.description || ''; // handle null value
   
              
               setCForm(data) 
-              setMode('getting')  
-              // console.log("inside form in getting data",cform)    
-              // const getValues = Object.values(cform)
-              // setTableData(getValues)
-              // console.log("values of cform", getValues)
-              // console.log("type of cform", typeof getValues)
-              // console.log("here are values of cform",tableData) 
-              // console.log("here is type of cform",typeof tableData) 
+              setMode('getting')   
               
             
       }
@@ -150,11 +140,6 @@ function CompanyProfile(){
       getId()
     },[id,getToken])
 
-   
-
-    
-
-    // console.log("after useeffect",cform)
     const handleOpen = () => {
         setOpen(true);
       };
@@ -162,17 +147,6 @@ function CompanyProfile(){
       const handleClose = () => {
         setOpen(false);
       };
-
-      // const handleChange = (e) => {
-      //   const {name,value} = e.target;
-      //   // setCForm({...cform,[name]:value})
-      //   setCForm((prevCForm)=>({
-      //     ...prevCForm, [name]:value
-      //   }))
-      //   console.log("in handle change",e.target.value);
-      //   console.log('cform', cform)
-      // }
-
 
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -189,19 +163,6 @@ function CompanyProfile(){
         }
       };
       
-
-  //     const handleSelect = (e)=>{
-  //       let value = e.target.value
-  //       console.log(value, 'value')
-  //  setCForm((prevCForm)=>({
-  // ...prevCForm, industry_name:value
-  //  }))
-  //  console.log(cform)
-  //     }
-
-      // useEffect(() => {
-      //   console.log("Updated cform:", cform);
-      // }, [cform]);
 
 
       const handleFileChange = (e) => {
@@ -239,13 +200,13 @@ function CompanyProfile(){
               "content-type": "multipart/form-data",
             }
           })
-          // toast.success(posts || "Form Submitted Successfully")
+          toast.success(posts || "Form Submitted Successfully")
 
           console.log(posts,"here is posted s form")
         }
         catch(error){
           console.log(error,"error in sform")
-          // toast.error(error.posts.message ||"Form Not Submitted.")
+          toast.error(error.posts.message ||"Form Not Submitted.")
         }
         
         handleClose()
@@ -294,14 +255,7 @@ function CompanyProfile(){
 
       const handleEditClick = () => {
         setEditMode(!editMode);
-        // setMode('edit')
-    };
-
-    // const handleChangeSelect = (event) => {
-    //   setCurrency(event.target.value);
-    // };
-      
-      
+    };      
 
     const styles = {
         headtop:{
@@ -316,7 +270,8 @@ function CompanyProfile(){
             // cursor:"pointer"
             display: 'flex',
             // justifyContent: 'left',
-            padding:'1rem 0rem 1rem 0rem'
+            padding:'1rem 0rem 1rem 0rem',
+            fontFamily:"Daikon-Regular"
         },
         head1:{
           width:"100%",
@@ -330,10 +285,6 @@ function CompanyProfile(){
             height:'2.5rem',
             width:'2.5rem',
             justifyContent:'right',
-            // borderRadius:'2rem',
-            // maxWidth: 400,
-            // margin: 'auto',
-            // backgroundColor:'blue'
         },
         textField:{
             width:"46%",
@@ -342,15 +293,11 @@ function CompanyProfile(){
         },
         textField1:{
             width:"90%",
-            // height:'10%',
-            // height:"3rem !important",
             margin:"0rem 0.5rem 0.5rem 1rem",
             // overflow:"auto",
         },
         textField2:{
           width:"90%",
-          // height:'10%',
-          // height:"3rem !important",
           margin:"1rem 0.5rem 0.5rem 1rem",
           // overflow:"auto",
       },
@@ -368,9 +315,6 @@ function CompanyProfile(){
             color:"black",
             backgroundColor : "white",
             width:"50%",
-            // display:'flex',
-            // justifyContent:'center',
-            // alignItems:'center',
             height: '60%',
             // margin: '0',
             position: 'fixed',
@@ -451,12 +395,10 @@ function CompanyProfile(){
           fontFamily:"Daikon-Regular",
           display: 'flex',
           fontSize: 'medium',
-          // margin :'0.5rem 0rem 0rem 0rem',
           color:"darkgray"
         },
         boxTop:{
           display:"flex",
-          // flexWrap:"wrap",
           flexDirection :"row",
           margin:"0.5rem",
           justifyContent:"left",
@@ -499,8 +441,6 @@ function CompanyProfile(){
           display: 'flex',
           fontSize: 'medium',
           margin :'0.5rem 0rem 0rem 1rem',
-          // justifyContent:"left",
-          // textAlign:"left"
       },
       boxTop11:{
         width:"100%",
@@ -517,16 +457,19 @@ function CompanyProfile(){
       },
       head12:{
         marginLeft:"30rem"
-      }
-      // form:{
-      //   display:"flex",
-      //   flexWrap:"wrap"
-      // }
+      },
+      describe:{
+        fontSize:"large",
+        fontFamily:"Daikon-Regular",
+        marginLeft:"1.5%",
+        marginBottom:"0.5%",
+        color:"darkgray"
+      }   
     }
 
    
 
-    console.log("here is cform",cform)
+    // console.log("here is cform",cform)
 
 
     return(
@@ -538,84 +481,64 @@ function CompanyProfile(){
         Company
       </Typography>
       <IconButton onClick={handleEditClick}>
-                        <EditIcon /> 
-                    </IconButton>
+          <EditIcon /> 
+      </IconButton>
       </Container>
 
       {(!formSubmitted || editMode) ?
        <Box>
         <form onSubmit={companySubmit} style={styles.form} >
-            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
+            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" required
             // InputLabelProps={{ shrink: true }} 
             name="name" value={cform.name} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
+            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" required 
             // InputLabelProps={{ shrink: true }}
             name="email" value={cform.email} onChange={handleChange}
             />
-            
-            <TextField
-            style={styles.textField}
-          id="outlined-select-currency-native"
-          select
-          size="small"
-          label="Industry"
-          name="industry_name"
-          value={cform.industry_name}
-          InputLabelProps={{ shrink: true }}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          // helperText="Please select your Industry"
-          variant="outlined"
-        >
-          <option value=''>
-            Select Industry
-          </option>
-          <option value='Finance'>
-            Finance
-          </option>
-          <option value='IT'>
-            IT
-          </option>
-          <option value='Pharmaceutical'>
-          Pharmaceutical
-          </option>
-          {/* {industry.map((option) => (
-            <option key={option.value} value={option.name}>
-              {option.name}
-            </option>
-          ))} */}
-        </TextField>
-            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="gst_number" value={cform.gst_number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="reg_number" value={cform.reg_number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
+            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            <FormControl variant="outlined" size="small" required style={styles.textField}>
+                  <InputLabel>Industry : </InputLabel>
+                  <Select
+                    value={cform.industry_name}
+                    onChange={handleChange}
+                    label="Industry"
+                    name="industry_name"
+                  >
+                    {industry.map((industry) => (
+                      <MenuItem key={industry.id} value={industry.name}>
+                        {industry.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" required 
             // InputLabelProps={{ shrink: true }}
             name="sector" value={cform.sector} onChange={handleChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" required
             InputLabelProps={{ shrink: true }}
             name="banner" 
             inputProps={{ accept: "image/*" }}
             // value={cform.sector} 
             onChange={handleFileChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" required
             InputLabelProps={{ shrink: true }}
             name="logo" 
             // value={cform.sector} 
@@ -623,19 +546,19 @@ function CompanyProfile(){
             onChange={handleFileChange}
             />
             
-            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
             />
             <Box className={classes.reactQuillContainer}>
-            {(cform.name || cform.address) && (
-  <ReactQuill
-    value={cform.description}
-    required
-    onChange={(value) => handleEditorChange("description", value)}
-    className={classes.editor}
-  />
-)}
+            <Typography style={styles.describe}>Overview : </Typography>
+            <ReactQuill
+              value={cform.description}
+              required
+              onChange={(value) => handleEditorChange("description", value)}
+              className={classes.editor}
+            />
+
 
             </Box>
             <Box style={styles.buttons}>
@@ -654,10 +577,6 @@ function CompanyProfile(){
                 <img src={`${base_uri}${cform.banner}`} alt={cform.id} style={styles.image}/>
                 <Box style={styles.imageText11}>{cform.name}</Box>
                 </Box>
-                {/* <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Name:</Typography> 
-                <Box style={styles.tabledata}>   {cform.name}</Box>
-                </Box> */}
                 <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Email:</Typography> 
                 <Box style={styles.tabledata}>   {cform.email}</Box>
@@ -676,17 +595,18 @@ function CompanyProfile(){
                  <Box style={styles.tabledata}>   {cform.reg_date}</Box>
                 </Box>
                 <Box style={styles.boxTop}>
-                <Typography style={styles.text}>Sector:</Typography>
-                 <Box style={styles.tabledata}>   {cform.sector}</Box>
-                </Box>
-                <Box style={styles.boxTop}>
                 <Typography style={styles.text}>Industry:</Typography>
                  <Box style={styles.tabledata}>   {cform.industry_name}</Box>
                 </Box>
+                <Box style={styles.boxTop}>
+                <Typography style={styles.text}>Sector:</Typography>
+                 <Box style={styles.tabledata}>   {cform.sector}</Box>
+                </Box>
+               
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Address:</Typography>
                  <Box style={styles.tabledata12}>   {cform.address}</Box>
-                </Box>
+                </Box>  
                 <Box style={styles.boxTop1}>
                 <Typography style={styles.text}>Registered Number:</Typography>
                  <Box style={styles.tabledata12}>   {cform.reg_number}</Box>
@@ -720,7 +640,7 @@ function CompanyProfile(){
           <Box><Typography style={styles.modalinputhead}>Name : </Typography><TextField size="small" id="outlined-basic"  label="Name" style={styles.textField1} type="text" variant="outlined" 
             name="name" value={sform.name} onChange={handleChange1}
             /></Box>  
-            <Box><Typography style={styles.modalinputhead}>Short Description : </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text"  variant="outlined" className={classes.outlinedBasic}
+            <Box><Typography style={styles.modalinputhead}>Short Description </Typography><TextField size="small" id="outlined-basic"  label="Description" style={styles.textField1} type="text"  variant="outlined" className={classes.outlinedBasic}
             name="short_description" value={sform.short_description} onChange={handleChange1}
             /></Box>  
              <Box><TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField2} type="file" variant="outlined" 

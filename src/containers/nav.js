@@ -42,7 +42,8 @@ const styles = theme => ({
         borderBottom: '2px solid ' + theme.palette.primary.main,
         padding: '2px 10px',
         display: 'inline-block',
-        marginRight: 20
+        marginRight: 20,
+        fontFamily:"Daikon-Regular"
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -125,7 +126,7 @@ class SideNav extends React.Component {
             myworkLink: false,
             myAccount: false,
             userProfile: JSON.parse(localStorage.getItem("userInfo")),
-            home_title: "",
+            home_title: "Home",
             selectedIcon: "home",
             menuArray: [
                 {
@@ -380,7 +381,7 @@ class SideNav extends React.Component {
                             <div className={classes.pageTitle}>
                                 <HomeOutlinedIcon style={{ display: 'inline-block', marginBottom: '-5px' }} /> {this.state.home_title}
                             </div>
-                            <div style={{ display: 'inline-block' }}>
+                            {/* <div style={{ display: 'inline-block' }}>
                                 <InputBase
                                     className={classes.input}
                                     placeholder="Search.."
@@ -388,7 +389,7 @@ class SideNav extends React.Component {
                                     onChange={this.handleUserName}
                                     inputProps={{ 'aria-label': 'user' }}
                                 />
-                            </div>
+                            </div> */}
                         </Typography>
                         <div>
                             <IconButton aria-label="pending messages" onClick={this.handleMessageNav} size="medium">
@@ -396,17 +397,17 @@ class SideNav extends React.Component {
                                     <MailOutlineOutlinedIcon />
                                 </Badge>
                             </IconButton>
-                            <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
+                            {/* <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
                                 <MonetizationOnOutlinedIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
-                                <div style={{ fontWeight: 'bold' }}>
+                                <div style={{ fontFamily:"Daikon-Bold" }}>
                                     {
                                         this.state.userProfile.first_name + " " + this.state.userProfile.last_name
                                     }
                                 </div>
 
-                                <div>{"@" + this.state.userProfile.username}</div>
+                                <div style={{ fontFamily:"Daikon-Regular" }}>{"@" + this.state.userProfile.username}</div>
                             </div>
                             <IconButton className={classes.profile} variant="contained" onClick={this.handleUserMenuToggle} ref="userMenuRef">
                                 {
@@ -431,9 +432,9 @@ class SideNav extends React.Component {
                                         <Paper>
                                             <ClickAwayListener onClickAway={this.handleUserMenuClose}>
                                                 <MenuList autoFocusItem={this.state.userMenuOpen} id="menu-list-grow">
-                                                    <MenuItem onClick={this.nav_profile}>Profile</MenuItem>
-                                                    <MenuItem onClick={this.nav_my_account}>Our Plans</MenuItem>
-                                                    <MenuItem onClick={this.nav_logout}>Logout</MenuItem>
+                                                    <MenuItem onClick={this.nav_profile} style={{ fontFamily:"Daikon-Regular" }}>Profile</MenuItem>
+                                                    <MenuItem onClick={this.nav_my_account} style={{ fontFamily:"Daikon-Regular" }}>Our Plans</MenuItem>
+                                                    <MenuItem onClick={this.nav_logout}style={{ fontFamily:"Daikon-Regular" }}>Logout</MenuItem>
                                                 </MenuList>
                                             </ClickAwayListener>
                                         </Paper>

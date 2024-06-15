@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     image:{
         width:"8rem",
-        height:"8rem",
-        // ObjectFit:"contain",
+        height:"6rem",
+        ObjectFit:"contain",
         
     },
     heading:{
@@ -47,11 +47,12 @@ const useStyles = makeStyles((theme) => ({
         fontFamily:"Daikon-Regular"
     },
     paper:{
-        marginTop:"4%"
+        marginTop:"4%",
+        cursor:"pointer",
     },
     loader:{
         padding:"20% 0% 0% 45%"
-    }
+    },
 }))
 
 export default function GovernmentSchemesTab(){
@@ -129,7 +130,7 @@ export default function GovernmentSchemesTab(){
         </Grid>
         
          </>: <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
-        <Grid item xs={4}><RightTab/></Grid>
+        <Grid item xs={4} className={classes.right}><RightTab/></Grid>
         </Grid>
         </>
     )

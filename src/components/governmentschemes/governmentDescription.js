@@ -77,6 +77,7 @@ export default function GovernmentDescription(){
     const history = useHistory();
    
     useEffect(() => {
+
       if (location.state && location.state.id) {
         fetchSchemes(location.state.id);
       } else {
