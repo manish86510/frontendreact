@@ -15,7 +15,8 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         width: "100%",
-        borderRadius: 30
+        borderRadius: 30,
+        marginTop:"2%"
     },
     readOnlyfield: {
         paddingLeft: '10px',
@@ -34,6 +35,7 @@ const styles = theme => ({
         bordeRadius: "0px 30px 30px 0px",
         backgrounColor: "#da1111",
     },
+    
 
 
 })

@@ -113,7 +113,7 @@ const UpcomingEventCard = ({ classes }) => {
 
     return (
         <>
-        {eventData.length > 0 ? eventData.map((eventData)=><Card className={classes.card} style={{ margin: '25px 0' }} >
+        {eventData.length > 0 ? eventData.map((eventData,index)=><Card className={classes.card} style={{ margin: '25px 0' }} key={index} >
         <CardHeader title={
                 <Typography className={classes.cardHeader}>Upcoming Events</Typography>
             }  />

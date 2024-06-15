@@ -397,9 +397,9 @@ class SideNav extends React.Component {
                                     <MailOutlineOutlinedIcon />
                                 </Badge>
                             </IconButton>
-                            <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
+                            {/* <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
                                 <MonetizationOnOutlinedIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontFamily:"Daikon-Bold" }}>
                                     {

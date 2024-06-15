@@ -111,7 +111,7 @@ export default function PostingWork({id}){
     //     return data
     // }
 
-    // const filter = data1.filter((m)=>m.name.toLowerCase().includes(search.toLowerCase()))
+    const filter = data.filter((m)=>m.company_name.toLowerCase().includes(search.toLowerCase()))
     return(
         <>
         {data.length>0 ? <Grid >
@@ -119,7 +119,7 @@ export default function PostingWork({id}){
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search}  variant="outlined" fullWidth onChange={handleChange} /> 
           {/* <Button variant="contained" color="primary">Primary</Button> */}
       </Container>
-               {data.map((data,index)=><Grid key={index} className={classes.topService}> <Link to="/workdetailposting" ><Box onClick={handleClick(data.user)}><Box className={classes.maincard}><div className={classes.maincard1}>
+               {filter.map((data,index)=><Grid key={index} className={classes.topService}> <Link to="/workdetailposting" ><Box onClick={handleClick(data.user)}><Box className={classes.maincard}><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={`${base_uri}${data.company_logo}`} alt="random"/> 

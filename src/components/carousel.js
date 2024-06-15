@@ -110,15 +110,15 @@ const useStyles = makeStyles((theme) => ({
     overflow:'hidden',
   },
   heading:{
-    color:"black",
+    color:"black !important",
     textAlign: 'center',
     textDecoration:"none",
     fontFamily:"Daikon-Regular",
     margin: '0', // Remove default margin
-    padding: '-1rem 0'
+    padding: '-1rem 0',
   },
   heading1:{
-    color:"black",
+    color:"black", 
     textAlign: 'center',
     textDecoration:"none",
     fontFamily:"Daikon-Regular",
@@ -190,18 +190,6 @@ export default function Carousel(){
   
     return (
         <>
-      {/* <div 
-      style={{width:"45rem",height:"15rem",margin:"1rem"}}
-      >
-      <Slider {...settings}>
-      {tutorialSteps.map((m,i)=><div>
-        <img 
-        style={{height:"30rem",width:"10rem"}} 
-        src={m.imgPath} alt={i}/>
-        <Typography>{m.label}</Typography>
-      </div>)}</Slider></div> */}
-
-
      {data.length > 0 ?  <div className={classes.carouselContainer} >
       <OwlCarousel 
       autoplay 
@@ -214,8 +202,8 @@ export default function Carousel(){
       {data.map((m)=><div key={m.id} className='item'  onClick={() => handleClick(m.id)}> <Link to='/carousel-call' state={m.id} className={classes.heading}  >
         <img src={`${base_uri}${m.banner}`} alt={m.label} />
        
-          <h4 dangerouslySetInnerHTML={{ __html: m.title }} style={{marginBottom:1,color:'black'}}></h4>
-        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,39) }} style={{marginTop:0}}></p>
+          <h4 dangerouslySetInnerHTML={{ __html: cutItShort(m.title,80) }} style={{marginBottom:1,color:'black'}}></h4>
+        <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,80) }} style={{marginTop:0,color:"black !important"}}></p>
         <p className={classes.heading} >{m.date}</p></Link>
     </div>)}
     </OwlCarousel></div> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}

@@ -469,7 +469,7 @@ function CompanyProfile(){
 
    
 
-    console.log("here is cform",cform)
+    // console.log("here is cform",cform)
 
 
     return(
@@ -488,31 +488,31 @@ function CompanyProfile(){
       {(!formSubmitted || editMode) ?
        <Box>
         <form onSubmit={companySubmit} style={styles.form} >
-            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" 
+            <TextField size="small" id="outlined-basic" label="Name" style={styles.textField} type="text" variant="outlined" required
             // InputLabelProps={{ shrink: true }} 
             name="name" value={cform.name} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" 
+            <TextField size="small" id="outlined-basic" label="Email" style={styles.textField} type="email" variant="outlined" required 
             // InputLabelProps={{ shrink: true }}
             name="email" value={cform.email} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="number" value={cform.number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="GST Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="gst_number" value={cform.gst_number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" 
+            <TextField size="small" id="outlined-basic"  label="Registration Number" style={styles.textField} type="number" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="reg_number" value={cform.reg_number} onChange={handleChange}
             />
-            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" 
+            <TextField size="small" id="outlined-basic"  type="date" style={styles.textField} variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="reg_date" value={cform.reg_date} onChange={handleChange}
             />
-            <FormControl variant="outlined" size="small" style={styles.textField}>
+            <FormControl variant="outlined" size="small" required style={styles.textField}>
                   <InputLabel>Industry : </InputLabel>
                   <Select
                     value={cform.industry_name}
@@ -527,18 +527,18 @@ function CompanyProfile(){
                     ))}
                   </Select>
                 </FormControl>
-            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Sector" style={styles.textField} type="text" variant="outlined" required 
             // InputLabelProps={{ shrink: true }}
             name="sector" value={cform.sector} onChange={handleChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Banner" style={styles.textField} type="file" variant="outlined" required
             InputLabelProps={{ shrink: true }}
             name="banner" 
             inputProps={{ accept: "image/*" }}
             // value={cform.sector} 
             onChange={handleFileChange}
             />
-            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Logo" style={styles.textField} type="file" variant="outlined" required
             InputLabelProps={{ shrink: true }}
             name="logo" 
             // value={cform.sector} 
@@ -546,7 +546,7 @@ function CompanyProfile(){
             onChange={handleFileChange}
             />
             
-            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" 
+            <TextField id="outlined-basic" size="small"  label="Address" style={styles.textField} type="text" variant="outlined" required
             // InputLabelProps={{ shrink: true }}
             name="address" value={cform.address} onChange={handleChange}
             />

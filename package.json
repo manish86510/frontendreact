@@ -12,6 +12,7 @@
     "@material-ui/lab": "^4.0.0-alpha.33",
     "@material-ui/pickers": "^3.2.8",
     "axios": "^1.6.8",
+    "firebase": "^10.12.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.7.1",
     "material-ui-search-bar": "^0.4.2",

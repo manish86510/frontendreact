@@ -153,7 +153,14 @@ const useStyles = makeStyles((theme) => ({
       },
       icon:{
         cursor:"pointer",
-      }
+      },
+      attachmenttext:{
+        fontFamily:"Daikon-Regular",
+        cursor:"pointer",
+      },
+      attachment:{
+        display:"flex"
+      },
     
 }));
 
@@ -259,7 +266,8 @@ export default function MyWorkDetailGetting({idWorkGetting}){
               {data.description}
             </Typography>
             <Box className={classes.header3}>
-              <AttachFileIcon className={classes.icon} onClick={() => window.open(attachmentURL, '_blank')}/>
+            <Box className={classes.attachment} onClick={() => window.open(attachmentURL, '_blank')}>
+            <AttachFileIcon className={classes.icon} /><Typography className={classes.attachmenttext}>Attachment</Typography></Box>
               {/* <embed src={attachmentURL} type="application/pdf" width="100%" height="600px" /> */}
             {/* <Button variant="contained" color="primary" onClick={() => window.open(data.pdfUrl, '_blank')}>
                   Open PDF

@@ -149,7 +149,7 @@ export default function GettingWork({id}){
     //     return data
     // }
 
-    // const filter = data.filter((m)=>m.name.toLowerCase().includes(search.toLowerCase()))
+    const filter = data.filter((m)=>m.company_name.toLowerCase().includes(search.toLowerCase()))
 
     return(
         <>  
@@ -160,7 +160,7 @@ export default function GettingWork({id}){
       </Container>
                { 
             //    data ?
-                data.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting"><Box onClick={() => handleClickParent(data.user)}><Box className={classes.maincard} ><div className={classes.maincard1}>
+            filter.map((data,index)=><Grid key={index} className={classes.topService}><Link to="/workdetailgetting"><Box onClick={() => handleClickParent(data.user)}><Box className={classes.maincard} ><div className={classes.maincard1}>
                     <Box className={classes.maincard11}>
                       <Box className={classes.imageBox}>
                       <img className={classes.image} src={`${base_uri}${data.company_logo}`} alt="random"/> 

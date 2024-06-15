@@ -14,6 +14,9 @@ const styles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    message:{
+        marginTop:"5%"
+    }
 });
 
 class Message extends React.Component {
@@ -50,7 +53,7 @@ class Message extends React.Component {
                             {value === 1 &&  <MyMessages /> }
                         </div>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={5} className={classes.message}>
                         <MessageBox />
                     </Grid>
                 </Grid>

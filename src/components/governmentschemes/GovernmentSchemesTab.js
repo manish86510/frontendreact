@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     image:{
         width:"8rem",
-        height:"8rem",
-        // ObjectFit:"contain",
+        height:"6rem",
+        ObjectFit:"contain",
         
     },
     heading:{
