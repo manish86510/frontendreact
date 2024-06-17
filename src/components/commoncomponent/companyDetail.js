@@ -137,7 +137,7 @@ export default function CompanyDetail({id}){
         <Container >
             <Box className={classes.top}>
             <img className={classes.topimage} src={`${base_uri}${data.logo}`} alt={data.id}/>
-           <Typography className={classes.topHeader} variant="h4">{data.name}</Typography>
+           <Typography className={classes.topHeader} variant="h5">{data.name}</Typography>
             </Box>
             
             <Box className={classes.imageContainer} >

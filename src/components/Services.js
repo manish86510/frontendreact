@@ -3,10 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Container } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import LanguageIcon from '@material-ui/icons/Language';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import axios from 'axios';
@@ -74,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
         position:'relative',
         margin:"1.3rem 0rem 1rem 0rem",
         padding:"0.5rem"
+    },
+    loader:{
+      margin:"10% 0% 10% 0%",
+      display:"flex",
+      justifyContent:"center"
     }
   }));
 export default function Services(){
@@ -167,7 +169,7 @@ export default function Services(){
     };
     return(
         <>
-        <Grid className={classes.topService}>
+        {data.length> 0 ? <Grid className={classes.topService}>
             <Container>
         <Typography variant="h6" style={{fontFamily:'Daikon-Bold'}}>Services</Typography><hr/>
         <Box className={classes.maincard}>{data.map((card,index)=>{
@@ -182,7 +184,8 @@ export default function Services(){
             })}</Box>
             {/* <Box>...More</Box> */}
             </Container>
-        </Grid>
+        </Grid>:<Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
+        
         </>
     )
 }

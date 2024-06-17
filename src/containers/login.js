@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import endpoints from "../api/endpoints";
 import toast, { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
+import Bharat from '../img/bharat.png';
 
 const styles = (theme) => ({
   forget_pass: {
@@ -177,9 +178,10 @@ class Login extends React.Component {
                 alignItems: 'center',
               }}
             >
-              <Avatar style={{ margin: '10px', backgroundColor: '#33ab9f' }}>
+              <img src={Bharat} alt="bharat"/>
+              {/* <Avatar style={{ margin: '10px', backgroundColor: '#33ab9f' }}>
                 <LockOutlinedIcon />
-              </Avatar>
+              </Avatar> */}
               <Typography component="h1" variant="h5">
                 Log Into Your Account
               </Typography>

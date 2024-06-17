@@ -65,7 +65,8 @@ const useStyles = makeStyles((theme) => ({
         fontFamily:"Daikon-Regular"
     },
     date:{
-        fontFamily:"Daikon-Regular"
+        fontFamily:"Daikon-Regular",
+        marginTop:"4%"
     }
 }))
 
@@ -109,11 +110,12 @@ export default function GovernmentDescription(){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4" className={classes.topHeading}>Government Scheme Page</Typography>
+            {/* <Typography variant="h4" className={classes.topHeading}>Government Scheme Page</Typography> */}
+            <Typography variant="h5" className={classes.topHeading}>{data.name}</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography className={classes.heading}>{data.name}</Typography>
+            {/* <Typography className={classes.heading}>{data.name}</Typography> */}
             <Typography className={classes.date}>Date: {data.launched_date} </Typography><br/>
             <Typography className={classes.longdesc} dangerouslySetInnerHTML={{ __html:data.long_desc }}></Typography>
             <br/><br/><br/>

@@ -110,7 +110,7 @@ export default function CarouselCall(){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4" className={classes.topheading}>{data.title}</Typography>
+            <Typography variant="h5" className={classes.topheading}>{data.title}</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>

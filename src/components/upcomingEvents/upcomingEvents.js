@@ -62,6 +62,7 @@ const styles = theme => ({
     },
     loader:{
         marginTop:"50%",
+        marginLeft:"40%",
         display:"flex",
         justifyContent:"center",
     }
@@ -69,6 +70,8 @@ const styles = theme => ({
 
 const UpcomingEventCard = ({ classes }) => {
 
+
+    // const eventData = [];
     const eventData = [
         {
             date: '17',
