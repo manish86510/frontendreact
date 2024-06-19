@@ -19,8 +19,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop:"1%"
     },
     image:{
-        width:"90%",
-        margin:"3%"
+        width:"100%",
+        height:"5rem",
+        margin:"3% 0% 3% 0%",
+        objectFit:"contain",
         // height:"50%"
     },
     textContainer:{
@@ -31,10 +33,20 @@ const useStyles = makeStyles((theme) => ({
         fontFamily:"Daikon-Bold"
     },
     body:{
-        fontFamily:"Daikon-Regular"
+        fontFamily:"Daikon-Regular",
+        marginBottom:"2%",
     },
     imageContainer:{
         marginTop:"2%"
+    },
+    extra:{
+        fontFamily:"Daikon-Bold",
+    },
+    topextra:{
+        // margin:"3% 0% 0% 25%"
+        display:"flex",
+        justifyContent:"center",
+        textAlign:"center",
     }
 }))
 
@@ -46,7 +58,7 @@ export default function ShowFire({data}){
         <Grid container direction="row"  spacing={3}> 
         <Grid item xs={8} className={classes.topFire}> 
             {/* <h1>I am in Firebase</h1> */}
-       {data ?
+       {Object.keys(data).length > 0 ?
         <Paper className={classes.fire}>
        <Grid container direction="row">
         <Grid item xs={3}> 
@@ -64,13 +76,13 @@ export default function ShowFire({data}){
            
         <Box className={classes.top}>
         <Box className={classes.textContainer}>
-        <Typography variant="h5" className={classes.heading}>{data.title}</Typography>
+        <Typography variant="h6" className={classes.heading}>{data.title}</Typography>
         {/* <Typography variant="h6" className={classes.heading}>Hello Title Of Showing Title In Title</Typography> */}
         </Box>
         <Typography className={classes.body}>{data.body}</Typography>
         {/* <Typography className={classes.body}>Body Here Is Body Of FireBase Inside Firebase Component In </Typography> */}
         </Box></Grid></Grid></Paper>
-        :""}
+        :<Box className={classes.topextra}><Typography variant="h5" className={classes.extra}>No New Notification</Typography></Box>}
         </Grid>
         <Grid item xs={4}> <RightTab/></Grid>
         </Grid>

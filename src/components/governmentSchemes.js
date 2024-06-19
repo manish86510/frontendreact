@@ -111,34 +111,6 @@ export default function GovernmentSchemes(){
 
     // console.log(data)
 
-    const tutorialSteps = [
-        {
-          label: 'Atal Pension Yojana',
-          icons: <AssignmentIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Kaushal Vikas Yojana',
-          icons:<AssignmentIndIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Pradhan Mantri Mudra Yojana',
-          icons:<LanguageIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Pradhan Mantri Awas Yojana',
-          icons:<PersonOutlineIcon  className={classes.icons}/>
-        },
-        {
-            label: 'Jeevan Jyoti Bima Yojana',
-            icons: <AssignmentIcon className={classes.icons}/>
-          },
-          {
-            label: 'Atmanirbhar Bharat Abhiyan',
-            icons:<AssignmentIndIcon className={classes.icons}/>
-          },
-        
-      ];
-
       const history = useHistory();
 
       const handleClick = (id) => {
@@ -179,7 +151,9 @@ export default function GovernmentSchemes(){
             })}</Box>
             {/* <Box>...More</Box> */}
             </Container>
-        </Grid> : <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>}
+        </Grid> :[]
+        //  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>
+         }
         
         </>
     )

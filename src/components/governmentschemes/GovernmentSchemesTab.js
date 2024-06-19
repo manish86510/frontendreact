@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     loader:{
         padding:"20% 0% 0% 45%"
     },
+    search:{
+        margin:"3% 0% 3% 0%"
+    }
 }))
 
 export default function GovernmentSchemesTab(){
@@ -113,7 +116,7 @@ export default function GovernmentSchemesTab(){
     return(
         <> 
         <Grid container direction="row"  spacing={3}> 
-        {data.length > 0 ?<> <Grid item xs={8}> <Typography variant="h4">Government Schemes</Typography><hr/>
+        {data.length > 0 ?<> <Grid item xs={8}> <Typography variant="h5">Government Schemes</Typography><hr/>
         <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search} variant="outlined" fullWidth onChange={handleChange} /> 
       </Container>

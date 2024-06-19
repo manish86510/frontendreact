@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     search:{
-        marginTop:"1rem"
+        margin:"4% 0% 4% 0%"
     },
     maincard:{
         display:"flex",
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     nowork:{
         marginTop:"20%",
         marginLeft:"25%"
-    }
+    },
  
   }));
 export default function PostingWork({id}){

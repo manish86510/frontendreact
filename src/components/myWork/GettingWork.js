@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     search:{
-        marginTop:"1rem"
+        margin:"4% 0% 4% 0%"
     },
     maincard:{
         display:"flex",
