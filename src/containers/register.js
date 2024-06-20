@@ -1,308 +1,300 @@
 import React from "react";
-import { Button, FormGroup } from '@material-ui/core';
-import '../styles/Login.css'
+import { Avatar, Button, CssBaseline, TextField, Link, Paper, Box, Grid, Typography, CircularProgress } from '@material-ui/core';
+import { withStyles, ThemeProvider, createTheme } from '@material-ui/core/styles';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import axios from 'axios';
-import '../../node_modules/font-awesome/css/font-awesome.min.css';
-// import Img from "react-image";
-import { Link, withRouter } from 'react-router-dom';
-// import { PropTypes } from 'prop-types';
-import { IconButton, CircularProgress } from "@material-ui/core";
+import { withRouter } from 'react-router-dom';
+import endpoints from "../api/endpoints";
+import toast, { Toaster } from 'react-hot-toast';
+import 'react-toastify/dist/ReactToastify.css';
+import Bharat from '../img/bharat.png';
 
-import { withStyles } from '@material-ui/core/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import EndPoint from '../api/endpoints';
-
-
-const image = require("../img/login_image.png");
-const styles = theme => ({
-    username: {
-        borderRadius: 100,
-        border: '1px solid #00b894',
-        display: 'flex',
-        alignItems: 'center',
-        width: 400,
-        height: 40
-    },
-    password: {
-        borderRadius: 100,
-        border: '1px solid #00b894',
-        alignItems: 'center',
-        display: 'flex',
-        width: 400,
-        height: 40
-    },
-    cpassword: {
-        borderRadius: 100,
-        border: '1px solid #00b894',
-        display: 'flex',
-        alignItems: 'center',
-        width: 400,
-        height: 40
-    },
-    email: {
-        borderRadius: 100,
-        border: '1px solid #00b894',
-        display: 'flex',
-        alignItems: 'center',
-        width: 400,
-        height: 40
-    },
-    iconButton: {
-        fontSize: 15
-    },
-    footer: {
-        marginTop: 63
-    },    
+const styles = (theme) => ({
+  forget_pass: {
+    color: '#999999',
+  },
+  login_btn: {
+    padding: 45,
+  },
+  footer: {
+    marginTop: 63,
+  },
+  user_input: {
+    marginLeft: 6,
+    marginBottom: 10,
+  },
+  pass_input: {
+    marginLeft: 6,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url(/images/role.jpg)`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    zIndex: 1,
+  },
+  paper: {
+    position: 'relative',
+    zIndex: 2,
+    padding: '1rem 1rem 1rem 1rem',
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    margin: '1rem 1rem 1rem 5rem',
+  },
 });
+
+const defaultTheme = createTheme();
+
 class Register extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSuccess: '',
-            isError: '',
-            fullname: '',
-            username: '',
-            email: '',
-            password: '',
-            loading: false,
-            error: {
-                username_err: '',
-                fullname_err: '',
-                email_err: '',
-                password_err: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSuccess: '',
+      isError: '',
+      fullname: '',
+      username: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+      loading: false,
+      error: {
+        username_err: '',
+        fullname_err: '',
+        email_err: '',
+        password_err: '',
+      },
+    };
+  }
+
+  validate = () => {
+    let flag = false;
+    const error = this.state.error;
+    if (this.state.fullname === "") {
+      error.fullname_err = "This field is required";
+      flag = true;
+    }
+    if (this.state.username === "") {
+      error.username_err = "This field is required";
+      flag = true;
+    }
+    if (this.state.email === "") {
+      error.email_err = "This field is required";
+      flag = true;
+    }
+    if (this.state.password === "") {
+      error.password_err = "This field is required";
+      flag = true;
+    }
+    this.setState({ error: error });
+    return flag;
+  }
+
+  postRegister = (e) => {
+    this.setState({ loading: true });
+    e.preventDefault();
+    if (!this.validate()) {
+      const { fullname } = this.state;
+      const index = fullname.indexOf(" ");
+      const firstName = index !== -1 ? fullname.substr(0, index) : fullname;
+      const lastName = index !== -1 ? fullname.substr(index + 1) : '';
+      
+      let formData = new FormData();
+      formData.append('first_name', firstName);
+      formData.append('last_name', lastName);
+      formData.append('username', this.state.username);
+      formData.append('email', this.state.email);
+      formData.append('password', this.state.password);
+      
+      axios.post(endpoints.profile_user, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(result => {
+        this.setState({ loading: false });
+        if (result.status === 200) {
+          this.props.history.push({
+            pathname: "/verify"
+          });
+        } else {
+          this.setState({
+            isError: "User already exists!",
+          });
+        }
+      }).catch(() => {
+        this.setState({
+          isError: "Something went wrong!",
+          loading: false
+        });
+      });
+    }
+  }
+
+  handleChange = field => e => {
+    this.setState({ [field]: e.target.value });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { error, loading } = this.state;
+
+    return (
+      <ThemeProvider theme={defaultTheme}>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className: '',
+            duration: 3000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+            success: {
+              duration: 3000,
+              theme: {
+                primary: 'green',
+                secondary: 'black',
               },
-        }
-    }
-
-    validate = () => {
-        debugger;
-        let flag = false;
-        const error = this.state.error;
-        if (this.state.fullname === "") {
-          error.fullname_err = "This field is required";
-          flag = true;
-        }
-        if (this.state.username === "") {
-            error.username_err = "This field is required";
-            flag = true;
-        }
-        if (this.state.email === "") {
-            error.email_err = "This field is required";
-            flag = true;
-        }
-        if (this.state.password === "") {
-            error.password_err = "This field is required";
-            flag = true;
-        }    
-        this.setState({ error: error });    
-        return flag;
-      }
-
-    postRegister = (e) => {
-        this.setState({loading: true});
-        e.preventDefault();
-        let self = this;
-        debugger;
-        if (!this.validate()) {
-            var index = this.state.fullname.indexOf(" ");
-            var firstName = this.state.fullname.substr(0, index);
-            var lastName = this.state.fullname.substr(index + 1);
-            let formData = new FormData();
-            if(index===-1){
-                formData.append('first_name', lastName);
-                formData.append('last_name', firstName);
-            }else{
-                formData.append('first_name', firstName);
-                formData.append('last_name', lastName);
-            }
-            formData.append('username', self.state.username);
-            formData.append('email', self.state.email);
-            formData.append('password', self.state.password);
-            axios.post(EndPoint.profile_user, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(result => {
-                this.setState({loading: false});
-                if (result.status === 200) {
-                    console.log(result.data);
-                    this.props.history.push({
-                        pathname: "/verify"
-                    });
-                } else {
-                    this.setState({
-                        isError: "User already exists!",
-                    });
-                }
-            }).catch(e => {
-                debugger;
-                this.setState({
-                    isError: "Something went wrong!",
-                    loading: false
-                });
-            });
-        }
-    }
-
-    handleUserName = e => {
-        this.setState({
-            username: e.target.value,
-        });
-    }
-    handlePassword = e => {
-        this.setState({
-            password: e.target.value,
-        });
-    }
-
-    handleFullname = e => {
-        this.setState({
-            fullname: e.target.value,
-        });
-    }
-
-    handleEmail = e => {
-        this.setState({
-            email: e.target.value,
-        });
-    }
-
-    handleConfirmPassword = e => {
-        this.setState({
-            confirm_password: e.target.value,
-        });
-    }
-
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div>
-            <div className="Login" >
-                <h4 align="center" > Sign Up
-            for </h4>
-                <h4 align="center"
-                    id="title"> Energe </h4><br></br>
-                <center>
-                    <p>{this.state.isError}</p>
-                    <form onSubmit={this.handleSubmit} method="post" >
-
-                    <FormGroup controlId="fullname"
-                            bsSize="large"
-                            className="padb10">
-                            <Paper component="form" className={classes.username}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
-                                    <FontAwesomeIcon icon={faUser} />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="full name"
-                                    value={this.state.fullname}
-                                    onChange={this.handleFullname}
-                                    type="text"
-                                    inputProps={{ 'aria-label': 'fullname' }}
-                                />
-                            </Paper>
-                        </FormGroup >
-
-                        <FormGroup controlId="username"
-                            bsSize="large"
-                            className="padb10">
-                            <Paper component="form" className={classes.username}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="user" disabled>
-                                    <FontAwesomeIcon icon={faUser} />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="user name"
-                                    value={this.state.username}
-                                    onChange={this.handleUserName}
-                                    type="text"
-                                    inputProps={{ 'aria-label': 'user' }}
-                                />
-                            </Paper>
-                        </FormGroup >
-
-                        <FormGroup controlId="email"
-                            bsSize="large"
-                            className="padb10" >
-                            <Paper component="form" className={classes.email}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="email" disabled>
-                                    <FontAwesomeIcon icon={faEnvelope} />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="email"
-                                    onChange={this.handleEmail}
-                                    value={this.state.email}
-                                    inputProps={{ 'aria-label': 'email' }}
-                                />
-                            </Paper>
-                        </FormGroup>
-
-                        <FormGroup controlId="password"
-                            bsSize="large"
-                            className="padb10" >
-                            <Paper component="form" className={classes.password}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="password" disabled>
-                                    <FontAwesomeIcon icon={faLock} />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="password"
-                                    value={this.state.password}
-                                    onChange={this.handlePassword}
-                                    type="password"
-                                    inputProps={{ 'aria-label': 'password' }}
-                                    helperText={this.state.error.password_err}
-                                />
-                            </Paper>
-                        </FormGroup>
-
-                        <FormGroup controlId="cpassword"
-                            bsSize="large"
-                            className="padb10" >
-                            <Paper component="form" className={classes.cpassword}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="cpassword" disabled>
-                                    <FontAwesomeIcon icon={faLock} />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="confirm password"
-                                    value={this.state.confirm_password}
-                                    onChange={this.handleConfirmPassword}
-                                    type="password"
-                                    inputProps={{ 'aria-label': 'cpassword' }}
-                                />
-                            </Paper>
-                        </FormGroup>
-                        <br></br>
-                        <Button variant="contained"  
-                        disabled={this.state.loading}
-                        block bsSize="large" color="primary" 
-                        type="submit" onClick={this.postRegister} className="padb10"> 
-                        {
-                            this.state.loading?(<CircularProgress size={15}/>):undefined
-                        }
-                        &nbsp; Sign up 
-                        </Button>
-                    </form><br></br>
-                    <p> <Link to="/login" > Already have an account ? Log in ! </Link></p>
-                </center>
-                <div className={classes.register_img}>
-                    <img
-                     className={classes.footer} 
-                    alt="footer" src={image}
-                        // style={{ width: "100%", height: "fit-content", bottom: 0, position: "inherit" }}
-                         alt="" />
-                </div>
-                </div>
-            </div >
-        );
-    }
+            },
+          }}
+        />
+        <Grid container component="main" style={{ height: '100vh', position: 'relative' }}>
+          <CssBaseline />
+          <div className={classes.overlay} />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={4}
+            component={Paper}
+            elevation={6}
+            square
+            className={classes.paper}
+          >
+            <Box
+              style={{
+                marginTop: 8,
+                marginLeft: 10,
+                marginRight: 10,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+                <img src={Bharat} alt="bharat"/>
+              {/* <Avatar style={{ margin: '10px', backgroundColor: '#33ab9f' }}>
+                <LockOutlinedIcon />
+              </Avatar> */}
+              <Typography component="h1" variant="h5">
+                Create an Account
+              </Typography>
+              <form onSubmit={this.postRegister} noValidate style={{ marginTop: 1 }}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="fullname"
+                  label="Full Name"
+                  name="fullname"
+                  autoComplete="fullname"
+                  autoFocus
+                  size="small"
+                  value={this.state.fullname}
+                  onChange={this.handleChange('fullname')}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  size="small"
+                  value={this.state.username}
+                  onChange={this.handleChange('username')}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  size="small"
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  size="small"
+                  autoComplete="current-password"
+                  value={this.state.password}
+                  onChange={this.handleChange('password')}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="confirm_password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm_password"
+                  autoComplete="confirm-password"
+                  size="small"
+                  value={this.state.confirm_password}
+                  onChange={this.handleChange('confirm_password')}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  style={{ marginTop: 24, marginBottom: 16, backgroundColor: '#33ab9f' }}
+                >
+                  {loading ? <CircularProgress size={24} /> : 'Sign Up'}
+                </Button>
+                <Grid container style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Grid align="center">
+                    Already have an account?
+                    <Link href="/login" variant="body2">
+                      {' Log in'}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Box mt={5}>
+                  <Typography variant="body2" color="textSecondary" align="center">
+                    {'Copyright © '}
+                    <Link color="inherit" href="https://mui.com/">
+                      Services UI
+                    </Link>{' '}
+                    {new Date().getFullYear()}
+                    {'.'}
+                  </Typography>
+                </Box>
+              </form>
+            </Box>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default withRouter(withStyles(styles)(Register));

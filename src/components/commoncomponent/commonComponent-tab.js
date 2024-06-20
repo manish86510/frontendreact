@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   top:{
     display:"flex",
     justifyContent:"center",
+    textAlign:"center",
     padding:"0rem 0rem 1rem 0rem",
     fontFamily:"Daikon-Bold"
   },
@@ -63,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily:"Daikon-Regular"
   },
   date:{
-    fontFamily:"Daikon-Regular"
+    fontFamily:"Daikon-Regular",
+    marginTop:'2%'
   }
 }));
 
@@ -117,11 +119,12 @@ export default function ComponentTabs({card}){
         <>
         {data ? <Grid container direction="row"  spacing={3}>
         <Grid item xs={8}><Container>
-            <Typography variant="h4" className={classes.top}>Government Scheme Page</Typography>
+            {/* <Typography variant="h4" className={classes.top}>Government Scheme Page</Typography> */}
+            <Typography variant="h5" className={classes.top}>{data.name}</Typography>
             <Box className={classes.imageContainer} >
                 <img src={`${base_uri}${data.banner}`} alt="imageishere" className={classes.image}/>
             </Box>
-            <Typography className={classes.heading}>{data.name}</Typography>
+            {/* <Typography className={classes.heading}>{data.name}</Typography> */}
             <Typography className={classes.date}>Date: {data.launched_date}</Typography><br/>
             <Typography dangerouslySetInnerHTML={{ __html:data.long_desc }} className={classes.longdesc}></Typography>
             <br/><br/><br/>

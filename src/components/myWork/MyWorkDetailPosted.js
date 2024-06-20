@@ -350,7 +350,10 @@ const useStyles = makeStyles((theme) => ({
     },
     loader:{
       padding:"20% 0% 0% 45%"
-  }
+    },
+    messageHeading:{
+      margin:"1%"
+    },
   }));
   
   const Card = ({idWorkPosting}) => {
@@ -433,7 +436,7 @@ const useStyles = makeStyles((theme) => ({
         <>
         <Grid container direction="row"  spacing={3}>
         {data.length > 0 ? <Grid item xs={8}>
-                <h1>Messages</h1>
+                <Typography variant="h4" className={classes.messageHeading}>Messages</Typography>
                 {data.map((data)=><Paper><div className={classes.card}>
                   <Box className={classes.header}>
         <Typography variant="subtitle1" className={classes.header1}>{data.subject}</Typography>

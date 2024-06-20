@@ -161,6 +161,9 @@ const useStyles = makeStyles((theme) => ({
       attachment:{
         display:"flex"
       },
+      message:{
+        margin:"1%"
+      }
     
 }));
 
@@ -172,7 +175,7 @@ export default function MyWorkDetailGetting({idWorkGetting}){
 
     const classes = useStyles();
     // console.log("getting id of myget work",getId)
-    console.log("getting id from state and app.js",idWorkGetting)
+    // console.log("getting id from state and app.js",idWorkGetting)
 
 
     var getToken = localStorage.getItem('access');
@@ -255,7 +258,7 @@ export default function MyWorkDetailGetting({idWorkGetting}){
             <br/>
             <br/><br/><br/>
         </Container>
-                <h1>Messages</h1>
+                <Typography variant="h4" className={classes.message}>Messages</Typography>
                 {data.map((data)=><Paper><div className={classes.card}>
                   <Box className={classes.header}>
         <Typography variant="subtitle1" className={classes.header1}>{data.subject}</Typography>

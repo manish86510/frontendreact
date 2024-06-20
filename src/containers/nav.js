@@ -27,6 +27,8 @@ import { withRouter } from 'react-router-dom';
 import InputBase from '@material-ui/core/InputBase';
 import Icon from '@material-ui/core/Icon';
 import Badge from '@material-ui/core/Badge';
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+
 
 
 const drawerWidth = 240;
@@ -179,13 +181,13 @@ class SideNav extends React.Component {
                 },
                 {
                     "title": "My Work",
-                    "icon": "date_range",
+                    "icon": "work_outline",
                     "selected": false,
                     "link": "/my_work",
                 },
                 {
                     "title": "Help",
-                    "icon": "settings",
+                    "icon": "help_outline",
                     "selected": false,
                     "link": "/help",
                 },
@@ -263,20 +265,20 @@ class SideNav extends React.Component {
         // this.state.home_title = "Message";
         this.props.history.push({ pathname: "/message" })
     }
-    nav_notification = () => {
-        // this.state.home_title = "Notifications";
-        this.setState({
-            home_title: "Notifications",
-            homeLink: false,
-            bookmarkLink: false,
-            bookmarkLink1: false,
-            bookmarkLink2: false,
-            notificationLink: true,
-            collabrationLink: false,
-            eventsLink: false,
-        });
-        this.props.history.push({ pathname: "/notifications" })
-    }
+    // nav_notification = () => {
+    //     // this.state.home_title = "Notifications";
+    //     this.setState({
+    //         home_title: "Notifications",
+    //         homeLink: false,
+    //         bookmarkLink: false,
+    //         bookmarkLink1: false,
+    //         bookmarkLink2: false,
+    //         notificationLink: true,
+    //         collabrationLink: false,
+    //         eventsLink: false,
+    //     });
+    //     this.props.history.push({ pathname: "/notifications" })
+    // }
     
     nav_collaborate = () => {
         // this.state.home_title = "Collaborate";
@@ -328,6 +330,12 @@ class SideNav extends React.Component {
             home_title: "Wallet",
         });
         this.props.history.push({ pathname: "/wallet" })
+    }
+    nav_notification = () => {
+        this.setState({
+            home_title: "Notification",
+        });
+        this.props.history.push({ pathname: "/notification" })
     }
     nav_logout = () => {
         this.props.history.push({ pathname: "/logout" })
@@ -400,6 +408,9 @@ class SideNav extends React.Component {
                             {/* <IconButton aria-label="search" onClick={this.nav_wallet} size="medium">
                                 <MonetizationOnOutlinedIcon />
                             </IconButton> */}
+                            <IconButton aria-label="search" onClick={this.nav_notification} size="medium">
+                                <NotificationsNoneOutlinedIcon />
+                            </IconButton>
                             <div style={{ display: 'inline-block', verticalAlign: 'middle', padding: '5px 10px' }}>
                                 <div style={{ fontFamily:"Daikon-Bold" }}>
                                     {

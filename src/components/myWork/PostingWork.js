@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     search:{
-        marginTop:"1rem"
+        margin:"4% 0% 4% 0%"
     },
     maincard:{
         display:"flex",
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     nowork:{
         marginTop:"20%",
         marginLeft:"25%"
-    }
+    },
  
   }));
 export default function PostingWork({id}){
@@ -130,7 +130,7 @@ export default function PostingWork({id}){
                         // onClick={() => getid(card.id)}
                         // onClick={handleSelect}
                         >{data.company_name}</Typography>
-                    <Typography className={classes.label1} >{data.description}</Typography></Container>
+                    <Typography className={classes.label1} >{data.subject}</Typography></Container>
                     </Box>
                 </div></Box></Box></Link></Grid>)}
                 </Grid> : <Typography variant="h4" className={classes.nowork}>No Work Posted Yet</Typography>}

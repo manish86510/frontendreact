@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     loader:{
         padding:"20% 0% 0% 45%"
     },
+    search:{
+        margin:"3% 0% 3% 0%"
+    }
 }))
 
 export default function GovernmentSchemesTab(){
@@ -113,7 +116,7 @@ export default function GovernmentSchemesTab(){
     return(
         <> 
         <Grid container direction="row"  spacing={3}> 
-        {data.length > 0 ?<> <Grid item xs={8}> <Typography variant="h4">Government Schemes</Typography><hr/>
+        {data.length > 0 ?<> <Grid item xs={8}> <Typography variant="h5">Government Schemes</Typography><hr/>
         <Container className={classes.search}>
           <TextField id="outlined-basic" className={classes.TextArea} size="small" label="Search..." value={search} variant="outlined" fullWidth onChange={handleChange} /> 
       </Container>
@@ -122,7 +125,9 @@ export default function GovernmentSchemesTab(){
             <Grid item xs={3} className={classes.gridImage}><img className={classes.image} src={`${base_uri}${data.banner}`} alt="random name"/></Grid>
             <Grid item xs={9} >
                 <Link to="/govt-description">
-                <Typography variant="h6" className={classes.heading} >{data.name}</Typography></Link>
+                <Typography variant="h6" className={classes.heading} >{cutItShort(data.name,45)}
+                    {/* {data.name} */}
+                    </Typography></Link>
                 <Typography className={classes.description} dangerouslySetInnerHTML={{ __html:cutItShort(data.short_desc,110) }}></Typography>
              </Grid>
             </Grid> </Box>

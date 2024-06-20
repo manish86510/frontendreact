@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import endpoints,{base_uri} from "../api/endpoints";
 import { useHistory } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
       padding:"0rem 0rem 0rem 0.5rem",
       overflow:"hidden",
       textOverflow:"ellipsis",
+    },
+    loader:{
+      // margin:"10% 0% 5% 50%"
+      display:"flex",
+      justifyContent:"center"
     }
   }));
 
@@ -105,34 +111,6 @@ export default function GovernmentSchemes(){
 
     // console.log(data)
 
-    const tutorialSteps = [
-        {
-          label: 'Atal Pension Yojana',
-          icons: <AssignmentIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Kaushal Vikas Yojana',
-          icons:<AssignmentIndIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Pradhan Mantri Mudra Yojana',
-          icons:<LanguageIcon  className={classes.icons}/>
-        },
-        {
-          label: 'Pradhan Mantri Awas Yojana',
-          icons:<PersonOutlineIcon  className={classes.icons}/>
-        },
-        {
-            label: 'Jeevan Jyoti Bima Yojana',
-            icons: <AssignmentIcon className={classes.icons}/>
-          },
-          {
-            label: 'Atmanirbhar Bharat Abhiyan',
-            icons:<AssignmentIndIcon className={classes.icons}/>
-          },
-        
-      ];
-
       const history = useHistory();
 
       const handleClick = (id) => {
@@ -141,11 +119,19 @@ export default function GovernmentSchemes(){
           state: { id }
         });
       };
-  
+      
+      const DataSlice =(data,label)=>{
+        if(data.length>20){
+          return data.slice(0,label) + "..."
+        }
+        else{
+          return data
+        }
+      }
 
     return(
         <>
-        <Grid className={classes.topService}>
+        {data.length>0 ? <Grid className={classes.topService}>
             <Container>
         <Typography  variant="h6" style={{fontFamily:"Daikon-Bold"}}>Government Schemes</Typography><hr/>
             <Box className={classes.maincard}>{data.map((card,index)=>{
@@ -157,13 +143,18 @@ export default function GovernmentSchemes(){
                       <img className={classes.image} src={`${base_uri}${card.banner}`}
                       alt={card.id}/>
                       </Box>
-                    <Box className={classes.label}>{card.name}</Box></Link>
+                    <Box className={classes.label}>{DataSlice(card.name,20)}
+                      {/* {card.name} */}
+                      </Box></Link>
                     </Box>
                 </div>
             })}</Box>
             {/* <Box>...More</Box> */}
             </Container>
-        </Grid>
+        </Grid> :[]
+        //  <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box>
+         }
+        
         </>
     )
 }

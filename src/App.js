@@ -53,6 +53,8 @@ import my_account_tab from './components/my-account/my_account_tab';
 import Subscription from './components/my-account/Subscription';
 import  Help  from './components/help/Help';
 import Tickets from './Admin/components/tickets/Tickets';
+import ShowFire from './containers/firebase/ShowFire';
+import { Link } from "react-router-dom";
 
 
 const theme = createTheme({
@@ -73,21 +75,34 @@ const theme = createTheme({
 export default function App() {
     const [selectedId, setSelectedId] = useState("");
     const [schemes,setSchemes] = useState("");
+    const [fire,setFire] = useState([]);
     const [id,setId] = useState("");
     const [idPost,setIdPost] = useState("");
     // const setTokens = (data) => {
     //     localStorage.setItem("tokens", JSON.stringify(data));
     //     setAuthTokens(data);
     // }
+
+    function bodySlice(data,value){
+      if (data.length>20){
+        return data.slice(0,value) + "..."
+      }
+      else{
+        return data
+      }
+    }
+
     useEffect(()=>{
         generateToken()
         onMessage(messaging,(payload)=>{
           console.log(payload.notification,"here is payload")
-          toast.success(payload.notification.title)
+          // toast.success(payload.notification.title)
+          setFire(payload.notification)
         
         const { title, body, image } = payload.notification;
     
     toast.custom((t) => (
+      
         <div
           style={{
             maxWidth: '100%',
@@ -102,14 +117,17 @@ export default function App() {
             transition: t.visible ? 'transform 0.2s ease-out, opacity 0.2s ease-out' : 'transform 0.2s ease-in, opacity 0.2s ease-in',
           }}
         >
-          <div style={{ flex: '1 0 auto', width: 'auto', padding: '1rem' }}>
+         <div style={{ flex: '1 0 auto', width: 'auto', padding: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'start' }}>
               <div style={{ flexShrink: 0, paddingTop: '0.125rem' }}>
                 {image && <img style={{ height: '2.5rem', width: '2.5rem', borderRadius: '50%' }} src={image} alt="" />}
               </div>
               <div style={{ marginLeft: '0.75rem', flex: '1' }}>
                 <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1F2937' }}>{title}</p>
-                <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#6B7280' }}>{body}</p>
+                <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#6B7280' }}>
+                  {bodySlice(body,20)}
+                  {/* {body} */}
+                  </p>
               </div>
             </div>
           </div>
@@ -146,13 +164,15 @@ export default function App() {
         })
       },[])
 
-
+      console.log("I am getting fire",fire)
     return (<div>
         
-        <Toaster
-     position="top-right" />
         <MuiThemeProvider theme={theme}>
             <Router>
+            <Link to='/notification'> 
+            <Toaster
+     position="top-right" />
+     </Link>
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route exact path="/login" component={Login} />
@@ -199,6 +219,10 @@ export default function App() {
                         <MyWork myWorkId={setId} myPostId={setIdPost}/>
                         </Route>
                         <Route path="/carousel-call" component={CarouselCall} />
+                        {/* <Route path="/notification" component={ShowFire} /> */}
+                        <Route path="/notification">
+                            <ShowFire   data={fire}/>
+                        </Route>
                         <Route path="/chapter" component={Chapter} />
                         <Route path="/company-tabs" component={CompanyTab} />
                         {/* <Route path="/company-detail" component= {CompanyDetailTab}/> */}

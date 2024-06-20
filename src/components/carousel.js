@@ -18,72 +18,6 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
 
-const tutorialSteps = [
-  {
-    label: 'Smart Cities Mission Portal by Ministry of Urban Development',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day. ',
-      date:'26 October 2021'
-  },
-  {
-    label: 'Guidelines for Integrated Development of Commercial Floriculture Scheme',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'23 March 2022'
-  },
-  {
-    label: 'Social defence schemes of Ministry of Social Justice and Empowerment',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'26 December 2022'
-  },
-  {
-    label: 'Schemes and programmes for differently abled by Ministry of Social Justice and Empowerment',
-    imgPath:
-      'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'14 January 2023'
-  },
-  {
-    label: 'Information on Rashtriya Madhyamik Shiksha Abhiyan',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'14 February 2024'
-  },
-  {
-    label: 'Balika Samriddhi Yojana by the Ministry of Women and Child Development',
-    imgPath:
-      'https://www.shutterstock.com/shutterstock/photos/2274412231/display_1500/stock-vector-many-rainbow-gradient-random-bright-soft-balls-background-colorful-balls-background-for-kids-zone-2274412231.jpg',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'12 March 2024'
-  },
-  {
-    label: 'Information on schemes of animal husbandry',
-    imgPath:
-      'https://newvision-media.s3.amazonaws.com/cms/4040184f-4412-4775-980f-d2df40139bd3.jpg',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'12 February 2022'
-  },
-  {
-    label: 'Download forms of schemes for care of older persons',
-    imgPath:
-      'https://media.contentapi.ea.com/content/dam/eacom/lost-in-random/images/2021/06/lost-in-random-feature-image-16x9.jpg.adapt.crop16x9.1023w.jpg',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'14 June 2020'
-  },
-  {
-    label: 'Information about Jan Shikshan Sansthan scheme',
-    imgPath:
-      'https://i.ytimg.com/vi/RtvdEJQWQ8Y/maxresdefault.jpg',
-      description:'Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day.',
-      date:'14 February 2021',
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400,
@@ -206,7 +140,9 @@ export default function Carousel(){
         <p className={classes.heading1} dangerouslySetInnerHTML={{ __html: cutItShort(m.short_desc,80) }} style={{marginTop:0,color:"black !important"}}></p>
         <p className={classes.heading} >{m.date}</p></Link>
     </div>)}
-    </OwlCarousel></div> : <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>}
+    </OwlCarousel></div> : []
+    // <Grid item xs={8}> <Box className={classes.loader}> <CircularProgress  color="secondary" /></Box></Grid>
+    }
       </>
     );
 }
