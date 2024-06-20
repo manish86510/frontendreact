@@ -82,14 +82,17 @@ const Industry = () => {
           paddingRight: "8px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ height: "40px", borderRadius: "18px" }}
-          onClick={() => setShowAdd(!showAdd)}
-        >
-          {showAdd ? <>Close</> : <>Add Industry</>}
-        </Button>
+        {!showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px" }}
+            onClick={() => setShowAdd(!showAdd)}
+          >
+            {showAdd ? <>Close</> : <>Add Industry</>}
+          </Button>
+        )}
+
         {!showAdd && !showEdit && (
           <TextField
             id="standard-basic"
@@ -105,7 +108,10 @@ const Industry = () => {
       {showAdd && <AddIndustry setShowAdd={setShowAdd} />}
       {/* {!showAdd && <AdminTable rows={allNews} />} */}
       {showEdit && (
-        <EditIndustry industryId={selectedIndustryId} setShowEdit={setShowEdit} />
+        <EditIndustry
+          industryId={selectedIndustryId}
+          setShowEdit={setShowEdit}
+        />
       )}
       {/* {!showAdd && (
         <SchemesTable rows={allIndustry} handleDelete={handleDelete} />

@@ -76,14 +76,17 @@ const AdminEvents = () => {
           paddingRight: "8px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ height: "40px", borderRadius: "18px" }}
-          onClick={() => setShowAdd(!showAdd)}
-        >
-          {showAdd ? <>Close</> : <>Add Events</>}
-        </Button>
+        {!showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px" }}
+            onClick={() => setShowAdd(!showAdd)}
+          >
+            {showAdd ? <>Close</> : <>Add Events</>}
+          </Button>
+        )}
+
         {!showAdd && !showEdit && (
           <TextField
             id="standard-basic"

@@ -6,7 +6,7 @@ import axios from "axios";
 import endpoints from "../../../api/endpoints";
 import toast from "react-hot-toast";
 import EditScheme from "./EditScheme";
-import TextField from "@material-ui/core/TextField"; 
+import TextField from "@material-ui/core/TextField";
 
 const Schemes = () => {
   const [showAdd, setShowAdd] = useState(false);
@@ -82,14 +82,17 @@ const Schemes = () => {
           paddingRight: "8px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ height: "40px", borderRadius: "18px" }}
-          onClick={() => setShowAdd(!showAdd)}
-        >
-          {showAdd ? <>Close</> : <>Add Schemes</>}
-        </Button>
+        {!showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px" }}
+            onClick={() => setShowAdd(!showAdd)}
+          >
+            {showAdd ? <>Close</> : <>Add Schemes</>}
+          </Button>
+        )}
+
         {!showAdd && !showEdit && (
           <TextField
             id="standard-basic"

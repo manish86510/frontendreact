@@ -78,14 +78,17 @@ const News = () => {
           paddingRight: "8px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ height: "40px", borderRadius: "18px" }}
-          onClick={() => setShowAdd(!showAdd)}
-        >
-          {showAdd ? <>Close</> : <>Add News</>}
-        </Button>
+        {!showEdit && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ height: "40px", borderRadius: "18px" }}
+            onClick={() => setShowAdd(!showAdd)}
+          >
+            {showAdd ? <>Close</> : <>Add News</>}
+          </Button> 
+        )}
+
         {!showAdd && !showEdit && (
           <TextField
             id="standard-basic"
